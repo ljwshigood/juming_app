@@ -147,27 +147,19 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 
 		RxPermissions rxPermissions1 = new RxPermissions(this);
 
-		rxPermissions1.requestEach(Manifest.permission.READ_EXTERNAL_STORAGE,
+		rxPermissions1.requestEach(
 				Manifest.permission.ACCESS_FINE_LOCATION,
 				Manifest.permission.ACCESS_COARSE_LOCATION,
 				Manifest.permission.CAMERA,
-				Manifest.permission.BLUETOOTH,
-				Manifest.permission.BLUETOOTH_ADMIN,
 				Manifest.permission.RECORD_AUDIO,
-				Manifest.permission.BLUETOOTH,
-				Manifest.permission.READ_SMS,
-				Manifest.permission.SEND_SMS,
-				Manifest.permission.CALL_PHONE,
-				Manifest.permission.READ_CONTACTS,
-				Manifest.permission.BLUETOOTH_ADMIN,
 				Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Consumer<Permission>() {
 			@Override
 			public void accept(Permission permission) throws Exception {
 				if (permission.granted) {
 
 				}else{
-					Toast.makeText(getApplicationContext(),"您没有授权该权限，请在设置中打开授权",Toast.LENGTH_LONG).show();
-					finish();
+					Toast.makeText(getApplicationContext(),"您没有授权该权限，请在设置中打开授权"+permission.name,Toast.LENGTH_LONG).show();
+					//finish();
 				}
 			}
 		});
