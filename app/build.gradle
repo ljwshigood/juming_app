@@ -47,4 +47,5 @@ dependencies {
     implementation project(':barlibrary')
     implementation project(':permissionlib')
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
+    implementation project(':bridgewebviewlibrary')
 }

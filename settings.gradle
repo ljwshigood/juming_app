@@ -1,1 +1,1 @@
-include ':app', ':zzview', ':barlibrary', ':permissionlib'
+include ':app', ':zzview', ':barlibrary', ':permissionlib', ':bridgewebviewlibrary'

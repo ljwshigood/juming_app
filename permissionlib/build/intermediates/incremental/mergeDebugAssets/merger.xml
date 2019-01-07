@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="D:\SourceTest\git_zz\code\juming_app\permissionlib\src\main\assets"/><source path="D:\SourceTest\git_zz\code\juming_app\permissionlib\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="D:\SourceTest\git_zz\code\juming_app\permissionlib\src\debug\assets"/></dataSet></merger>
