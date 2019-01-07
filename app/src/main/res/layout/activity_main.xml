@@ -48,7 +48,7 @@
                             android:layout_height="25dp"
                             android:layout_gravity="center_horizontal"
                             android:scaleType="center"
-                            android:src="@drawable/ic_launcher_background" />
+                            android:src="@mipmap/icon_shouye_pre" />
 
                         <TextView
                             android:id="@+id/tv_home"
@@ -56,7 +56,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="5dp"
-                            android:text="首页"
+                            android:text="主页"
                             android:textSize="12sp" />
                     </LinearLayout>
                 </RelativeLayout>
@@ -79,7 +79,7 @@
                             android:layout_height="25dp"
                             android:layout_gravity="center_horizontal"
                             android:scaleType="center"
-                            android:src="@drawable/ic_launcher_background" />
+                            android:src="@mipmap/icon_lishi_nor" />
 
                         <TextView
                             android:id="@+id/tv_near"
@@ -87,7 +87,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="5dp"
-                            android:text="发现"
+                            android:text="历史"
                             android:textSize="12sp" />
                     </LinearLayout>
                 </RelativeLayout>
@@ -137,7 +137,7 @@
                             android:layout_height="25dp"
                             android:layout_gravity="center_horizontal"
                             android:scaleType="center"
-                            android:src="@drawable/ic_launcher_background" />
+                            android:src="@mipmap/icon_xiaoxi_nor" />
 
                         <TextView
                             android:id="@+id/tv_message"
@@ -167,7 +167,7 @@
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_launcher_background" />
+                            android:src="@mipmap/icon_wode_nor" />
 
                         <TextView
                             android:id="@+id/tv_user"
@@ -202,7 +202,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_launcher_background" />
+                android:src="@mipmap/icon_fabu_tab" />
 
             <TextView
                 android:id="@+id/tv_release"
