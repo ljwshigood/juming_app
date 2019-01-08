@@ -32,14 +32,8 @@ public class UserFragment extends Fragment implements OnClickListener {
 
 	private RelativeLayout mRlRuheFaBuXuqiu;
 
-	private RelativeLayout mRlPingTaiGuize;
-
-	private RelativeLayout mRllianxikefu;
-	
-	private RelativeLayout mRlSet ;
 
 	private void initView(View view) {
-		mRlSet = view.findViewById(R.id.rl_set) ;
 		mRlMyRelease =  view.findViewById(R.id.rl_my_release);
 		mRlMyBill =  view.findViewById(R.id.rl_my_bill);
 		mRlMyJinku =  view.findViewById(R.id.rl_my_jinku);
@@ -47,8 +41,6 @@ public class UserFragment extends Fragment implements OnClickListener {
 		mRlMyRenzhen =  view.findViewById(R.id.rl_my_renzhen);
 		mRlRuheDingDan =  view.findViewById(R.id.rl_ruhejiedan);
 		mRlRuheFaBuXuqiu =  view.findViewById(R.id.rl_ruhe_fabuxuqiu);
-		mRlPingTaiGuize =  view.findViewById(R.id.rl_pingtai_guize);
-		mRllianxikefu =  view.findViewById(R.id.rl_lianxikefu);
 
 		mRlMyRelease.setOnClickListener(this);
 		mRlMyBill.setOnClickListener(this);
@@ -57,9 +49,6 @@ public class UserFragment extends Fragment implements OnClickListener {
 		mRlMyRenzhen.setOnClickListener(this);
 		mRlRuheDingDan.setOnClickListener(this);
 		mRlRuheFaBuXuqiu.setOnClickListener(this);
-		mRlPingTaiGuize.setOnClickListener(this);
-		mRllianxikefu.setOnClickListener(this);
-		mRlSet.setOnClickListener(this);
 
 	}
 
@@ -97,14 +86,6 @@ public class UserFragment extends Fragment implements OnClickListener {
 			break;
 		case R.id.rl_ruhe_fabuxuqiu:
 			break;
-		case R.id.rl_pingtai_guize:
-			break;
-
-		case R.id.rl_lianxikefu:
-			break;
-		case R.id.rl_set :
-			break ;
-
 		default:
 			break;
 		}

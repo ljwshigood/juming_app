@@ -48,7 +48,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 	 
 	 private ImageView mIvHome ;
 	 
-	 private ImageView mIvNear ;
+	 private ImageView mIvHistory;
 	 
 	 private ImageView mIvRelease ;
 	 
@@ -58,7 +58,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 	 
 	 private TextView mTvHome ;
 	 
-	 private TextView mTvNear ;
+	 private TextView mTvHistory;
 	 
 	 private TextView mTvRelease ;
 	 
@@ -81,7 +81,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 	 private void initView(){
 		 
 		 mRlHome = findViewById(R.id.rl_home) ;
-		 mRlNear = findViewById(R.id.rl_near) ;
+		 mRlNear = findViewById(R.id.rl_history) ;
 		 mRlRelease = findViewById(R.id.ll_realease) ;
 		 mRlMessage = findViewById(R.id.rl_message) ;
 		 mRlUser = findViewById(R.id.rl_user) ;
@@ -94,13 +94,13 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 		 
 		 
 		 mIvHome = findViewById(R.id.iv_home) ;
-		 mIvNear = findViewById(R.id.iv_near) ;
+		 mIvHistory = findViewById(R.id.iv_history) ;
 		 mIvRelease = findViewById(R.id.iv_release) ;
 		 mIvMessage = findViewById(R.id.iv_message) ;
 		 mIvUser = findViewById(R.id.iv_user) ;
 		 
 		 mTvHome = findViewById(R.id.tv_home) ;
-		 mTvNear = findViewById(R.id.tv_near) ;
+		 mTvHistory = findViewById(R.id.tv_history) ;
 		 mTvRelease = findViewById(R.id.tv_release) ;
 		 mTvMessage = findViewById(R.id.tv_message) ;
 		 mTvUser = findViewById(R.id.tv_user) ;
@@ -189,42 +189,69 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ll_realease:
-		/*	mTvHome.setTextColor(mContext.getResources().getColor(R.color.dark));
-			mTvNear.setTextColor(mContext.getResources().getColor(R.color.dark));
-			mTvRelease.setTextColor(mContext.getResources().getColor(R.color.dark_blue));
+			mTvHome.setTextColor(mContext.getResources().getColor(R.color.dark));
+			mTvHistory.setTextColor(mContext.getResources().getColor(R.color.dark));
+			mTvRelease.setTextColor(mContext.getResources().getColor(R.color.dark_red));
 			mTvMessage.setTextColor(mContext.getResources().getColor(R.color.dark));
-			mTvUser.setTextColor(mContext.getResources().getColor(R.color.dark));*/
+			mTvUser.setTextColor(mContext.getResources().getColor(R.color.dark));
 			break;
 		case R.id.rl_home:
-			/*mTvHome.setTextColor(mContext.getResources().getColor(R.color.dark_blue));
-			mTvNear.setTextColor(mContext.getResources().getColor(R.color.dark));
+			mTvHome.setTextColor(mContext.getResources().getColor(R.color.dark_red));
+			mTvHistory.setTextColor(mContext.getResources().getColor(R.color.dark));
 			mTvRelease.setTextColor(mContext.getResources().getColor(R.color.dark));
 			mTvMessage.setTextColor(mContext.getResources().getColor(R.color.dark));
-			mTvUser.setTextColor(mContext.getResources().getColor(R.color.dark));*/
+			mTvUser.setTextColor(mContext.getResources().getColor(R.color.dark));
+
+			mIvHome.setImageResource(R.mipmap.icon_shouye_pre);
+			mIvHistory.setImageResource(R.mipmap.icon_lishi_nor);
+			mIvUser.setImageResource(R.mipmap.icon_wode_nor);
+			mIvMessage.setImageResource(R.mipmap.icon_xiaoxi_nor);
+
+
 			mWJViewPaper.setCurrentItem(0);
 			break ;
-		case R.id.rl_near:
-			/*mTvHome.setTextColor(mContext.getResources().getColor(R.color.dark));
-			mTvNear.setTextColor(mContext.getResources().getColor(R.color.dark_blue));
+		case R.id.rl_history:
+			mTvHome.setTextColor(mContext.getResources().getColor(R.color.dark));
+			mTvHistory.setTextColor(mContext.getResources().getColor(R.color.dark_red));
 			mTvRelease.setTextColor(mContext.getResources().getColor(R.color.dark));
 			mTvMessage.setTextColor(mContext.getResources().getColor(R.color.dark));
-			mTvUser.setTextColor(mContext.getResources().getColor(R.color.dark));*/
+			mTvUser.setTextColor(mContext.getResources().getColor(R.color.dark));
+
+
+			mIvHome.setImageResource(R.mipmap.icon_shouye_nor);
+			mIvHistory.setImageResource(R.mipmap.icon_lishi_pre);
+			mIvUser.setImageResource(R.mipmap.icon_wode_nor);
+			mIvMessage.setImageResource(R.mipmap.icon_xiaoxi_nor);
+
 			mWJViewPaper.setCurrentItem(1);
 			break ;
 		case R.id.rl_user:
-			/*mTvHome.setTextColor(mContext.getResources().getColor(R.color.dark));
-			mTvNear.setTextColor(mContext.getResources().getColor(R.color.dark));
+			mTvHome.setTextColor(mContext.getResources().getColor(R.color.dark));
+			mTvHistory.setTextColor(mContext.getResources().getColor(R.color.dark));
 			mTvRelease.setTextColor(mContext.getResources().getColor(R.color.dark));
 			mTvMessage.setTextColor(mContext.getResources().getColor(R.color.dark));
-			mTvUser.setTextColor(mContext.getResources().getColor(R.color.dark_blue));*/
+			mTvUser.setTextColor(mContext.getResources().getColor(R.color.dark_red));
 			mWJViewPaper.setCurrentItem(3);
+
+			mIvHome.setImageResource(R.mipmap.icon_shouye_nor);
+			mIvHistory.setImageResource(R.mipmap.icon_lishi_nor);
+			mIvUser.setImageResource(R.mipmap.icon_wode_pre);
+			mIvMessage.setImageResource(R.mipmap.icon_xiaoxi_nor);
+
 			break ;
 		case R.id.rl_message :
-			/*mTvHome.setTextColor(mContext.getResources().getColor(R.color.dark));
-			mTvNear.setTextColor(mContext.getResources().getColor(R.color.dark));
+			mTvHome.setTextColor(mContext.getResources().getColor(R.color.dark));
+			mTvHistory.setTextColor(mContext.getResources().getColor(R.color.dark));
 			mTvRelease.setTextColor(mContext.getResources().getColor(R.color.dark));
-			mTvMessage.setTextColor(mContext.getResources().getColor(R.color.dark_blue));
-			mTvUser.setTextColor(mContext.getResources().getColor(R.color.dark));*/
+			mTvMessage.setTextColor(mContext.getResources().getColor(R.color.dark_red));
+			mTvUser.setTextColor(mContext.getResources().getColor(R.color.dark));
+
+			mIvHome.setImageResource(R.mipmap.icon_shouye_nor);
+			mIvHistory.setImageResource(R.mipmap.icon_lishi_nor);
+			mIvUser.setImageResource(R.mipmap.icon_wode_nor);
+			mIvMessage.setImageResource(R.mipmap.icon_xiaoxi_pre);
+
+
 			mWJViewPaper.setCurrentItem(2);
 			break ;
 

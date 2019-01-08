@@ -53,7 +53,6 @@ public class BaseActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       // setTranslucentStatus ();
         if (getRequestedOrientation () != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
             setRequestedOrientation ( ActivityInfo.SCREEN_ORIENTATION_PORTRAIT );
         }
@@ -65,6 +64,12 @@ public class BaseActivity extends FragmentActivity {
                 .navigationBarColor(R.color.colorPrimary)
                 .init();
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        ImmersionBar.with(this).init();
     }
 
     @Override

@@ -3,7 +3,7 @@
 	<color name="bgColor_overlay">#60000000</color>
     <color name="blue">#4ac8f0</color>
 	<color name="dark">#5d717b</color>
-	<color name="dark_blue">#41bdff</color>
+	<color name="dark_red">#FF67AA</color>
 
 	<color name="pickerview_timebtn_nor">#057dff</color>
 	<color name="pickerview_timebtn_pre">#c2daf5</color>
