@@ -17,7 +17,7 @@ import com.zzteck.jumin.provider.TwoColumnItemProvider;
  * Describe:
  */
 
-public class TestHomeAdapter extends MultipleItemRvAdapter<TestBean, BaseViewHolder> {
+public class HomeAdapter extends MultipleItemRvAdapter<TestBean, BaseViewHolder> {
     //通栏商品大图片
     public static final int TYPE_IMG = 100;
     //通栏图文
@@ -32,7 +32,7 @@ public class TestHomeAdapter extends MultipleItemRvAdapter<TestBean, BaseViewHol
     public static final int TYPE_NARROW_IMG = 600;
     //两列
     public static final int TYPE_TWO_COLUMN = 700;
-    public TestHomeAdapter() {
+    public HomeAdapter() {
         super(null);
         finishInitialize();
 

@@ -6,8 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.provider.BaseItemProvider;
 import com.zzteck.jumin.R;
-import com.zzteck.jumin.adapter.TestHomeAdapter;
-import com.zzteck.jumin.adapter.TestItemAdapter;
+import com.zzteck.jumin.adapter.HomeAdapter;
+import com.zzteck.jumin.adapter.HomeItemAdapter;
 import com.zzteck.jumin.bean.TestBean;
 
 /**
@@ -18,7 +18,7 @@ import com.zzteck.jumin.bean.TestBean;
 public class ScrollItemProvider extends BaseItemProvider<TestBean, BaseViewHolder> {
     @Override
     public int viewType() {
-        return TestHomeAdapter.TYPE_HORIZONTAL_SCROLL;
+        return HomeAdapter.TYPE_HORIZONTAL_SCROLL;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class ScrollItemProvider extends BaseItemProvider<TestBean, BaseViewHolde
     public void convert(BaseViewHolder helper, TestBean data, int position) {
         RecyclerView mRecyclerView = helper.getView(R.id.item_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-        TestItemAdapter adapter = new TestItemAdapter();
+        HomeItemAdapter adapter = new HomeItemAdapter();
         adapter.setNewData(data.getGoodsInfo());
         mRecyclerView.setAdapter(adapter);
     }

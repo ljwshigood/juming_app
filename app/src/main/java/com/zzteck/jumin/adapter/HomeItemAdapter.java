@@ -14,8 +14,8 @@ import com.zzteck.jumin.bean.TestBean;
  * Describe:
  */
 
-public class TestItemAdapter extends BaseQuickAdapter<TestBean.GoodsInfoBean, BaseViewHolder> {
-    public TestItemAdapter() {
+public class HomeItemAdapter extends BaseQuickAdapter<TestBean.GoodsInfoBean, BaseViewHolder> {
+    public HomeItemAdapter() {
         super(R.layout.app_item_home_scroll_item);
     }
 

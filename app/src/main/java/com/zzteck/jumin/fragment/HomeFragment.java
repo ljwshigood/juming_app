@@ -17,9 +17,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.youth.banner.Banner;
 import com.zzteck.jumin.R;
-import com.zzteck.jumin.adapter.TestHomeAdapter;
+import com.zzteck.jumin.adapter.HomeAdapter;
 import com.zzteck.jumin.bean.TestBean;
-import com.zzteck.jumin.ui.MarqueeView;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -56,9 +55,10 @@ public class HomeFragment extends BaseFragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 6);
         mRecyclerView.setLayoutManager(gridLayoutManager);
         String jsonData = new String(getAssertsFile(getContext(), "content.json"));
-        data = new Gson().fromJson(jsonData, new TypeToken<List<TestBean>>() {
-        }.getType());
-        TestHomeAdapter adapter = new TestHomeAdapter();
+
+        data = new Gson().fromJson(jsonData, new TypeToken<List<TestBean>>() {}.getType());
+
+        HomeAdapter adapter = new HomeAdapter();
         adapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
             @Override
             public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
@@ -96,27 +96,20 @@ public class HomeFragment extends BaseFragment {
 
     private View getHeaderView(RecyclerView v) {
         List<String> bannerImg = new ArrayList<>();
-        bannerImg.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530962561545&di=f6af0eb6d96e5540baf2ce3bc96dca38&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0118a6576505160000018c1bc1c1d9.jpg%401280w_1l_2o_100sh.jpg");
-        bannerImg.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530962666446&di=d7d90171e1fd6cc69352b73e2f8df529&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F017338576505290000012e7e45db9f.jpg%401280w_1l_2o_100sh.jpg");
-        bannerImg.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531557498&di=5e4a5342ae724f219b004ccad7b6fa82&imgtype=jpg&er=1&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F017e0458212939a84a0e282bca0f71.jpg%401280w_1l_2o_100sh.jpg");
-        bannerImg.add("http://58.87.71.247:8080/TestFile/banner.png");
+        bannerImg.add("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1546918492&di=062431ef3056895f59346be28583583f&src=http://b.hiphotos.baidu.com/zhidao/pic/item/14ce36d3d539b600d3924a1feb50352ac65cb73e.jpg");
+        bannerImg.add("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1546918492&di=062431ef3056895f59346be28583583f&src=http://b.hiphotos.baidu.com/zhidao/pic/item/14ce36d3d539b600d3924a1feb50352ac65cb73e.jpg");
+        bannerImg.add("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1546918492&di=062431ef3056895f59346be28583583f&src=http://b.hiphotos.baidu.com/zhidao/pic/item/14ce36d3d539b600d3924a1feb50352ac65cb73e.jpg");
+        bannerImg.add("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1546918492&di=062431ef3056895f59346be28583583f&src=http://b.hiphotos.baidu.com/zhidao/pic/item/14ce36d3d539b600d3924a1feb50352ac65cb73e.jpg");
+
         View convertView = LayoutInflater
                 .from(getContext())
                 .inflate(R.layout.app_include_home_header, (ViewGroup) v.getParent(), false);
+
         Banner mBanner = convertView.findViewById(R.id.app_home_header_banner);
+
         mBanner.setImages(bannerImg)
-             /*   .setImageLoader(new GlideImageLoader())*/
                 .setDelayTime(3000)
                 .start();
-
-
-        MarqueeView marqueeView=convertView.findViewById(R.id.app_home_header_problem);
-
-        List<String> problems=new ArrayList<>();
-        problems.add("如何获取更多个人积分");
-        problems.add("下单时服务费率规则");
-        problems.add("大额预定商品详细交易流程");
-        marqueeView.startWithList(problems);
 
         ViewGroup.LayoutParams bannerParams = mBanner.getLayoutParams();
         int resourceId = getContext().getResources().getIdentifier("status_bar_height", "dimen", "android");

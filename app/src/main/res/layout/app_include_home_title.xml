@@ -4,63 +4,87 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/transparent"
-    android:orientation="vertical"
-    android:paddingLeft="13dp"
-    android:paddingRight="13dp">
+    android:background="@color/blue"
+    android:orientation="vertical">
 
     <View
         android:id="@+id/fake_status_bar"
         android:layout_width="match_parent"
         android:layout_height="24dp"
-        android:background="@color/transparent" />
+        android:background="@color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:gravity="center_vertical"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/app_home_title_ll_news"
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_left"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="80"
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="5dp">
 
-            <android.support.v7.widget.AppCompatImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="北京"
+                android:textColor="@color/dark_red"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_beijing"
+                android:layout_marginLeft="10dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/app_home_title_tv_news"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:layout_weight="1"
+                android:paddingBottom="7dp"
+                android:paddingLeft="18dp"
+                android:paddingStart="18dp"
+                android:paddingTop="7dp"
+                android:textSize="14sp" />
         </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/app_home_title_tv_news"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="13dp"
-            android:layout_marginRight="13dp"
-            android:layout_weight="1"
-            android:paddingBottom="7dp"
-            android:paddingLeft="18dp"
-            android:paddingStart="18dp"
-            android:paddingTop="7dp"
-            android:text="汾酒珍品"
-            android:textSize="14sp"
-            tools:ignore="RtlSymmetry" />
-
         <LinearLayout
-            android:id="@+id/app_home_title_ll_search"
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_right"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="70"
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="5dp">
 
-            <android.support.v7.widget.AppCompatImageView
+
+            <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_qiandao" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/icon_saoyisao" />
+
         </LinearLayout>
     </LinearLayout>
 
