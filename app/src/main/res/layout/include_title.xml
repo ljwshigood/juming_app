@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="50dp" >
+    android:background="@color/blue"
+    android:layout_height="75dp" >
 
     <LinearLayout
         android:id="@+id/ll_back"
@@ -19,7 +20,7 @@
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher_background" />
+            android:src="@mipmap/ic_back" />
     </LinearLayout>
 
     <TextView

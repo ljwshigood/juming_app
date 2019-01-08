@@ -6,19 +6,21 @@ import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.github.jdsjlzx.recyclerview.LRecyclerView;
+import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.youth.banner.Banner;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.HomeAdapter;
-import com.zzteck.jumin.bean.TestBean;
+import com.zzteck.jumin.bean.HomeBean;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -34,9 +36,11 @@ import java.util.List;
 
 public class HomeFragment extends BaseFragment {
     private LinearLayout mToolbar;
-    private RecyclerView mRecyclerView;
-    private List<TestBean> data;
+    private LRecyclerView mRecyclerView;
+    private List<HomeBean> data;
     private int height;
+
+    private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
 
     @Override
     public int getLayoutId() {
@@ -47,35 +51,36 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void initView(View mView) {
         mToolbar = mView.findViewById(R.id.toolbar);
-        mRecyclerView = mView.findViewById(R.id.app_home_list);
+        mRecyclerView = mView.findViewById(R.id.rv_home);
     }
+
+    private List<HomeBean> mHomeList = new ArrayList<>() ;
 
     @Override
     public void lazyLoad() {
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 6);
+
+        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(gridLayoutManager);
+
         String jsonData = new String(getAssertsFile(getContext(), "content.json"));
 
-        data = new Gson().fromJson(jsonData, new TypeToken<List<TestBean>>() {}.getType());
+        data = new Gson().fromJson(jsonData, new TypeToken<List<HomeBean>>() {}.getType());
 
-        HomeAdapter adapter = new HomeAdapter();
-        adapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
-                int type = data.get(position).getType();
-                if (type == 1 || type == 3 || type == 2 || type == 5 || type == 6) {
-                    return 6;
-                } else if (type == 4) {
-                    return 2;
-                } else if (type == 7) {
-                    return 3;
-                }
-                return 0;
-            }
-        });
-        mRecyclerView.setAdapter(adapter);
-        adapter.setHeaderView(getHeaderView(mRecyclerView));
-        adapter.setNewData(data);
+        for(int i = 0 ;i < 3;i++){
+            HomeBean bean = new HomeBean() ;
+            bean.setType(i);
+            mHomeList.add(bean) ;
+        }
+
+        HomeAdapter adapter = new HomeAdapter(getActivity(),mHomeList);
+
+
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(adapter) ;
+
+        mRecyclerView.setAdapter(mLRecyclerViewAdapter);
+
+        mLRecyclerViewAdapter.addHeaderView(getHeaderView(mRecyclerView));
+
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private int totalDy = 0;
             @Override
@@ -92,6 +97,8 @@ public class HomeFragment extends BaseFragment {
                 }
             }
         });
+
+        mRecyclerView.setNestedScrollingEnabled(false);
     }
 
     private View getHeaderView(RecyclerView v) {

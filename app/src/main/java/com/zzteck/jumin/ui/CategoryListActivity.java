@@ -15,14 +15,14 @@ import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.utils.JavaSctiptMethods;
 
 
-public class ListActivity extends BaseActivity implements OnClickListener{
+public class CategoryListActivity extends BaseActivity implements OnClickListener{
 
 	private BridgeWebView mWeview;
 
 	private void initView() {
 
 		mWeview = findViewById(R.id.weview);
-		mWeview.addBridgeInterface(new JavaSctiptMethods(ListActivity.this, mWeview));//设置js和android通信桥梁方法
+		mWeview.addBridgeInterface(new JavaSctiptMethods(CategoryListActivity.this, mWeview));//设置js和android通信桥梁方法
 		mWeview.loadUrl("file:///android_asset/code/list.html");//本地模板
 
 	}
@@ -37,12 +37,11 @@ public class ListActivity extends BaseActivity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list);
-		mContext = ListActivity.this ;
+		mContext = CategoryListActivity.this ;
 		App.getInstance().addActivity(this);
 
  		initView() ;
 		setWebViewClient() ;
-
 	}
 	
 

@@ -1,79 +1,74 @@
 package com.zzteck.jumin.adapter;
 
-import com.chad.library.adapter.base.BaseViewHolder;
-import com.chad.library.adapter.base.MultipleItemRvAdapter;
-import com.zzteck.jumin.bean.TestBean;
-import com.zzteck.jumin.provider.ImgAndTextItemProvider;
-import com.zzteck.jumin.provider.ImgItemProvider;
-import com.zzteck.jumin.provider.NarrowImgItemProvider;
-import com.zzteck.jumin.provider.ScrollItemProvider;
-import com.zzteck.jumin.provider.TextItemProvider;
-import com.zzteck.jumin.provider.ThreeColumnItemProvider;
-import com.zzteck.jumin.provider.TwoColumnItemProvider;
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.ViewGroup;
 
+import com.zzteck.jumin.ViewHolder.CategoryViewHolder;
+import com.zzteck.jumin.ViewHolder.PictureViewHolder;
+import com.zzteck.jumin.ViewHolder.VideoViewHolder;
+import com.zzteck.jumin.bean.HomeBean;
+import com.zzteck.jumin.utils.Constants;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2018/6/30.
  * Describe:
  */
 
-public class HomeAdapter extends MultipleItemRvAdapter<TestBean, BaseViewHolder> {
-    //通栏商品大图片
-    public static final int TYPE_IMG = 100;
-    //通栏图文
-    public static final int TYPE_TEXT_AND_IMG = 200;
-    //通栏文本
-    public static final int TYPE_TEXT = 300;
-    //三列
-    public static final int TYPE_THREE_COLUMN = 400;
-    //通栏水平拖动
-    public static final int TYPE_HORIZONTAL_SCROLL = 500;
-    //通栏窄图片
-    public static final int TYPE_NARROW_IMG = 600;
-    //两列
-    public static final int TYPE_TWO_COLUMN = 700;
-    public HomeAdapter() {
-        super(null);
-        finishInitialize();
+public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
+    private Context mContext ;
+
+    private List<HomeBean> mHomeList ;
+
+    public HomeAdapter(Context context,List<HomeBean> list) {
+        this.mContext = context ;
+        this.mHomeList = list ;
     }
 
     @Override
-    protected int getViewType(TestBean testBean) {
-        int type = testBean.getType();
-        if (type == 1) {
-            return TYPE_IMG;
-        } else if (type == 2) {
-            return TYPE_TEXT_AND_IMG;
-        } else if (type == 3) {
-            return TYPE_TEXT;
-        } else if (type == 4) {
-            return TYPE_THREE_COLUMN;
-        } else if (type == 5) {
-            return TYPE_HORIZONTAL_SCROLL;
-        } else if (type == 6) {
-            return TYPE_NARROW_IMG;
-        } else if (type == 7) {
-            return TYPE_TWO_COLUMN;
+    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        BaseViewHolder viewHolder = null;
+        switch (viewType) {
+            case Constants.HOME_VIDEO:
+                viewHolder = new VideoViewHolder(mContext,parent);
+                break ;
+            case Constants.PICTURE_LOGO:
+                viewHolder = new PictureViewHolder(mContext,parent);
+                break;
+            case Constants.CATEGORY:
+                viewHolder = new CategoryViewHolder(mContext,parent);
+                break;
         }
-        return 0;
+
+        return viewHolder ;
     }
 
     @Override
-    public void registerItemProvider() {
-        //通栏商品大图片
-        mProviderDelegate.registerProvider(new ImgItemProvider());
-        //通栏图文
-        mProviderDelegate.registerProvider(new ImgAndTextItemProvider());
-        //通栏文本
-        mProviderDelegate.registerProvider(new TextItemProvider());
-        //三列图文
-        mProviderDelegate.registerProvider(new ThreeColumnItemProvider());
-        //通栏横向滑动
-        mProviderDelegate.registerProvider(new ScrollItemProvider());
-        //通栏窄图片
-        mProviderDelegate.registerProvider(new NarrowImgItemProvider());
-        //两列图文
-        mProviderDelegate.registerProvider(new TwoColumnItemProvider());
+    public void onBindViewHolder(BaseViewHolder holder, int position) {
+
     }
+
+    @Override
+    public int getItemViewType(int position) {
+
+        if(position == 0){
+            return Constants.HOME_VIDEO ;
+        }else if(position == 1){
+            return Constants.PICTURE_LOGO ;
+        }else if(position == 2){
+            return Constants.CATEGORY ;
+        }
+        return 0 ;
+    }
+
+    @Override
+    public int getItemCount() {
+        return mHomeList == null ? 0 : mHomeList.size() ;
+    }
+
+
 }

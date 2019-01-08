@@ -6,12 +6,11 @@
 
     <include layout="@layout/app_include_home_title" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/app_home_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never"
-        android:scrollbars="none" />
 
+    <com.github.jdsjlzx.recyclerview.LRecyclerView
+        android:id="@+id/rv_home"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:descendantFocusability="blocksDescendants" />
 
 </LinearLayout>

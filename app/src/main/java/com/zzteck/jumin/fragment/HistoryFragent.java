@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 
 import com.zzteck.jumin.R;
 
-public class NearFragent extends Fragment {
+public class HistoryFragent extends Fragment {
 
     private View mMainView;
 
@@ -29,7 +29,7 @@ public class NearFragent extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mMainView = inflater.inflate(R.layout.fragment_near, container, false);
+        mMainView = inflater.inflate(R.layout.fragment_history, container, false);
         mContext = getActivity();
         initView(mMainView);
         initData();

@@ -20,7 +20,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.fragment.HomeFragment;
-import com.zzteck.jumin.fragment.NearFragent;
+import com.zzteck.jumin.fragment.HistoryFragent;
 import com.zzteck.jumin.fragment.ReleaseFragment;
 import com.zzteck.jumin.fragment.UserFragment;
 import com.zzteck.jumin.fragment.WJConversationListFragment;
@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 
 	 private Fragment mHomeFragmemt;
 	 
-	 private Fragment mNearFragment ;
+	 private Fragment mHistoryFragment;
 	 
 	 private Fragment mReleaseFragment ;
 
@@ -107,13 +107,13 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 		 
 		 mWJViewPaper = findViewById(R.id.content) ;
 		 mHomeFragmemt = new HomeFragment();
-		 mNearFragment = new NearFragent();
+		 mHistoryFragment = new HistoryFragent();
 		 mReleaseFragment = new ReleaseFragment();
 		 mMessageFragment = new WJConversationListFragment();
 		 mUserFragment = new UserFragment();
 		 
 		 mFragment.add(mHomeFragmemt) ;
-		 mFragment.add(mNearFragment) ;
+		 mFragment.add(mHistoryFragment) ;
 		 mFragment.add(mMessageFragment) ;
 		 mFragment.add(mUserFragment) ;
 
@@ -181,7 +181,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if(resultCode == 3322){
-			((NearFragent)mNearFragment).refreshTask();
+			((HistoryFragent) mHistoryFragment).refreshTask();
 		}
 	}
 
