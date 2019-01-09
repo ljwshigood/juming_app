@@ -9,7 +9,3 @@
 .externalNativeBuild
 /permissionlib/build/
 /.idea/
-LRecyclerview_library/.gitignore
-LRecyclerview_library/build.gradle
-LRecyclerview_library/proguard-rules.pro
-LRecyclerview_library/src/
