@@ -1,1 +1,1 @@
-include ':app', ':zzview', ':barlibrary', ':permissionlib', ':bridgewebviewlibrary'
+include ':app', ':zzview', ':barlibrary', ':permissionlib', ':LRecyclerview_library', ':library-tbsx5'

@@ -8,9 +8,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/LRecyclerview_library" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/barlibrary" />
-            <option value="$PROJECT_DIR$/bridgewebviewlibrary" />
+            <option value="$PROJECT_DIR$/library-tbsx5" />
             <option value="$PROJECT_DIR$/permissionlib" />
             <option value="$PROJECT_DIR$/zzview" />
           </set>
