@@ -20,8 +20,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.fragment.HomeFragment;
-import com.zzteck.jumin.fragment.HistoryFragment;
-import com.zzteck.jumin.fragment.ReleaseActivity;
+import com.zzteck.jumin.fragment.FavoriteFragment;
 import com.zzteck.jumin.fragment.UserFragment;
 import com.zzteck.jumin.fragment.WJConversationListFragment;
 import com.zzteck.zzview.WJViewPaper;
@@ -107,7 +106,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 		 
 		 mWJViewPaper = findViewById(R.id.content) ;
 		 mHomeFragmemt = new HomeFragment();
-		 mHistoryFragment = new HistoryFragment();
+		 mHistoryFragment = new FavoriteFragment();
 		 mMessageFragment = new WJConversationListFragment();
 		 mUserFragment = new UserFragment();
 		 
@@ -180,7 +179,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if(resultCode == 3322){
-			((HistoryFragment) mHistoryFragment).refreshTask();
+			((FavoriteFragment) mHistoryFragment).refreshTask();
 		}
 	}
 
