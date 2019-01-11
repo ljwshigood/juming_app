@@ -9,27 +9,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zzteck.jumin.R;
+import com.zzteck.jumin.ui.BaseActivity;
 
-public class ReleaseFragment extends Fragment {
+public class ReleaseActivity extends BaseActivity {
 	
 	private View mMainView ;
 	
 	private Context mContext ;
 	
-	private void initView(View view){
+	private void initView(){
 		
 	}
 	
 	private void initData(){
 		
 	}
-	
+
 	@Override
-	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-		mMainView = inflater.inflate(R.layout.fragment_release, container,false);
-		mContext = getActivity() ;
-		initView(mMainView);
-		initData() ;
-		return mMainView ;
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_release);
 	}
+
 }

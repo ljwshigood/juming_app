@@ -10,14 +10,14 @@ import android.widget.LinearLayout;
 
 import com.zzteck.jumin.R;
 
-public class HistoryFragent extends Fragment {
+public class HistoryFragment extends Fragment {
 
     private View mMainView;
 
     private Context mContext;
 
     private void initView(View view) {
-        mLLTypeTitle =  view.findViewById(R.id.ll_type_title);
+
     }
 
     private void initData() {
