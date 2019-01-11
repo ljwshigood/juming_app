@@ -3,13 +3,20 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LRecyclerview_library/LRecyclerview_library.iml" filepath="$PROJECT_DIR$/LRecyclerview_library/LRecyclerview_library.iml" />
+      <module fileurl="file://D:\SourceTest\juming_app\LRecyclerview_library\LRecyclerview_library.iml" filepath="D:\SourceTest\juming_app\LRecyclerview_library\LRecyclerview_library.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://D:\SourceTest\juming_app\app\app.iml" filepath="D:\SourceTest\juming_app\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/barlibrary/barlibrary.iml" filepath="$PROJECT_DIR$/barlibrary/barlibrary.iml" />
+      <module fileurl="file://D:\SourceTest\juming_app\barlibrary\barlibrary.iml" filepath="D:\SourceTest\juming_app\barlibrary\barlibrary.iml" />
       <module fileurl="file://E:\git_code\juming_app\jumin-androidapp.iml" filepath="E:\git_code\juming_app\jumin-androidapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/juming_app.iml" filepath="$PROJECT_DIR$/juming_app.iml" />
+      <module fileurl="file://D:\SourceTest\juming_app\juming_app.iml" filepath="D:\SourceTest\juming_app\juming_app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library-tbsx5/library-tbsx5.iml" filepath="$PROJECT_DIR$/library-tbsx5/library-tbsx5.iml" />
+      <module fileurl="file://D:\SourceTest\juming_app\library-tbsx5\library-tbsx5.iml" filepath="D:\SourceTest\juming_app\library-tbsx5\library-tbsx5.iml" />
       <module fileurl="file://$PROJECT_DIR$/permissionlib/permissionlib.iml" filepath="$PROJECT_DIR$/permissionlib/permissionlib.iml" />
+      <module fileurl="file://D:\SourceTest\juming_app\permissionlib\permissionlib.iml" filepath="D:\SourceTest\juming_app\permissionlib\permissionlib.iml" />
       <module fileurl="file://$PROJECT_DIR$/zzview/zzview.iml" filepath="$PROJECT_DIR$/zzview/zzview.iml" />
+      <module fileurl="file://D:\SourceTest\juming_app\zzview\zzview.iml" filepath="D:\SourceTest\juming_app\zzview\zzview.iml" />
     </modules>
   </component>
 </project>
