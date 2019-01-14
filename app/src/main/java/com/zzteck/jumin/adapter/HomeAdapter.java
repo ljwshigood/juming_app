@@ -1,6 +1,7 @@
 package com.zzteck.jumin.adapter;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
@@ -23,7 +24,9 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private List<HomeBean> mHomeList ;
 
-    public HomeAdapter(Context context,List<HomeBean> list) {
+    private FragmentManager mFragmentManager ;
+
+    public HomeAdapter(Context context,List<HomeBean> list,FragmentManager fragmentManager) {
         this.mContext = context ;
         this.mHomeList = list ;
     }
@@ -40,7 +43,7 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 viewHolder = new PictureViewHolder(mContext,parent);
                 break;
             case Constants.CATEGORY:
-                viewHolder = new CategoryViewHolder(mContext,parent);
+                viewHolder = new CategoryViewHolder(mContext,parent,mFragmentManager);
                 break;
         }
 

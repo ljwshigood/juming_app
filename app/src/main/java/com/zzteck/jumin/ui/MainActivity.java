@@ -115,22 +115,24 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 		 mFragment.add(mMessageFragment) ;
 		 mFragment.add(mUserFragment) ;
 
-		  FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter ( getSupportFragmentManager () ) {
-	            @Override
-	            public Fragment getItem(int position) {
-	                return mFragment.get ( position );
-	            }
+		 FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter ( getSupportFragmentManager () ) {
+			@Override
+			public Fragment getItem(int position) {
+				return mFragment.get ( position );
+			}
 
-	            @Override
-	            public int getCount() {
-	                return mFragment.size ();
-	            }
-	        };
-	        mWJViewPaper.setScrollble(false);
-	        mWJViewPaper.setAdapter ( fragmentPagerAdapter );
-	        mWJViewPaper.setOffscreenPageLimit ( 4 );
+			@Override
+			public int getCount() {
+				return mFragment.size ();
+			}
+		};
+		mWJViewPaper.setScrollble(false);
+		mWJViewPaper.setAdapter ( fragmentPagerAdapter );
+		mWJViewPaper.setOffscreenPageLimit ( 4 );
 
-	        mWJViewPaper.setCurrentItem ( 0 );
+		mWJViewPaper.setCurrentItem ( 0 ) ;
+
+
 
 	 }
 	 
@@ -157,7 +159,6 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 
 				}else{
 					Toast.makeText(getApplicationContext(),"您没有授权该权限，请在设置中打开授权"+permission.name,Toast.LENGTH_LONG).show();
-					//finish();
 				}
 			}
 		});

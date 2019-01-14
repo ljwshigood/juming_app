@@ -40,9 +40,8 @@
         android:name=".app.App"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.CategoryListActivity">
-
-        </activity>
+        <activity android:name=".ui.CategoryListActivity"></activity>
+        <activity android:name=".ui.FeedBackActivity"></activity>
 
         <activity android:name=".ui.MainActivity">
             <intent-filter>
