@@ -1,7 +1,10 @@
 package com.zzteck.jumin.view;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,8 +14,12 @@ import com.zzteck.jumin.R;
 import com.zzteck.jumin.ui.BaseActivity;
 
 
-public class SignInDialog extends BaseActivity implements OnClickListener{
+public class SignInDialog extends Dialog implements OnClickListener{
 
+
+	public SignInDialog(@NonNull Context context) {
+		super(context);
+	}
 
 	private void initView() {
 
@@ -37,11 +44,6 @@ public class SignInDialog extends BaseActivity implements OnClickListener{
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override
