@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.FavoriteAdapter;
+import com.zzteck.jumin.adapter.SecondHandAdapter;
 
 public class SecondHandFragment extends Fragment {
 
@@ -19,14 +20,14 @@ public class SecondHandFragment extends Fragment {
 
     private RecyclerView mRlFavorite ;
 
-    private FavoriteAdapter mFavoriteAdapter ;
+    private SecondHandAdapter mFavoriteAdapter ;
 
     private void initView(View view) {
         mRlFavorite = view.findViewById(R.id.rl_favorite) ;
     }
 
     private void initData() {
-        mFavoriteAdapter = new FavoriteAdapter(getActivity(),null) ;
+        mFavoriteAdapter = new SecondHandAdapter(getActivity(),null) ;
         mRlFavorite.setAdapter(mFavoriteAdapter) ;
     }
 
