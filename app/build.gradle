@@ -27,6 +27,9 @@ dependencies {
     }
     //banner
     implementation 'com.youth.banner:banner:1.4.10'
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-4'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.github.hackware1993:MagicIndicator:1.5.0'
     //RecyclerView
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
