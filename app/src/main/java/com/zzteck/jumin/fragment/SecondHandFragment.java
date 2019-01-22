@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zzteck.jumin.R;
-import com.zzteck.jumin.adapter.FavoriteAdapter;
 import com.zzteck.jumin.adapter.SecondHandAdapter;
 
 public class SecondHandFragment extends Fragment {
@@ -20,28 +19,24 @@ public class SecondHandFragment extends Fragment {
 
     private RecyclerView mRlFavorite ;
 
-    private SecondHandAdapter mFavoriteAdapter ;
+    private SecondHandAdapter mSecondAdapter;
 
     private void initView(View view) {
-        mRlFavorite = view.findViewById(R.id.rl_favorite) ;
+        mRlFavorite = view.findViewById(R.id.rl_second_hand) ;
     }
 
     private void initData() {
-        mFavoriteAdapter = new SecondHandAdapter(getActivity(),null) ;
-        mRlFavorite.setAdapter(mFavoriteAdapter) ;
+        mSecondAdapter = new SecondHandAdapter(getActivity(),null) ;
+        mRlFavorite.setAdapter(mSecondAdapter) ;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mMainView = inflater.inflate(R.layout.fragment_history, container, false);
+        mMainView = inflater.inflate(R.layout.fragment_second_hand, container, false);
         mContext = getActivity();
         initView(mMainView);
         initData();
         return mMainView;
     }
-
-    public void refreshTask() {
-    }
-
 
 }

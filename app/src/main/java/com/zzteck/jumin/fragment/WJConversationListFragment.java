@@ -18,15 +18,11 @@ public class WJConversationListFragment extends Fragment {
 	
 	private TextView mTvMainInfo ;
 	
-	private ImageView mIvBack ;
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 		mContext = getActivity() ;
 		View convertionList = inflater.inflate(R.layout.conversation_list,container, false);
 		mTvMainInfo = convertionList.findViewById(R.id.tv_main_info) ;
-		mIvBack  = convertionList.findViewById(R.id.iv_back) ;
-		mIvBack.setVisibility(View.INVISIBLE);
 		mTvMainInfo.setText("消息");
 		return convertionList;
 	}

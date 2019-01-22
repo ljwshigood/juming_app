@@ -1,34 +1,26 @@
 package com.zzteck.jumin.fragment;
 
 import android.content.Context;
-import android.content.res.AssetManager;
-import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.ColorUtils;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 
-import com.github.jdsjlzx.recyclerview.LRecyclerView;
-import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
-import com.youth.banner.Banner;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.ComFragmentAdapter;
-import com.zzteck.jumin.adapter.HomeAdapter;
+import com.zzteck.jumin.adapter.FeaturedPagerAdapter;
 import com.zzteck.jumin.bean.HomeBean;
 import com.zzteck.jumin.view.ColorFlipPagerTitleView;
 import com.zzteck.jumin.view.JudgeNestedScrollView;
@@ -43,9 +35,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -59,6 +48,7 @@ import java.util.List;
 public class HomeFragment extends BaseFragment {
 
     private List<HomeBean> data;
+
     private int height;
 
     private SmartRefreshLayout refreshLayout ;
@@ -66,8 +56,6 @@ public class HomeFragment extends BaseFragment {
     private JudgeNestedScrollView scrollView;
 
     private MagicIndicator magicIndicator;
-
-    private MagicIndicator magicIndicatorTitle;
 
     private String[] mTitles = new String[]{"推荐", "二手房", "商家"};
 
@@ -79,9 +67,14 @@ public class HomeFragment extends BaseFragment {
 
     private BusinessFragment mBusinessFragment ;
 
-    private ViewPager viewPager;
+    private ViewPager viewPagerHome;
+
+    private LinearLayout mPoints ;
+
+    private ViewPager mBannerViewPaper ;
 
     private List<Fragment> getFragments() {
+
         List<Fragment> fragments = new ArrayList<>();
 
         mRecomandFragment = new RecommandFragment() ;
@@ -95,20 +88,145 @@ public class HomeFragment extends BaseFragment {
         return fragments;
     }
 
+    private List<String> modelList = new ArrayList<>() ;
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_home ;
     }
 
+    private int mPlayTimeInterval = 2500 ;
+
+    private void initViewPager() {
+        mPlayTimeInterval = (int) 2.5 * 2000;
+        if (modelList != null && modelList.size() > 0) {
+            for (int i = 0; i < modelList.size(); i++) {
+                View view = new View(getActivity());
+                view.setBackgroundResource(R.drawable.dot_normal);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(20, 20);
+                params.leftMargin = 18 ;
+                view.setLayoutParams(params) ;
+                if (mPoints.getChildCount() == i) {
+                    mPoints.addView(view) ;
+                }
+            }
+
+            mPoints.getChildAt(0).setBackgroundResource(R.drawable.dot_focused);
+            //设置适配器
+            FeaturedPagerAdapter adapter = new FeaturedPagerAdapter(getActivity(), modelList,0);
+            mBannerViewPaper.setAdapter(adapter);
+            mBannerViewPaper.setOffscreenPageLimit(3);
+            mBannerViewPaper.setCurrentItem(0);
+
+            mBannerViewPaper.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+                @Override
+                public void onPageSelected(int position) {
+                    mPoints.getChildAt(prePosition).setBackgroundResource(R.drawable.dot_normal) ;
+                    mPoints.getChildAt(position % mPoints.getChildCount()).setBackgroundResource(R.drawable.dot_focused) ;
+                    prePosition = position % mPoints.getChildCount() ;
+                }
+
+                @Override
+                public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int arg0) {
+
+                }
+            }) ;
+        }
+
+        if (modelList != null && modelList.size() > 1) {
+            startPlay();
+
+            mBannerViewPaper.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    final int action = MotionEventCompat.getActionMasked(event);
+
+                    switch (action) {
+                        case MotionEvent.ACTION_DOWN:
+                            stopPlay();
+                            break;
+
+                        case MotionEvent.ACTION_MOVE:
+                            stopPlay();
+                            break;
+
+                        case MotionEvent.ACTION_UP:
+                            startPlay();
+                            break;
+                    }
+
+                    return false;
+                }
+            });
+        }
+    }
+
+    private boolean mIsPlay = false ;
+
+    private int prePosition ;
+
+    /**
+     * 描述：开始自动轮播.
+     */
+    public void startPlay() {
+        if (mHandler != null) {
+            mIsPlay = true;
+            mHandler.removeCallbacks(mRunnable);
+            mHandler.postDelayed(mRunnable, mPlayTimeInterval);
+        }
+    }
+
+    /**
+     * 描述：停止自动轮播.
+     */
+    public void stopPlay() {
+        if (mHandler != null) {
+            mIsPlay = false;
+            mHandler.removeCallbacks(mRunnable);
+        }
+    }
+
+    /**
+     * 用于轮播的Runnable
+     */
+    private Runnable mRunnable = new Runnable() {
+        public void run() {
+            if (mBannerViewPaper != null) {
+                mHandler.sendEmptyMessage(0);
+            }
+        }
+    };
+
+    /**
+     * 用于轮播的handler
+     */
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                int currentItem = mBannerViewPaper.getCurrentItem();
+                mBannerViewPaper.setCurrentItem(currentItem + 1);
+                mHandler.postDelayed(mRunnable, 3000);
+            }
+        }
+
+    };
+
 
     @Override
     public void initView(View view) {
-
-        viewPager = view.findViewById(R.id.view_pager) ;
+        mPoints = view.findViewById(R.id.layout_points) ;
+        viewPagerHome = view.findViewById(R.id.view_pager) ;
+        mBannerViewPaper = view.findViewById(R.id.vp_banner) ;
         refreshLayout = view.findViewById(R.id.refreshLayout) ;
         scrollView = view.findViewById(R.id.scrollView) ;
         magicIndicator = view.findViewById(R.id.magic_indicator) ;
-        magicIndicatorTitle = view.findViewById(R.id.magic_indicator_title) ;
+
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
             public void onHeaderPulling(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
@@ -161,10 +279,23 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        viewPager.setAdapter(new ComFragmentAdapter(getActivity().getSupportFragmentManager(), getFragments()));
-        viewPager.setOffscreenPageLimit(10);
+        viewPagerHome.setAdapter(new ComFragmentAdapter(getActivity().getSupportFragmentManager(), getFragments()));
+        viewPagerHome.setOffscreenPageLimit(10);
         initMagicIndicator();
-        initMagicIndicatorTitle();
+
+        String[] images= new String[] {
+                "http://img.zcool.cn/community/0166c756e1427432f875520f7cc838.jpg",
+                "http://img.zcool.cn/community/018fdb56e1428632f875520f7b67cb.jpg",
+                "http://img.zcool.cn/community/01c8dc56e1428e6ac72531cbaa5f2c.jpg",
+                "http://img.zcool.cn/community/01fda356640b706ac725b2c8b99b08.jpg",
+                "http://img.zcool.cn/community/01fd2756e142716ac72531cbf8bbbf.jpg",
+                "http://img.zcool.cn/community/0114a856640b6d32f87545731c076a.jpg"};
+
+        for(int i = 0 ;i < images.length ;i++){
+            modelList.add(images[i]) ;
+        }
+
+        initViewPager() ;
 
     }
 
@@ -188,7 +319,7 @@ public class HomeFragment extends BaseFragment {
                 simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        viewPager.setCurrentItem(index, false);
+                        viewPagerHome.setCurrentItem(index, false);
                     }
                 });
                 return simplePagerTitleView;
@@ -208,56 +339,11 @@ public class HomeFragment extends BaseFragment {
             }
         });
         magicIndicator.setNavigator(commonNavigator);
-        ViewPagerHelper.bind(magicIndicator, viewPager);
-    }
-
-    private void initMagicIndicatorTitle() {
-        CommonNavigator commonNavigator = new CommonNavigator(getActivity());
-        commonNavigator.setScrollPivotX(0.65f);
-        commonNavigator.setAdjustMode(true);
-        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
-            @Override
-            public int getCount() {
-                return mDataList == null ? 0 : mDataList.size();
-            }
-
-            @Override
-            public IPagerTitleView getTitleView(Context context, final int index) {
-                SimplePagerTitleView simplePagerTitleView = new ColorFlipPagerTitleView(context);
-                simplePagerTitleView.setText(mDataList.get(index));
-                simplePagerTitleView.setNormalColor(ContextCompat.getColor(getActivity(), R.color.mainBlack));
-                simplePagerTitleView.setSelectedColor(ContextCompat.getColor(getActivity(), R.color.mainBlack));
-                simplePagerTitleView.setTextSize(16);
-                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        viewPager.setCurrentItem(index, false);
-                    }
-                });
-                return simplePagerTitleView;
-            }
-
-            @Override
-            public IPagerIndicator getIndicator(Context context) {
-                LinePagerIndicator indicator = new LinePagerIndicator(context);
-                indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
-                indicator.setLineHeight(UIUtil.dip2px(context, 2));
-                indicator.setLineWidth(UIUtil.dip2px(context, 20));
-                indicator.setRoundRadius(UIUtil.dip2px(context, 3));
-                indicator.setStartInterpolator(new AccelerateInterpolator());
-                indicator.setEndInterpolator(new DecelerateInterpolator(2.0f));
-                indicator.setColors(ContextCompat.getColor(getActivity(), R.color.mainRed));
-                return indicator;
-            }
-        });
-        magicIndicatorTitle.setNavigator(commonNavigator);
-        ViewPagerHelper.bind(magicIndicatorTitle, viewPager);
-
+        ViewPagerHelper.bind(magicIndicator, viewPagerHome);
     }
 
     @Override
     public void lazyLoad() {
-
 
     }
 

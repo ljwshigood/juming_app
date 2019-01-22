@@ -11,7 +11,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -19,7 +21,10 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
-                android:text="精选视频" />
+                android:text="精选视频"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -27,7 +32,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:text="更多" />
+                android:text="更多"
+                android:textSize="16sp" />
 
         </RelativeLayout>
 
@@ -39,13 +45,16 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:background="@mipmap/ic_launcher" />
+                android:background="@mipmap/bg_default_video"
+                android:scaleType="fitXY" />
         </LinearLayout>
 
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
             android:orientation="vertical">
 
 
@@ -55,22 +64,55 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="分享至" />
+                    android:text="分享至"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_weixin"
+                    android:layout_marginLeft="15dp"/>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_pengyouquan"
+                    android:layout_marginLeft="15dp"/>
+
 
             </LinearLayout>
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/icon_fabu_shipin"
-                android:layout_marginRight="15dp" />
+                android:layout_marginRight="15dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_fabu_shipin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="发布"
+                    android:textColor="@color/mainRed"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
 
         </RelativeLayout>
 

@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.BusinessAdapter;
-import com.zzteck.jumin.adapter.FavoriteAdapter;
 
 public class BusinessFragment extends Fragment {
 
@@ -18,17 +17,17 @@ public class BusinessFragment extends Fragment {
 
     private Context mContext;
 
-    private RecyclerView mRlFavorite ;
+    private RecyclerView mRlBusiness;
 
-    private BusinessAdapter mFavoriteAdapter ;
+    private BusinessAdapter mBusinessAdapter;
 
     private void initView(View view) {
-        mRlFavorite = view.findViewById(R.id.rl_favorite) ;
+        mRlBusiness = view.findViewById(R.id.rl_business) ;
     }
 
     private void initData() {
-        mFavoriteAdapter = new BusinessAdapter(getActivity(),null) ;
-        mRlFavorite.setAdapter(mFavoriteAdapter) ;
+        mBusinessAdapter = new BusinessAdapter(getActivity(),null) ;
+        mRlBusiness.setAdapter(mBusinessAdapter) ;
     }
 
     @Override
@@ -39,9 +38,5 @@ public class BusinessFragment extends Fragment {
         initData();
         return mMainView;
     }
-
-    public void refreshTask() {
-    }
-
 
 }
