@@ -13,43 +13,15 @@ import android.widget.RelativeLayout;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.ui.MyReleaseActivity;
 
-public class UserFragment extends Fragment implements OnClickListener {
+public class ReleaseCompleteFragment extends Fragment implements OnClickListener {
 
 	private View mMainView;
 
 	private Context mContext;
 
-	private RelativeLayout mRlMyRelease;
-
-	private RelativeLayout mRlMyBill;
-
-	private RelativeLayout mRlMyJinku;
-
-	private RelativeLayout mRlMyAttendtion;
-
-	private RelativeLayout mRlMyRenzhen;
-
-	private RelativeLayout mRlRuheDingDan;
-
-	private RelativeLayout mRlRuheFaBuXuqiu;
-
 
 	private void initView(View view) {
-		mRlMyRelease =  view.findViewById(R.id.rl_my_release);
-		mRlMyBill =  view.findViewById(R.id.rl_my_bill);
-		mRlMyJinku =  view.findViewById(R.id.rl_my_jinku);
-		mRlMyAttendtion =  view.findViewById(R.id.rl_my_guanzhu);
-		mRlMyRenzhen =  view.findViewById(R.id.rl_my_renzhen);
-		mRlRuheDingDan =  view.findViewById(R.id.rl_ruhejiedan);
-		mRlRuheFaBuXuqiu =  view.findViewById(R.id.rl_ruhe_fabuxuqiu);
 
-		mRlMyRelease.setOnClickListener(this);
-		mRlMyBill.setOnClickListener(this);
-		mRlMyJinku.setOnClickListener(this);
-		mRlMyAttendtion.setOnClickListener(this);
-		mRlMyRenzhen.setOnClickListener(this);
-		mRlRuheDingDan.setOnClickListener(this);
-		mRlRuheFaBuXuqiu.setOnClickListener(this);
 
 	}
 
@@ -60,7 +32,7 @@ public class UserFragment extends Fragment implements OnClickListener {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		mMainView = inflater.inflate(R.layout.fragment_user, container, false);
+		mMainView = inflater.inflate(R.layout.fragment_release_complete, container, false);
 		mContext = getActivity();
 		initView(mMainView);
 		initData();
