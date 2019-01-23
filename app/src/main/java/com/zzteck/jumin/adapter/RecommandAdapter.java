@@ -32,13 +32,13 @@ public class RecommandAdapter extends RecyclerView.Adapter<RecommandAdapter.View
 
     @NonNull
     @Override
-    public RecommandAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecommandAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_recommand,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecommandAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecommandAdapter.ViewHolder holder, int position) {
 
     }
 

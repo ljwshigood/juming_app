@@ -44,6 +44,7 @@
         <activity android:name=".ui.FeedBackActivity"></activity>
         <activity android:name=".ui.MyReleaseActivity"></activity>
         <activity android:name=".ui.ModifyUserActivity"></activity>
+        <activity android:name=".ui.ReleaseActivity"></activity>
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

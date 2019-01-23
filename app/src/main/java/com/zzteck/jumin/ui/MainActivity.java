@@ -193,6 +193,10 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 			mTvRelease.setTextColor(mContext.getResources().getColor(R.color.dark_red));
 			mTvMessage.setTextColor(mContext.getResources().getColor(R.color.dark));
 			mTvUser.setTextColor(mContext.getResources().getColor(R.color.dark));
+
+			Intent intent = new Intent(mContext, ReleaseActivity.class) ;
+			startActivity(intent);
+
 			break;
 		case R.id.rl_home:
 			mTvHome.setTextColor(mContext.getResources().getColor(R.color.dark_red));

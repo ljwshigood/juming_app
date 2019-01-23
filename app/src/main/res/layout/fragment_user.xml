@@ -26,14 +26,14 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <com.zzteck.zzview.RoundImageView xmlns:wj="http://schemas.android.com/apk/res/com.zzteck.jumin"
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/iv_user_icon"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_gravity="center"
-                    android:background="@mipmap/ic_launcher"
-                    android:scaleType="fitXY"
-                    wj:type="circle" />
+                    app:civ_border_width="2dp"
+                    android:src="@mipmap/ic_launcher"
+                    app:civ_border_color="@color/white" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"

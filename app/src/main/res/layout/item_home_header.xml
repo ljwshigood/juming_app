@@ -4,17 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
+    android:layout_marginTop="10dp"
     android:orientation="vertical">
-
-    <com.youth.banner.Banner
-        android:id="@+id/app_home_header_banner"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/app_home_header_banner"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -36,7 +31,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:src="@mipmap/ic_meiliyue"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -63,7 +58,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:src="@mipmap/ic_lirenshenghuo"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -91,7 +86,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:src="@mipmap/ic_xiuxianyule"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -118,7 +113,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:src="@mipmap/ic_jujiashenghuo"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -146,7 +141,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:src="@mipmap/ic_more"/>
 
                 <TextView
                     android:layout_width="wrap_content"

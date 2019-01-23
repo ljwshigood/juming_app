@@ -73,6 +73,13 @@
 
                         </RelativeLayout>
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <include layout="@layout/item_home_header" />
+                        </LinearLayout>
+
                         <include layout="@layout/item_home_video" />
 
                         <include layout="@layout/item_home_picture" />

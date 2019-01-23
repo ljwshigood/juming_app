@@ -32,13 +32,13 @@ public class SecondHandAdapter extends RecyclerView.Adapter<SecondHandAdapter.Vi
 
     @NonNull
     @Override
-    public SecondHandAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SecondHandAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_second_hand,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SecondHandAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(SecondHandAdapter.ViewHolder holder, int position) {
 
     }
 
