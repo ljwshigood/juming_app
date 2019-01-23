@@ -25,7 +25,7 @@ public class RecommandFragment extends Fragment {
     private RecommandAdapter recommandAdapter;
 
     private void initView(View view) {
-        mRlFavorite = view.findViewById(R.id.rl_favorite) ;
+        mRlFavorite = view.findViewById(R.id.rl_history) ;
     }
 
     private void initData() {

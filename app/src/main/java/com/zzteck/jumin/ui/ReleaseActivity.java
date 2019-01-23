@@ -12,9 +12,7 @@ import android.widget.TextView;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.ui.BaseActivity;
 
-public class ReleaseActivity extends BaseActivity {
-	
-	private View mMainView ;
+public class ReleaseActivity extends BaseActivity implements View.OnClickListener {
 	
 	private Context mContext ;
 
@@ -36,4 +34,10 @@ public class ReleaseActivity extends BaseActivity {
 		initData();
 	}
 
+	@Override
+	public void onClick(View view) {
+		switch (view.getId()){
+
+		}
+	}
 }

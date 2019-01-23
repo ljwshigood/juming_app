@@ -10,12 +10,8 @@ import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.BaseViewHolder;
 import com.zzteck.jumin.bean.HomeBean;
 import com.zzteck.jumin.fragment.BusinessFragment;
-import com.zzteck.jumin.fragment.FavoriteFragment;
-import com.zzteck.jumin.fragment.HomeFragment;
 import com.zzteck.jumin.fragment.RecommandFragment;
 import com.zzteck.jumin.fragment.SecondHandFragment;
-import com.zzteck.jumin.fragment.UserFragment;
-import com.zzteck.jumin.fragment.WJConversationListFragment;
 import com.zzteck.zzview.WJViewPaper;
 
 import java.util.ArrayList;

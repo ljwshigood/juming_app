@@ -3,6 +3,7 @@ package com.zzteck.jumin.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,11 @@ public class WJConversationListFragment extends Fragment {
 	private Context mContext ;
 	
 	private TextView mTvMainInfo ;
-	
+
+	private RecyclerView mRVMessage ;
+
+
+
 	@Override
 	public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 		mContext = getActivity() ;
@@ -27,10 +32,4 @@ public class WJConversationListFragment extends Fragment {
 		return convertionList;
 	}
 	
-	
-    private void enterFragment() {
-    	
-    }
-	
-
 }
