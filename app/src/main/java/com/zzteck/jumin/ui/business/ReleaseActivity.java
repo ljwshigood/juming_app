@@ -1,16 +1,13 @@
-package com.zzteck.jumin.ui;
+package com.zzteck.jumin.ui.business;
 
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zzteck.jumin.R;
-import com.zzteck.jumin.ui.BaseActivity;
+import com.zzteck.jumin.ui.mainui.BaseActivity;
 
 public class ReleaseActivity extends BaseActivity implements View.OnClickListener {
 	

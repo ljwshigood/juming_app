@@ -1,4 +1,4 @@
-package com.zzteck.jumin.ui;
+package com.zzteck.jumin.ui.mainui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,9 +8,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.zzteck.jumin.R;
+import com.zzteck.jumin.ui.mainui.BaseActivity;
 
 
-public class AuthenticationActivity extends BaseActivity implements OnClickListener{
+public class FeedBackActivity extends BaseActivity implements OnClickListener{
 
 
 	private void initView() {
@@ -20,9 +21,11 @@ public class AuthenticationActivity extends BaseActivity implements OnClickListe
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_authentication);
- 		initView() ;
 
+		setContentView(R.layout.activity_feek_back);
+
+
+ 		initView() ;
 	}
 	
 

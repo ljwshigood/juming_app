@@ -1,4 +1,4 @@
-package com.zzteck.jumin.ui;
+package com.zzteck.jumin.ui.business;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,6 +22,7 @@ import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
+import com.zzteck.jumin.ui.mainui.BaseActivity;
 
 
 public class CategoryListActivity extends BaseActivity implements OnClickListener{

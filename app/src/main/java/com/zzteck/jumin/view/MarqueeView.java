@@ -1,4 +1,4 @@
-package com.zzteck.jumin.ui;
+package com.zzteck.jumin.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;

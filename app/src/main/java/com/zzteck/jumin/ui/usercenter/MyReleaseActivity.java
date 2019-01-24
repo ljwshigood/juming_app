@@ -1,8 +1,7 @@
-package com.zzteck.jumin.ui;
+package com.zzteck.jumin.ui.usercenter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -21,6 +20,7 @@ import com.zzteck.jumin.fragment.ReleaseCompleteFragment;
 import com.zzteck.jumin.fragment.ReleaseTuiguangFragment;
 import com.zzteck.jumin.fragment.ReleaseVideoFragment;
 import com.zzteck.jumin.fragment.ReleaseWaitingFragment;
+import com.zzteck.jumin.ui.mainui.BaseActivity;
 
 import java.util.ArrayList;
 

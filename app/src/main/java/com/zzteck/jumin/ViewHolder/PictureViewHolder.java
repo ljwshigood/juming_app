@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.BaseViewHolder;
 import com.zzteck.jumin.bean.HomeBean;
-import com.zzteck.jumin.ui.CategoryListActivity;
+import com.zzteck.jumin.ui.business.CategoryListActivity;
 
 
 /**

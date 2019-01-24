@@ -1,4 +1,4 @@
-package com.zzteck.jumin.ui;
+package com.zzteck.jumin.ui.mainui;
 
 import android.Manifest;
 import android.content.Intent;
@@ -23,6 +23,7 @@ import com.zzteck.jumin.fragment.HomeFragment;
 import com.zzteck.jumin.fragment.HistoryFragment;
 import com.zzteck.jumin.fragment.UserFragment;
 import com.zzteck.jumin.fragment.WJConversationListFragment;
+import com.zzteck.jumin.ui.business.ReleaseActivity;
 import com.zzteck.zzview.WJViewPaper;
 
 import java.util.ArrayList;

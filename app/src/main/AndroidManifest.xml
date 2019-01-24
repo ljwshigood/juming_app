@@ -40,12 +40,12 @@
         android:name=".app.App"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.CategoryListActivity"></activity>
-        <activity android:name=".ui.FeedBackActivity"></activity>
-        <activity android:name=".ui.MyReleaseActivity"></activity>
-        <activity android:name=".ui.ModifyUserActivity"></activity>
-        <activity android:name=".ui.ReleaseActivity"></activity>
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.business.CategoryListActivity"></activity>
+        <activity android:name=".ui.mainui.FeedBackActivity"></activity>
+        <activity android:name=".ui.usercenter.MyReleaseActivity"></activity>
+        <activity android:name=".ui.usercenter.ModifyUserActivity"></activity>
+        <activity android:name=".ui.business.ReleaseActivity"></activity>
+        <activity android:name=".ui.mainui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

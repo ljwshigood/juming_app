@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.zzteck.jumin.R;
-import com.zzteck.jumin.ui.MyReleaseActivity;
+import com.zzteck.jumin.ui.usercenter.MyReleaseActivity;
 import com.zzteck.jumin.view.SignInDialog;
 
 public class UserFragment extends Fragment implements OnClickListener {
