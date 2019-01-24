@@ -1,36 +1,21 @@
 package com.zzteck.jumin.ui.usercenter;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.hjhrq1991.library.tbs.BridgeHandler;
-import com.hjhrq1991.library.tbs.CallBackFunction;
-import com.hjhrq1991.library.tbs.DefaultHandler;
-import com.hjhrq1991.library.tbs.SimpleBridgeWebViewClientListener;
-import com.hjhrq1991.library.tbs.TbsBridgeWebView;
-import com.tencent.smtt.export.external.interfaces.SslError;
-import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebView;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 
-import java.io.LineNumberReader;
 
-
-public class LoginActivity extends BaseActivity implements OnClickListener{
+public class MemberUpgradeActivity extends BaseActivity implements OnClickListener{
 
 
 	private EditText mEtPwd ;
@@ -62,9 +47,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_login);
+		setContentView(R.layout.activity_memeber_upgrade);
 
-		mContext = LoginActivity.this ;
+		mContext = MemberUpgradeActivity.this ;
 		App.getInstance().addActivity(this);
 
  		initView() ;
