@@ -2,6 +2,7 @@ package com.zzteck.jumin.ui.usercenter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,30 +18,13 @@ import com.zzteck.jumin.ui.mainui.BaseActivity;
 
 public class MemberUpgradeActivity extends BaseActivity implements OnClickListener{
 
-
-	private EditText mEtPwd ;
-
-	private EditText mEtUserName ;
-
-	private TextView mTvRegister ;
-
-	private TextView mTvForgetPwd ;
-
-	private LinearLayout mLLLogin ;
+	private RecyclerView mRVMemeberUpgrade ;
 
 
 	private void initView() {
 
-		mLLLogin = findViewById(R.id.ll_login) ;
+		mRVMemeberUpgrade = findViewById(R.id.rv_memeber_upgrade) ;
 
-		mEtPwd = findViewById(R.id.et_user_pwd) ;
-		mEtUserName = findViewById(R.id.et_user_name) ;
-		mTvForgetPwd = findViewById(R.id.tv_forget_pwd) ;
-		mTvRegister = findViewById(R.id.tv_register) ;
-
-		mTvRegister.setOnClickListener(this);
-		mTvForgetPwd.setOnClickListener(this);
-		mLLLogin.setOnClickListener(this);
 	}
 
 	@Override
@@ -76,12 +60,8 @@ public class MemberUpgradeActivity extends BaseActivity implements OnClickListen
 		Intent intent = null ;
 		switch (v.getId()) {
 			case R.id.tv_forget_pwd :
-				intent = new Intent(mContext,ForgetPwdActivity.class) ;
-				startActivity(intent);
 				break ;
 			case R.id.tv_register :
-				intent = new Intent(mContext,RegisterActivity.class) ;
-				startActivity(intent);
 				break ;
 			case R.id.ll_login :
 
