@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
+import com.zzteck.jumin.ui.mainui.MainActivity;
 
 
 public class LoginActivity extends BaseActivity implements OnClickListener{
@@ -88,7 +89,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 				startActivity(intent);
 				break ;
 			case R.id.ll_login :
-
+				intent = new Intent(mContext,MainActivity.class) ;
+				startActivity(intent);
 				break ;
 			case R.id.iv_back :
 				finish();

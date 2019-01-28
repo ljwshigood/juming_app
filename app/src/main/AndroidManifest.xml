@@ -47,6 +47,7 @@
 
         <activity android:name=".ui.usercenter.LoginActivity"></activity>
         <activity android:name=".ui.usercenter.RegisterActivity"></activity>
+        <activity android:name=".ui.usercenter.ForgetPwdActivity"></activity>
 
         <activity android:name=".ui.mainui.WelcomeActivity">
             <intent-filter>
