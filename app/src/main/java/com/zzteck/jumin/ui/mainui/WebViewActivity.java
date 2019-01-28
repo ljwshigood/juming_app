@@ -216,7 +216,7 @@ class WebviewModeListener implements ICoreStatusListener {
 
 	@Override
 	public boolean onCoreStop() {
-		// TODO Auto-generated method stub
+
 		return false;
 	}
 }
