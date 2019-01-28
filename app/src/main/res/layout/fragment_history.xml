@@ -29,6 +29,7 @@
         android:orientation="vertical"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:background="@android:color/white"
         android:paddingTop="10dp">
 
         <android.support.v7.widget.RecyclerView

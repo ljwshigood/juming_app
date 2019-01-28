@@ -4,6 +4,7 @@ package com.zzteck.jumin.ui.business;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zzteck.jumin.R;
@@ -14,9 +15,13 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 	private Context mContext ;
 
 	private TextView mTvMainInfo ;
+
+	private ImageView mIvBack ;
 	
 	private void initView(){
 		mTvMainInfo = findViewById(R.id.tv_main_info) ;
+		mIvBack = findViewById(R.id.iv_back) ;
+		mIvBack.setOnClickListener(this);
 	}
 	
 	private void initData(){
@@ -34,7 +39,9 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()){
-
+			case R.id.iv_back:
+				finish();
+				break ;
 		}
 	}
 }

@@ -45,18 +45,20 @@
         <activity android:name="com.zzteck.jumin.ui.mainui.WebViewActivity">
         </activity>
 
-        <activity android:name=".ui.business.CategoryListActivity"></activity>
-        <activity android:name=".ui.mainui.FeedBackActivity"></activity>
-        <activity android:name=".ui.usercenter.MyReleaseActivity"></activity>
-        <activity android:name=".ui.usercenter.ModifyUserActivity"></activity>
-        <activity android:name=".ui.business.ReleaseActivity"></activity>
-        <activity android:name=".ui.mainui.MainActivity">
+        <activity android:name=".ui.mainui.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.business.CategoryListActivity"></activity>
+        <activity android:name=".ui.mainui.FeedBackActivity"></activity>
+        <activity android:name=".ui.usercenter.MyReleaseActivity"></activity>
+        <activity android:name=".ui.usercenter.ModifyUserActivity"></activity>
+        <activity android:name=".ui.business.ReleaseActivity"></activity>
+        <activity android:name=".ui.mainui.MainActivity"></activity>
     </application>
 
 </manifest>

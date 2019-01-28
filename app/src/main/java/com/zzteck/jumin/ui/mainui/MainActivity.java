@@ -127,7 +127,8 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 				return mFragment.size ();
 			}
 		};
-		mWJViewPaper.setScrollble(false);
+
+		mWJViewPaper.setScrollble(true);
 		mWJViewPaper.setAdapter ( fragmentPagerAdapter );
 		mWJViewPaper.setOffscreenPageLimit ( 4 );
 

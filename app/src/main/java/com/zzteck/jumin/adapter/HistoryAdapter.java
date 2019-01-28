@@ -41,7 +41,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return mFavoriteList == null ? 0 : mFavoriteList.size();
+        return mFavoriteList == null ? 10 : mFavoriteList.size();
 
     }
 
@@ -52,7 +52,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         public ViewHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_title);
-
         }
     }
 
