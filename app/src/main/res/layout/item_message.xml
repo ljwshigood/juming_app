@@ -14,8 +14,8 @@
 
         <com.zzteck.zzview.RoundImageView xmlns:wj="http://schemas.android.com/apk/res/com.zzteck.jumin"
             android:id="@+id/iv_pic"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_gravity="center"
             android:background="@mipmap/ic_launcher"
             android:scaleType="fitXY"
@@ -28,19 +28,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:layout_weight="40"
+        android:layout_weight="45"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="刘大爷"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_content"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="咨询房地产"
+            android:textSize="15sp" />
 
     </LinearLayout>
 
@@ -48,9 +53,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:layout_weight="80"
+        android:layout_weight="75"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="2018-11-03"
+            android:textSize="15sp" />
 
     </LinearLayout>
 </LinearLayout>
