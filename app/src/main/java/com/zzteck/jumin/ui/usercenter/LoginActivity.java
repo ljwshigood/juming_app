@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,11 +29,13 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 
 	private LinearLayout mLLLogin ;
 
+	private ImageView mIvBack ;
+
 
 	private void initView() {
 
 		mLLLogin = findViewById(R.id.ll_login) ;
-
+		mIvBack = findViewById(R.id.iv_back) ;
 		mEtPwd = findViewById(R.id.et_user_pwd) ;
 		mEtUserName = findViewById(R.id.et_user_name) ;
 		mTvForgetPwd = findViewById(R.id.tv_forget_pwd) ;
@@ -41,6 +44,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		mTvRegister.setOnClickListener(this);
 		mTvForgetPwd.setOnClickListener(this);
 		mLLLogin.setOnClickListener(this);
+		mIvBack.setOnClickListener(this);
 	}
 
 	@Override
@@ -86,11 +90,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 			case R.id.ll_login :
 
 				break ;
+			case R.id.iv_back :
+				finish();
+				break ;
 		}
-	}
-
-	@Override
-	public void onBackPressed() {
-
 	}
 }
