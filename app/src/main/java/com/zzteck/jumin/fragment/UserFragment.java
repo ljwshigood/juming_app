@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.zzteck.jumin.R;
+import com.zzteck.jumin.ui.usercenter.MemberUpgradeActivity;
 import com.zzteck.jumin.ui.usercenter.MyReleaseActivity;
 import com.zzteck.jumin.view.SignInDialog;
 
@@ -31,7 +32,7 @@ public class UserFragment extends Fragment implements OnClickListener {
 
     private RelativeLayout mRlMyRenzhen;
 
-    private RelativeLayout mRlRuheDingDan;
+    private RelativeLayout mRlHuiyuanshengji;
 
     private RelativeLayout mRlRuheFaBuXuqiu;
 
@@ -45,7 +46,7 @@ public class UserFragment extends Fragment implements OnClickListener {
         mRlMyJinku = view.findViewById(R.id.rl_my_jinku);
         mRlMyAttendtion = view.findViewById(R.id.rl_my_guanzhu);
         mRlMyRenzhen = view.findViewById(R.id.rl_my_renzhen);
-        mRlRuheDingDan = view.findViewById(R.id.rl_ruhejiedan);
+        mRlHuiyuanshengji = view.findViewById(R.id.rl_ruiyuanshengji);
         mRlRuheFaBuXuqiu = view.findViewById(R.id.rl_ruhe_fabuxuqiu);
 
         mRlMyRelease.setOnClickListener(this);
@@ -53,7 +54,7 @@ public class UserFragment extends Fragment implements OnClickListener {
         mRlMyJinku.setOnClickListener(this);
         mRlMyAttendtion.setOnClickListener(this);
         mRlMyRenzhen.setOnClickListener(this);
-        mRlRuheDingDan.setOnClickListener(this);
+        mRlHuiyuanshengji.setOnClickListener(this);
         mRlRuheFaBuXuqiu.setOnClickListener(this);
         mLLQianDao.setOnClickListener(this);
     }
@@ -96,7 +97,9 @@ public class UserFragment extends Fragment implements OnClickListener {
             case R.id.rl_my_renzhen:
 
                 break;
-            case R.id.rl_ruhejiedan:
+            case R.id.rl_ruiyuanshengji:
+                intent = new Intent(getActivity(), MemberUpgradeActivity.class);
+                startActivity(intent);
                 break;
             case R.id.rl_ruhe_fabuxuqiu:
                 break;

@@ -56,7 +56,7 @@ public class ReleaseWaitingFragment extends Fragment implements OnClickListener 
 		case R.id.rl_my_renzhen:
 
 			break;
-		case R.id.rl_ruhejiedan:
+		case R.id.rl_ruiyuanshengji:
 			break;
 		case R.id.rl_ruhe_fabuxuqiu:
 			break;

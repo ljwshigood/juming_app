@@ -10,14 +10,23 @@ import java.io.Serializable;
 
 public class UpgradeMemeberBean implements Serializable{
 
-    public int getType() {
-        return type;
+    private int res ;
+
+    private String info ;
+
+    public int getRes() {
+        return res;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setRes(int res) {
+        this.res = res;
     }
 
-    private int type ;
+    public String getInfo() {
+        return info;
+    }
 
+    public void setInfo(String info) {
+        this.info = info;
+    }
 }
