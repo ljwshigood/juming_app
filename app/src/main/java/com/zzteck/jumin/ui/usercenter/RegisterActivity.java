@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
@@ -16,21 +18,22 @@ import com.zzteck.jumin.ui.mainui.BaseActivity;
 
 public class RegisterActivity extends BaseActivity implements OnClickListener{
 
+	private TextView mTvMainInfo ;
 
-	private String TAG = "liujw" ;
+	private ImageView mIvBack ;
 
 	private void initView() {
-
+		mIvBack = findViewById(R.id.iv_back) ;
+		mTvMainInfo =  findViewById(R.id.tv_main_info);
+		mIvBack.setOnClickListener(this);
+		mTvMainInfo.setText("注册");
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_list);
-
-		getWindow().setFormat(PixelFormat.TRANSLUCENT);//（这个对宿主没什么影响，建议声明）
-		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+		setContentView(R.layout.activity_register);
 
 		mContext = RegisterActivity.this ;
 		App.getInstance().addActivity(this);
@@ -57,7 +60,9 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-
+			case R.id.iv_back :
+				finish();
+				break ;
 		}
 	}
 
