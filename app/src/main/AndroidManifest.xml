@@ -41,6 +41,9 @@
         android:name=".app.App"
         android:theme="@style/AppTheme"
         tools:replace="android:label,android:icon,android:allowBackup,android:name">
+        
+        <activity android:name="com.zzteck.jumin.ui.mainui.WebViewActivity">
+        </activity>
 
         <activity android:name=".ui.business.CategoryListActivity"></activity>
         <activity android:name=".ui.mainui.FeedBackActivity"></activity>
