@@ -1,15 +1,11 @@
 package com.zzteck.jumin.ui.usercenter;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,8 +13,6 @@ import android.widget.TextView;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
-
-import java.io.LineNumberReader;
 
 
 public class LoginActivity extends BaseActivity implements OnClickListener{

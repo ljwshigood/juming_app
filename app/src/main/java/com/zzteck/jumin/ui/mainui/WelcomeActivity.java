@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,11 +22,13 @@ import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
+import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.fragment.HistoryFragment;
 import com.zzteck.jumin.fragment.HomeFragment;
 import com.zzteck.jumin.fragment.UserFragment;
 import com.zzteck.jumin.fragment.WJConversationListFragment;
 import com.zzteck.jumin.ui.business.ReleaseActivity;
+import com.zzteck.jumin.ui.usercenter.LoginActivity;
 import com.zzteck.zzview.WJViewPaper;
 
 import java.util.ArrayList;
@@ -37,8 +40,6 @@ import io.reactivex.functions.Consumer;
 public class WelcomeActivity extends BaseActivity implements OnClickListener{
 
 
-
-
 	 private void initView(){
 		 
 	 }
@@ -47,9 +48,18 @@ public class WelcomeActivity extends BaseActivity implements OnClickListener{
 		 @Override
 		 public void handleMessage(Message msg) {
 			 super.handleMessage(msg);
-			 Intent intent = new Intent(WelcomeActivity.this,MainActivity.class) ;
-			 startActivity(intent);
-			 finish();
+
+			 if(UserDAO.getInstance(mContext).isExistRecord("1")){
+				 Intent intent = new Intent(WelcomeActivity.this,MainActivity.class) ;
+				 startActivity(intent);
+				 finish();
+			 }else{
+				 Intent intent = new Intent(WelcomeActivity.this,LoginActivity.class) ;
+				 startActivity(intent);
+				 finish();
+			 }
+
+
 		 }
 	 } ;
 
