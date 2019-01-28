@@ -14,15 +14,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.hjhrq1991.library.tbs.BridgeHandler;
-import com.hjhrq1991.library.tbs.CallBackFunction;
-import com.hjhrq1991.library.tbs.DefaultHandler;
-import com.hjhrq1991.library.tbs.SimpleBridgeWebViewClientListener;
-import com.hjhrq1991.library.tbs.TbsBridgeWebView;
-import com.tencent.smtt.export.external.interfaces.SslError;
-import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebView;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.ui.mainui.BaseActivity;

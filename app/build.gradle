@@ -1,14 +1,26 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.zzteck.jumin"
         minSdkVersion 19
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+        ndk {
+            abiFilters 'x86', 'armeabi'  //使用uniapp时必须同时选择二者或选其一
+        }
+
     }
     buildTypes {
         release {
@@ -16,15 +28,32 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    //使用uniapp时，需复制下面代码
+    /*代码开始*/
+    aaptOptions {
+        additionalParameters '--auto-add-overlay'
+        //noCompress 'foo', 'bar'
+        ignoreAssetsPattern "!.svn:!.git:.*:!CVS:!thumbs.db:!picasa.ini:!*.scc:*~"
+    }
+    /*代码结束*/
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.aar'])
     configurations.all {
         resolutionStrategy {
             force 'com.android.support:support-annotations:26.1.0'
         }
     }
+    implementation 'com.android.support:multidex:1.0.3'
     //banner
     implementation 'com.youth.banner:banner:1.4.10'
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-4'
@@ -32,8 +61,6 @@ dependencies {
     compile 'com.github.hackware1993:MagicIndicator:1.5.0'
     //RecyclerView
     implementation 'com.android.support:recyclerview-v7:27.1.1'
-    compile 'com.squareup.okhttp3:okhttp:3.6.0'
-    compile 'com.squareup.okio:okio:1.11.0'
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
@@ -46,6 +73,6 @@ dependencies {
     implementation project(':permissionlib')
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
     implementation project(':LRecyclerview_library')
-    implementation project(':library-tbsx5')
+//    implementation project(':library-tbsx5')
     implementation project(':FlycoTabLayout_Lib')
 }

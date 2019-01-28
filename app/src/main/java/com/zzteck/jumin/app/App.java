@@ -14,10 +14,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import io.dcloud.application.DCloudApplication;
+
 /**
  *
  */
-public class App extends android.app.Application {
+public class App extends DCloudApplication {
 
 
     private List<Activity> activityList = new LinkedList<Activity> ();
