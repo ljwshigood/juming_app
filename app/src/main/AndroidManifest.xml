@@ -44,6 +44,7 @@
         
         <activity android:name="com.zzteck.jumin.ui.mainui.WebViewActivity">
         </activity>
+        <activity android:name=".ui.mainui.SearchActivity"></activity>
         <activity android:name=".ui.usercenter.MemberUpgradeActivity"></activity>
         <activity android:name=".ui.usercenter.LoginActivity"></activity>
         <activity android:name=".ui.usercenter.RegisterActivity"></activity>

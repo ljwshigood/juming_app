@@ -32,9 +32,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.activity_register);
-
 		mContext = RegisterActivity.this ;
 		App.getInstance().addActivity(this);
 

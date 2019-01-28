@@ -29,7 +29,7 @@ import io.dcloud.feature.internal.sdk.SDK;
  *
  *
  */
-public class WebViewActivity extends Activity {
+public class WebViewActivity extends BaseActivity {
 
 	boolean doHardAcc = true;
 	EntryProxy mEntryProxy = null;
