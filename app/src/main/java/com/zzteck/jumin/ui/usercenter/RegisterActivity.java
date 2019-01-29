@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zzteck.jumin.R;
@@ -20,13 +22,15 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 
 	private TextView mTvMainInfo ;
 
-	private ImageView mIvBack ;
+	private RelativeLayout mLLBack ;
 
 	private void initView() {
-		mIvBack = findViewById(R.id.iv_back) ;
+		mLLBack = findViewById(R.id.ll_back) ;
 		mTvMainInfo =  findViewById(R.id.tv_main_info);
-		mIvBack.setOnClickListener(this);
+		mLLBack.setOnClickListener(this);
 		mTvMainInfo.setText("注册");
+		mLLBack.setVisibility(View.VISIBLE);
+		mTvMainInfo.setTextColor(mContext.getResources().getColor(R.color.colorBlack));
 	}
 
 	@Override
@@ -58,14 +62,10 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-			case R.id.iv_back :
+			case R.id.ll_back :
 				finish();
 				break ;
 		}
 	}
 
-	@Override
-	public void onBackPressed() {
-
-	}
 }
