@@ -76,11 +76,13 @@
 
 
             <ImageView
+                android:id="@+id/iv_qiandao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/icon_qiandao" />
 
             <ImageView
+                android:id="@+id/iv_zxing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"

@@ -1,6 +1,8 @@
 package com.zzteck.jumin.fragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -12,16 +14,22 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.ComFragmentAdapter;
 import com.zzteck.jumin.adapter.FeaturedPagerAdapter;
 import com.zzteck.jumin.bean.HomeBean;
+import com.zzteck.jumin.ui.mainui.SearchActivity;
+import com.zzteck.jumin.ui.mainui.ZxingActivity;
 import com.zzteck.jumin.view.ColorFlipPagerTitleView;
 import com.zzteck.jumin.view.JudgeNestedScrollView;
 
@@ -45,7 +53,7 @@ import java.util.List;
  * Describe:
  */
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
     private List<HomeBean> data;
 
@@ -72,6 +80,8 @@ public class HomeFragment extends BaseFragment {
     private LinearLayout mPoints ;
 
     private ViewPager mBannerViewPaper ;
+
+    private TextView mTvSearch ;
 
     private List<Fragment> getFragments() {
 
@@ -218,14 +228,44 @@ public class HomeFragment extends BaseFragment {
     };
 
 
+    private ImageView mIvQianDao ;
+
+    private ImageView mIvZxing ;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(data != null){
+
+            Bundle bundle = data.getExtras();
+            if (bundle == null) {
+                return;
+            }
+            if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                String result = bundle.getString(CodeUtils.RESULT_STRING);
+                // mEtBarCode.setText(result) ;
+            } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                //  mEtBarCode.setText("") ;
+            }
+        }
+    }
+
     @Override
     public void initView(View view) {
+
+        mIvQianDao= view.findViewById(R.id.iv_qiandao) ;
+        mIvZxing = view.findViewById(R.id.iv_zxing) ;
+        mTvSearch = view.findViewById(R.id.tv_search) ;
         mPoints = view.findViewById(R.id.layout_points) ;
         viewPagerHome = view.findViewById(R.id.view_pager) ;
         mBannerViewPaper = view.findViewById(R.id.vp_banner) ;
         refreshLayout = view.findViewById(R.id.refreshLayout) ;
         scrollView = view.findViewById(R.id.scrollView) ;
         magicIndicator = view.findViewById(R.id.magic_indicator) ;
+
+        mTvSearch.setOnClickListener(this);
+        mIvQianDao.setOnClickListener(this);
+        mIvZxing.setOnClickListener(this);
 
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
@@ -348,4 +388,18 @@ public class HomeFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void onClick(View view) {
+        Intent intent = null ;
+        switch (view.getId()){
+            case R.id.tv_search :
+                intent = new Intent(getActivity(), SearchActivity.class) ;
+                startActivity(intent);
+                break ;
+            case R.id.iv_zxing:
+                intent = new Intent(getActivity(),ZxingActivity.class) ;
+                startActivityForResult(intent,1122) ;
+                break ;
+        }
+    }
 }

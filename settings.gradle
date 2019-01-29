@@ -1,1 +1,1 @@
-include ':app', ':zzview', ':barlibrary', ':permissionlib', ':LRecyclerview_library'/*, ':library-tbsx5'*/, ':FlycoTabLayout_Lib'
+include ':app', ':zzview', ':barlibrary', ':permissionlib', ':LRecyclerview_library'/*, ':library-tbsx5'*/, ':FlycoTabLayout_Lib', ':lib-zxing'

@@ -46,8 +46,8 @@ repositories {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation fileTree(dir: 'libs', include: ['*.aar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.aar'], dir: 'libs')
     configurations.all {
         resolutionStrategy {
             force 'com.android.support:support-annotations:26.1.0'
@@ -73,6 +73,7 @@ dependencies {
     implementation project(':permissionlib')
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
     implementation project(':LRecyclerview_library')
-//    implementation project(':library-tbsx5')
+    //    implementation project(':library-tbsx5')
     implementation project(':FlycoTabLayout_Lib')
+    implementation project(':lib-zxing')
 }

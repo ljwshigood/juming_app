@@ -2,6 +2,7 @@ package com.zzteck.jumin.ui.usercenter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.ui.mainui.MainActivity;
+import com.zzteck.zzview.WindowsToast;
 
 
 public class LoginActivity extends BaseActivity implements OnClickListener{
@@ -89,8 +91,13 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 				startActivity(intent);
 				break ;
 			case R.id.ll_login :
-				intent = new Intent(mContext,MainActivity.class) ;
-				startActivity(intent);
+				if(!TextUtils.isEmpty(mEtUserName.getText().toString()) && !TextUtils.isEmpty(mEtPwd.getText().toString())){
+					intent = new Intent(mContext,MainActivity.class) ;
+					startActivity(intent);
+					finish();
+				}else{
+					WindowsToast.makeText(mContext,"用户名或密码为空").show();
+				}
 				break ;
 			case R.id.iv_back :
 				finish();

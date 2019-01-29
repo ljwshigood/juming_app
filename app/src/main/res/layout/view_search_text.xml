@@ -24,7 +24,7 @@
             android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:textSize="@dimen/text_size_15"
+            android:textSize="16sp"
             android:textColorHint="@color/dark"
             android:textColor="@color/dark"
             android:hint="请输入展示的产品和编号" >

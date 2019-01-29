@@ -10,6 +10,8 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -191,6 +193,7 @@ public class App extends DCloudApplication {
     @Override
     public void onCreate() {
         super.onCreate ();
+        ZXingLibrary.initDisplayOpinion(this);
         mContext = getApplicationContext ();
         initBaiduCrab();
     }
