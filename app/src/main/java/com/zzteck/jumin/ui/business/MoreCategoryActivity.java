@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.MoreCategoryAdapter;
@@ -31,8 +33,16 @@ public class MoreCategoryActivity extends BaseActivity implements OnClickListene
 	private RecyclerView mRvCategory ;
 
 	private void initView() {
+		mTvTitle = findViewById(R.id.tv_main_info) ;
+		mIvBack = findViewById(R.id.iv_back) ;
+		mIvBack.setOnClickListener(this);
+		mTvTitle.setText("更多");
 		mRvCategory = findViewById(R.id.rv_more_cate);
 	}
+
+	private TextView mTvTitle ;
+
+	private ImageView mIvBack ;
 
 	private MoreCategoryAdapter mMoreCategoryAdapter ;
 
@@ -110,12 +120,9 @@ public class MoreCategoryActivity extends BaseActivity implements OnClickListene
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-
+			case R.id.iv_back:
+				finish();
+				break ;
 		}
-	}
-
-	@Override
-	public void onBackPressed() {
-
 	}
 }

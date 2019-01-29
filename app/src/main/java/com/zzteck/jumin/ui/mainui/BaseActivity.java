@@ -46,10 +46,6 @@ public class BaseActivity extends FragmentActivity {
         this.mContext = BaseActivity.this;
         super.onCreate ( savedInstanceState );
 
-      /*  ImmersionBar.with(this)
-                .navigationBarColor(R.color.colorPrimary)
-                .init();*/
-
         ImmersionBar.with(this)
                 .statusBarDarkFont(true, 0.2f)
                 .navigationBarDarkIcon(true, 1f)
