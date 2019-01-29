@@ -9,6 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
@@ -16,10 +19,17 @@ import com.zzteck.jumin.ui.mainui.BaseActivity;
 
 public class ForgetPwdActivity extends BaseActivity implements OnClickListener{
 
-	private String TAG = "liujw" ;
+	private TextView mTvMainInfo ;
+
+	private RelativeLayout mLLBack ;
 
 	private void initView() {
-
+		mLLBack = findViewById(R.id.ll_back) ;
+		mTvMainInfo =  findViewById(R.id.tv_main_info);
+		mLLBack.setOnClickListener(this);
+		mTvMainInfo.setText("忘记密码");
+		mLLBack.setVisibility(View.VISIBLE);
+		mTvMainInfo.setTextColor(mContext.getResources().getColor(R.color.colorBlack));
 	}
 
 	@Override
@@ -53,11 +63,9 @@ public class ForgetPwdActivity extends BaseActivity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-
+			case R.id.ll_back:
+				finish();
+				break ;
 		}
-	}
-
-	@Override
-	public void onBackPressed() {
 	}
 }

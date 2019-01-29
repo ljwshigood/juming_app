@@ -49,19 +49,8 @@
             android:layout_weight="40"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="13dp"
-                android:layout_marginRight="13dp"
-                android:layout_weight="1"
-                android:paddingBottom="7dp"
-                android:paddingLeft="18dp"
-                android:paddingStart="18dp"
-                android:paddingTop="7dp"
-                android:background="@drawable/bg_dark_corner"
-                android:textSize="14sp" />
+            <include layout="@layout/view_search_tv_text"></include>
+
         </LinearLayout>
 
 

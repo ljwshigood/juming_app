@@ -222,7 +222,7 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 		city_result = new ArrayList<City>();
 		city_history = new ArrayList<String>();
 		resultList =  findViewById(R.id.search_result);
-		sh =  findViewById(R.id.sh);
+		sh =  findViewById(R.id.tv_search);
 		tv_noresult =  findViewById(R.id.tv_noresult);
 		helper = DatabaseManager.getInstance(this);
 		sh.addTextChangedListener(new TextWatcher() {
@@ -358,27 +358,27 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 	 * ų
 	 */
 	public void hotCityInit() {
-		City city = new City("Ϻ", "2");
+		City city = new City("上海", "2");
 		city_hot.add(city);
-		city = new City("", "2");
+		city = new City("北京", "2");
 		city_hot.add(city);
-		city = new City("", "2");
+		city = new City("广州", "2");
 		city_hot.add(city);
-		city = new City("", "2");
+		city = new City("深圳", "2");
 		city_hot.add(city);
-		city = new City("人", "2");
+		city = new City("武汉", "2");
 		city_hot.add(city);
-		city = new City("", "2");
+		city = new City("天津", "2");
 		city_hot.add(city);
-		city = new City("", "2");
+		city = new City("西安", "2");
 		city_hot.add(city);
-		city = new City("Ͼ", "2");
+		city = new City("南京", "2");
 		city_hot.add(city);
-		city = new City("", "2");
+		city = new City("杭州", "2");
 		city_hot.add(city);
-		city = new City("ɶ", "2");
+		city = new City("成都", "2");
 		city_hot.add(city);
-		city = new City("", "2");
+		city = new City("重庆", "2");
 		city_hot.add(city);
 	}
 
@@ -586,7 +586,7 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			final TextView city;
 			int viewType = getItemViewType(position);
-			if (viewType == 0) { // λ
+			if (viewType == 0) { // 定位
 				convertView = inflater.inflate(R.layout.frist_list_item, null);
 				TextView locateHint = (TextView) convertView
 						.findViewById(R.id.locateHint);
@@ -595,9 +595,8 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 					@Override
 					public void onClick(View v) {
 						if (locateProcess == 2) {
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 							Toast.makeText(getApplicationContext(),
-									"ѡг:"+city.getText().toString(),
+									"选中城市:"+city.getText().toString(),
 									Toast.LENGTH_SHORT).show();
 						} else if (locateProcess == 3) {
 							locateProcess = 1;
@@ -613,23 +612,23 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 				});
 				ProgressBar pbLocate = (ProgressBar) convertView
 						.findViewById(R.id.pbLocate);
-				if (locateProcess == 1) { // ڶλ
-					locateHint.setText("ڶλ");
+				if (locateProcess == 1) { // 正在定位
+					locateHint.setText("正在定位");
 					city.setVisibility(View.GONE);
 					pbLocate.setVisibility(View.VISIBLE);
-				} else if (locateProcess == 2) { // λɹ
-					locateHint.setText("ǰλ");
+				} else if (locateProcess == 2) { // 定位成功
+					locateHint.setText("当前定位城市");
 					city.setVisibility(View.VISIBLE);
 					city.setText(currentCity);
 //					mLocationClient.stop();
 					pbLocate.setVisibility(View.GONE);
 				} else if (locateProcess == 3) {
-					locateHint.setText("δλ,ѡ");
+					locateHint.setText("未定位到城市,请选择");
 					city.setVisibility(View.VISIBLE);
-					city.setText("ѡ");
+					city.setText("重新选择");
 					pbLocate.setVisibility(View.GONE);
 				}
-			} else if (viewType == 1) { // ʳ
+			} else if (viewType == 1) { // 最近访问城市
 				convertView = inflater.inflate(R.layout.recent_city, null);
 				GridView rencentCity = (GridView) convertView
 						.findViewById(R.id.recent_city);
@@ -639,7 +638,7 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view,
-							int position, long id) {
+											int position, long id) {
 
 						Toast.makeText(getApplicationContext(),
 								city_history.get(position), Toast.LENGTH_SHORT)
@@ -649,7 +648,7 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 				});
 				TextView recentHint = (TextView) convertView
 						.findViewById(R.id.recentHint);
-				recentHint.setText("ʵĳ");
+				recentHint.setText("最近访问的城市");
 			} else if (viewType == 2) {
 				convertView = inflater.inflate(R.layout.recent_city, null);
 				GridView hotCity = (GridView) convertView
@@ -658,7 +657,7 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view,
-							int position, long id) {
+											int position, long id) {
 
 						Toast.makeText(getApplicationContext(),
 								city_hot.get(position).getName(),
@@ -669,7 +668,7 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 				hotCity.setAdapter(new HotCityAdapter(context, this.hotList));
 				TextView hotHint = (TextView) convertView
 						.findViewById(R.id.recentHint);
-				hotHint.setText("ų");
+				hotHint.setText("热门城市");
 			} else if (viewType == 3) {
 				convertView = inflater.inflate(R.layout.total_item, null);
 			} else {
@@ -701,7 +700,7 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 		}
 
 		private class ViewHolder {
-			TextView alpha; // ĸ
+			TextView alpha; //
 			TextView name; // 
 		}
 	}
