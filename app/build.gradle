@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        debug {
+            keyAlias 'juming'
+            keyPassword '123456'
+            storeFile file('D:/SourceTest/juming_app/app/juming.jks')
+            storePassword '123456'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.zzteck.jumin"
@@ -28,7 +36,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
     //使用uniapp时，需复制下面代码
     /*代码开始*/
     aaptOptions {
