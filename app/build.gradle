@@ -60,7 +60,7 @@ dependencies {
             force 'com.android.support:support-annotations:26.1.0'
         }
     }
-    
+
     implementation 'com.android.support:multidex:1.0.3'
     //banner
     implementation 'com.youth.banner:banner:1.4.10'
