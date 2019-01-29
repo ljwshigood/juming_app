@@ -3,11 +3,37 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#f0f0f0"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
-    <include
+    <LinearLayout
         android:id="@+id/title"
-        layout="@layout/view_search_text"></include>
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:orientation="horizontal"></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/ic_back" />
+
+            <include layout="@layout/view_search_text"></include>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 
     <ListView

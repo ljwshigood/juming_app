@@ -32,6 +32,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.db.DatabaseManager;
+import com.zzteck.jumin.ui.mainui.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +41,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class ActivityLocation extends Activity implements OnScrollListener {
+public class ActivityLocation extends BaseActivity implements OnScrollListener {
 	private BaseAdapter adapter;
 	private ResultListAdapter resultListAdapter;
 	private ListView personList;
@@ -509,8 +510,7 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 			if (convertView == null) {
 				convertView = inflater.inflate(R.layout.list_item, null);
 				viewHolder = new ViewHolder();
-				viewHolder.name = (TextView) convertView
-						.findViewById(R.id.name);
+				viewHolder.name = convertView.findViewById(R.id.name);
 				convertView.setTag(viewHolder);
 			} else {
 				viewHolder = (ViewHolder) convertView.getTag();
@@ -542,9 +542,7 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 			alphaIndexer = new HashMap<String, Integer>();
 			sections = new String[list.size()];
 			for (int i = 0; i < list.size(); i++) {
-				// ǰƴĸ
 				String currentStr = getAlpha(list.get(i).getPinyi());
-				// һƴĸΪ" "
 				String previewStr = (i - 1) >= 0 ? getAlpha(list.get(i - 1)
 						.getPinyi()) : " ";
 				if (!previewStr.equals(currentStr)) {
@@ -588,9 +586,8 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 			int viewType = getItemViewType(position);
 			if (viewType == 0) { // 定位
 				convertView = inflater.inflate(R.layout.frist_list_item, null);
-				TextView locateHint = (TextView) convertView
-						.findViewById(R.id.locateHint);
-				city = (TextView) convertView.findViewById(R.id.lng_city);
+				TextView locateHint =  convertView.findViewById(R.id.locateHint);
+				city =  convertView.findViewById(R.id.lng_city);
 				city.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -602,11 +599,8 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 							locateProcess = 1;
 							personList.setAdapter(adapter);
 							adapter.notifyDataSetChanged();
-//							mLocationClient.stop();
 							isNeedFresh = true;
-//							InitLocation();
 							currentCity = "";
-//							mLocationClient.start();
 						}
 					}
 				});
@@ -620,7 +614,6 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 					locateHint.setText("当前定位城市");
 					city.setVisibility(View.VISIBLE);
 					city.setText(currentCity);
-//					mLocationClient.stop();
 					pbLocate.setVisibility(View.GONE);
 				} else if (locateProcess == 3) {
 					locateHint.setText("未定位到城市,请选择");
@@ -628,7 +621,7 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 					city.setText("重新选择");
 					pbLocate.setVisibility(View.GONE);
 				}
-			} else if (viewType == 1) { // 最近访问城市
+			} /*else if (viewType == 1) { // 最近访问城市
 				convertView = inflater.inflate(R.layout.recent_city, null);
 				GridView rencentCity = (GridView) convertView
 						.findViewById(R.id.recent_city);
@@ -649,7 +642,7 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 				TextView recentHint = (TextView) convertView
 						.findViewById(R.id.recentHint);
 				recentHint.setText("最近访问的城市");
-			} else if (viewType == 2) {
+			} */else if (viewType == 1) {
 				convertView = inflater.inflate(R.layout.recent_city, null);
 				GridView hotCity = (GridView) convertView
 						.findViewById(R.id.recent_city);
@@ -669,16 +662,14 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 				TextView hotHint = (TextView) convertView
 						.findViewById(R.id.recentHint);
 				hotHint.setText("热门城市");
-			} else if (viewType == 3) {
+			} /*else if (viewType == 2) {
 				convertView = inflater.inflate(R.layout.total_item, null);
-			} else {
+			} else*/ {
 				if (convertView == null) {
 					convertView = inflater.inflate(R.layout.list_item, null);
 					holder = new ViewHolder();
-					holder.alpha = (TextView) convertView
-							.findViewById(R.id.alpha);
-					holder.name = (TextView) convertView
-							.findViewById(R.id.name);
+					holder.alpha = convertView.findViewById(R.id.alpha);
+					holder.name = convertView.findViewById(R.id.name);
 					convertView.setTag(holder);
 				} else {
 					holder = (ViewHolder) convertView.getTag();
@@ -707,7 +698,6 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 
 	@Override
 	protected void onStop() {
-//		mLocationClient.stop();
 		super.onStop();
 	}
 
@@ -740,7 +730,7 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			convertView = inflater.inflate(R.layout.item_city, null);
-			TextView city = (TextView) convertView.findViewById(R.id.city);
+			TextView city = convertView.findViewById(R.id.city);
 			city.setText(hotCitys.get(position).getName());
 			return convertView;
 		}
@@ -783,7 +773,6 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 
 	private boolean mReady;
 
-	// ʼƴĸʾ
 	private void initOverlay() {
 		mReady = true;
 		LayoutInflater inflater = LayoutInflater.from(this);
@@ -813,13 +802,11 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 				overlay.setText(s);
 				overlay.setVisibility(View.VISIBLE);
 				handler.removeCallbacks(overlayThread);
-				// ӳһִУoverlayΪɼ
 				handler.postDelayed(overlayThread, 1000);
 			}
 		}
 	}
 
-	// overlayɼ
 	private class OverlayThread implements Runnable {
 		@Override
 		public void run() {
@@ -827,7 +814,6 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 		}
 	}
 
-	// úƴĸ
 	private String getAlpha(String str) {
 		if (str == null) {
 			return "#";
@@ -881,7 +867,6 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 			overlay.setText(text);
 			overlay.setVisibility(View.VISIBLE);
 			handler.removeCallbacks(overlayThread);
-			// ӳһִУoverlayΪɼ
 			handler.postDelayed(overlayThread, 1000);
 		}
 	}
@@ -932,7 +917,7 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 //			Constant.city = amapLocation.getCity();
 			
 			currentCity = amapLocation.getCity();
-			locateProcess = 2; // λɹ
+			locateProcess = 2; //
 			personList.setAdapter(adapter);
 			adapter.notifyDataSetChanged();
 		} else {
@@ -941,7 +926,7 @@ public class ActivityLocation extends Activity implements OnScrollListener {
 					"Location ERR:"
 							+ amapLocation.getAMapException().getErrorCode(),
 					Toast.LENGTH_LONG).show();
-			locateProcess = 3; // λʧ
+			locateProcess = 3; //
 			personList.setAdapter(adapter);
 			adapter.notifyDataSetChanged();
 			return;
