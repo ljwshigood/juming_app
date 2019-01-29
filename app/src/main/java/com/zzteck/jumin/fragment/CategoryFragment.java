@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zzteck.jumin.R;
-import com.zzteck.jumin.adapter.HistoryAdapter;
+import com.zzteck.jumin.adapter.CategoryListAdapter;
 import com.zzteck.jumin.view.NormalDecoration;
 
 public class CategoryFragment extends Fragment {
@@ -20,32 +20,28 @@ public class CategoryFragment extends Fragment {
 
     private Context mContext;
 
-    private RecyclerView mRlHistory;
+    private RecyclerView mRlCate;
 
-    private HistoryAdapter mFavoriteAdapter ;
+    private CategoryListAdapter mGategoryListAdapter;
 
     private void initView(View view) {
-        mRlHistory = view.findViewById(R.id.rl_history) ;
+        mRlCate = view.findViewById(R.id.rl_cate) ;
     }
 
     private void initData() {
-        mRlHistory.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRlHistory.addItemDecoration(new NormalDecoration(ContextCompat.getColor(getActivity(), R.color.mainGrayF8), (int) getActivity().getResources().getDimension(R.dimen.one)));
-        mFavoriteAdapter = new HistoryAdapter(getActivity(),null) ;
-        mRlHistory.setAdapter(mFavoriteAdapter) ;
+        mRlCate.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRlCate.addItemDecoration(new NormalDecoration(ContextCompat.getColor(getActivity(), R.color.mainGrayF8), (int) getActivity().getResources().getDimension(R.dimen.one)));
+        mGategoryListAdapter = new CategoryListAdapter(getActivity(),null) ;
+        mRlCate.setAdapter(mGategoryListAdapter) ;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mMainView = inflater.inflate(R.layout.fragment_history, container, false);
+        mMainView = inflater.inflate(R.layout.fragment_category, container, false);
         mContext = getActivity();
         initView(mMainView);
         initData();
         return mMainView;
     }
-
-    public void refreshTask() {
-    }
-
 
 }
