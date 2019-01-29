@@ -41,7 +41,11 @@
         android:name=".app.App"
         android:theme="@style/AppTheme"
         tools:replace="android:label,android:icon,android:allowBackup,android:name">
-        
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="e7db04f4e93cb4203d9bb9307e48b2da"/>
+
         <activity android:name="com.zzteck.jumin.ui.mainui.WebViewActivity">
         </activity>
         <activity android:name=".ui.mainui.SearchActivity"></activity>
@@ -50,6 +54,7 @@
         <activity android:name=".ui.usercenter.RegisterActivity"></activity>
         <activity android:name=".ui.usercenter.ForgetPwdActivity"></activity>
         <activity android:name=".ui.mainui.ZxingActivity"></activity>
+        <activity android:name=".ui.mainui.LocationActivity"></activity>
 
         <activity android:name=".ui.mainui.WelcomeActivity">
             <intent-filter>
@@ -65,6 +70,8 @@
         <activity android:name=".ui.usercenter.ModifyUserActivity"></activity>
         <activity android:name=".ui.business.ReleaseActivity"></activity>
         <activity android:name=".ui.mainui.MainActivity"></activity>
+
+        <service android:name="com.amap.api.location.APSService"></service>
     </application>
 
 </manifest>
