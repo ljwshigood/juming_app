@@ -2,20 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical">
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:src="@mipmap/pic_qiandao" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/ll_qiandao"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/bg_red_rec_press"
+        android:gravity="center"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="完成"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
 
     </LinearLayout>
 

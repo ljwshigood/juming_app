@@ -32,6 +32,7 @@ import com.zzteck.jumin.ui.mainui.SearchActivity;
 import com.zzteck.jumin.ui.mainui.ZxingActivity;
 import com.zzteck.jumin.view.ColorFlipPagerTitleView;
 import com.zzteck.jumin.view.JudgeNestedScrollView;
+import com.zzteck.jumin.view.SignInDialog;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -392,6 +393,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
     public void onClick(View view) {
         Intent intent = null ;
         switch (view.getId()){
+            case R.id.iv_qiandao :
+                SignInDialog dialog = new SignInDialog(getActivity()) ;
+                dialog.show();
+                break ;
             case R.id.tv_search :
                 intent = new Intent(getActivity(), SearchActivity.class) ;
                 startActivity(intent);
