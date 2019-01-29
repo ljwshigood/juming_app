@@ -1,14 +1,10 @@
-package com.zzteck.jumin.ui.mainui;
+package com.zzteck.jumin.ui.location;
 
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -18,18 +14,22 @@ import com.amap.api.location.AMapLocationClientOption.AMapLocationMode;
 import com.amap.api.location.AMapLocationClientOption.AMapLocationProtocol;
 import com.amap.api.location.AMapLocationListener;
 import com.zzteck.jumin.R;
+import com.zzteck.jumin.ui.mainui.BaseActivity;
 
 /**
- * 高精度定位模式功能演示
+ *
  *
  */
-public class LocationActivity extends BaseActivity  implements OnClickListener{
+
+public class LocationActivity extends BaseActivity implements OnClickListener{
 
 	private TextView tvResult;
 	private Button btLocation;
 
 	private AMapLocationClient locationClient = null;
 	private AMapLocationClientOption locationOption = new AMapLocationClientOption();
+
+	private TextView mTvMainInfo ;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class LocationActivity extends BaseActivity  implements OnClickListener{
 
 		tvResult = (TextView) findViewById(R.id.tv_result);
 		btLocation = (Button) findViewById(R.id.bt_location);
-		
+		mTvMainInfo = findViewById(R.id.tv_main_info) ;
 		btLocation.setOnClickListener(this);
 	}
 	

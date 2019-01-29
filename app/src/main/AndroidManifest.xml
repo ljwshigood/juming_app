@@ -54,7 +54,8 @@
         <activity android:name=".ui.usercenter.RegisterActivity"></activity>
         <activity android:name=".ui.usercenter.ForgetPwdActivity"></activity>
         <activity android:name=".ui.mainui.ZxingActivity"></activity>
-        <activity android:name=".ui.mainui.LocationActivity"></activity>
+        <activity android:name=".ui.location.LocationActivity"></activity>
+        <activity android:name=".ui.location.ActivityLocation"></activity>
 
         <activity android:name=".ui.mainui.WelcomeActivity">
             <intent-filter>

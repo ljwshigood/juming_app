@@ -22,12 +22,13 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
-import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.ComFragmentAdapter;
 import com.zzteck.jumin.adapter.FeaturedPagerAdapter;
 import com.zzteck.jumin.bean.HomeBean;
+import com.zzteck.jumin.ui.location.ActivityLocation;
+import com.zzteck.jumin.ui.location.LocationActivity;
 import com.zzteck.jumin.ui.mainui.SearchActivity;
 import com.zzteck.jumin.ui.mainui.ZxingActivity;
 import com.zzteck.jumin.view.ColorFlipPagerTitleView;
@@ -83,6 +84,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
     private ViewPager mBannerViewPaper ;
 
     private TextView mTvSearch ;
+
+    private LinearLayout mLLeft ;
 
     private List<Fragment> getFragments() {
 
@@ -253,7 +256,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
     @Override
     public void initView(View view) {
-
+        mLLeft = view.findViewById(R.id.ll_left) ;
         mIvQianDao= view.findViewById(R.id.iv_qiandao) ;
         mIvZxing = view.findViewById(R.id.iv_zxing) ;
         mTvSearch = view.findViewById(R.id.tv_search) ;
@@ -267,6 +270,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         mTvSearch.setOnClickListener(this);
         mIvQianDao.setOnClickListener(this);
         mIvZxing.setOnClickListener(this);
+        mLLeft.setOnClickListener(this);
 
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
@@ -393,6 +397,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
     public void onClick(View view) {
         Intent intent = null ;
         switch (view.getId()){
+            case R.id.ll_left:
+                intent = new Intent(getActivity(), ActivityLocation.class) ;
+                startActivity(intent);
+                break ;
             case R.id.iv_qiandao :
                 SignInDialog dialog = new SignInDialog(getActivity()) ;
                 dialog.show();
