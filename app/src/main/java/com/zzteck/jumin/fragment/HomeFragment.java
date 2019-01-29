@@ -27,6 +27,7 @@ import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.ComFragmentAdapter;
 import com.zzteck.jumin.adapter.FeaturedPagerAdapter;
 import com.zzteck.jumin.bean.HomeBean;
+import com.zzteck.jumin.ui.business.MoreCategoryActivity;
 import com.zzteck.jumin.ui.location.ActivityLocation;
 import com.zzteck.jumin.ui.location.LocationActivity;
 import com.zzteck.jumin.ui.mainui.SearchActivity;
@@ -254,8 +255,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         }
     }
 
+    private LinearLayout mLLMore ;
+
     @Override
     public void initView(View view) {
+
+        mLLMore = view.findViewById(R.id.ll_more) ;
         mLLeft = view.findViewById(R.id.ll_left) ;
         mIvQianDao= view.findViewById(R.id.iv_qiandao) ;
         mIvZxing = view.findViewById(R.id.iv_zxing) ;
@@ -271,6 +276,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         mIvQianDao.setOnClickListener(this);
         mIvZxing.setOnClickListener(this);
         mLLeft.setOnClickListener(this);
+        mLLMore.setOnClickListener(this);
 
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
@@ -397,6 +403,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
     public void onClick(View view) {
         Intent intent = null ;
         switch (view.getId()){
+            case R.id.ll_more:
+                intent = new Intent(getActivity(), MoreCategoryActivity.class) ;
+                startActivity(intent);
+                break ;
             case R.id.ll_left:
                 intent = new Intent(getActivity(), ActivityLocation.class) ;
                 startActivity(intent);

@@ -56,6 +56,7 @@
         <activity android:name=".ui.mainui.ZxingActivity"></activity>
         <activity android:name=".ui.location.LocationActivity"></activity>
         <activity android:name=".ui.location.ActivityLocation"></activity>
+        <activity android:name=".ui.business.MoreCategoryActivity"></activity>
 
         <activity android:name=".ui.mainui.WelcomeActivity">
             <intent-filter>
