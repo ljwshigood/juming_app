@@ -14,6 +14,8 @@
             <option value="$PROJECT_DIR$/barlibrary" />
             <option value="$PROJECT_DIR$/lib-zxing" />
             <option value="$PROJECT_DIR$/permissionlib" />
+            <option value="$PROJECT_DIR$/photoselect" />
+            <option value="$PROJECT_DIR$/uil" />
             <option value="$PROJECT_DIR$/zzview" />
           </set>
         </option>

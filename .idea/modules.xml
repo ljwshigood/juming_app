@@ -10,6 +10,8 @@
       <module fileurl="file://$PROJECT_DIR$/juming_app.iml" filepath="$PROJECT_DIR$/juming_app.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib-zxing/lib-zxing.iml" filepath="$PROJECT_DIR$/lib-zxing/lib-zxing.iml" />
       <module fileurl="file://$PROJECT_DIR$/permissionlib/permissionlib.iml" filepath="$PROJECT_DIR$/permissionlib/permissionlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/photoselect/photoselect.iml" filepath="$PROJECT_DIR$/photoselect/photoselect.iml" />
+      <module fileurl="file://$PROJECT_DIR$/uil/uil.iml" filepath="$PROJECT_DIR$/uil/uil.iml" />
       <module fileurl="file://$PROJECT_DIR$/zzview/zzview.iml" filepath="$PROJECT_DIR$/zzview/zzview.iml" />
     </modules>
   </component>
