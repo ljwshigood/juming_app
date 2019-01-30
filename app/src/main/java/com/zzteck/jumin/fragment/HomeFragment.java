@@ -10,6 +10,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -26,6 +28,7 @@ import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.ComFragmentAdapter;
 import com.zzteck.jumin.adapter.FeaturedPagerAdapter;
+import com.zzteck.jumin.adapter.VideoAdapter;
 import com.zzteck.jumin.bean.HomeBean;
 import com.zzteck.jumin.ui.business.MoreCategoryActivity;
 import com.zzteck.jumin.ui.location.ActivityLocation;
@@ -257,9 +260,21 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
     private LinearLayout mLLMore ;
 
+    private RecyclerView mRVVideo ;
+
+    private void initData(){
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRVVideo.setLayoutManager(linearLayoutManager);
+        VideoAdapter adapter = new VideoAdapter(getActivity(),null);
+        mRVVideo.setAdapter(adapter);
+    }
+
     @Override
     public void initView(View view) {
 
+        mRVVideo = view.findViewById(R.id.rv_video) ;
         mLLMore = view.findViewById(R.id.ll_more) ;
         mLLeft = view.findViewById(R.id.ll_left) ;
         mIvQianDao= view.findViewById(R.id.iv_qiandao) ;
@@ -395,7 +410,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
     @Override
     public void lazyLoad() {
-
+        initData();
     }
 
 

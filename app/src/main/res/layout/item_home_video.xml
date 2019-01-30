@@ -42,11 +42,10 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_video"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:background="@mipmap/bg_default_video"
-                android:scaleType="fitXY" />
+                android:layout_height="250dp" />
         </LinearLayout>
 
 
@@ -76,15 +75,15 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/icon_weixin"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginLeft="15dp"
+                    android:src="@mipmap/icon_weixin" />
 
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/icon_pengyouquan"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginLeft="15dp"
+                    android:src="@mipmap/icon_pengyouquan" />
 
 
             </LinearLayout>
