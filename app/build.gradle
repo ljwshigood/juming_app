@@ -85,5 +85,6 @@ dependencies {
     implementation project(':lib-zxing')
     implementation files('libs/pinyin4j-2.5.0.jar')
     implementation files('libs/pinyin4android1.0.jar')
-    implementation project(':photoselect')
+    //    implementation project(':photoselect')
+    implementation project(':photoselectcompont')
 }

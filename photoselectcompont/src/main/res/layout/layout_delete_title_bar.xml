@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/common_crop_title_bar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/common_crop_height_title_bar"
+    android:background="@color/common_crop_color_title_bar_background"
+    android:orientation="horizontal" >
+
+    <ImageButton
+        android:id="@+id/title_bar_back_button_ib"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/common_crop_space_between_element_h"
+        android:background="@null"
+        android:scaleType="centerInside"
+        android:src="@drawable/common_crop_ic_back" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/common_crop_space_between_element_v"
+        android:layout_toRightOf="@id/title_bar_back_button_ib"
+        android:background="@color/common_crop_color_black" />
+
+    <TextView
+        android:id="@+id/title_bar_title_tv"
+        style="@style/common_crop_text_white_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="62dp"
+        android:text="fanhui" />
+
+    <ImageView
+        android:id="@+id/iv_delete_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/common_crop_space_between_element_h"
+        android:gravity="center"
+        android:src="@drawable/ps_d_i" />
+
+</RelativeLayout>
