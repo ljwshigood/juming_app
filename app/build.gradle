@@ -61,6 +61,7 @@ dependencies {
         }
     }
     implementation 'com.android.support:multidex:1.0.3'
+    // implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     //banner
     implementation 'com.youth.banner:banner:1.4.10'
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-4'
@@ -80,11 +81,11 @@ dependencies {
     implementation project(':permissionlib')
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
     implementation project(':LRecyclerview_library')
-    //    implementation project(':library-tbsx5')
     implementation project(':FlycoTabLayout_Lib')
     implementation project(':lib-zxing')
     implementation files('libs/pinyin4j-2.5.0.jar')
     implementation files('libs/pinyin4android1.0.jar')
     //    implementation project(':photoselect')
     implementation project(':photoselectcompont')
+    implementation project(':volley-master')
 }

@@ -10,6 +10,8 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import java.util.ArrayList;
@@ -22,7 +24,6 @@ import io.dcloud.application.DCloudApplication;
  *
  */
 public class App extends DCloudApplication {
-
 
     private List<Activity> activityList = new LinkedList<Activity> ();
 
@@ -189,6 +190,8 @@ public class App extends DCloudApplication {
             }
         });*/
     }
+
+    public static RequestQueue queues;
     
     @Override
     public void onCreate() {
@@ -196,6 +199,13 @@ public class App extends DCloudApplication {
         ZXingLibrary.initDisplayOpinion(this);
         mContext = getApplicationContext ();
         initBaiduCrab();
+
+        queues = Volley.newRequestQueue(getApplicationContext());
+
+    }
+
+    public static RequestQueue getHttpQueues() {
+        return queues;
     }
 
     /**

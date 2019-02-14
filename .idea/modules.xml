@@ -12,6 +12,7 @@
       <module fileurl="file://$PROJECT_DIR$/permissionlib/permissionlib.iml" filepath="$PROJECT_DIR$/permissionlib/permissionlib.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoselectcompont/photoselectcompont.iml" filepath="$PROJECT_DIR$/photoselectcompont/photoselectcompont.iml" />
       <module fileurl="file://$PROJECT_DIR$/uil/uil.iml" filepath="$PROJECT_DIR$/uil/uil.iml" />
+      <module fileurl="file://$PROJECT_DIR$/volley-master/volley-master.iml" filepath="$PROJECT_DIR$/volley-master/volley-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/zzview/zzview.iml" filepath="$PROJECT_DIR$/zzview/zzview.iml" />
     </modules>
   </component>
