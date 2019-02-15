@@ -33,6 +33,7 @@ import com.zzteck.jumin.adapter.ComFragmentAdapter;
 import com.zzteck.jumin.adapter.FeaturedPagerAdapter;
 import com.zzteck.jumin.adapter.VideoAdapter;
 import com.zzteck.jumin.bean.BannerBean;
+import com.zzteck.jumin.bean.CategoryBean;
 import com.zzteck.jumin.bean.HomeBean;
 import com.zzteck.jumin.bean.LoginBean;
 import com.zzteck.jumin.bean.VideoBean;
@@ -291,7 +292,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         Map<String, String> map = new HashMap<>() ;
         map.put("s","App.Info.Getvideoinfo") ;
         map.put("cityid","1") ;
-        HttpUtils.doGet(getActivity(), Constants.HOST+"?"+ UtilsTools.getMapToString(map),"GET",new VolleyInterface(getActivity(), VolleyInterface.mListener, VolleyInterface.mErrorListtener) {
+        /*HttpUtils.doGet(getActivity(), Constants.HOST+"?"+ UtilsTools.getMapToString(map),"GET",new VolleyInterface(getActivity(), VolleyInterface.mListener, VolleyInterface.mErrorListtener) {
 
             @Override
             public void onSuccess(String result) {
@@ -313,9 +314,25 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
             public void onError(VolleyError error) {
 
             }
-        });
+        });*/
 
     }
+
+    private ImageView mIvOne ;
+
+    private ImageView mIvTwo ;
+
+    private ImageView mIvThree ;
+
+    private ImageView mIvFour ;
+
+    private TextView mTvOne ;
+
+    private TextView mTvTwo ;
+
+    private TextView mTvThree ;
+
+    private TextView mTvFour ;
 
     @Override
     public void initView(View view) {
@@ -332,6 +349,16 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         refreshLayout = view.findViewById(R.id.refreshLayout) ;
         scrollView = view.findViewById(R.id.scrollView) ;
         magicIndicator = view.findViewById(R.id.magic_indicator) ;
+
+        mIvOne = view.findViewById(R.id.iv_one) ;
+        mIvTwo = view.findViewById(R.id.iv_two) ;
+        mIvThree = view.findViewById(R.id.iv_three) ;
+        mIvFour = view.findViewById(R.id.iv_four) ;
+
+        mTvOne = view.findViewById(R.id.tv_one) ;
+        mTvTwo = view.findViewById(R.id.tv_two) ;
+        mTvThree = view.findViewById(R.id.tv_three) ;
+        mTvFour = view.findViewById(R.id.tv_four) ;
 
         mTvSearch.setOnClickListener(this);
         mIvQianDao.setOnClickListener(this);
@@ -398,7 +425,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         Map<String, String> map = new HashMap<>() ;
         map.put("s","App.Index.Banner") ;
 
-        HttpUtils.doGet(getActivity(), Constants.HOST+"?"+ UtilsTools.getMapToString(map),"GET",new VolleyInterface(getActivity(), VolleyInterface.mListener, VolleyInterface.mErrorListtener) {
+        /*HttpUtils.doGet(getActivity(), Constants.HOST+"?"+ UtilsTools.getMapToString(map),"GET",new VolleyInterface(getActivity(), VolleyInterface.mListener, VolleyInterface.mErrorListtener) {
 
             @Override
             public void onSuccess(String result) {
@@ -411,10 +438,35 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
                         modelList.add(bean.getData().get(i)) ;
                     }
                 }
-
                 initViewPager() ;
+            }
 
-               // Log.e("liujw","######################message : "+message);
+            @Override
+            public void onError(VolleyError error) {
+
+            }
+        });*/
+
+        getCategoryTitle(1) ;
+    }
+
+
+    private void getCategoryTitle(int type){
+
+        Map<String, String> map = new HashMap<>() ;
+        map.put("s","App.Category.Pushcat") ;
+        map.put("type",type+"") ;
+        HttpUtils.doGet(getActivity(), Constants.HOST+"?"+ UtilsTools.getMapToString(map),"GET",new VolleyInterface(getActivity(), VolleyInterface.mListener, VolleyInterface.mErrorListtener) {
+
+            @Override
+            public void onSuccess(String result) {
+                String message = new String(result.getBytes()) ;
+                Gson gson = new Gson() ;
+                CategoryBean bean = gson.fromJson(message,CategoryBean.class) ;
+
+
+
+                Log.e("liujw","######################message : "+message);
             }
 
             @Override
