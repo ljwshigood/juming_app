@@ -21,7 +21,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -32,6 +36,7 @@ import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.ComFragmentAdapter;
 import com.zzteck.jumin.adapter.FeaturedPagerAdapter;
 import com.zzteck.jumin.adapter.VideoAdapter;
+import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.bean.BannerBean;
 import com.zzteck.jumin.bean.CategoryBean;
 import com.zzteck.jumin.bean.HomeBean;
@@ -62,6 +67,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -292,11 +298,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         Map<String, String> map = new HashMap<>() ;
         map.put("s","App.Info.Getvideoinfo") ;
         map.put("cityid","1") ;
-        /*HttpUtils.doGet(getActivity(), Constants.HOST+"?"+ UtilsTools.getMapToString(map),"GET",new VolleyInterface(getActivity(), VolleyInterface.mListener, VolleyInterface.mErrorListtener) {
 
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
             @Override
-            public void onSuccess(String result) {
-                String message = new String(result.getBytes()) ;
+            public void onResponse(String response) {
+                String message = new String(response.getBytes()) ;
                 Gson gson = new Gson() ;
                 VideoBean bean = gson.fromJson(message,VideoBean.class) ;
 
@@ -307,14 +313,17 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
                 }
 
                 mVideoAdapter.notifyVideoListChange(mVideoList);
-
             }
-
+        }, new Response.ErrorListener() {
             @Override
-            public void onError(VolleyError error) {
+            public void onErrorResponse(VolleyError error) {
 
             }
-        });*/
+        });
+
+        stringRequest.setTag("");
+
+        App.getHttpQueues().add(stringRequest);
 
     }
 
@@ -425,11 +434,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         Map<String, String> map = new HashMap<>() ;
         map.put("s","App.Index.Banner") ;
 
-        /*HttpUtils.doGet(getActivity(), Constants.HOST+"?"+ UtilsTools.getMapToString(map),"GET",new VolleyInterface(getActivity(), VolleyInterface.mListener, VolleyInterface.mErrorListtener) {
-
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
             @Override
-            public void onSuccess(String result) {
-                String message = new String(result.getBytes()) ;
+            public void onResponse(String response) {
+                String message = new String(response.getBytes()) ;
                 Gson gson = new Gson() ;
                 BannerBean bean = gson.fromJson(message,BannerBean.class) ;
 
@@ -440,12 +448,16 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
                 }
                 initViewPager() ;
             }
-
+        }, new Response.ErrorListener() {
             @Override
-            public void onError(VolleyError error) {
+            public void onErrorResponse(VolleyError error) {
 
             }
-        });*/
+        });
+
+        stringRequest.setTag("");
+        // 将请求添加至队列里面
+        App.getHttpQueues().add(stringRequest);
 
         getCategoryTitle(1) ;
     }
@@ -456,24 +468,25 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         Map<String, String> map = new HashMap<>() ;
         map.put("s","App.Category.Pushcat") ;
         map.put("type",type+"") ;
-        HttpUtils.doGet(getActivity(), Constants.HOST+"?"+ UtilsTools.getMapToString(map),"GET",new VolleyInterface(getActivity(), VolleyInterface.mListener, VolleyInterface.mErrorListtener) {
 
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
             @Override
-            public void onSuccess(String result) {
-                String message = new String(result.getBytes()) ;
+            public void onResponse(String response) {
+                String message = new String(response.getBytes()) ;
                 Gson gson = new Gson() ;
                 CategoryBean bean = gson.fromJson(message,CategoryBean.class) ;
 
-
-
-                Log.e("liujw","######################message : "+message);
             }
-
+        }, new Response.ErrorListener() {
             @Override
-            public void onError(VolleyError error) {
+            public void onErrorResponse(VolleyError error) {
 
             }
         });
+
+        stringRequest.setTag("");
+        App.getHttpQueues().add(stringRequest);
 
     }
 
