@@ -35,6 +35,7 @@ import com.zzteck.jumin.adapter.VideoAdapter;
 import com.zzteck.jumin.bean.BannerBean;
 import com.zzteck.jumin.bean.HomeBean;
 import com.zzteck.jumin.bean.LoginBean;
+import com.zzteck.jumin.bean.VideoBean;
 import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.ui.business.MoreCategoryActivity;
 import com.zzteck.jumin.ui.location.ActivityLocation;
@@ -275,13 +276,45 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
     private RecyclerView mRVVideo ;
 
+    private VideoAdapter mVideoAdapter ;
+
+    private List<VideoBean.DataBean> mVideoList = new ArrayList<>();
+
     private void initData(){
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRVVideo.setLayoutManager(linearLayoutManager);
-        VideoAdapter adapter = new VideoAdapter(getActivity(),null);
-        mRVVideo.setAdapter(adapter);
+        mVideoAdapter = new VideoAdapter(getActivity(),mVideoList);
+        mRVVideo.setAdapter(mVideoAdapter);
+
+        Map<String, String> map = new HashMap<>() ;
+        map.put("s","App.Info.Getvideoinfo") ;
+        map.put("cityid","1") ;
+        HttpUtils.doGet(getActivity(), Constants.HOST+"?"+ UtilsTools.getMapToString(map),"GET",new VolleyInterface(getActivity(), VolleyInterface.mListener, VolleyInterface.mErrorListtener) {
+
+            @Override
+            public void onSuccess(String result) {
+                String message = new String(result.getBytes()) ;
+                Gson gson = new Gson() ;
+                VideoBean bean = gson.fromJson(message,VideoBean.class) ;
+
+                if(bean != null && bean.getData() != null && bean.getData().size() > 0){
+                    for(int i = 0 ;i < bean.getData().size() ;i++){
+                        mVideoList.add(bean.getData().get(i)) ;
+                    }
+                }
+
+                mVideoAdapter.notifyVideoListChange(mVideoList);
+
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+
+            }
+        });
+
     }
 
     @Override
@@ -362,18 +395,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         viewPagerHome.setOffscreenPageLimit(10);
         initMagicIndicator();
 
-        /*String[] images= new String[] {
-                "http://img.zcool.cn/community/0166c756e1427432f875520f7cc838.jpg",
-                "http://img.zcool.cn/community/018fdb56e1428632f875520f7b67cb.jpg",
-                "http://img.zcool.cn/community/01c8dc56e1428e6ac72531cbaa5f2c.jpg",
-                "http://img.zcool.cn/community/01fda356640b706ac725b2c8b99b08.jpg",
-                "http://img.zcool.cn/community/01fd2756e142716ac72531cbf8bbbf.jpg",
-                "http://img.zcool.cn/community/0114a856640b6d32f87545731c076a.jpg"};
-
-        for(int i = 0 ;i < images.length ;i++){
-            modelList.add(images[i]) ;
-        }*/
-
         Map<String, String> map = new HashMap<>() ;
         map.put("s","App.Index.Banner") ;
 
@@ -393,7 +414,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
                 initViewPager() ;
 
-                Log.e("liujw","######################message : "+message);
+               // Log.e("liujw","######################message : "+message);
             }
 
             @Override
@@ -401,8 +422,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
             }
         });
-
-
 
     }
 

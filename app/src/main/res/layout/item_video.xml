@@ -14,7 +14,9 @@
         <ImageView
             android:id="@+id/iv_video"
             android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_height="250dp"
+            android:scaleType="fitXY"
+            android:background="@android:color/black"
             android:src="@mipmap/ic_launcher" />
 
 

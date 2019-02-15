@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.VideoBean;
 
@@ -22,11 +24,16 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
     private Context mContext;
 
-    private List<VideoBean> mVideoList;
+    private List<VideoBean.DataBean> mVideoList;
 
-    public VideoAdapter(Context context, List<VideoBean> list) {
+    public VideoAdapter(Context context, List<VideoBean.DataBean> list) {
         this.mContext = context;
         this.mVideoList = list;
+    }
+
+    public void notifyVideoListChange(List<VideoBean.DataBean> list){
+        this.mVideoList = list ;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -38,11 +45,18 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(VideoAdapter.ViewHolder holder, int position) {
 
+        Glide.with(mContext)
+                .load(mVideoList.get(position).getImg_path())
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
+                .crossFade(300)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(holder.mIvVideo);
     }
 
     @Override
     public int getItemCount() {
-        return mVideoList == null ? 10 : mVideoList.size();
+        return mVideoList == null ? 0 : mVideoList.size();
 
     }
 
