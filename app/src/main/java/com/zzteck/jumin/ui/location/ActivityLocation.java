@@ -118,7 +118,7 @@ public class ActivityLocation extends BaseActivity implements OnScrollListener {
 		public void onLocationChanged(AMapLocation loc) {
 			if (null != loc) {
 				//解析定位结果
-				//String result = Utils.getLocationStr(loc);
+				//String result = UtilsTools.getLocationStr(loc);
 				//tvResult.setText(result);
 			} else {
 				//tvResult.setText("定位失败，loc is null");

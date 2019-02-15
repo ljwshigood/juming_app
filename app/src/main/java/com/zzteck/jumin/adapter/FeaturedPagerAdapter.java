@@ -9,17 +9,18 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zzteck.jumin.R;
+import com.zzteck.jumin.bean.BannerBean;
 
 import java.util.List;
 
 
 public class FeaturedPagerAdapter extends PagerAdapter {
-    private List<String> data;
+    private List<BannerBean.DataBean> data;
     private Context context;
 
     private int mType ;
     
-    public FeaturedPagerAdapter(Context context, List<String> data, int type) {
+    public FeaturedPagerAdapter(Context context, List<BannerBean.DataBean> data, int type) {
         this.data = data;
         this.mType = type ;
         this.context = context;
@@ -44,7 +45,7 @@ public class FeaturedPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, final int position) {
         ImageView view = new ImageView(context);
         view.setScaleType(ImageView.ScaleType.FIT_XY);
-        String img = data.get(position % data.size());
+        String img = data.get(position % data.size()).getImg_path();
         Glide.with(context)
                 .load(img)
                 .placeholder(R.mipmap.ic_launcher)

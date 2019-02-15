@@ -41,7 +41,7 @@ public class UserDAO {
 		mDatabaseManager.getmSQLiteDatabase().execSQL(updateSQL,mValue);
 	}
 	
-	public synchronized void insertUserTable(String wanjiaToken, String token, LoginBean.UserInfo user, int isLogin){
+	public synchronized void insertUserTable(LoginBean.DataBean user, int isLogin){
 		if(user == null){
 			return ;
 		}
@@ -50,16 +50,26 @@ public class UserDAO {
 										"%d,\"%s\",\"%s\"," +
 										"%s,\"%s\",\"%s\",%d)" ;
 		
-		insertSQL = String.format(insertSQL, String.valueOf(user.getId()),user.getName(),user.getName(),user.getName(),
+		insertSQL = String.format(insertSQL, String.valueOf(user.getId()),user.getTname(),user.getTname(),user.getTname(),
 					1,1,1,
 					System.currentTimeMillis(),user.getMobile(),user.getEmail(),
-					String.valueOf(user.getId()),wanjiaToken,token,isLogin);
+					String.valueOf(user.getId()),String.valueOf(user.getId()),String.valueOf(user.getId()),isLogin);
 		mDatabaseManager.getmSQLiteDatabase().execSQL(insertSQL);
 	}
 	
 	public synchronized boolean isExistRecord(String id){
 		String sqlSQL = "select * from user where id = %s";
 		sqlSQL = String.format(sqlSQL, id);
+		Cursor cursor  = mDatabaseManager.getmSQLiteDatabase().rawQuery(sqlSQL,null);
+		while(cursor != null && cursor.moveToNext()){
+			return true ;
+		}
+		mDatabaseManager.recyleCursor(cursor) ;
+		return false ;
+	}
+
+	public synchronized boolean isExistRecordLogin(){
+		String sqlSQL = "select id from user where isLogin = 1";
 		Cursor cursor  = mDatabaseManager.getmSQLiteDatabase().rawQuery(sqlSQL,null);
 		while(cursor != null && cursor.moveToNext()){
 			return true ;
@@ -82,13 +92,13 @@ public class UserDAO {
 		mDatabaseManager.getmSQLiteDatabase().execSQL(updateSQL);
 	}
 	
-	public synchronized void editorUserTable(String wanjiaToken,LoginBean.UserInfo user){
+	public synchronized void editorUserTable(LoginBean.DataBean user){
 		if(isExistRecord(String.valueOf(user.getId()))){
 			String updateSQL = "update user set username = \"%s\",wanjiaToken = \"%s\",inviteCode = \"%s\" ,head = \"%s\" ,token = \"%s\"  where id = %s" ;
-			updateSQL = String.format(updateSQL, user.getId(),wanjiaToken,"",user.getHeader(),"",user.getId());
+			updateSQL = String.format(updateSQL, user.getId(),user.getTname(),"",user.getLogo(),"",user.getId());
 			mDatabaseManager.getmSQLiteDatabase().execSQL(updateSQL);
 		}else{
-			//insertUserTable(wanjiaToken, user,1);
+			insertUserTable(user,1);
 		}
 	}
 	

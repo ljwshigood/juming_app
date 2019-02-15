@@ -43,7 +43,7 @@ public class HttpUtils {
         // 将请求添加至队列里面
         App.getHttpQueues().add(stringRequest);
         // 启动
-        App.getHttpQueues().start();
+       // App.getHttpQueues().start();
     }
 
     /**
@@ -60,17 +60,19 @@ public class HttpUtils {
         Log.e("发送Get请求的URL:", url);
         //获取全局的请求队列并把基于Tag标签的请求全部取消，防止重复请求
         App.getHttpQueues().cancelAll(tag);
+
         stringRequest = new StringRequest(url, vif.loadingListener(), vif.errorListener()) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 return params;
             }
         };
+
         // 设置标签
         stringRequest.setTag(tag);
         // 加入队列
         App.getHttpQueues().add(stringRequest);
         // 启动
-        App.getHttpQueues().start();
+      //  App.getHttpQueues().start();
     }
 }

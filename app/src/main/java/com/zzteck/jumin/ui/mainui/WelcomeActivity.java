@@ -49,7 +49,7 @@ public class WelcomeActivity extends BaseActivity implements OnClickListener{
 		 public void handleMessage(Message msg) {
 			 super.handleMessage(msg);
 
-			 if(UserDAO.getInstance(mContext).isExistRecord("1")){
+			 if(UserDAO.getInstance(mContext).isExistRecordLogin()){
 				 Intent intent = new Intent(WelcomeActivity.this,MainActivity.class) ;
 				 startActivity(intent);
 				 finish();

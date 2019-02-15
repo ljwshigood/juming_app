@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -20,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
@@ -29,15 +32,23 @@ import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.ComFragmentAdapter;
 import com.zzteck.jumin.adapter.FeaturedPagerAdapter;
 import com.zzteck.jumin.adapter.VideoAdapter;
+import com.zzteck.jumin.bean.BannerBean;
 import com.zzteck.jumin.bean.HomeBean;
+import com.zzteck.jumin.bean.LoginBean;
+import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.ui.business.MoreCategoryActivity;
 import com.zzteck.jumin.ui.location.ActivityLocation;
 import com.zzteck.jumin.ui.location.LocationActivity;
+import com.zzteck.jumin.ui.mainui.MainActivity;
 import com.zzteck.jumin.ui.mainui.SearchActivity;
 import com.zzteck.jumin.ui.mainui.ZxingActivity;
+import com.zzteck.jumin.utils.Constants;
+import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.ColorFlipPagerTitleView;
 import com.zzteck.jumin.view.JudgeNestedScrollView;
 import com.zzteck.jumin.view.SignInDialog;
+import com.zzteck.jumin.webmanager.HttpUtils;
+import com.zzteck.jumin.webmanager.VolleyInterface;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -51,7 +62,9 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -106,7 +119,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         return fragments;
     }
 
-    private List<String> modelList = new ArrayList<>() ;
+    private List<BannerBean.DataBean> modelList = new ArrayList<>() ;
 
     @Override
     public int getLayoutId() {
@@ -349,7 +362,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         viewPagerHome.setOffscreenPageLimit(10);
         initMagicIndicator();
 
-        String[] images= new String[] {
+        /*String[] images= new String[] {
                 "http://img.zcool.cn/community/0166c756e1427432f875520f7cc838.jpg",
                 "http://img.zcool.cn/community/018fdb56e1428632f875520f7b67cb.jpg",
                 "http://img.zcool.cn/community/01c8dc56e1428e6ac72531cbaa5f2c.jpg",
@@ -359,9 +372,37 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
         for(int i = 0 ;i < images.length ;i++){
             modelList.add(images[i]) ;
-        }
+        }*/
 
-        initViewPager() ;
+        Map<String, String> map = new HashMap<>() ;
+        map.put("s","App.Index.Banner") ;
+
+        HttpUtils.doGet(getActivity(), Constants.HOST+"?"+ UtilsTools.getMapToString(map),"GET",new VolleyInterface(getActivity(), VolleyInterface.mListener, VolleyInterface.mErrorListtener) {
+
+            @Override
+            public void onSuccess(String result) {
+                String message = new String(result.getBytes()) ;
+                Gson gson = new Gson() ;
+                BannerBean bean = gson.fromJson(message,BannerBean.class) ;
+
+                if(bean != null && bean.getData() != null && bean.getData().size() > 0){
+                    for(int i = 0 ;i < bean.getData().size() ;i++){
+                        modelList.add(bean.getData().get(i)) ;
+                    }
+                }
+
+                initViewPager() ;
+
+                Log.e("liujw","######################message : "+message);
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+
+            }
+        });
+
+
 
     }
 
