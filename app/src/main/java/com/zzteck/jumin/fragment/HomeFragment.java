@@ -52,6 +52,7 @@ import com.zzteck.jumin.ui.mainui.MainActivity;
 import com.zzteck.jumin.ui.mainui.SearchActivity;
 import com.zzteck.jumin.ui.mainui.ZxingActivity;
 import com.zzteck.jumin.utils.Constants;
+import com.zzteck.jumin.utils.GlideCircleTransform;
 import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.ColorFlipPagerTitleView;
 import com.zzteck.jumin.view.JudgeNestedScrollView;
@@ -94,9 +95,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
     private MagicIndicator magicIndicator;
 
-    private String[] mTitles = new String[]{"推荐", "二手房", "商家"};
+  //  private String[] mTitles = new String[]{"推荐", "二手房", "商家"};
 
-    private List<String> mDataList = Arrays.asList(mTitles);
+    private List<String> mDataList = new ArrayList<>();
 
     private RecommandFragment mRecomandFragment ;
 
@@ -370,17 +371,28 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         mTvThree = view.findViewById(R.id.tv_three) ;
         mTvFour = view.findViewById(R.id.tv_four) ;
 
+        mIvErShouFang = view.findViewById(R.id.iv_ershoufang) ;
+        mIvXinFang = view.findViewById(R.id.iv_xinfang) ;
+        mIvChuZu = view.findViewById(R.id.iv_chuzu) ;
+        mIvShangpuChuzu = view.findViewById(R.id.iv_shangpuchuzu) ;
+        mIvShangpuZhuanrang = view.findViewById(R.id.iv_shangpuzhuanrang) ;
 
         mIvCategoryList.add(mIvOne) ;
         mIvCategoryList.add(mIvTwo) ;
         mIvCategoryList.add(mIvThree) ;
         mIvCategoryList.add(mIvFour) ;
 
-
         mTvCategoryList.add(mTvOne) ;
         mTvCategoryList.add(mTvTwo) ;
         mTvCategoryList.add(mTvThree) ;
         mTvCategoryList.add(mTvFour) ;
+
+
+        mImagePicLogo.add(mIvErShouFang) ;
+        mImagePicLogo.add(mIvXinFang) ;
+        mImagePicLogo.add(mIvChuZu) ;
+        mImagePicLogo.add(mIvShangpuChuzu) ;
+        mImagePicLogo.add(mIvShangpuZhuanrang) ;
 
         mTvSearch.setOnClickListener(this);
         mIvQianDao.setOnClickListener(this);
@@ -442,7 +454,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
         viewPagerHome.setAdapter(new ComFragmentAdapter(getActivity().getSupportFragmentManager(), getFragments()));
         viewPagerHome.setOffscreenPageLimit(10);
-        initMagicIndicator();
 
         Map<String, String> map = new HashMap<>() ;
         map.put("s","App.Index.Banner") ;
@@ -471,7 +482,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         stringRequest.setTag("");
         App.getHttpQueues().add(stringRequest);
 
-        getCategoryTitle(1) ;
+        getCategoryTitle1() ;
+        getCategoryTitle2();
+
+        getCategoryTitle3();
+
     }
 
     private List<ImageView> mIvCategoryList = new ArrayList<>();
@@ -479,11 +494,63 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
     private List<TextView> mTvCategoryList = new ArrayList<>() ;
 
 
-    private void getCategoryTitle(int type){
+    private void getCategoryTitle1(){
 
         Map<String, String> map = new HashMap<>() ;
         map.put("s","App.Category.Pushcat") ;
-        map.put("type",type+"") ;
+        map.put("type",1+"") ;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String message = new String(response.getBytes()) ;
+                Gson gson = new Gson() ;
+                CategoryBean bean = gson.fromJson(message,CategoryBean.class) ;
+                if(bean.getData() != null && bean.getData().size() > 0){
+                    for(int i = 0 ;i < bean.getData().size();i++){
+                        Glide.with(getActivity())
+                                .load(bean.getData().get(i).getIcon())
+                                .placeholder(R.mipmap.ic_launcher)
+                                .error(R.mipmap.ic_launcher)
+                                .crossFade(300)
+                                .transform(new GlideCircleTransform(getActivity()))
+                                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                                .into(mIvCategoryList.get(i));
+                        mTvCategoryList.get(i).setText(bean.getData().get(i).getCatname());
+                    }
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        stringRequest.setTag("");
+        App.getHttpQueues().add(stringRequest);
+
+    }
+
+    private ImageView mIvErShouFang ;
+
+    private ImageView mIvXinFang ;
+
+    private ImageView mIvChuZu ;
+
+    private ImageView mIvShangpuChuzu ;
+
+    private ImageView mIvShangpuZhuanrang ;
+
+    private List<ImageView>  mImagePicLogo = new ArrayList<>();
+
+    private void getCategoryTitle2(){
+
+        Map<String, String> map = new HashMap<>() ;
+        map.put("s","App.Category.Pushcat") ;
+        map.put("type",2+"") ;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
             @Override
@@ -499,11 +566,43 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
                                 .error(R.mipmap.ic_launcher)
                                 .crossFade(300)
                                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                                .into(mIvCategoryList.get(i));
-                        mTvCategoryList.get(i).setText(bean.getData().get(i).getCatname());
+                                .into(mImagePicLogo.get(i));
                     }
                 }
 
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        stringRequest.setTag("");
+        App.getHttpQueues().add(stringRequest);
+
+    }
+
+    private void getCategoryTitle3(){
+
+        Map<String, String> map = new HashMap<>() ;
+        map.put("s","App.Category.Pushcat") ;
+        map.put("type",3+"") ;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String message = new String(response.getBytes()) ;
+                Gson gson = new Gson() ;
+                CategoryBean bean = gson.fromJson(message,CategoryBean.class) ;
+                if(bean.getData() != null && bean.getData().size() > 0){
+                    for(int i = 0 ;i < bean.getData().size() ;i++){
+                        mDataList.add(bean.getData().get(i).getCatname()) ;
+                    }
+                }
+
+                initMagicIndicator();
 
             }
         }, new Response.ErrorListener() {

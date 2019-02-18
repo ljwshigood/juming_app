@@ -23,8 +23,9 @@
             <ImageView
                 android:id="@+id/iv_ershoufang"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/pic_ershoufang" />
+                android:layout_height="80dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/pic_ershoufang" />
 
         </LinearLayout>
 
@@ -37,9 +38,10 @@
             <ImageView
                 android:id="@+id/iv_xinfang"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_marginLeft="5dp"
-                android:background="@mipmap/pic_xinfangchushou" />
+                android:scaleType="fitXY"
+                android:src="@mipmap/pic_xinfangchushou" />
         </LinearLayout>
     </LinearLayout>
 
@@ -66,8 +68,9 @@
                 <ImageView
                     android:id="@+id/iv_chuzu"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@mipmap/pic_fangwuchuzu" />
+                    android:layout_height="80dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/pic_fangwuchuzu" />
             </LinearLayout>
 
             <LinearLayout
@@ -79,9 +82,10 @@
                 <ImageView
                     android:id="@+id/iv_shangpuchuzu"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="80dp"
                     android:layout_marginLeft="5dp"
-                    android:background="@mipmap/pic_shangpuchuzhu" />
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/pic_shangpuchuzhu" />
             </LinearLayout>
 
 
@@ -96,9 +100,10 @@
             <ImageView
                 android:id="@+id/iv_shangpuzhuanrang"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_marginLeft="5dp"
-                android:background="@mipmap/pic_shangpuzhuanrang" />
+                android:scaleType="fitXY"
+                android:src="@mipmap/pic_shangpuzhuanrang" />
 
         </LinearLayout>
 
