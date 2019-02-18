@@ -42,6 +42,7 @@ import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.bean.BannerBean;
 import com.zzteck.jumin.bean.CategoryBean;
 import com.zzteck.jumin.bean.HomeBean;
+import com.zzteck.jumin.bean.HomeInfo;
 import com.zzteck.jumin.bean.LoginBean;
 import com.zzteck.jumin.bean.VideoBean;
 import com.zzteck.jumin.db.UserDAO;
@@ -115,17 +116,25 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
     private LinearLayout mLLeft ;
 
-    private List<Fragment> getFragments() {
+    private List<Fragment> getFragments(List<String> data) {
 
         List<Fragment> fragments = new ArrayList<>();
 
-        mRecomandFragment = new RecommandFragment() ;
-        mSecondHandFragment = new SecondHandFragment() ;
-        mBusinessFragment = new BusinessFragment() ;
+        if(data != null && data.size() > 0){
 
-        fragments.add(mRecomandFragment);
-        fragments.add(mSecondHandFragment);
-        fragments.add(mBusinessFragment);
+            for(int i = 0 ;i < data.size() ;i++){
+
+                mRecomandFragment = new RecommandFragment() ;
+                Bundle bundle = new Bundle();
+                bundle.putString("item", data.get(i));
+                mRecomandFragment.setArguments(bundle);
+                fragments.add(mRecomandFragment);
+
+            }
+        }
+
+        //fragments.add(mSecondHandFragment);
+        //fragments.add(mBusinessFragment);
 
         return fragments;
     }
@@ -452,9 +461,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
             }
         });
 
-        viewPagerHome.setAdapter(new ComFragmentAdapter(getActivity().getSupportFragmentManager(), getFragments()));
-        viewPagerHome.setOffscreenPageLimit(10);
-
         Map<String, String> map = new HashMap<>() ;
         map.put("s","App.Index.Banner") ;
 
@@ -492,7 +498,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
     private List<ImageView> mIvCategoryList = new ArrayList<>();
 
     private List<TextView> mTvCategoryList = new ArrayList<>() ;
-
 
     private void getCategoryTitle1(){
 
@@ -600,9 +605,13 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
                     for(int i = 0 ;i < bean.getData().size() ;i++){
                         mDataList.add(bean.getData().get(i).getCatname()) ;
                     }
-                }
 
-                initMagicIndicator();
+                    initMagicIndicator() ;
+
+                    viewPagerHome.setAdapter(new ComFragmentAdapter(getActivity().getSupportFragmentManager(), getFragments(mDataList)));
+                    viewPagerHome.setOffscreenPageLimit(10);
+
+                }
 
             }
         }, new Response.ErrorListener() {
