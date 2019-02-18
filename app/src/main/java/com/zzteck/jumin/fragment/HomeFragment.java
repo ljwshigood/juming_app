@@ -26,6 +26,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -311,7 +313,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
                         mVideoList.add(bean.getData().get(i)) ;
                     }
                 }
-
                 mVideoAdapter.notifyVideoListChange(mVideoList);
             }
         }, new Response.ErrorListener() {
@@ -368,6 +369,18 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         mTvTwo = view.findViewById(R.id.tv_two) ;
         mTvThree = view.findViewById(R.id.tv_three) ;
         mTvFour = view.findViewById(R.id.tv_four) ;
+
+
+        mIvCategoryList.add(mIvOne) ;
+        mIvCategoryList.add(mIvTwo) ;
+        mIvCategoryList.add(mIvThree) ;
+        mIvCategoryList.add(mIvFour) ;
+
+
+        mTvCategoryList.add(mTvOne) ;
+        mTvCategoryList.add(mTvTwo) ;
+        mTvCategoryList.add(mTvThree) ;
+        mTvCategoryList.add(mTvFour) ;
 
         mTvSearch.setOnClickListener(this);
         mIvQianDao.setOnClickListener(this);
@@ -456,11 +469,14 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         });
 
         stringRequest.setTag("");
-        // 将请求添加至队列里面
         App.getHttpQueues().add(stringRequest);
 
         getCategoryTitle(1) ;
     }
+
+    private List<ImageView> mIvCategoryList = new ArrayList<>();
+
+    private List<TextView> mTvCategoryList = new ArrayList<>() ;
 
 
     private void getCategoryTitle(int type){
@@ -469,13 +485,25 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         map.put("s","App.Category.Pushcat") ;
         map.put("type",type+"") ;
 
-
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 String message = new String(response.getBytes()) ;
                 Gson gson = new Gson() ;
                 CategoryBean bean = gson.fromJson(message,CategoryBean.class) ;
+                if(bean.getData() != null && bean.getData().size() > 0){
+                    for(int i = 0 ;i < bean.getData().size();i++){
+                        Glide.with(getActivity())
+                                .load(bean.getData().get(i).getIcon())
+                                .placeholder(R.mipmap.ic_launcher)
+                                .error(R.mipmap.ic_launcher)
+                                .crossFade(300)
+                                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                                .into(mIvCategoryList.get(i));
+                        mTvCategoryList.get(i).setText(bean.getData().get(i).getCatname());
+                    }
+                }
+
 
             }
         }, new Response.ErrorListener() {
