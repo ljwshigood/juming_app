@@ -629,7 +629,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
     private void initMagicIndicator() {
         CommonNavigator commonNavigator = new CommonNavigator(getActivity());
         commonNavigator.setScrollPivotX(0.65f);
-        commonNavigator.setAdjustMode(true);
+      //  commonNavigator.setAdjustMode(true);
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
@@ -646,7 +646,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
                 simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        viewPagerHome.setCurrentItem(index, false);
+                        viewPagerHome.setCurrentItem(index);
                     }
                 });
                 return simplePagerTitleView;
