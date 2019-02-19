@@ -2,6 +2,7 @@ package com.zzteck.jumin.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -116,7 +117,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
     private LinearLayout mLLeft ;
 
-    private List<Fragment> getFragments(List<String> data) {
+    private List<Fragment> getFragments(List<CategoryBean.DataBean> data) {
 
         List<Fragment> fragments = new ArrayList<>();
 
@@ -126,16 +127,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
                 mRecomandFragment = new RecommandFragment() ;
                 Bundle bundle = new Bundle();
-                bundle.putString("item", data.get(i));
+                bundle.putString("item", data.get(i).getCatid());
                 mRecomandFragment.setArguments(bundle);
                 fragments.add(mRecomandFragment);
 
             }
         }
-
-        //fragments.add(mSecondHandFragment);
-        //fragments.add(mBusinessFragment);
-
         return fragments;
     }
 
@@ -608,7 +605,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
                     initMagicIndicator() ;
 
-                    viewPagerHome.setAdapter(new ComFragmentAdapter(getActivity().getSupportFragmentManager(), getFragments(mDataList)));
+                    viewPagerHome.setAdapter(new ComFragmentAdapter(getActivity().getSupportFragmentManager(), getFragments(bean.getData())));
                     viewPagerHome.setOffscreenPageLimit(10);
 
                 }
@@ -629,7 +626,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
     private void initMagicIndicator() {
         CommonNavigator commonNavigator = new CommonNavigator(getActivity());
         commonNavigator.setScrollPivotX(0.65f);
-      //  commonNavigator.setAdjustMode(true);
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
@@ -654,15 +650,20 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
             @Override
             public IPagerIndicator getIndicator(Context context) {
-                LinePagerIndicator indicator = new LinePagerIndicator(context);
+
+                LinePagerIndicator linePagerIndicator = new LinePagerIndicator(context);
+                linePagerIndicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
+                linePagerIndicator.setColors(ContextCompat.getColor(getActivity(), R.color.mainRed));
+
+                /*LinePagerIndicator indicator = new LinePagerIndicator(context);
                 indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
                 indicator.setLineHeight(UIUtil.dip2px(context, 2));
                 indicator.setLineWidth(UIUtil.dip2px(context, 20));
                 indicator.setRoundRadius(UIUtil.dip2px(context, 3));
                 indicator.setStartInterpolator(new AccelerateInterpolator());
                 indicator.setEndInterpolator(new DecelerateInterpolator(2.0f));
-                indicator.setColors(ContextCompat.getColor(getActivity(), R.color.mainRed));
-                return indicator;
+                indicator.setColors(ContextCompat.getColor(getActivity(), R.color.mainRed));*/
+                return linePagerIndicator;
             }
         });
         magicIndicator.setNavigator(commonNavigator);

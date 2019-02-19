@@ -41,11 +41,11 @@ public class RecommandFragment extends Fragment {
         mRlFavorite = view.findViewById(R.id.rl_history) ;
     }
 
-    private void initData() {
+    private void initData(HomeInfo info) {
 
         mRlFavorite.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRlFavorite.addItemDecoration(new NormalDecoration(ContextCompat.getColor(getActivity(), R.color.mainGrayF8), (int) getActivity().getResources().getDimension(R.dimen.one)));
-        recommandAdapter = new RecommandAdapter(getActivity(),null) ;
+        recommandAdapter = new RecommandAdapter(getActivity(),info.getData()) ;
         mRlFavorite.setAdapter(recommandAdapter) ;
     }
 
@@ -61,7 +61,6 @@ public class RecommandFragment extends Fragment {
             Log.e("liujw","#################item : "+item) ;
             getInfosList(item,0+"",1+"") ;
         }
-        initData();
         return mMainView;
     }
 
@@ -85,7 +84,7 @@ public class RecommandFragment extends Fragment {
                 String message = new String(response.getBytes()) ;
                 Gson gson = new Gson() ;
                 HomeInfo info = gson.fromJson(message,HomeInfo.class) ;
-
+                initData(info);
 
 
             }

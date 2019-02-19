@@ -9,9 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zzteck.jumin.R;
+import com.zzteck.jumin.bean.HomeInfo;
 import com.zzteck.jumin.bean.RecommandBean;
 import com.zzteck.jumin.ui.mainui.WebViewActivity;
+import com.zzteck.zzview.RoundImageView;
 
 import java.util.List;
 
@@ -24,9 +28,9 @@ public class RecommandAdapter extends RecyclerView.Adapter<RecommandAdapter.View
 
     private Context mContext ;
 
-    private List<RecommandBean> mHomeList ;
+    private List<HomeInfo.DataBean> mHomeList ;
 
-    public RecommandAdapter(Context context, List<RecommandBean> list) {
+    public RecommandAdapter(Context context, List<HomeInfo.DataBean> list) {
         this.mContext = context ;
         this.mHomeList = list ;
     }
@@ -44,27 +48,47 @@ public class RecommandAdapter extends RecyclerView.Adapter<RecommandAdapter.View
                 mContext.startActivity(intent);
             }
         });
+
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecommandAdapter.ViewHolder holder, int position) {
 
+        Glide.with(mContext)
+                .load(mHomeList.get(position).getImg_path())
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
+                .crossFade(300)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(holder.mIvLogo);
+
+        holder.mTvTitle.setText(mHomeList.get(position).getTitle());
+        holder.mTvDetail.setText(mHomeList.get(position).getContent());
+
     }
 
     @Override
     public int getItemCount() {
-        return mHomeList == null ? 10 : mHomeList.size() ;
+        return mHomeList == null ? 0 : mHomeList.size() ;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView name;
+        private RoundImageView mIvLogo ;
+
+        private TextView mTvTitle ;
+
+        private TextView mTvDetail ;
+
+        private TextView mTvValue ;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.tv_title);
-
+            mIvLogo = itemView.findViewById(R.id.iv_pic) ;
+            mTvTitle = itemView.findViewById(R.id.tv_title) ;
+            mTvDetail = itemView.findViewById(R.id.tv_detail) ;
+            mTvValue = itemView.findViewById(R.id.tv_value) ;
         }
     }
 
