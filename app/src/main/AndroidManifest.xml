@@ -47,7 +47,13 @@
             android:value="e7db04f4e93cb4203d9bb9307e48b2da"/>
 
         <activity android:name="com.zzteck.jumin.ui.mainui.WebViewActivity">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
+
         <activity android:name=".ui.mainui.SearchActivity"></activity>
         <activity android:name=".ui.usercenter.MemberUpgradeActivity"></activity>
         <activity android:name=".ui.usercenter.LoginActivity"></activity>

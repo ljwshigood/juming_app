@@ -621,28 +621,7 @@ public class ActivityLocation extends BaseActivity implements OnScrollListener {
 					city.setText("重新选择");
 					pbLocate.setVisibility(View.GONE);
 				}
-			} /*else if (viewType == 1) { // 最近访问城市
-				convertView = inflater.inflate(R.layout.recent_city, null);
-				GridView rencentCity = (GridView) convertView
-						.findViewById(R.id.recent_city);
-				rencentCity
-						.setAdapter(new HitCityAdapter(context, this.hisCity));
-				rencentCity.setOnItemClickListener(new OnItemClickListener() {
-
-					@Override
-					public void onItemClick(AdapterView<?> parent, View view,
-											int position, long id) {
-
-						Toast.makeText(getApplicationContext(),
-								city_history.get(position), Toast.LENGTH_SHORT)
-								.show();
-
-					}
-				});
-				TextView recentHint = (TextView) convertView
-						.findViewById(R.id.recentHint);
-				recentHint.setText("最近访问的城市");
-			} */else if (viewType == 1) {
+			} else if (viewType == 1) {
 				convertView = inflater.inflate(R.layout.recent_city, null);
 				GridView hotCity = (GridView) convertView
 						.findViewById(R.id.recent_city);
@@ -662,9 +641,7 @@ public class ActivityLocation extends BaseActivity implements OnScrollListener {
 				TextView hotHint = (TextView) convertView
 						.findViewById(R.id.recentHint);
 				hotHint.setText("热门城市");
-			} /*else if (viewType == 2) {
-				convertView = inflater.inflate(R.layout.total_item, null);
-			} else*/ {
+			} else {
 				if (convertView == null) {
 					convertView = inflater.inflate(R.layout.list_item, null);
 					holder = new ViewHolder();

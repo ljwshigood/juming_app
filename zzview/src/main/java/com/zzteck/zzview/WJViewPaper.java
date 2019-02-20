@@ -19,19 +19,21 @@ public class WJViewPaper extends ViewPager {
   
      @Override  
      public boolean onTouchEvent(MotionEvent ev) {  
-        if (!scrollble) {  
+       /* if (!scrollble) {
             return true;  
         }  
-        return super.onTouchEvent(ev);  
+        return super.onTouchEvent(ev);  */
+         return true;
      }  
   
      @Override
      public boolean onInterceptTouchEvent(MotionEvent arg0) {
-         if (!scrollble){
+       /*  if (!scrollble){
              return false;
          }else{
              return super.onInterceptTouchEvent(arg0);
-         }
+         }*/
+         return false;
      }
   
      public boolean isScrollble() {  
