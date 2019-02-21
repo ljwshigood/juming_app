@@ -30,15 +30,26 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
 import com.zzteck.jumin.R;
+import com.zzteck.jumin.adapter.ComFragmentAdapter;
+import com.zzteck.jumin.app.App;
+import com.zzteck.jumin.bean.CategoryBean;
 import com.zzteck.jumin.db.DatabaseManager;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
+import com.zzteck.jumin.utils.Constants;
+import com.zzteck.jumin.utils.UtilsTools;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class ActivityLocation extends BaseActivity implements OnScrollListener {
@@ -70,6 +81,31 @@ public class ActivityLocation extends BaseActivity implements OnScrollListener {
 	private AMapLocationClient locationClient = null;
 
 	private AMapLocationClientOption locationOption = new AMapLocationClientOption();
+
+
+	private void getCity(){
+
+		Map<String, String> map = new HashMap<>() ;
+		map.put("s","App.City.Index") ;
+
+		StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				String message = new String(response.getBytes()) ;
+				Gson gson = new Gson() ;
+
+			}
+		}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+
+			}
+		});
+
+		stringRequest.setTag("");
+		App.getHttpQueues().add(stringRequest);
+
+	}
 
 
 	/**

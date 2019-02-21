@@ -109,7 +109,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 					Map<String, String> map = new HashMap<>() ;
 					map.put("s","App.Member.Login") ;
 					map.put("username",mEtUserName.getText().toString().trim()) ;
-					map.put("password",mEtPwd.getText().toString().trim()) ;
+					map.put("userpwd",mEtPwd.getText().toString().trim()) ;
 
 					HttpUtils.doGet(this, Constants.HOST+"?"+ UtilsTools.getMapToString(map), "GET",
 							new VolleyInterface(getApplicationContext(), VolleyInterface.mListener, VolleyInterface.mErrorListtener) {

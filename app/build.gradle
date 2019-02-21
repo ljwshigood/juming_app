@@ -88,4 +88,5 @@ dependencies {
     //    implementation project(':photoselect')
     implementation project(':photoselectcompont')
     implementation project(':volley-master')
+    implementation files('libs/jcore-android-1.2.7.jar')
 }
