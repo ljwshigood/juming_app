@@ -29,6 +29,8 @@ import com.zzteck.zzview.WJViewPaper;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.CustomPushNotificationBuilder;
+import cn.jpush.android.api.JPushInterface;
 import io.reactivex.functions.Consumer;
 
 
@@ -164,9 +166,21 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 				}
 			}
 		});
-		
+
+		setStyleCustom() ;
+
 	}
-	
+
+
+	/**
+	 * 设置通知栏样式 - 定义通知栏Layout
+	 */
+	private void setStyleCustom() {
+		CustomPushNotificationBuilder builder = new CustomPushNotificationBuilder(this, R.layout.customer_notitfication_layout, R.id.icon, R.id.title, R.id.text);
+		builder.layoutIconDrawable = R.mipmap.ic_launcher;
+		builder.developerArg0 = "developerArg2";
+		JPushInterface.setPushNotificationBuilder(2, builder);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

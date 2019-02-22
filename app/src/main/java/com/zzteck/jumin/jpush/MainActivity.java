@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.zzteck.jumin.R;
 
+import cn.jpush.android.api.CustomPushNotificationBuilder;
 import cn.jpush.android.api.InstrumentedActivity;
 import cn.jpush.android.api.JPushInterface;
 
@@ -36,8 +37,21 @@ public class MainActivity extends InstrumentedActivity implements OnClickListene
 	/*	setContentView(R.layout.main);*/
 		initView();   
 		registerMessageReceiver();  // used for receive msg
+
+
 	}
-	
+
+	/**
+	 * 设置通知栏样式 - 定义通知栏Layout
+	 */
+	private void setStyleCustom() {
+		CustomPushNotificationBuilder builder = new CustomPushNotificationBuilder(this, R.layout.customer_notitfication_layout, R.id.icon, R.id.title, R.id.text);
+		builder.layoutIconDrawable = R.mipmap.ic_launcher;
+		builder.developerArg0 = "developerArg2";
+		JPushInterface.setPushNotificationBuilder(2, builder);
+		//Toast.makeText(PushSetActivity.this, "Custom Builder - 2", Toast.LENGTH_SHORT).show();
+	}
+
 	private void initView(){
 		/*TextView mImei = (TextView) findViewById(R.id.tv_imei);
 		String udid =  ExampleUtil.getImei(getApplicationContext(), "");
