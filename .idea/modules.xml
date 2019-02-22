@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/LRecyclerview_library/LRecyclerview_library.iml" filepath="$PROJECT_DIR$/LRecyclerview_library/LRecyclerview_library.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/barlibrary/barlibrary.iml" filepath="$PROJECT_DIR$/barlibrary/barlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/citylib/citylib.iml" filepath="$PROJECT_DIR$/citylib/citylib.iml" />
       <module fileurl="file://E:\git_code\juming_app\jumin-androidapp.iml" filepath="E:\git_code\juming_app\jumin-androidapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/juming_app.iml" filepath="$PROJECT_DIR$/juming_app.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib-zxing/lib-zxing.iml" filepath="$PROJECT_DIR$/lib-zxing/lib-zxing.iml" />

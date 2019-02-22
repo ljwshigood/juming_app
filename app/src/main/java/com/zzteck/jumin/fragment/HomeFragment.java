@@ -2,7 +2,6 @@ package com.zzteck.jumin.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,16 +12,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -43,14 +38,9 @@ import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.bean.BannerBean;
 import com.zzteck.jumin.bean.CategoryBean;
 import com.zzteck.jumin.bean.HomeBean;
-import com.zzteck.jumin.bean.HomeInfo;
-import com.zzteck.jumin.bean.LoginBean;
 import com.zzteck.jumin.bean.VideoBean;
-import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.ui.business.MoreCategoryActivity;
-import com.zzteck.jumin.ui.location.ActivityLocation;
 import com.zzteck.jumin.ui.location.LocationActivity;
-import com.zzteck.jumin.ui.mainui.MainActivity;
 import com.zzteck.jumin.ui.mainui.SearchActivity;
 import com.zzteck.jumin.ui.mainui.ZxingActivity;
 import com.zzteck.jumin.utils.Constants;
@@ -59,12 +49,9 @@ import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.ColorFlipPagerTitleView;
 import com.zzteck.jumin.view.JudgeNestedScrollView;
 import com.zzteck.jumin.view.SignInDialog;
-import com.zzteck.jumin.webmanager.HttpUtils;
-import com.zzteck.jumin.webmanager.VolleyInterface;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
-import net.lucode.hackware.magicindicator.buildins.UIUtil;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
@@ -72,9 +59,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -685,7 +670,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
                 startActivity(intent);
                 break ;
             case R.id.ll_left:
-                intent = new Intent(getActivity(), ActivityLocation.class) ;
+                intent = new Intent(getActivity(), LocationActivity.class) ;
                 startActivity(intent);
                 break ;
             case R.id.iv_qiandao :

@@ -84,15 +84,13 @@
 
         <activity android:name="com.zzteck.jumin.ui.mainui.WebViewActivity">
         </activity>
-
+        <activity android:name=".ui.location.LocationActivity"></activity>
         <activity android:name=".ui.mainui.SearchActivity"></activity>
         <activity android:name=".ui.usercenter.MemberUpgradeActivity"></activity>
         <activity android:name=".ui.usercenter.LoginActivity"></activity>
         <activity android:name=".ui.usercenter.RegisterActivity"></activity>
         <activity android:name=".ui.usercenter.ForgetPwdActivity"></activity>
         <activity android:name=".ui.mainui.ZxingActivity"></activity>
-        <activity android:name=".ui.location.LocationActivity"></activity>
-        <activity android:name=".ui.location.ActivityLocation"></activity>
         <activity android:name=".ui.business.MoreCategoryActivity"></activity>
         <activity android:name=".ui.business.MoreCategoryListActivity"></activity>
 
@@ -113,36 +111,6 @@
 
         <service android:name="com.amap.api.location.APSService"></service>
 
-
-        <!-- start jpush-->
-        <!-- For test only 测试的主程序-->
-        <!--<activity
-            android:name="com.example.jpushdemo.MainActivity"
-            android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        &lt;!&ndash; For test only 测试高级功能 &ndash;&gt;
-        <activity
-            android:name="com.example.jpushdemo.PushSetActivity"
-            android:label="@string/app_name"></activity>
-        &lt;!&ndash; For test only 测试设置 &ndash;&gt;
-        <activity
-            android:name="com.example.jpushdemo.SettingActivity"
-            android:label="@string/app_name"></activity>
-        &lt;!&ndash; For test only 测试状态通知栏，需要打开的Activity &ndash;&gt;
-        <activity
-            android:name="com.example.jpushdemo.TestActivity"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="jpush.testAction" />
-                <category android:name="jpush.testCategory" />
-            </intent-filter>
-        </activity-->>
-
-        <!-- Rich push 核心功能 since 2.0.6-->
         <activity
             android:name="cn.jpush.android.ui.PopWinActivity"
             android:exported="false"
