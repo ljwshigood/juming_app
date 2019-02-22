@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
 import io.dcloud.application.DCloudApplication;
 
 /**
@@ -201,6 +202,10 @@ public class App extends DCloudApplication {
         initBaiduCrab();
 
         queues = Volley.newRequestQueue(getApplicationContext());
+
+
+        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);     		// 初始化 JPush
 
     }
 

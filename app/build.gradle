@@ -30,6 +30,13 @@ android {
         }
 
     }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -88,5 +95,4 @@ dependencies {
     //    implementation project(':photoselect')
     implementation project(':photoselectcompont')
     implementation project(':volley-master')
-    implementation files('libs/jcore-android-1.2.7.jar')
 }
