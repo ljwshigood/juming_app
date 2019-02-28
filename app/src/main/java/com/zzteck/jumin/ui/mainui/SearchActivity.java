@@ -2,6 +2,7 @@ package com.zzteck.jumin.ui.mainui;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 
 import com.zzteck.jumin.R;
@@ -28,10 +29,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         mLLBack.setOnClickListener(this);
     }
 
-    private String[] searchArray = new String[]{"春秋战国","明清时期","秦汉时期","三国两晋南北朝","上古三代","宋元时期","隋唐五代","新石器时代"} ;
+    private String[] searchArray = new String[]{"春秋战国","明清时期","秦汉时期","上古三代","宋元时期","隋唐五代","新石器时代"} ;
 
     private void initData(){
-        for(int i = 0 ;i < 8 ;i++){
+        for(int i = 0 ;i < 7 ;i++){
             SearchBean bean = new SearchBean() ;
             bean.setSearch(searchArray[i]) ;
             mSearchList.add(bean);

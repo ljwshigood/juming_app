@@ -51,7 +51,7 @@ public class SearchAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mLayoutInflater.inflate(R.layout.item_search,null);
             viewHolder = new ViewHolder();
-            viewHolder.mTvSearch = (TextView) convertView.findViewById(R.id.tv_search);
+            viewHolder.mTvSearch =  convertView.findViewById(R.id.tv_search);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
