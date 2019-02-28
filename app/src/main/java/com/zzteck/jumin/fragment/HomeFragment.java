@@ -18,10 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
@@ -293,7 +289,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         map.put("s","App.Info.Getvideoinfo") ;
         map.put("cityid","1") ;
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
+        /*StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 String message = new String(response.getBytes()) ;
@@ -316,7 +312,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
         stringRequest.setTag("");
 
-        App.getHttpQueues().add(stringRequest);
+        App.getHttpQueues().add(stringRequest);*/
 
     }
 
@@ -446,7 +442,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         Map<String, String> map = new HashMap<>() ;
         map.put("s","App.Index.Banner") ;
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
+        /*StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 String message = new String(response.getBytes()) ;
@@ -468,7 +464,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         });
 
         stringRequest.setTag("");
-        App.getHttpQueues().add(stringRequest);
+        App.getHttpQueues().add(stringRequest);*/
 
         getCategoryTitle1() ;
         getCategoryTitle2();
@@ -487,7 +483,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         map.put("s","App.Category.Pushcat") ;
         map.put("type",1+"") ;
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
+      /*  StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 String message = new String(response.getBytes()) ;
@@ -517,7 +513,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         });
 
         stringRequest.setTag("");
-        App.getHttpQueues().add(stringRequest);
+        App.getHttpQueues().add(stringRequest);*/
 
     }
 
@@ -539,7 +535,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         map.put("s","App.Category.Pushcat") ;
         map.put("type",2+"") ;
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
+        /*StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 String message = new String(response.getBytes()) ;
@@ -567,7 +563,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         });
 
         stringRequest.setTag("");
-        App.getHttpQueues().add(stringRequest);
+        App.getHttpQueues().add(stringRequest);*/
 
     }
 
@@ -577,7 +573,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         map.put("s","App.Category.Pushcat") ;
         map.put("type",3+"") ;
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
+       /* StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 String message = new String(response.getBytes()) ;
@@ -604,7 +600,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         });
 
         stringRequest.setTag("");
-        App.getHttpQueues().add(stringRequest);
+        App.getHttpQueues().add(stringRequest);*/
 
     }
 

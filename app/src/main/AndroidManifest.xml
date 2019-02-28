@@ -76,14 +76,13 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:networkSecurityConfig="@xml/network_security_config"
         tools:replace="android:label,android:icon,android:allowBackup,android:name">
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="e7db04f4e93cb4203d9bb9307e48b2da" />
 
-        <activity android:name="com.zzteck.jumin.ui.mainui.WebViewActivity">
-        </activity>
         <activity android:name=".ui.location.LocationActivity"></activity>
         <activity android:name=".ui.mainui.SearchActivity"></activity>
         <activity android:name=".ui.usercenter.MemberUpgradeActivity"></activity>

@@ -7,15 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.HomeInfo;
-import com.zzteck.jumin.bean.RecommandBean;
-import com.zzteck.jumin.ui.mainui.WebViewActivity;
 import com.zzteck.zzview.RoundImageView;
 
 import java.util.List;
@@ -45,8 +42,8 @@ public class RecommandAdapter extends RecyclerView.Adapter<RecommandAdapter.View
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, WebViewActivity.class) ;
-                mContext.startActivity(intent);
+                /*Intent intent = new Intent(mContext, WebViewActivity.class) ;
+                mContext.startActivity(intent);*/
             }
         });
 

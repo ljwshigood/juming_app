@@ -1,1 +1,1 @@
-include ':app', ':zzview', ':barlibrary', ':permissionlib', ':LRecyclerview_library', ':uil', ':FlycoTabLayout_Lib', ':lib-zxing', ':photoselectcompont', ':volley-master', ':citylib'
+include ':app', ':zzview', ':barlibrary', ':permissionlib', ':LRecyclerview_library', ':uil', ':FlycoTabLayout_Lib', ':lib-zxing', ':photoselectcompont', /*':volley-master',*/ ':citylib'

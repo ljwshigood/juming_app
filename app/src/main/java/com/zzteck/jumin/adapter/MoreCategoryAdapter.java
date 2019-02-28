@@ -15,7 +15,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.MoreCategory;
 import com.zzteck.jumin.ui.business.MoreCategoryListActivity;
-import com.zzteck.jumin.ui.mainui.WebViewActivity;
 
 import java.util.List;
 

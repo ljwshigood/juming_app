@@ -253,8 +253,10 @@ public class BasicNetwork implements Network {
 
     private Map<String, String> getCacheHeaders(Cache.Entry entry) {
         // If there's no cache entry, we're done.
+        Map<String,String> headers1 = new HashMap<>() ;
         if (entry == null) {
-            return Collections.emptyMap();
+          //  return Collections.emptyMap();
+            return headers1;
         }
 
         Map<String, String> headers = new HashMap<>();

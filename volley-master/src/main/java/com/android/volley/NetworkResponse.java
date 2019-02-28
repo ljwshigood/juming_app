@@ -19,6 +19,7 @@ package com.android.volley;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -162,11 +163,12 @@ public class NetworkResponse {
     public final long networkTimeMs;
 
     private static Map<String, String> toHeaderMap(List<Header> allHeaders) {
+        Map<String,String> headers1 = new HashMap<>() ;
         if (allHeaders == null) {
             return null;
         }
         if (allHeaders.isEmpty()) {
-            return Collections.emptyMap();
+            return headers1;
         }
         Map<String, String> headers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
         // Later elements in the list take precedence.
@@ -177,11 +179,12 @@ public class NetworkResponse {
     }
 
     private static List<Header> toAllHeaderList(Map<String, String> headers) {
+        List<Header> headers1 = new ArrayList<Header>() ;
         if (headers == null) {
             return null;
         }
         if (headers.isEmpty()) {
-            return Collections.emptyList();
+            return headers1;
         }
         List<Header> allHeaders = new ArrayList<>(headers.size());
         for (Map.Entry<String, String> header : headers.entrySet()) {

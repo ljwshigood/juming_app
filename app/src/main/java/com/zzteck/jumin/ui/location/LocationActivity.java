@@ -210,8 +210,8 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
-        city_container = (ListView) findViewById(R.id.city_container);
-        letter_container = (LetterListView) findViewById(R.id.letter_container);
+        city_container = findViewById(R.id.city_container);
+        letter_container = findViewById(R.id.letter_container);
 
         databaseHelper = new DatabaseHelper(this);
         handler = new Handler();

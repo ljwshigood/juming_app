@@ -11,10 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.RecommandAdapter;
@@ -78,7 +74,7 @@ public class RecommandFragment extends Fragment {
         map.put("cityid",cityId) ;
         map.put("pages",pages) ;
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
+        /*StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 String message = new String(response.getBytes()) ;
@@ -96,7 +92,7 @@ public class RecommandFragment extends Fragment {
         });
 
         stringRequest.setTag("");
-        App.getHttpQueues().add(stringRequest);
+        App.getHttpQueues().add(stringRequest);*/
 
     }
 
