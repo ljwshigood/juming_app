@@ -59,6 +59,9 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
+import org.simple.eventbus.EventBus;
+import org.simple.eventbus.Subscriber;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -130,8 +133,16 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
     private List<BannerBean.DataBean> modelList = new ArrayList<>() ;
 
+    @Subscriber
+    public void onEventMainThread(String event) {
+        mTvLocation.setText(event);
+    }
+
+    private TextView mTvLocation ;
+
     @Override
     public int getLayoutId() {
+        EventBus.getDefault().register(this);
         return R.layout.fragment_home ;
     }
 
@@ -258,6 +269,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
     };
 
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
+
     private ImageView mIvQianDao ;
 
     private ImageView mIvZxing ;
@@ -378,7 +395,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
     @Override
     public void initView(View view) {
-
+        mTvLocation = view.findViewById(R.id.tv_location) ;
         mRVVideo = view.findViewById(R.id.rv_video) ;
         mLLMore = view.findViewById(R.id.ll_more) ;
         mLLeft = view.findViewById(R.id.ll_left) ;

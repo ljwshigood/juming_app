@@ -224,6 +224,8 @@
             android:value="4d644227914852b85d52cf74" /> <!--  </>值来自开发者平台取得的AppKey-->
 
         <!--end jpush-->
+        
+        <service android:name="com.zzteck.jumin.service.LocationService"></service>
 
     </application>
 

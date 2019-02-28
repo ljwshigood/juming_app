@@ -13,6 +13,8 @@ public abstract class BaseFragment extends Fragment {
     boolean isLoad = false;
     boolean isInit = false;
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

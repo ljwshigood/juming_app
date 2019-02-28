@@ -30,6 +30,13 @@ public class CityListAdapter extends BaseAdapter {
     private Map<String, Integer> letterIndex;
     private final int VIEW_TYPE = 5;
 
+    private String mCity = "正在定位..." ;
+
+    public void notifyLocationCity(String city){
+        this.mCity = city ;
+        notifyDataSetChanged();
+    }
+
     public CityListAdapter(Context context, List<City> allCities, List<City> hotCities, List<String> historyCities, Map<String, Integer> letterIndex) {
         this.context = context;
         this.allCities = allCities;
@@ -63,12 +70,12 @@ public class CityListAdapter extends BaseAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        return position < 4 ? position : 4;
+        return position < 3 ? position : 3;
     }
 
     @Override
     public int getCount() {
-        return allCities.size();
+        return allCities == null ? 0 : allCities.size();
     }
 
     @Override
@@ -85,23 +92,22 @@ public class CityListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         int viewType = getItemViewType(position);
         if (viewType == 0) {//定位
-            convertView = inflater.inflate(R.layout.item_city_location, null);
-        } else if (viewType == 1) {//最近访问
-            convertView = inflater.inflate(R.layout.item_city_grid, null);
-            GridView recentCityView = (GridView) convertView.findViewById(R.id.grid_city);
-            recentCityView.setAdapter(new RecentCityAdapter(context, this.historyCities));
-            recentCityView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            LocationHolder holder ;
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.item_city_location, null);
+                holder = new LocationHolder();
+                holder.mTvLocation =  convertView.findViewById(R.id.tv_location);
+                convertView.setTag(holder);
+            }else{
+                holder = (LocationHolder) convertView.getTag();
+            }
 
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(context, historyCities.get(position), Toast.LENGTH_SHORT).show();
-                }
-            });
-            TextView recentHint = (TextView) convertView.findViewById(R.id.recentHint);
-            recentHint.setText("最近访问的城市");
-        } else if (viewType == 2) {//热门城市
+            holder.mTvLocation.setText(mCity);
+
+        } else if (viewType == 1) {
+
             convertView = inflater.inflate(R.layout.item_city_grid, null);
-            final GridView hotCity = (GridView) convertView.findViewById(R.id.grid_city);
+            final GridView hotCity =  convertView.findViewById(R.id.grid_city);
             hotCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 @Override
@@ -111,17 +117,18 @@ public class CityListAdapter extends BaseAdapter {
                 }
             });
             hotCity.setAdapter(new HotCityAdapter(context, this.hotCities));
-            TextView hotHint = (TextView) convertView.findViewById(R.id.recentHint);
+            TextView hotHint =  convertView.findViewById(R.id.recentHint);
             hotHint.setText("热门城市");
-        } else if (viewType == 3) {
+
+        } else if (viewType == 2) {
             convertView = inflater.inflate(R.layout.item_city_total_tag, null);
-        } else {
+        }else {
             Holder holder;
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.item_city_list, null);
                 holder = new Holder();
-                holder.letter = (TextView) convertView.findViewById(R.id.tv_letter);
-                holder.name = (TextView) convertView.findViewById(R.id.tv_name);
+                holder.letter =  convertView.findViewById(R.id.tv_letter);
+                holder.name =  convertView.findViewById(R.id.tv_name);
                 convertView.setTag(holder);
             } else {
                 holder = (Holder) convertView.getTag();
@@ -140,6 +147,10 @@ public class CityListAdapter extends BaseAdapter {
         }
 
         return convertView;
+    }
+
+    class LocationHolder{
+        TextView mTvLocation ;
     }
 
     class Holder {

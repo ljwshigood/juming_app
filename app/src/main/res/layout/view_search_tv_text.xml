@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="30dp"
     android:paddingLeft="25dp"
-    android:background="@drawable/bg_shape_rec">
+    android:background="@drawable/bg_city_shape_rec">
 
     <LinearLayout
         android:id="@+id/ll_search"

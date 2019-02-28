@@ -27,6 +27,7 @@ import com.zzteck.jumin.fragment.HistoryFragment;
 import com.zzteck.jumin.fragment.HomeFragment;
 import com.zzteck.jumin.fragment.UserFragment;
 import com.zzteck.jumin.fragment.WJConversationListFragment;
+import com.zzteck.jumin.service.LocationService;
 import com.zzteck.jumin.ui.business.ReleaseActivity;
 import com.zzteck.jumin.ui.usercenter.LoginActivity;
 import com.zzteck.zzview.WJViewPaper;
@@ -71,6 +72,9 @@ public class WelcomeActivity extends BaseActivity implements OnClickListener{
  		initView() ;
 		App.getInstance().addActivity(this);
 		mHandler.sendEmptyMessageDelayed(0,2000) ;
+
+		Intent intent = new Intent(this, LocationService.class) ;
+		startService(intent) ;
 	}
 
 
