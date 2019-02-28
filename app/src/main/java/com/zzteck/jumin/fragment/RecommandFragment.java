@@ -1,6 +1,7 @@
 package com.zzteck.jumin.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -16,12 +17,22 @@ import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.RecommandAdapter;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.bean.HomeInfo;
+import com.zzteck.jumin.bean.LoginBean;
+import com.zzteck.jumin.db.UserDAO;
+import com.zzteck.jumin.ui.mainui.MainActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.NormalDecoration;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class RecommandFragment extends Fragment {
 
@@ -66,7 +77,7 @@ public class RecommandFragment extends Fragment {
      * @param cityId
      * @param pages
      */
-    private void getInfosList(String catId,String cityId,String pages){
+    private void getInfosList(final String catId, final String cityId, String pages){
 
         Map<String, String> map = new HashMap<>() ;
         map.put("s","App.Info.Getinfos") ;
@@ -74,25 +85,35 @@ public class RecommandFragment extends Fragment {
         map.put("cityid",cityId) ;
         map.put("pages",pages) ;
 
-        /*StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
             @Override
-            public void onResponse(String response) {
-                String message = new String(response.getBytes()) ;
-                Gson gson = new Gson() ;
-                HomeInfo info = gson.fromJson(message,HomeInfo.class) ;
-                initData(info);
-
-
+            public void onFailure(Call call, IOException e) {
+                Log.e("liujw","##########################IOException : "+e.toString());
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
 
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                final String responseStr = response.body().string();
+
+                Log.e("liujw","##########################getInfosList catId : "+catId+" #####################: "+responseStr);
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        String message = new String(responseStr) ;
+                        Gson gson = new Gson() ;
+                        HomeInfo info = gson.fromJson(message,HomeInfo.class) ;
+                        initData(info);
+
+                    }
+                });
             }
         });
-
-        stringRequest.setTag("");
-        App.getHttpQueues().add(stringRequest);*/
 
     }
 

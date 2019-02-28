@@ -125,7 +125,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 						@Override
 						public void onFailure(Call call, IOException e) {
 							Log.e("liujw","##########################IOException : "+e.toString());
-							//ToastUtil.showToast(GetActivity.this, "Get 失败");
 						}
 
 						@Override
@@ -151,33 +150,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 							});
 						}
 					});
-
-					/*HttpUtils.doGet(this, Constants.HOST+"?"+ UtilsTools.getMapToString(map), "GET",
-							new VolleyInterface(getApplicationContext(), VolleyInterface.mListener, VolleyInterface.mErrorListtener) {
-
-								@Override
-								public void onSuccess(String result) {
-									String message = new String(result.getBytes()) ;
-									Gson gson = new Gson() ;
-									LoginBean bean = gson.fromJson(message,LoginBean.class) ;
-
-									Log.e("liujw","####################message : "+message) ;
-									if(bean.getData().isIs_login()){
-
-										UserDAO.getInstance(mContext).editorUserTable(bean.getData());
-
-										Intent intent = new Intent(mContext,MainActivity.class) ;
-										startActivity(intent);
-										finish();
-									}
-
-								}
-
-								@Override
-								public void onError(VolleyError error) {
-
-								}
-					});*/
 
 				}else{
 					WindowsToast.makeText(mContext,"用户名或密码为空").show();

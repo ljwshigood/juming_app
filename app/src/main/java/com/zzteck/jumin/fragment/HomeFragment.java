@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,9 +35,12 @@ import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.bean.BannerBean;
 import com.zzteck.jumin.bean.CategoryBean;
 import com.zzteck.jumin.bean.HomeBean;
+import com.zzteck.jumin.bean.LoginBean;
 import com.zzteck.jumin.bean.VideoBean;
+import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.ui.business.MoreCategoryActivity;
 import com.zzteck.jumin.ui.location.LocationActivity;
+import com.zzteck.jumin.ui.mainui.MainActivity;
 import com.zzteck.jumin.ui.mainui.SearchActivity;
 import com.zzteck.jumin.ui.mainui.ZxingActivity;
 import com.zzteck.jumin.utils.Constants;
@@ -55,10 +59,17 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 /**
@@ -289,6 +300,39 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         map.put("s","App.Info.Getvideoinfo") ;
         map.put("cityid","1") ;
 
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("liujw","##########################IOException : "+e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                final String responseStr = response.body().string();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String message = new String(responseStr) ;
+                        Gson gson = new Gson() ;
+                        VideoBean bean = gson.fromJson(message,VideoBean.class) ;
+
+                        if(bean != null && bean.getData() != null && bean.getData().size() > 0){
+                            for(int i = 0 ;i < bean.getData().size() ;i++){
+                                mVideoList.add(bean.getData().get(i)) ;
+                            }
+                        }
+                        mVideoAdapter.notifyVideoListChange(mVideoList);
+                    }
+                });
+            }
+        });
+
+
+
         /*StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -442,29 +486,34 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         Map<String, String> map = new HashMap<>() ;
         map.put("s","App.Index.Banner") ;
 
-        /*StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
             @Override
-            public void onResponse(String response) {
-                String message = new String(response.getBytes()) ;
-                Gson gson = new Gson() ;
-                BannerBean bean = gson.fromJson(message,BannerBean.class) ;
-
-                if(bean != null && bean.getData() != null && bean.getData().size() > 0){
-                    for(int i = 0 ;i < bean.getData().size() ;i++){
-                        modelList.add(bean.getData().get(i)) ;
-                    }
-                }
-                initViewPager() ;
+            public void onFailure(Call call, IOException e) {
+                Log.e("liujw","##########################IOException : "+e.toString());
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
 
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                final String responseStr = response.body().string();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Gson gson = new Gson() ;
+                        BannerBean bean = gson.fromJson(responseStr,BannerBean.class) ;
+
+                        if(bean != null && bean.getData() != null && bean.getData().size() > 0){
+                            for(int i = 0 ;i < bean.getData().size() ;i++){
+                                modelList.add(bean.getData().get(i)) ;
+                            }
+                        }
+                        initViewPager() ;
+                    }
+                });
             }
         });
-
-        stringRequest.setTag("");
-        App.getHttpQueues().add(stringRequest);*/
 
         getCategoryTitle1() ;
         getCategoryTitle2();
@@ -483,37 +532,41 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         map.put("s","App.Category.Pushcat") ;
         map.put("type",1+"") ;
 
-      /*  StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
             @Override
-            public void onResponse(String response) {
-                String message = new String(response.getBytes()) ;
-                Gson gson = new Gson() ;
-                CategoryBean bean = gson.fromJson(message,CategoryBean.class) ;
-                if(bean.getData() != null && bean.getData().size() > 0){
-                    for(int i = 0 ;i < bean.getData().size();i++){
-                        Glide.with(getActivity())
-                                .load(bean.getData().get(i).getIcon())
-                                .placeholder(R.mipmap.ic_launcher)
-                                .error(R.mipmap.ic_launcher)
-                                .crossFade(300)
-                                .transform(new GlideCircleTransform(getActivity()))
-                                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                                .into(mIvCategoryList.get(i));
-                        mTvCategoryList.get(i).setText(bean.getData().get(i).getCatname());
-                    }
-                }
-
-
+            public void onFailure(Call call, IOException e) {
+                Log.e("liujw","##########################IOException : "+e.toString());
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
 
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                final String responseStr = response.body().string();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Gson gson = new Gson() ;
+                        CategoryBean bean = gson.fromJson(responseStr,CategoryBean.class) ;
+                        if(bean.getData() != null && bean.getData().size() > 0){
+                            for(int i = 0 ;i < bean.getData().size();i++){
+                                Glide.with(getActivity())
+                                        .load(bean.getData().get(i).getIcon())
+                                        .placeholder(R.mipmap.ic_launcher)
+                                        .error(R.mipmap.ic_launcher)
+                                        .crossFade(300)
+                                        .transform(new GlideCircleTransform(getActivity()))
+                                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                                        .into(mIvCategoryList.get(i));
+                                mTvCategoryList.get(i).setText(bean.getData().get(i).getCatname());
+                            }
+                        }
+                    }
+                });
             }
         });
-
-        stringRequest.setTag("");
-        App.getHttpQueues().add(stringRequest);*/
 
     }
 
@@ -535,35 +588,39 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         map.put("s","App.Category.Pushcat") ;
         map.put("type",2+"") ;
 
-        /*StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
             @Override
-            public void onResponse(String response) {
-                String message = new String(response.getBytes()) ;
-                Gson gson = new Gson() ;
-                CategoryBean bean = gson.fromJson(message,CategoryBean.class) ;
-                if(bean.getData() != null && bean.getData().size() > 0){
-                    for(int i = 0 ;i < bean.getData().size();i++){
-                        Glide.with(getActivity())
-                                .load(bean.getData().get(i).getIcon())
-                                .placeholder(R.mipmap.ic_launcher)
-                                .error(R.mipmap.ic_launcher)
-                                .crossFade(300)
-                                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                                .into(mImagePicLogo.get(i));
-                    }
-                }
-
-
+            public void onFailure(Call call, IOException e) {
+                Log.e("liujw","##########################IOException : "+e.toString());
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
 
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                final String responseStr = response.body().string();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Gson gson = new Gson() ;
+                        CategoryBean bean = gson.fromJson(responseStr,CategoryBean.class) ;
+                        if(bean.getData() != null && bean.getData().size() > 0){
+                            for(int i = 0 ;i < bean.getData().size();i++){
+                                Glide.with(getActivity())
+                                        .load(bean.getData().get(i).getIcon())
+                                        .placeholder(R.mipmap.ic_launcher)
+                                        .error(R.mipmap.ic_launcher)
+                                        .crossFade(300)
+                                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                                        .into(mImagePicLogo.get(i));
+                            }
+                        }
+                    }
+                });
             }
         });
-
-        stringRequest.setTag("");
-        App.getHttpQueues().add(stringRequest);*/
 
     }
 
@@ -573,34 +630,39 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         map.put("s","App.Category.Pushcat") ;
         map.put("type",3+"") ;
 
-       /* StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.HOST+"?"+ UtilsTools.getMapToString(map), new Response.Listener<String>() {
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
             @Override
-            public void onResponse(String response) {
-                String message = new String(response.getBytes()) ;
-                Gson gson = new Gson() ;
-                CategoryBean bean = gson.fromJson(message,CategoryBean.class) ;
-                if(bean.getData() != null && bean.getData().size() > 0){
-                    for(int i = 0 ;i < bean.getData().size() ;i++){
-                        mDataList.add(bean.getData().get(i).getCatname()) ;
-                    }
-
-                    initMagicIndicator() ;
-
-                    viewPagerHome.setAdapter(new ComFragmentAdapter(getActivity().getSupportFragmentManager(), getFragments(bean.getData())));
-                    viewPagerHome.setOffscreenPageLimit(10);
-
-                }
-
+            public void onFailure(Call call, IOException e) {
+                Log.e("liujw","##########################IOException : "+e.toString());
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
 
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                final String responseStr = response.body().string();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Gson gson = new Gson() ;
+                        CategoryBean bean = gson.fromJson(responseStr,CategoryBean.class) ;
+                        if(bean.getData() != null && bean.getData().size() > 0){
+                            for(int i = 0 ;i < bean.getData().size() ;i++){
+                                mDataList.add(bean.getData().get(i).getCatname()) ;
+                            }
+
+                            initMagicIndicator() ;
+
+                            viewPagerHome.setAdapter(new ComFragmentAdapter(getActivity().getSupportFragmentManager(), getFragments(bean.getData())));
+                            viewPagerHome.setOffscreenPageLimit(10);
+
+                        }
+                    }
+                });
             }
         });
-
-        stringRequest.setTag("");
-        App.getHttpQueues().add(stringRequest);*/
 
     }
 
