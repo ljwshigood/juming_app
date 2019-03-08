@@ -13,22 +13,14 @@
         android:layout_weight="80"
         android:orientation="vertical">
 
-         <com.zzteck.zzview.RoundImageView xmlns:wj="http://schemas.android.com/apk/res/com.zzteck.jumin"
-             android:id="@+id/iv_pic"
-             android:layout_width="80dp"
-             android:layout_height="80dp"
-             android:layout_gravity="center"
-             android:src="@mipmap/ic_launcher"
-             android:scaleType="fitXY"
-             wj:type="round" />
-
-       <!-- <ImageView
+        <com.zzteck.zzview.RoundImageView xmlns:wj="http://schemas.android.com/apk/res/com.zzteck.jumin"
             android:id="@+id/iv_pic"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:scaleType="fitXY"
-            android:src="@mipmap/ic_launcher" />-->
+            android:src="@mipmap/ic_launcher"
+            wj:type="round" />
 
     </LinearLayout>
 
@@ -46,6 +38,7 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:textSize="16sp"
+            android:singleLine="true"
             tools:text="江滨华府" />
 
         <TextView
@@ -53,6 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:lines="3"
             android:textColor="@color/themeGray"
             android:textSize="15sp"
             tools:text="附近环境优雅" />

@@ -1,7 +1,6 @@
 package com.zzteck.jumin.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -13,13 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
+import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.RecommandAdapter;
-import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.bean.HomeInfo;
-import com.zzteck.jumin.bean.LoginBean;
-import com.zzteck.jumin.db.UserDAO;
-import com.zzteck.jumin.ui.mainui.MainActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.NormalDecoration;
@@ -54,7 +50,30 @@ public class RecommandFragment extends Fragment {
         mRlFavorite.addItemDecoration(new NormalDecoration(ContextCompat.getColor(getActivity(), R.color.mainGrayF8), (int) getActivity().getResources().getDimension(R.dimen.one)));
         recommandAdapter = new RecommandAdapter(getActivity(),info.getData()) ;
         mRlFavorite.setAdapter(recommandAdapter) ;
+
+        recommandAdapter.setNoMore(R.layout.view_no_more);
+        recommandAdapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
+            @Override
+            public void onMoreShow() {
+                Log.e("liujw", "@@@@@@@@@@@@@@@@@@@@@@@@@@@@onMoreShow");
+                if(mCategoryId != null){
+                    mCurrentPage++ ;
+                    getInfosList(mCategoryId,0+"",mCurrentPage+"") ;
+                }
+
+            }
+
+            @Override
+            public void onMoreClick() {
+
+            }
+        });
+
     }
+
+    private int mCurrentPage  = 1 ;
+
+    private String mCategoryId ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,10 +83,11 @@ public class RecommandFragment extends Fragment {
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            String item = bundle.getString("item");
-            Log.e("liujw","#################item : "+item) ;
-            getInfosList(item,0+"",1+"") ;
+            mCategoryId = bundle.getString("item");
+            Log.e("liujw","#################item : "+mCategoryId) ;
+            getInfosList(mCategoryId,0+"",mCurrentPage+"") ;
         }
+
         return mMainView;
     }
 
@@ -108,7 +128,15 @@ public class RecommandFragment extends Fragment {
                         String message = new String(responseStr) ;
                         Gson gson = new Gson() ;
                         HomeInfo info = gson.fromJson(message,HomeInfo.class) ;
-                        initData(info);
+                        if(mCurrentPage == 1){
+                            initData(info);
+                        }else{
+                            if(recommandAdapter != null){
+                                recommandAdapter.addAll(info.getData());
+                            }
+
+                        }
+
 
                     }
                 });

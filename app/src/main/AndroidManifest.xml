@@ -93,6 +93,14 @@
         <activity android:name=".ui.business.MoreCategoryActivity"></activity>
         <activity android:name=".ui.business.MoreCategoryListActivity"></activity>
 
+        <!--<activity android:nacom.zzteck.jumin.fragment.HomeFragmentk">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>-->
+
         <activity android:name=".ui.mainui.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

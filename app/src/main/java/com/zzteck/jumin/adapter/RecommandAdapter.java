@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.jude.easyrecyclerview.adapter.*;
+import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.HomeInfo;
 import com.zzteck.zzview.RoundImageView;
@@ -22,59 +24,65 @@ import java.util.List;
  * Describe:
  */
 
-public class RecommandAdapter extends RecyclerView.Adapter<RecommandAdapter.ViewHolder> {
+public class RecommandAdapter extends RecyclerArrayAdapter<HomeInfo.DataBean> {
 
     private Context mContext ;
 
     private List<HomeInfo.DataBean> mHomeList ;
 
-    public RecommandAdapter(Context context, List<HomeInfo.DataBean> list) {
+
+    public RecommandAdapter(Context context, List<HomeInfo.DataBean> objects) {
+        super(context, objects);
         this.mContext = context ;
-        this.mHomeList = list ;
-    }
-
-
-    @NonNull
-    @Override
-    public RecommandAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_recommand,parent,false);
-
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*Intent intent = new Intent(mContext, WebViewActivity.class) ;
-                mContext.startActivity(intent);*/
-            }
-        });
-
-        return new ViewHolder(view);
+        this.mHomeList = objects ;
     }
 
     @Override
-    public void onBindViewHolder(RecommandAdapter.ViewHolder holder, int position) {
-
-        Glide.with(mContext)
-                .load(mHomeList.get(position).getImg_path())
-                .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
-                .crossFade(300)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .into(holder.mIvLogo);
-
-        holder.mTvTitle.setText(mHomeList.get(position).getTitle());
-        holder.mTvDetail.setText(mHomeList.get(position).getContent());
-
+    public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
+        return new RecommandViewHolder(parent);
     }
 
-    @Override
-    public int getItemCount() {
-        return mHomeList == null ? 0 : mHomeList.size() ;
-    }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class RecommandViewHolder extends BaseViewHolder<HomeInfo.DataBean> {
 
         private RoundImageView mIvLogo ;
-        //private ImageView mIvLogo ;
+
+        private TextView mTvTitle ;
+
+        private TextView mTvDetail ;
+
+        private TextView mTvValue ;
+
+        public RecommandViewHolder(ViewGroup parent) {
+            super(parent, R.layout.item_recommand);
+
+            mIvLogo = $(R.id.iv_pic) ;
+            mTvTitle = $(R.id.tv_title) ;
+            mTvDetail = $(R.id.tv_detail) ;
+            mTvValue = $(R.id.tv_value) ;
+        }
+
+        @Override
+        public void setData(HomeInfo.DataBean data) {
+            super.setData(data);
+
+            Glide.with(mContext)
+                    .load(data.getImg_path())
+                    .placeholder(R.mipmap.ic_launcher)
+                    .error(R.mipmap.ic_launcher)
+                    .crossFade(300)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .into(mIvLogo);
+
+            mTvTitle.setText(data.getTitle());
+            mTvDetail.setText(data.getContent());
+        }
+    }
+
+
+    public class ViewHolder extends BaseViewHolder{
+
+        private RoundImageView mIvLogo ;
 
         private TextView mTvTitle ;
 

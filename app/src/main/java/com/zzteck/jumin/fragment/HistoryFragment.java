@@ -20,19 +20,13 @@ public class HistoryFragment extends Fragment {
 
     private Context mContext;
 
-    private RecyclerView mRlHistory;
-
-    private HistoryAdapter mFavoriteAdapter ;
 
     private void initView(View view) {
-        mRlHistory = view.findViewById(R.id.rl_history) ;
+
     }
 
     private void initData() {
-        mRlHistory.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRlHistory.addItemDecoration(new NormalDecoration(ContextCompat.getColor(getActivity(), R.color.mainGrayF8), (int) getActivity().getResources().getDimension(R.dimen.one)));
-        mFavoriteAdapter = new HistoryAdapter(getActivity(),null) ;
-        mRlHistory.setAdapter(mFavoriteAdapter) ;
+
     }
 
     @Override
@@ -45,6 +39,7 @@ public class HistoryFragment extends Fragment {
     }
 
     public void refreshTask() {
+
     }
 
 

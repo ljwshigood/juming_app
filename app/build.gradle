@@ -68,6 +68,10 @@ dependencies {
         }
     }
 
+    compile 'com.jude:easyrecyclerview:4.4.2'
+
+    compile 'com.jakewharton:butterknife:8.7.0'
+
     compile 'org.simple:androideventbus:1.0.5.1'
     implementation 'com.android.support:multidex:1.0.3'
      implementation 'com.squareup.okhttp3:okhttp:3.10.0'

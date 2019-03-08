@@ -10,6 +10,7 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
         app:srlEnablePreviewInEditMode="false">
 
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
@@ -18,6 +19,7 @@
             app:srlAccentColor="@android:color/white" />
 
 
+        <!--<android.support.v4.widget.NestedScrollView-->
         <com.zzteck.jumin.view.JudgeNestedScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
@@ -35,53 +37,62 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-
-                    <LinearLayout
+                    <android.support.design.widget.CollapsingToolbarLayout
+                        android:id="@+id/collapse"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
+                        app:contentScrim="?attr/colorPrimary"
+                        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                        app:titleEnabled="false">
 
-
-                        <include layout="@layout/item_home_location"></include>
-
-                        <RelativeLayout
-                            android:id="@+id/rv_banner"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
 
-                            <android.support.v4.view.ViewPager
-                                android:id="@+id/vp_banner"
-                                android:layout_width="match_parent"
-                                android:layout_height="200dp" />
+                            <include layout="@layout/item_home_location"></include>
 
-                            <LinearLayout
-                                android:id="@+id/layout_container"
+                            <RelativeLayout
+                                android:id="@+id/rv_banner"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentBottom="true"
-                                android:layout_centerHorizontal="true"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:paddingBottom="10dp">
+                                android:background="@android:color/white">
+
+                                <android.support.v4.view.ViewPager
+                                    android:id="@+id/vp_banner"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp" />
 
                                 <LinearLayout
-                                    android:id="@+id/layout_points"
+                                    android:id="@+id/layout_container"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:gravity="center_horizontal"
-                                    android:orientation="horizontal" />
-                            </LinearLayout>
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_centerHorizontal="true"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:paddingBottom="10dp">
 
-                        </RelativeLayout>
+                                    <LinearLayout
+                                        android:id="@+id/layout_points"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center_horizontal"
+                                        android:orientation="horizontal" />
+                                </LinearLayout>
 
-                        <include layout="@layout/item_home_header" />
+                            </RelativeLayout>
 
-                        <include layout="@layout/item_home_video" />
+                            <include layout="@layout/item_home_header" />
 
-                        <include layout="@layout/item_home_picture" />
+                            <include layout="@layout/item_home_video" />
 
-                    </LinearLayout>
+                            <include layout="@layout/item_home_picture" />
+
+                        </LinearLayout>
+                    </android.support.design.widget.CollapsingToolbarLayout>
 
                 </LinearLayout>
 
@@ -95,9 +106,35 @@
                 <android.support.v4.view.ViewPager
                     android:id="@+id/view_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp" />
+                    android:layout_height="match_parent" />
             </LinearLayout>
+
         </com.zzteck.jumin.view.JudgeNestedScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/home_toolbar"
+            style="@style/AppTheme.Toolbar"
+            android:layout_marginBottom="0dp"
+            android:background="@android:color/transparent"
+            app:layout_collapseMode="pin">
+
+        </android.support.v7.widget.Toolbar>
+
+
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/magic_indicator_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thirty_eight"
+            android:background="@color/mainWhite"
+            android:visibility="gone"
+            app:layout_collapseMode="pin" />
+
+    </LinearLayout>
 
 </FrameLayout>
