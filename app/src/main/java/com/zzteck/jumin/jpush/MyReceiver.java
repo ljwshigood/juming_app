@@ -39,7 +39,7 @@ public class MyReceiver extends BroadcastReceiver {
 				processCustomMessage(context, bundle);
 
 			} else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
-				Logger.e(TAG, "[MyReceiver] 接收到推送下来的通知");
+				Logger.e(TAG, "[MyReceiver] 接)收到推送下来的通知");
 				int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
 				Logger.e(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
 

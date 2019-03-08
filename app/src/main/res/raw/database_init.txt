@@ -14403,6 +14403,14 @@ CREATE TABLE [watch] (
 
 /* Data [watch] */
 
+drop table if exists [push];
+
+CREATE TABLE [push](
+  [id] integer primary key AUTOINCREMENT,
+  [titile] TEXT,
+  [content] TEXT,
+  [url] TEXT,
+  [createdTime] TimeStamp NOT NULL DEFAULT (datetime('now','localtime')));
 
 /* Drop table [wedding] */
 drop table if exists [wedding];
