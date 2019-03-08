@@ -195,9 +195,6 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if(resultCode == 3322){
-			((HistoryFragment) mHistoryFragment).refreshTask();
-		}
 	}
 
 	@Override
