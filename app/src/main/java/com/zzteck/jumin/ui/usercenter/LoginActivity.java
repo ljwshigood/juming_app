@@ -2,6 +2,7 @@ package com.zzteck.jumin.ui.usercenter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -59,6 +60,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		mEtUserName = findViewById(R.id.et_user_name) ;
 		mTvForgetPwd = findViewById(R.id.tv_forget_pwd) ;
 		mTvRegister = findViewById(R.id.tv_register) ;
+
+		mEtPwd.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
 		mTvRegister.setOnClickListener(this);
 		mTvForgetPwd.setOnClickListener(this);

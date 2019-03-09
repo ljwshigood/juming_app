@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDexApplication;
 
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
@@ -22,7 +23,7 @@ import cn.jpush.android.api.JPushInterface;
 /**
  *
  */
-public class App extends Application {
+public class App extends MultiDexApplication {
 
     private List<Activity> activityList = new LinkedList<Activity> ();
 
