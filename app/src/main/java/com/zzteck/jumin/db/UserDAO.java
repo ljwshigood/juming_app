@@ -94,8 +94,8 @@ public class UserDAO {
 	
 	public synchronized void editorUserTable(LoginBean.DataBean user){
 		if(isExistRecord(String.valueOf(user.getId()))){
-			String updateSQL = "update user set username = \"%s\",wanjiaToken = \"%s\",inviteCode = \"%s\" ,head = \"%s\" ,token = \"%s\"  where id = %s" ;
-			updateSQL = String.format(updateSQL, user.getId(),user.getTname(),"",user.getLogo(),"",user.getId());
+			String updateSQL = "update user set username = \"%s\",wanjiaToken = \"%s\",head = \"%s\" ,token = \"%s\"  where id = %s" ;
+			updateSQL = String.format(updateSQL, user.getTname(),user.getTname(),"",user.getLogo(),user.getTname(),user.getId());
 			mDatabaseManager.getmSQLiteDatabase().execSQL(updateSQL);
 		}else{
 			insertUserTable(user,1);
