@@ -22,6 +22,7 @@ import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.GlideCircleTransform;
 import com.zzteck.jumin.utils.UtilsTools;
+import com.zzteck.zzview.WindowsToast;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -73,8 +74,14 @@ public class SignInDialog extends Dialog{
 					public void run() {
 						Gson gson = new Gson();
 						QiandaoBean bean = gson.fromJson(responseStr, QiandaoBean.class);
+						if(bean.getData().isIs_success() == true){
+
+						}else{
+							WindowsToast.makeText(mContext,bean.getData().getInfo()).show();
+						}
 
 						dismiss();
+
 					}
 				});
 			}

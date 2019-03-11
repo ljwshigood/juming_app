@@ -617,7 +617,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         });
         scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             int lastScrollY = 0;
-            int h = DensityUtil.dp2px(170);
+            int maxh = DensityUtil.dp2px(80);
+            int minh = DensityUtil.dp2px(40) ;
             int color = ContextCompat.getColor(getActivity(), R.color.mainWhite) & 0x00ffffff;
 
             @Override
@@ -633,15 +634,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                     scrollView.setNeedScroll(true);
                 }
 
-                if (lastScrollY < h) {
-                    scrollY = Math.min(h, scrollY);
-                    mScrollY = scrollY > h ? h : scrollY;
-                    toolbar.setBackgroundColor(((255 * mScrollY / h) << 24) | color);
+                if (lastScrollY > maxh) {
+                    scrollY = Math.min(maxh, scrollY);
+                    mScrollY = scrollY > maxh ? maxh : scrollY;
+                    toolbar.setVisibility(View.VISIBLE);
+                    toolbar.setBackgroundColor(((255 * mScrollY / maxh) << 24) | color);
+                }
+
+                if(lastScrollY < minh){
+                    toolbar.setVisibility(View.GONE);
+
                 }
 
                 lastScrollY = scrollY;
             }
         });
+
+        toolbar.setVisibility(View.GONE);
         toolbar.setBackgroundColor(0);
 
     }

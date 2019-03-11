@@ -49,8 +49,6 @@ public class ReleaseWaitingFragment extends Fragment implements OnClickListener 
 			startActivity(intent);
 
 			break;
-		case R.id.rl_my_jinku:
-			break;
 		case R.id.rl_my_guanzhu:
 			break;
 		case R.id.rl_my_renzhen:
