@@ -20,19 +20,25 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.google.gson.Gson;
 import com.iasii.app.citylist.adapter.CityListAdapter;
 import com.iasii.app.citylist.db.DatabaseHelper;
 import com.iasii.app.citylist.entity.City;
+import com.iasii.app.citylist.entity.CityCompentBean;
 import com.iasii.app.citylist.utils.DensityUtil;
 import com.iasii.app.citylist.utils.PingYinUtil;
 import com.iasii.app.citylist.view.LetterListView;
 import com.zzteck.jumin.R;
+import com.zzteck.jumin.bean.ChildCategoryBean;
 import com.zzteck.jumin.db.DatabaseManager;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
+import com.zzteck.jumin.utils.Constants;
+import com.zzteck.jumin.utils.UtilsTools;
 
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -41,16 +47,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 
 public class LocationActivity extends BaseActivity implements LetterListView.OnTouchingLetterChangedListener, AbsListView.OnScrollListener ,View.OnClickListener{
 
     private ListView city_container;
     private LetterListView letter_container;
 
-    private List<City> allCities = new ArrayList<>();
-    private List<City> hotCities = new ArrayList<>();
+    private List<CityCompentBean.DataBeanX.DataBean> allCities = new ArrayList<>();
+    private List<CityCompentBean.DataBeanX.DataBean> hotCities = new ArrayList<>();
     private List<String> historyCities = new ArrayList<>();
-    private List<City> citiesData;
+    private List<CityCompentBean.DataBeanX.DataBean> citiesData;
     private Map<String, Integer> letterIndex = new HashMap<>();
     private CityListAdapter cityListAdapter;
 
@@ -86,8 +98,45 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
         setupView();
         initOverlay();
 
+        getCityist() ;
+
         EventBus.getDefault().register(this);
     }
+
+    private void getCityist() {
+
+        Map<String, String> map = new HashMap<>();
+        map.put("s", "App.City.Index");
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("liujw", "##########################IOException : " + e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                final String responseStr = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String message = new String(responseStr);
+                        Gson gson = new Gson();
+                        CityCompentBean bean  = gson.fromJson(message,CityCompentBean.class) ;
+
+                        citiesData = getCityList(bean);
+
+                        allCities.addAll(citiesData);
+
+                    }
+                });
+            }
+        });
+    }
+
 
 
     @Subscriber
@@ -105,41 +154,50 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
     }
 
     private void initCity() {
-        City city = new City("定位", "0"); // 当前定位城市
-        allCities.add(city);
-        city = new City("热门", "2"); // 热门城市
-        allCities.add(city);
-        city = new City("全部", "3"); // 全部城市
-        allCities.add(city);
-        citiesData = getCityList();
-        allCities.addAll(citiesData);
+        CityCompentBean.DataBeanX.DataBean cityLocation = new CityCompentBean.DataBeanX.DataBean(); // 当前定位城市
+        cityLocation.setCityname("定位");
+        cityLocation.setCityid("0");
+        allCities.add(cityLocation);
+
+        CityCompentBean.DataBeanX.DataBean cityHot = new CityCompentBean.DataBeanX.DataBean();
+        cityHot.setCityname("热门");
+        cityHot.setCityid("2");
+
+        allCities.add(cityHot);
+
+        CityCompentBean.DataBeanX.DataBean cityALL = new CityCompentBean.DataBeanX.DataBean();
+        cityALL.setCityname("全部");
+        cityALL.setCityid("3");
+
+        allCities.add(cityALL);
+
     }
 
     /**
      * 热门城市
      */
     public void initHotCity() {
-        City city = new City("北京", "2");
+        CityCompentBean.DataBeanX.DataBean city = new CityCompentBean.DataBeanX.DataBean("北京", "2");
         hotCities.add(city);
-        city = new City("上海", "2");
+        city = new CityCompentBean.DataBeanX.DataBean("上海", "2");
         hotCities.add(city);
-        city = new City("广州", "2");
+        city = new CityCompentBean.DataBeanX.DataBean("广州", "2");
         hotCities.add(city);
-        city = new City("深圳", "2");
+        city = new CityCompentBean.DataBeanX.DataBean("深圳", "2");
         hotCities.add(city);
-        city = new City("武汉", "2");
+        city = new CityCompentBean.DataBeanX.DataBean("武汉", "2");
         hotCities.add(city);
-        city = new City("天津", "2");
+        city = new CityCompentBean.DataBeanX.DataBean("天津", "2");
         hotCities.add(city);
-        city = new City("西安", "2");
+        city = new CityCompentBean.DataBeanX.DataBean("西安", "2");
         hotCities.add(city);
-        city = new City("南京", "2");
+        city = new CityCompentBean.DataBeanX.DataBean("南京", "2");
         hotCities.add(city);
-        city = new City("杭州", "2");
+        city = new CityCompentBean.DataBeanX.DataBean("杭州", "2");
         hotCities.add(city);
-        city = new City("成都", "2");
+        city = new CityCompentBean.DataBeanX.DataBean("成都", "2");
         hotCities.add(city);
-        city = new City("重庆", "2");
+        city = new CityCompentBean.DataBeanX.DataBean("重庆", "2");
         hotCities.add(city);
     }
 
@@ -164,8 +222,9 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
     }
 
 
-    private ArrayList<City> getCityList() {
-        ArrayList<City> list = new ArrayList<>();
+    private ArrayList<CityCompentBean.DataBeanX.DataBean> getCityList(CityCompentBean bean) {
+        ArrayList<CityCompentBean.DataBeanX.DataBean> list = new ArrayList<>();
+        /*ArrayList<City> list = new ArrayList<>();
 
         Cursor cursor = DatabaseManager.getInstance(this).getmSQLiteDatabase().rawQuery("select * from city", null);
         City city;
@@ -173,7 +232,14 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
             city = new City(cursor.getString(3), cursor.getString(1));
             list.add(city);
         }
-        cursor.close();
+        cursor.close();*/
+
+        if(bean != null && bean.getData() != null && bean.getData().getData() != null){
+            for(int i = 0 ;i < bean.getData().getData().size() ;i++){
+                list.add(bean.getData().getData().get(i)) ;
+            }
+        }
+
         Collections.sort(list, comparator);
         return list;
     }
@@ -240,8 +306,8 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
         }
         if (isOverlayReady) {
             String text;
-            String name = allCities.get(firstVisibleItem).getName();
-            String pinyin = allCities.get(firstVisibleItem).getPinyin();
+            String name = allCities.get(firstVisibleItem).getCityname();
+            String pinyin = allCities.get(firstVisibleItem).getCitypy();
             if (firstVisibleItem < 4) {
                 text = name;
             } else {

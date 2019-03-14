@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.iasii.app.citylist.R;
 import com.iasii.app.citylist.entity.City;
+import com.iasii.app.citylist.entity.CityCompentBean;
 
 import java.util.List;
 import java.util.Map;
@@ -23,8 +24,8 @@ import java.util.regex.Pattern;
 public class CityListAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
-    private List<City> allCities;
-    private List<City> hotCities;
+    private List<CityCompentBean.DataBeanX.DataBean> allCities;
+    private List<CityCompentBean.DataBeanX.DataBean> hotCities;
     private List<String> historyCities;
     private String[] firstLetterArray;// 存放存在的汉语拼音首字母
     private Map<String, Integer> letterIndex;
@@ -37,7 +38,7 @@ public class CityListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public CityListAdapter(Context context, List<City> allCities, List<City> hotCities, List<String> historyCities, Map<String, Integer> letterIndex) {
+    public CityListAdapter(Context context, List<CityCompentBean.DataBeanX.DataBean> allCities, List<CityCompentBean.DataBeanX.DataBean> hotCities, List<String> historyCities, Map<String, Integer> letterIndex) {
         this.context = context;
         this.allCities = allCities;
         this.hotCities = hotCities;
@@ -52,11 +53,11 @@ public class CityListAdapter extends BaseAdapter {
         firstLetterArray = new String[allCities.size()];
         for (int i = 0; i < allCities.size(); i++) {
             // 当前汉语拼音首字母
-            String currentStr = getAlpha(allCities.get(i).getPinyin());
+            String currentStr = getAlpha(allCities.get(i).getCitypy());
             // 上一个汉语拼音首字母，如果不存在为" "
-            String previewStr = (i - 1) >= 0 ? getAlpha(allCities.get(i - 1).getPinyin()) : " ";
+            String previewStr = (i - 1) >= 0 ? getAlpha(allCities.get(i - 1).getCitypy()) : " ";
             if (!previewStr.equals(currentStr)) {
-                String name = getAlpha(allCities.get(i).getPinyin());
+                String name = getAlpha(allCities.get(i).getCitypy());
                 letterIndex.put(name, i);
                 firstLetterArray[i] = name;
             }
@@ -112,7 +113,7 @@ public class CityListAdapter extends BaseAdapter {
 
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(context, hotCities.get(position).getName(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, hotCities.get(position).getCityname(), Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -134,9 +135,9 @@ public class CityListAdapter extends BaseAdapter {
                 holder = (Holder) convertView.getTag();
             }
             if (position >= 1) {
-                holder.name.setText(allCities.get(position).getName());
-                String currentStr = getAlpha(allCities.get(position).getPinyin());
-                String previewStr = (position - 1) >= 0 ? getAlpha(allCities.get(position - 1).getPinyin()) : " ";
+                holder.name.setText(allCities.get(position).getCityname());
+                String currentStr = getAlpha(allCities.get(position).getCitypy());
+                String previewStr = (position - 1) >= 0 ? getAlpha(allCities.get(position - 1).getCitypy()) : " ";
                 if (!previewStr.equals(currentStr)) {
                     holder.letter.setVisibility(View.VISIBLE);
                     holder.letter.setText(currentStr);

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.iasii.app.citylist.R;
 import com.iasii.app.citylist.entity.City;
+import com.iasii.app.citylist.entity.CityCompentBean;
 
 import java.util.List;
 
@@ -18,9 +19,9 @@ import java.util.List;
 public class HotCityAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
-    private List<City> hotCities;
+    private List<CityCompentBean.DataBeanX.DataBean> hotCities;
 
-    public HotCityAdapter(Context context, List<City> hotCities) {
+    public HotCityAdapter(Context context, List<CityCompentBean.DataBeanX.DataBean> hotCities) {
         this.context = context;
         inflater = LayoutInflater.from(this.context);
         this.hotCities = hotCities;
@@ -45,7 +46,7 @@ public class HotCityAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = inflater.inflate(R.layout.item_city_cell, null);
         TextView city = (TextView) convertView.findViewById(R.id.city);
-        city.setText(hotCities.get(position).getName());
+        city.setText(hotCities.get(position).getCityname());
         return convertView;
     }
 }
