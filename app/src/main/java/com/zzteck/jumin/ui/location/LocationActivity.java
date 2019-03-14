@@ -248,11 +248,11 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
     /**
      * a-z排序
      */
-    Comparator comparator = new Comparator<City>() {
+    Comparator comparator = new Comparator<CityCompentBean.DataBeanX.DataBean>() {
         @Override
-        public int compare(City lhs, City rhs) {
-            String a = lhs.getPinyin().substring(0, 1);
-            String b = rhs.getPinyin().substring(0, 1);
+        public int compare(CityCompentBean.DataBeanX.DataBean lhs, CityCompentBean.DataBeanX.DataBean rhs) {
+            String a = lhs.getCitypy().substring(0, 1);
+            String b = rhs.getCitypy().substring(0, 1);
             int flag = a.compareTo(b);
             if (flag == 0) {
                 return a.compareTo(b);
