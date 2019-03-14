@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zzteck.jumin.R;
+import com.zzteck.jumin.bean.ChildCategoryBean;
 import com.zzteck.jumin.bean.Favorite;
+import com.zzteck.jumin.bean.MainCategoryBean;
 
 import java.util.List;
 
@@ -21,11 +23,16 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
     private Context mContext;
 
-    private List<Favorite> mFavoriteList;
+    private List<ChildCategoryBean.DataBean> mFavoriteList;
 
-    public CategoryListAdapter(Context context, List<Favorite> list) {
+    public CategoryListAdapter(Context context, List<ChildCategoryBean.DataBean> list) {
         this.mContext = context;
         this.mFavoriteList = list;
+    }
+
+    public void notifyCategoryList(List<ChildCategoryBean.DataBean> mFavoriteList){
+        this.mFavoriteList = mFavoriteList ;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -36,12 +43,12 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
     @Override
     public void onBindViewHolder(CategoryListAdapter.ViewHolder holder, int position) {
-
+        holder.name.setText(mFavoriteList.get(position).getChildren().get(0).getCatname());
     }
 
     @Override
     public int getItemCount() {
-        return mFavoriteList == null ? 10 : mFavoriteList.size();
+        return mFavoriteList == null ? 0 : mFavoriteList.size();
 
     }
 

@@ -38,7 +38,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 
 	 private Fragment mHomeFragmemt;
 	 
-	 private Fragment mHistoryFragment;
+	 private Fragment mCategoryFragment;
 	 
 	 private Fragment mReleaseFragment ;
 
@@ -109,12 +109,12 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 		 
 		 mWJViewPaper = findViewById(R.id.content) ;
 		 mHomeFragmemt = new HomeFragment();
-		 mHistoryFragment = new HistoryFragment();
+		 mCategoryFragment = new HistoryFragment();
 		 mMessageFragment = new WJConversationListFragment();
 		 mUserFragment = new UserFragment();
 		 
 		 mFragment.add(mHomeFragmemt) ;
-		 mFragment.add(mHistoryFragment) ;
+		 mFragment.add(mCategoryFragment) ;
 		 mFragment.add(mMessageFragment) ;
 		 mFragment.add(mUserFragment) ;
 

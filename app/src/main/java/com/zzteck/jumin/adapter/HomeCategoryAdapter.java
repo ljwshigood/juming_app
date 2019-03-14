@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.Favorite;
+import com.zzteck.jumin.bean.MainCategoryBean;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
 
     private Context mContext;
 
-    private String[] mFavoriteList;
+    private List<MainCategoryBean.DataBean> mFavoriteList;
 
     public void setOnItemClickListener(MessageAdapter.OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
@@ -36,7 +37,7 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
 
     }
 
-    public HomeCategoryAdapter(Context context, String[] list) {
+    public HomeCategoryAdapter(Context context, List<MainCategoryBean.DataBean> list) {
         this.mContext = context;
         this.mFavoriteList = list;
     }
@@ -58,12 +59,12 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
 
     @Override
     public void onBindViewHolder(HomeCategoryAdapter.ViewHolder holder, int position) {
-        holder.name.setText(mFavoriteList[position]);
+        holder.name.setText(mFavoriteList.get(position).getCatname());
     }
 
     @Override
     public int getItemCount() {
-        return mFavoriteList == null ? 0 : mFavoriteList.length;
+        return mFavoriteList == null ? 0 : mFavoriteList.size();
 
     }
 
