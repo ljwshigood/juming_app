@@ -1,18 +1,15 @@
 package com.zzteck.jumin.ui.business;
 
 import android.content.Intent;
-import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zzteck.jumin.R;
@@ -34,15 +31,16 @@ public class MoreCategoryActivity extends BaseActivity implements OnClickListene
 
 	private void initView() {
 		mTvTitle = findViewById(R.id.tv_main_info) ;
-		mIvBack = findViewById(R.id.iv_back) ;
-		mIvBack.setOnClickListener(this);
+		mRlBack = findViewById(R.id.ll_back) ;
+		mRlBack.setOnClickListener(this);
 		mTvTitle.setText("更多");
 		mRvCategory = findViewById(R.id.rv_more_cate);
+		mRlBack.setVisibility(View.VISIBLE);
 	}
 
 	private TextView mTvTitle ;
 
-	private ImageView mIvBack ;
+	private RelativeLayout mRlBack;
 
 	private MoreCategoryAdapter mMoreCategoryAdapter ;
 
@@ -120,7 +118,7 @@ public class MoreCategoryActivity extends BaseActivity implements OnClickListene
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-			case R.id.iv_back:
+			case R.id.ll_back:
 				finish();
 				break ;
 		}
