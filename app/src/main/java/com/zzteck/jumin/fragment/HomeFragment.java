@@ -37,7 +37,9 @@ import com.zzteck.jumin.adapter.VideoAdapter;
 import com.zzteck.jumin.bean.BannerBean;
 import com.zzteck.jumin.bean.CategoryBean;
 import com.zzteck.jumin.bean.VideoBean;
+import com.zzteck.jumin.ui.business.CategoryListActivity;
 import com.zzteck.jumin.ui.business.MoreCategoryActivity;
+import com.zzteck.jumin.ui.business.NearFragent;
 import com.zzteck.jumin.ui.location.LocationActivity;
 import com.zzteck.jumin.ui.mainui.MainCategoryActivity;
 import com.zzteck.jumin.ui.mainui.SearchActivity;
@@ -522,6 +524,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         mIvThree = view.findViewById(R.id.iv_three) ;
         mIvFour = view.findViewById(R.id.iv_four) ;
 
+
+        mIvOne.setOnClickListener(this);
+        mIvTwo.setOnClickListener(this);
+        mIvThree.setOnClickListener(this);
+        mIvFour.setOnClickListener(this);
+
         mTvOne = view.findViewById(R.id.tv_one) ;
         mTvTwo = view.findViewById(R.id.tv_two) ;
         mTvThree = view.findViewById(R.id.tv_three) ;
@@ -754,6 +762,22 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         Intent intent = null ;
         switch (view.getId()){
+            case R.id.iv_one :
+                intent = new Intent(getActivity(), CategoryListActivity.class) ;
+                startActivity(intent);
+                break ;
+            case R.id.iv_two :
+                intent = new Intent(getActivity(), NearFragent.class) ;
+                startActivity(intent);
+                break ;
+            case R.id.iv_three :
+                intent = new Intent(getActivity(), CategoryListActivity.class) ;
+                startActivity(intent);
+                break ;
+            case R.id.iv_four :
+                intent = new Intent(getActivity(), CategoryListActivity.class) ;
+                startActivity(intent);
+                break ;
             case R.id.iv_xinfang :
                 intent = new Intent(getActivity(), MainCategoryActivity.class) ;
                 startActivity(intent);
