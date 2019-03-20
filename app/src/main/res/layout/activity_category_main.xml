@@ -1,97 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <include layout="@layout/include_title"></include>
+
+    <FrameLayout
+        android:id="@+id/fl_activity"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@android:color/white"
-        android:layout_marginTop="25dp">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/ll_back"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:paddingLeft="15dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            app:srlEnablePreviewInEditMode="false">
 
-
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@mipmap/ic_back" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/ll_search"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical">
-
-            <include layout="@layout/view_search_text"></include>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/iv_search"
-                android:layout_width="wrap_content"
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="搜索"
-                android:textSize="16sp" />
-        </LinearLayout>
-    </RelativeLayout>
+                app:srlAccentColor="@android:color/white" />
 
+            <com.zzteck.jumin.view.JudgeNestedScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <LinearLayout
-        android:id="@+id/ll_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="推荐产品"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="15dp"
-            android:textSize="16sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-        <com.zzteck.zzview.WJSpandGridView
-            android:id="@+id/gv_search"
+                        <android.support.design.widget.CollapsingToolbarLayout
+                            android:id="@+id/collapse"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:contentScrim="?attr/colorPrimary"
+                            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                            app:titleEnabled="false">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <android.support.v7.widget.RecyclerView
+                                    android:id="@+id/rv_expand"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+                                <include layout="@layout/item_home_picture" />
+                            </LinearLayout>
+
+                        </android.support.design.widget.CollapsingToolbarLayout>
+
+                    </LinearLayout>
+
+                    <net.lucode.hackware.magicindicator.MagicIndicator
+                        android:id="@+id/magic_indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/thirty_eight"
+                        android:layout_gravity="bottom"
+                        android:background="@color/mainWhite" />
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/view_pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+
+            </com.zzteck.jumin.view.JudgeNestedScrollView>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:horizontalSpacing="3dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="20dp"
-            android:listSelector="@android:color/transparent"
-            android:numColumns="4"
-            android:scrollbars="none"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="3dp">
+            android:orientation="vertical">
 
-        </com.zzteck.zzview.WJSpandGridView>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/home_toolbar"
+                style="@style/AppTheme.Toolbar"
+                android:layout_marginBottom="0dp"
+                android:background="@android:color/transparent"
+                app:layout_collapseMode="pin">
 
-    </LinearLayout>
+            </android.support.v7.widget.Toolbar>
+
+        </LinearLayout>
 
 
+        <!-- <android.support.v7.widget.RecyclerView
+             android:id="@+id/rv_expand"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>-->
+
+
+    </FrameLayout>
 </LinearLayout>

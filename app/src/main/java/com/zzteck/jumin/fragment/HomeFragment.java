@@ -39,6 +39,7 @@ import com.zzteck.jumin.bean.CategoryBean;
 import com.zzteck.jumin.bean.VideoBean;
 import com.zzteck.jumin.ui.business.MoreCategoryActivity;
 import com.zzteck.jumin.ui.location.LocationActivity;
+import com.zzteck.jumin.ui.mainui.MainCategoryActivity;
 import com.zzteck.jumin.ui.mainui.SearchActivity;
 import com.zzteck.jumin.ui.mainui.ZxingActivity;
 import com.zzteck.jumin.utils.Constants;
@@ -532,6 +533,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         mIvShangpuChuzu = view.findViewById(R.id.iv_shangpuchuzu) ;
         mIvShangpuZhuanrang = view.findViewById(R.id.iv_shangpuzhuanrang) ;
 
+
+        mIvErShouFang.setOnClickListener(this);
+        mIvXinFang.setOnClickListener(this);
+        mIvChuZu.setOnClickListener(this);
+        mIvShangpuChuzu.setOnClickListener(this);
+        mIvShangpuZhuanrang.setOnClickListener(this);
+
         mIvCategoryList.add(mIvOne) ;
         mIvCategoryList.add(mIvTwo) ;
         mIvCategoryList.add(mIvThree) ;
@@ -746,6 +754,26 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         Intent intent = null ;
         switch (view.getId()){
+            case R.id.iv_xinfang :
+                intent = new Intent(getActivity(), MainCategoryActivity.class) ;
+                startActivity(intent);
+                break ;
+            case R.id.iv_chuzu :
+                intent = new Intent(getActivity(), MainCategoryActivity.class) ;
+                startActivity(intent);
+                break ;
+            case R.id.iv_shangpuchuzu :
+                intent = new Intent(getActivity(), MainCategoryActivity.class) ;
+                startActivity(intent);
+                break ;
+            case R.id.iv_ershoufang :
+                intent = new Intent(getActivity(), MainCategoryActivity.class) ;
+                startActivity(intent);
+                break ;
+            case R.id.iv_shangpuzhuanrang :
+                intent = new Intent(getActivity(), MainCategoryActivity.class) ;
+                startActivity(intent);
+                break ;
             case R.id.ll_more:
                 intent = new Intent(getActivity(), MoreCategoryActivity.class) ;
                 startActivity(intent);
