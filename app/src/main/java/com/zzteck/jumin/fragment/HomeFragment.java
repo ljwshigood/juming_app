@@ -499,7 +499,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     }
 
+    private TextView mTvMoreVideo ;
+
     private void initView(View view) {
+
+        mTvMoreVideo = view.findViewById(R.id.tv_more_video) ;
 
         mTvLocation = view.findViewById(R.id.tv_location) ;
         refreshLayout = view.findViewById(R.id.refreshLayout) ;
@@ -546,6 +550,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         mIvChuZu.setOnClickListener(this);
         mIvShangpuChuzu.setOnClickListener(this);
         mIvShangpuZhuanrang.setOnClickListener(this);
+
+        mTvMoreVideo.setOnClickListener(this);
 
         mIvCategoryList.add(mIvOne) ;
         mIvCategoryList.add(mIvTwo) ;
@@ -761,6 +767,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         Intent intent = null ;
         switch (view.getId()){
+            case R.id.tv_more_video:
+                intent = new Intent(getActivity(), CategoryListActivity.class) ;
+                startActivity(intent);
+                break ;
             case R.id.iv_one :
                 intent = new Intent(getActivity(), CategoryListActivity.class) ;
                 startActivity(intent);

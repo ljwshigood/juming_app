@@ -86,6 +86,7 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 	 * @param catId
 	 * @param cityId
 	 * @param pages
+	 *
 	 */
 	private void getInfosList(final String catId, final String cityId, String pages){
 

@@ -1,6 +1,8 @@
 package com.zzteck.jumin.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.VideoBean;
+import com.zzteck.jumin.utils.Constants;
 
 import java.util.List;
 
@@ -43,7 +46,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(VideoAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(VideoAdapter.ViewHolder holder, final int position) {
 
         Glide.with(mContext)
                 .load(mVideoList.get(position).getImg_path())
@@ -52,6 +55,16 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
                 .crossFade(300)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(holder.mIvVideo);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse(Constants.HOST+mVideoList.get(position).getVideo());
+                Intent intent= new Intent(Intent.ACTION_VIEW) ;
+                intent.setDataAndType(uri,"video/*");
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override

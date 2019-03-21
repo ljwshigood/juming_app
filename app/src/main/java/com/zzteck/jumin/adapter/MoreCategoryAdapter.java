@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.MoreCategory;
+import com.zzteck.jumin.ui.business.CategoryListActivity;
 import com.zzteck.jumin.ui.business.MoreCategoryListActivity;
 
 import java.util.List;
@@ -47,6 +48,8 @@ public class MoreCategoryAdapter extends RecyclerView.Adapter<MoreCategoryAdapte
                 mContext.startActivity(intent);
             }
         });
+
+
         return new ViewHolder(view);
     }
 
@@ -62,6 +65,14 @@ public class MoreCategoryAdapter extends RecyclerView.Adapter<MoreCategoryAdapte
                 .into(holder.mIv);
 
         holder.name.setText(mMoreCategoryList.get(position).getInfo());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, CategoryListActivity.class) ;
+                mContext.startActivity(intent);
+            }
+        });
 
     }
 
