@@ -1,15 +1,18 @@
 package com.zzteck.jumin.ui.usercenter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,6 +24,16 @@ import com.zzteck.jumin.fragment.ReleaseTuiguangFragment;
 import com.zzteck.jumin.fragment.ReleaseVideoFragment;
 import com.zzteck.jumin.fragment.ReleaseWaitingFragment;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
+import com.zzteck.jumin.view.ColorFlipPagerTitleView;
+
+import net.lucode.hackware.magicindicator.MagicIndicator;
+import net.lucode.hackware.magicindicator.ViewPagerHelper;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
 import java.util.ArrayList;
 
@@ -32,15 +45,23 @@ public class MyReleaseActivity extends BaseActivity implements OnClickListener{
 
 	private ArrayList<Fragment> mFragments = new ArrayList<>();
 
-	private SlidingTabLayout slidingTab;
-
 	private ViewPager segVp;
 
-	private RelativeLayout mRlTitle ;
+	private LinearLayout mRlTitle ;
 
 	private TextView mTvMainInfo ;
 
+	private MagicIndicator magicIndicator;
+
+	private RelativeLayout mRlBack ;
+
 	private void initView() {
+
+		mRlBack = findViewById(R.id.ll_back) ;
+		mRlBack.setVisibility(View.VISIBLE);
+		mRlBack.setOnClickListener(this);
+
+		magicIndicator = findViewById(R.id.magic_indicator) ;
 
 		mTitles[0] = "已完成";
 		mFragments.add(new ReleaseCompleteFragment());
@@ -54,7 +75,6 @@ public class MyReleaseActivity extends BaseActivity implements OnClickListener{
 		mTitles[3] = "推广中";
 		mFragments.add(new ReleaseTuiguangFragment());
 
-		slidingTab = findViewById(R.id.slidingTab);
 		segVp = findViewById(R.id.wj_paper);
 		mRlTitle = findViewById(R.id.rl_include_title) ;
 		mRlTitle.setBackgroundColor(mContext.getResources().getColor(R.color.white));
@@ -62,25 +82,55 @@ public class MyReleaseActivity extends BaseActivity implements OnClickListener{
 		mTvMainInfo.setText("全部发布");
 		mTvMainInfo.setTextColor(mContext.getResources().getColor(R.color.colorBlack));
 		initSegTab();
+		initViewPaper() ;
+	}
+
+	private void initSegTab() {
+		CommonNavigator commonNavigator = new CommonNavigator(this);
+		commonNavigator.setScrollPivotX(0.65f);
+		commonNavigator.setAdjustMode(true);
+		commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+			@Override
+			public int getCount() {
+				return mTitles == null ? 0 : mTitles.length ;
+			}
+
+			@Override
+			public IPagerTitleView getTitleView(Context context, final int index) {
+				SimplePagerTitleView simplePagerTitleView = new ColorFlipPagerTitleView(context);
+				simplePagerTitleView.setText(mTitles[index]);
+				simplePagerTitleView.setNormalColor(ContextCompat.getColor(mContext, R.color.mainBlack));
+				simplePagerTitleView.setSelectedColor(ContextCompat.getColor(mContext, R.color.mainBlack));
+				simplePagerTitleView.setTextSize(16);
+				simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						segVp.setCurrentItem(index, false);
+					}
+				});
+				return simplePagerTitleView;
+			}
+
+			@Override
+			public IPagerIndicator getIndicator(Context context) {
+
+
+				LinePagerIndicator linePagerIndicator = new LinePagerIndicator(context);
+				linePagerIndicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
+				linePagerIndicator.setColors(ContextCompat.getColor(mContext, R.color.mainRed));
+
+				return linePagerIndicator;
+			}
+		});
+		magicIndicator.setNavigator(commonNavigator);
+		ViewPagerHelper.bind(magicIndicator, segVp);
 	}
 
 
-	private void initSegTab() {
+
+	private void initViewPaper() {
 		segVp.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
-		slidingTab.setViewPager(segVp);
-		slidingTab.setOnTabSelectListener(new OnTabSelectListener() {
 
-			@Override
-			public void onTabSelect(int position) {
-				segVp.setCurrentItem(position);
-			}
-
-			@Override
-			public void onTabReselect(int position) {
-
-			}
-
-		});
 		segVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
 			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -89,7 +139,6 @@ public class MyReleaseActivity extends BaseActivity implements OnClickListener{
 
 			@Override
 			public void onPageSelected(int position) {
-				slidingTab.setCurrentTab(position);
 
 			}
 
@@ -97,6 +146,7 @@ public class MyReleaseActivity extends BaseActivity implements OnClickListener{
 			public void onPageScrollStateChanged(int state) {
 
 			}
+
 		});
 		segVp.setCurrentItem(0);
 	}
@@ -151,7 +201,9 @@ public class MyReleaseActivity extends BaseActivity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-
+			case R.id.ll_back :
+				finish();
+				break ;
 		}
 	}
 

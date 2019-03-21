@@ -19,24 +19,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.flyco.tablayout.SlidingTabLayout
-                xmlns:tl="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/slidingTab"
+            <net.lucode.hackware.magicindicator.MagicIndicator
+                android:id="@+id/magic_indicator"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@android:color/white"
-                android:gravity="center|bottom"
-                tl:tl_indicator_width_equal_title="true"
-                tl:tl_tab_padding="12dp"
-                tl:tl_tab_space_equal="false"
-                tl:tl_textSelectSize="22sp"
-                tl:tl_textsize="15sp"
-                tl:tl_textSelectBold="false"
-                tl:tl_textBold="false"
-                tl:tl_textSelectColor="@android:color/black"
-                tl:tl_textUnselectColor="@color/themeGray">
-
-            </com.flyco.tablayout.SlidingTabLayout>
+                android:layout_height="@dimen/thirty_eight"
+                android:layout_gravity="bottom"
+                android:background="@color/mainWhite" />
 
         </LinearLayout>
 
