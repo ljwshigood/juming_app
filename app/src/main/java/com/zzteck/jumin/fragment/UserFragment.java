@@ -11,13 +11,22 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zzteck.jumin.R;
+import com.zzteck.jumin.bean.User;
+import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.ui.business.ChargeActivity;
 import com.zzteck.jumin.ui.mainui.FeedBackActivity;
 import com.zzteck.jumin.ui.usercenter.MemberUpgradeActivity;
 import com.zzteck.jumin.ui.usercenter.MyReleaseActivity;
+import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.view.MyDialog;
 import com.zzteck.jumin.view.SignInDialog;
+
+import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserFragment extends Fragment implements OnClickListener {
 
@@ -45,8 +54,14 @@ public class UserFragment extends Fragment implements OnClickListener {
 
     private TextView mTvLoginOut ;
 
+    private TextView mTvNickName ;
+
+    private CircleImageView mCvPhoto ;
+
     private void initView(View view) {
 
+        mCvPhoto = view.findViewById(R.id.iv_user_icon) ;
+        mTvNickName = view.findViewById(R.id.tv_nick_name) ;
         mTvLoginOut = view.findViewById(R.id.tv_login_out);
 
         mTvCharge = view.findViewById(R.id.tv_chongzhi);
@@ -75,7 +90,19 @@ public class UserFragment extends Fragment implements OnClickListener {
 
 
     private void initData() {
+        List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
+        if(userList != null && userList.size() > 0){
+            Glide.with(mContext)
+                    .load(Constants.HOST+userList.get(0).getHeader())
+                    .placeholder(R.mipmap.ic_launcher)
+                    .error(R.mipmap.ic_launcher)
+                    .crossFade(300)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .into(mCvPhoto);
 
+            mTvNickName.setText(userList.get(0).getUsername() +"");
+
+        }
     }
 
     @Override

@@ -4,15 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zzteck.jumin.R;
@@ -38,7 +35,7 @@ public class MemberUpgradeActivity extends BaseActivity implements OnClickListen
 
 	private TextView mTvTitle ;
 
-	private ImageView mIvBack ;
+	private RelativeLayout mRlBack;
 
 	private String[] resInfo = new String[]{"普通","黄金","白金","砖石"} ;
 
@@ -54,7 +51,7 @@ public class MemberUpgradeActivity extends BaseActivity implements OnClickListen
 
 
 	private void initView() {
-		mIvBack = findViewById(R.id.iv_back) ;
+		mRlBack = findViewById(R.id.ll_back) ;
 		mTvTitle = findViewById(R.id.tv_main_info) ;
 		mRVMemeberUpgrade = findViewById(R.id.rv_memeber_upgrade) ;
 		mRVMemeberUpgrade.setLayoutManager(new GridLayoutManager(this,2));
@@ -62,7 +59,8 @@ public class MemberUpgradeActivity extends BaseActivity implements OnClickListen
 		mMemeberAdapter = new MemeberAdapter(mContext,null) ;
 		mRVMemeberUpgrade.setAdapter(mMemeberAdapter) ;
 		mTvTitle.setText("会员升级");
-		mIvBack.setOnClickListener(this);
+		mRlBack.setOnClickListener(this);
+		mRlBack.setVisibility(View.VISIBLE);
 	}
 
 	@Override
@@ -98,7 +96,7 @@ public class MemberUpgradeActivity extends BaseActivity implements OnClickListen
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-			case R.id.iv_back :
+			case R.id.ll_back :
 				finish();
 				break ;
 		}
