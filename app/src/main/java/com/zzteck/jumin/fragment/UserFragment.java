@@ -16,6 +16,7 @@ import com.zzteck.jumin.ui.business.ChargeActivity;
 import com.zzteck.jumin.ui.mainui.FeedBackActivity;
 import com.zzteck.jumin.ui.usercenter.MemberUpgradeActivity;
 import com.zzteck.jumin.ui.usercenter.MyReleaseActivity;
+import com.zzteck.jumin.view.MyDialog;
 import com.zzteck.jumin.view.SignInDialog;
 
 public class UserFragment extends Fragment implements OnClickListener {
@@ -42,8 +43,11 @@ public class UserFragment extends Fragment implements OnClickListener {
 
     private TextView mTvQianDao;
 
+    private TextView mTvLoginOut ;
 
     private void initView(View view) {
+
+        mTvLoginOut = view.findViewById(R.id.tv_login_out);
 
         mTvCharge = view.findViewById(R.id.tv_chongzhi);
         mTvQianDao = view.findViewById(R.id.tv_qiandao);
@@ -65,6 +69,8 @@ public class UserFragment extends Fragment implements OnClickListener {
         mRlMyRenzhen.setOnClickListener(this);
         mRlHuiyuanshengji.setOnClickListener(this);
         mRlRuheFaBuXuqiu.setOnClickListener(this);
+
+        mTvLoginOut.setOnClickListener(this);
     }
 
 
@@ -85,6 +91,10 @@ public class UserFragment extends Fragment implements OnClickListener {
     public void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
+            case R.id.tv_login_out :
+                MyDialog dialog1 = new MyDialog(getActivity()) ;
+                dialog1.show();
+                break ;
             case R.id.tv_chongzhi:
                 intent = new Intent(getActivity(), ChargeActivity.class);
                 startActivity(intent);
