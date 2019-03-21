@@ -39,7 +39,6 @@ import com.zzteck.jumin.bean.CategoryBean;
 import com.zzteck.jumin.bean.VideoBean;
 import com.zzteck.jumin.ui.business.CategoryListActivity;
 import com.zzteck.jumin.ui.business.MoreCategoryActivity;
-import com.zzteck.jumin.ui.business.NearFragent;
 import com.zzteck.jumin.ui.location.LocationActivity;
 import com.zzteck.jumin.ui.mainui.MainCategoryActivity;
 import com.zzteck.jumin.ui.mainui.SearchActivity;
@@ -767,7 +766,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break ;
             case R.id.iv_two :
-                intent = new Intent(getActivity(), NearFragent.class) ;
+                intent = new Intent(getActivity(), CategoryListActivity.class) ;
                 startActivity(intent);
                 break ;
             case R.id.iv_three :

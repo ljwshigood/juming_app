@@ -67,14 +67,11 @@ dependencies {
             force 'com.android.support:support-annotations:26.1.0'
         }
     }
-
     compile 'com.jude:easyrecyclerview:4.4.2'
-
     compile 'com.jakewharton:butterknife:8.7.0'
-
     compile 'org.simple:androideventbus:1.0.5.1'
     implementation 'com.android.support:multidex:1.0.3'
-     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     //banner
     implementation 'com.youth.banner:banner:1.4.10'
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-4'
@@ -98,6 +95,7 @@ dependencies {
     implementation project(':lib-zxing')
     //    implementation project(':photoselect')
     implementation project(':photoselectcompont')
-//    implementation project(':volley-master')
+    //    implementation project(':volley-master')
     implementation project(':citylib')
+    implementation project(':poptabview_lib')
 }

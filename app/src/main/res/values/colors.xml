@@ -6,7 +6,7 @@
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFF</color>
     <color name="dark_gray">#8a8a8a</color>
-
+    <color name="colordc">#dcdcdc</color>
     <!--theme color-->
     <color name="themeGray">#DEDEDE</color>
     <!--basic color-->

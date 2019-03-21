@@ -1,45 +1,54 @@
 package com.zzteck.jumin.ui.business;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PixelFormat;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.animation.TranslateAnimation;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ccj.poptabview.FilterConfig;
+import com.ccj.poptabview.PopTabView;
+import com.ccj.poptabview.base.BaseFilterTabBean;
+import com.ccj.poptabview.bean.FilterGroup;
+import com.ccj.poptabview.listener.OnPopTabSetListener;
+import com.google.gson.Gson;
+import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.zzteck.jumin.R;
-import com.zzteck.jumin.adapter.MainFilterAdapter;
 import com.zzteck.jumin.adapter.RecommandAdapter;
-import com.zzteck.jumin.adapter.SubFilterAdapter;
 import com.zzteck.jumin.app.App;
-import com.zzteck.jumin.bean.FilterBean;
+import com.zzteck.jumin.bean.HomeInfo;
+import com.zzteck.jumin.bean.MyFilterConfig;
+import com.zzteck.jumin.bean.MyFilterParamsBean;
+import com.zzteck.jumin.bean.MyFilterTabBean;
+import com.zzteck.jumin.bean.MyPopEntityLoaderImp;
+import com.zzteck.jumin.bean.MyResultLoaderImp;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
-import com.zzteck.jumin.utils.ScreenUtil;
+import com.zzteck.jumin.utils.Constants;
+import com.zzteck.jumin.utils.UtilsTools;
+import com.zzteck.jumin.view.NormalDecoration;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
-public class CategoryListActivity extends Activity implements OnClickListener{
+public class CategoryListActivity extends BaseActivity implements OnClickListener,OnPopTabSetListener<MyFilterParamsBean> {
 
 	private String TAG = "liujw" ;
 
@@ -55,275 +64,167 @@ public class CategoryListActivity extends Activity implements OnClickListener{
 
 	private RelativeLayout mRlBack;
 
+	private PopTabView popTabView;
+
 	private void initView(){
 		mGvCommand = findViewById(R.id.rl_cate_list) ;
-		mLLBlogTypeTitle = findViewById(R.id.ll_blog_type);
-		mLLTypeTitle = findViewById(R.id.ll_filter_title);
-
 		mTvTitle = findViewById(R.id.tv_main_info) ;
 		mRlBack = findViewById(R.id.ll_back) ;
 		mRlBack.setOnClickListener(this);
 		mTvTitle.setText("二手房");
 		mRlBack.setVisibility(View.VISIBLE);
 
+		popTabView = findViewById(R.id.expandpop);
+
 	}
 
-	private void initData(){
-		/*mCommandAdapter = new RecommandAdapter(mContext, null) ;
-		mGvCommand.setAdapter(mCommandAdapter);*/
-	}
+	private String mCategoryId = "41" ;
 
-	private LayoutInflater mLayoutInflater ;
-
-	public int mScreenWidth = 0;
-
-	public int mScreenHeight = 0;
-
-	private List<String> mTitleMainList = new ArrayList<String>();
-
-	private int mItemWidth = 0;
-
-	private LinearLayout mLLBlogTypeTitle;
-
-	private PopupWindow mPopupWindow = null;
+	private int mCurrentPage = 1  ;
 
 	/**
-	 * 初始化 PopupWindow
-	 *
+	 * @param catId
+	 * @param cityId
+	 * @param pages
 	 */
+	private void getInfosList(final String catId, final String cityId, String pages){
 
-	private View mFilterView = null;
+		Map<String, String> map = new HashMap<>() ;
+		map.put("s","App.Info.Getinfos") ;
+		map.put("catid",catId) ;
+		map.put("cityid",cityId) ;
+		map.put("pages",pages) ;
 
-	private ListView mLvTitleMain = null;
 
-	private ListView mLvTitleSub = null;
-
-	private MainFilterAdapter mMainFilterAdapter = null;
-
-	private SubFilterAdapter mSubFilterAdapter = null;
-
-	private TranslateAnimation mTranslaterAnimation;
-
-	private String[] priceArray ;
-
-	private List<FilterBean> mFilterList = new ArrayList<>() ;
-
-	private void initFilter() {
-
-		priceArray = getResources().getStringArray(R.array.price);
-
-		for (int i = 0; i < priceArray.length ; i++) {
-			FilterBean bean = new FilterBean();
-			bean.setDetail(priceArray[i]);
-			mFilterList.add(bean);
-		}
-	}
-
-	public void initPopuWindow() {
-
-		mFilterView = LayoutInflater.from(mContext).inflate(R.layout.layout_filter_view, null);
-		mLlMainFilter =  mFilterView.findViewById(R.id.ll_main_filter);
-		mLLSubFilter =  mFilterView.findViewById(R.id.ll_sub_filter);
-		mLvTitleMain =  mFilterView.findViewById(R.id.lv_filter_main);
-		mLvTitleSub =  mFilterView.findViewById(R.id.lv_filter_sub);
-
-		mLvTitleMain.requestFocus();
-		mLvTitleSub.requestFocus();
-
-		RelativeLayout.LayoutParams lpMainFilter = (RelativeLayout.LayoutParams) mLlMainFilter.getLayoutParams();
-		RelativeLayout.LayoutParams lpSubFilter = (RelativeLayout.LayoutParams) mLLSubFilter.getLayoutParams();
-
-		lpMainFilter.height = mScreenHeight * 6 / 10;
-		lpSubFilter.height = mScreenHeight * 6 / 10;
-
-		mLlMainFilter.setLayoutParams(lpMainFilter);
-		mLLSubFilter.setLayoutParams(lpSubFilter);
-
-		mPopupWindow = new PopupWindow(mFilterView);
-		mPopupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-		mPopupWindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-
-		mPopupWindow.setBackgroundDrawable(new ColorDrawable(0x55000000));
-
-		mPopupWindow.setFocusable(true);
-		mPopupWindow.setOutsideTouchable(true);
-		mPopupWindow.update();
-		mPopupWindow.setTouchable(true);
-
-		mFilterView.setOnTouchListener(new View.OnTouchListener() {
-
+		OkHttpClient client = new OkHttpClient();
+		Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
+		Call call = client.newCall(request);
+		call.enqueue(new Callback() {
 			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				mPopupWindow.dismiss();
-				return false;
+			public void onFailure(Call call, IOException e) {
+				Log.e("liujw","##########################IOException : "+e.toString());
 			}
-		});
-		mFilterView.setFocusableInTouchMode(true);
-	}
 
-	private LinearLayout mLlMainFilter;
-
-	private LinearLayout mLLSubFilter;
-
-	private int mCurrentPosition;
-
-	private void showTitilePopWindows(View v, int position) {
-		showFilterPop(v, position);
-	}
-
-	private HashMap<Integer, List<FilterBean>> mHashMapSubTitle = new HashMap<Integer, List<FilterBean>>();
-
-	private String mFilterRegion ;
-
-	private void showFilterPop(View view, int position) {
-
-		mCurrentPosition = position;
-		if (mPopupWindow == null) {
-			initPopuWindow();
-		}
-
-		mLLSubFilter.setVisibility(View.GONE);
-
-		final List<FilterBean> filterList = mHashMapSubTitle.get(position);
-
-		mMainFilterAdapter = new MainFilterAdapter(mContext, mFilterList);
-		mLvTitleMain.setAdapter(mMainFilterAdapter);
-
-		int[] location = new int[2];
-		view.getLocationOnScreen(location);
-
-		mTranslaterAnimation = new TranslateAnimation(0, 0, -700, location[0]);
-		mTranslaterAnimation.setDuration(500);
-
-		mFilterView.setAnimation(mTranslaterAnimation);
-		mFilterView.startAnimation(mTranslaterAnimation);
-		mPopupWindow.showAsDropDown(view);
-
-		mLvTitleMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-				FilterBean mFilterBean = mFilterList.get(position);
-				TextView tv = (TextView)(mLLBlogTypeTitle.getChildAt(mCurrentPosition)).findViewById(R.id.tv_filter);
-				tv.setText(mFilterBean.getDetail());
-				switch (mCurrentPosition) {
-					case 0:
-						if(position == 0){
-							mFilterRegion = mFilterBean.getDetail();
-							if (mPopupWindow != null && mPopupWindow.isShowing()) {
-								mPopupWindow.dismiss();
-							}
+			public void onResponse(Call call, final Response response) throws IOException {
+				final String responseStr = response.body().string();
+
+				Log.e("liujw","##########################getInfosList catId : "+catId+" #####################: "+responseStr);
+
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+
+						String message = new String(responseStr) ;
+						Gson gson = new Gson() ;
+						HomeInfo info = gson.fromJson(message,HomeInfo.class) ;
+						if(mCurrentPage == 1){
+							initData(info);
 						}else{
-
-							mFilterRegion = mFilterBean.getDetail() + "区";
-							if (mPopupWindow != null && mPopupWindow.isShowing()) {
-								mPopupWindow.dismiss();
+							if(mCommandAdapter != null){
+								mCommandAdapter.addAll(info.getData());
 							}
-						}
-						break;
-					case 1:
-						if (mPopupWindow != null && mPopupWindow.isShowing()) {
-							mPopupWindow.dismiss();
-						}
-						if(mFilterBean.getDetail().equals("600以上")){
-							String filter = mFilterBean.getDetail().replace("-", ",");
-						}else {
 
-							String filter = mFilterBean.getDetail().replace("-", ",");
-							/*WebReleaseManager.getInstance(mContext).setmIReleaseManager(NearFragent.this);
-							WebReleaseManager.getInstance(mContext).findTask("", "", "", 0, 20, filter);*/
 						}
 
 
-						break;
-					case 2:
-						if (mPopupWindow != null && mPopupWindow.isShowing()) {
-							mPopupWindow.dismiss();
-						}
-						break;
-					case 3:
-						if (mPopupWindow != null && mPopupWindow.isShowing()) {
-							mPopupWindow.dismiss();
-						}
-						break;
-					default:
-						break;
-				}
-
-
-
+					}
+				});
 			}
 		});
 
-		mLvTitleMain.setOnKeyListener(new View.OnKeyListener() {
+	}
+
+	private void initData(HomeInfo info) {
+
+		mGvCommand.setLayoutManager(new LinearLayoutManager(this));
+		mGvCommand.addItemDecoration(new NormalDecoration(ContextCompat.getColor(this, R.color.mainGrayF8), (int) this.getResources().getDimension(R.dimen.one)));
+		mCommandAdapter = new RecommandAdapter(this,info.getData()) ;
+		mGvCommand.setAdapter(mCommandAdapter) ;
+
+		mCommandAdapter.setNoMore(R.layout.view_no_more);
+		mCommandAdapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
 			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if (keyCode == KeyEvent.KEYCODE_BACK) {
-					if (mPopupWindow != null && mPopupWindow.isShowing()) {
-						mPopupWindow.dismiss();
-					}
+			public void onMoreShow() {
+				Log.e("liujw", "@@@@@@@@@@@@@@@@@@@@@@@@@@@@onMoreShow");
+				if(mCategoryId != null){
+					mCurrentPage++ ;
+					getInfosList(mCategoryId,0+"",mCurrentPage+"") ;
 				}
-				return true;
+
+			}
+
+			@Override
+			public void onMoreClick() {
+
 			}
 		});
+
 	}
 
-	private void intTitleCount() {
-		mTitleMainList.add("距离");
-		mTitleMainList.add("报酬");
-		mTitleMainList.add("星级");
-	}
 
-	private void initBlogTitleColumn() {
+	/**
+	 * 模拟数据
+	 * 筛选器的 数据格式 都是大同小异
+	 * 要点:泛型处理,集合都用父类,实体都用子类表示.
+	 * @return
+	 */
+	public FilterGroup getMyData(String groupName, int groupType, int singleOrMutiply ) {
 
-		mLayoutInflater = LayoutInflater.from(mContext);
-		mScreenWidth = ScreenUtil.getWindowsWidth(this);
-		mScreenHeight = ScreenUtil.getWindowsHeight(this);
-		mItemWidth = mScreenWidth / mTitleMainList.size();
+		FilterGroup filterGroup = new FilterGroup();
 
-		mLLBlogTypeTitle.removeAllViews();
-		int count = mTitleMainList.size();
-		for (int i = 0; i < count; i++) {
+		filterGroup.setTab_group_name(groupName);
+		filterGroup.setTab_group_type(groupType);
+		filterGroup.setSingle_or_mutiply(singleOrMutiply);
 
-			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mItemWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
-			params.gravity = Gravity.CENTER;
-			final View view = mLayoutInflater.inflate(R.layout.item_filter, null);
-			TextView tv = view.findViewById(R.id.tv_filter);
-			view.setId(i);
-			tv.setTextSize(15);
+		List<BaseFilterTabBean> singleFilterList = new ArrayList<>();
+		for (int i = 0; i < 8; i++) {//一级fitler
+			MyFilterTabBean myFilterBean = new MyFilterTabBean();
+			myFilterBean.setTab_name(groupName + "_" + i);
+			myFilterBean.setTag_ids("tagid" + "_" + i );
+			myFilterBean.setMall_ids("mallid" + "_" + i );
+			myFilterBean.setCategory_ids("Categoryid" + "_" + i);
 
-			tv.setTextColor(mContext.getResources().getColor(R.color.dark));
-			tv.setText(mTitleMainList.get(i));
+			List<MyFilterTabBean.MyChildFilterBean> childFilterList = new ArrayList<>();
+			for (int j = 0; j < 5; j++) {//二级filter
+				MyFilterTabBean.MyChildFilterBean myChildFilterBean = new MyFilterTabBean.MyChildFilterBean();
+				myChildFilterBean.setTab_name(groupName + "_" + i + "__" + j);
+				myChildFilterBean.setTag_ids("tagid" + "_" + i + "__" + j);
+				myChildFilterBean.setMall_ids("mallid" + "_" + i + "__" + j);
+				myChildFilterBean.setCategory_ids("Categoryid" + "_" + i + "__" + j);
 
-			view.setOnClickListener(new View.OnClickListener() {
+				childFilterList.add(myChildFilterBean);
+			}
+			//增加二级tab
+			myFilterBean.setTabs(childFilterList);
 
-				@Override
-				public void onClick(View v) {
+			//增加一级tab
+			singleFilterList.add(myFilterBean);
 
-					if (mPopupWindow != null && mPopupWindow.isShowing()) {
-						mPopupWindow.dismiss();
-					}
-
-					for (int i = 0; i < mLLBlogTypeTitle.getChildCount(); i++) {
-						View localView = mLLBlogTypeTitle.getChildAt(i);
-						if (localView != v){
-						/*	CheckBox cb = (CheckBox)localView.findViewById(R.id.cb_triangle);
-							cb.setChecked(false);*/
-						}else {
-							/*CheckBox cb = (CheckBox)localView.findViewById(R.id.cb_triangle);
-							cb.setChecked(true);*/
-							if(i == 1){
-								showTitilePopWindows(view, i);
-							}
-						}
-					}
-				}
-			});
-
-			mLLBlogTypeTitle.addView(view, i, params);
 		}
+
+		filterGroup.setFilter_tab(singleFilterList);
+		return filterGroup;
+
 	}
 
-	private LinearLayout mLLTypeTitle;
+	private void addMyMethod() {
+
+		FilterGroup filterGroup1 = getMyData("距离", MyFilterConfig.TYPE_POPWINDOW_SINGLE,MyFilterConfig.FILTER_TYPE_SINGLE);
+		FilterGroup filterGroup5 = getMyData("价格", MyFilterConfig.TYPE_POPWINDOW_SINGLE,MyFilterConfig.FILTER_TYPE_MUTIFY);//自定义
+
+		FilterGroup filterGroup3 = getMyData("区域", FilterConfig.TYPE_POPWINDOW_SINGLE,FilterConfig.FILTER_TYPE_SINGLE);
+		FilterGroup filterGroup4 = getMyData("学校", FilterConfig.TYPE_POPWINDOW_SINGLE,FilterConfig.FILTER_TYPE_MUTIFY);
+
+		popTabView.setOnPopTabSetListener(this)
+				.setPopEntityLoader(new MyPopEntityLoaderImp()).setResultLoader(new MyResultLoaderImp()) //配置 {筛选类型}  方式
+				.addFilterItem(filterGroup1.getTab_group_name(), filterGroup1.getFilter_tab(), filterGroup1.getTab_group_type(), filterGroup1.getSingle_or_mutiply())
+				.addFilterItem(filterGroup5.getTab_group_name(), filterGroup5.getFilter_tab(), filterGroup5.getTab_group_type(), filterGroup5.getSingle_or_mutiply())
+				.addFilterItem(filterGroup3.getTab_group_name(), filterGroup3.getFilter_tab(), filterGroup3.getTab_group_type(), filterGroup3.getSingle_or_mutiply())
+				.addFilterItem(filterGroup4.getTab_group_name(), filterGroup4.getFilter_tab(), filterGroup4.getTab_group_type(), filterGroup4.getSingle_or_mutiply()) ;
+
+	}
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -334,12 +235,9 @@ public class CategoryListActivity extends Activity implements OnClickListener{
 		App.getInstance().addActivity(this);
 
  		initView() ;
+		addMyMethod() ;
 
-		initFilter();
-		intTitleCount() ;
-		initBlogTitleColumn() ;
-
-		initData();
+		getInfosList(mCategoryId,0+"",mCurrentPage+"") ;
 	}
 	
 
@@ -368,7 +266,7 @@ public class CategoryListActivity extends Activity implements OnClickListener{
 	}
 
 	@Override
-	public void onBackPressed() {
+	public void onPopTabSet(int index, String lable, MyFilterParamsBean params, String value) {
 
 	}
 }
