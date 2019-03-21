@@ -28,8 +28,15 @@ public class RecommandAdapter extends RecyclerArrayAdapter<HomeInfo.DataBean> {
 
     private Context mContext ;
 
-    private List<HomeInfo.DataBean> mHomeList ;
+    public List<HomeInfo.DataBean> getmHomeList() {
+        return mHomeList;
+    }
 
+    public void setmHomeList(List<HomeInfo.DataBean> mHomeList) {
+        this.mHomeList = mHomeList;
+    }
+
+    private List<HomeInfo.DataBean> mHomeList ;
 
     public RecommandAdapter(Context context, List<HomeInfo.DataBean> objects) {
         super(context, objects);
@@ -41,7 +48,6 @@ public class RecommandAdapter extends RecyclerArrayAdapter<HomeInfo.DataBean> {
     public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
         return new RecommandViewHolder(parent);
     }
-
 
     public class RecommandViewHolder extends BaseViewHolder<HomeInfo.DataBean> {
 

@@ -1,4 +1,4 @@
-package com.zzteck.jumin.ui.mainui;
+package com.zzteck.jumin.ui.business;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.SearchAdapter;
 import com.zzteck.jumin.bean.SearchBean;
+import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.zzview.WJSpandGridView;
 
 import java.util.ArrayList;

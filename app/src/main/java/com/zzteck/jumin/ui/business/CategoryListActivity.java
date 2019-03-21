@@ -160,6 +160,16 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 			}
 		});
 
+		mCommandAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+			@Override
+			public void onItemClick(int position) {
+
+				Intent intent = new Intent(mContext, CategoryDetailActivity.class) ;
+				startActivity(intent);
+
+			}
+		});
+
 	}
 
 

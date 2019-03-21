@@ -1,6 +1,7 @@
 package com.zzteck.jumin.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -16,6 +17,7 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.RecommandAdapter;
 import com.zzteck.jumin.bean.HomeInfo;
+import com.zzteck.jumin.ui.business.CategoryDetailActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.NormalDecoration;
@@ -36,26 +38,25 @@ public class RecommandFragment extends Fragment {
 
     private Context mContext;
 
-    private RecyclerView mRlFavorite ;
+    private RecyclerView mRlCategory;
 
     private RecommandAdapter recommandAdapter;
 
     private void initView(View view) {
-        mRlFavorite = view.findViewById(R.id.rl_history) ;
+        mRlCategory = view.findViewById(R.id.rl_history) ;
     }
 
     private void initData(HomeInfo info) {
 
-        mRlFavorite.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRlFavorite.addItemDecoration(new NormalDecoration(ContextCompat.getColor(getActivity(), R.color.mainGrayF8), (int) getActivity().getResources().getDimension(R.dimen.one)));
+        mRlCategory.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRlCategory.addItemDecoration(new NormalDecoration(ContextCompat.getColor(getActivity(), R.color.mainGrayF8), (int) getActivity().getResources().getDimension(R.dimen.one)));
         recommandAdapter = new RecommandAdapter(getActivity(),info.getData()) ;
-        mRlFavorite.setAdapter(recommandAdapter) ;
+        mRlCategory.setAdapter(recommandAdapter) ;
 
         recommandAdapter.setNoMore(R.layout.view_no_more);
         recommandAdapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
             @Override
             public void onMoreShow() {
-                Log.e("liujw", "@@@@@@@@@@@@@@@@@@@@@@@@@@@@onMoreShow");
                 if(mCategoryId != null){
                     mCurrentPage++ ;
                     getInfosList(mCategoryId,0+"",mCurrentPage+"") ;
@@ -66,6 +67,14 @@ public class RecommandFragment extends Fragment {
             @Override
             public void onMoreClick() {
 
+            }
+        });
+
+        recommandAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(getActivity(), CategoryDetailActivity.class) ;
+                startActivity(intent);
             }
         });
 

@@ -104,7 +104,8 @@
 
         <activity android:name=".ui.mainui.MainCategoryActivity">
         </activity>
-        <activity android:name="com.zzteck.jumin.ui.business.NearFragent"></activity>
+
+        <activity android:name=".ui.business.CategoryDetailActivity"></activity>
 
         <activity android:name=".ui.business.ChargeSuccessActivity"></activity>
         <activity android:name=".ui.business.ChargeFailActivity"></activity>
