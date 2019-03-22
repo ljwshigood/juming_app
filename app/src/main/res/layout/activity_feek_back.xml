@@ -20,15 +20,18 @@
                 android:id="@+id/ll_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:text="反馈原因" />
+                    android:text="反馈原因"
+                    android:textSize="16sp" />
 
                 <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rl_feekback"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_marginTop="10dp">
@@ -47,25 +50,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:text="以上原因都不是，请注明原因" />
+                    android:text="以上原因都不是，请注明原因"
+                    android:textSize="16sp" />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
-                    android:background="@null" />
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_btn_rec_press"
+                    android:gravity="left|top" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_add_pic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:text="添加图片" />
+                    android:text="添加图片"
+                    android:textSize="16sp" />
 
 
                 <android.support.v7.widget.RecyclerView
@@ -82,12 +92,14 @@
                 android:id="@+id/ll_contact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
+                    android:textSize="16sp"
                     android:text="联系方式" />
 
                 <LinearLayout
@@ -102,7 +114,34 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
-                        android:hint="请输入手机号码" />
+                        android:hint="请输入手机号码"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/ll_commit"
+                    android:layout_width="250dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bg_red_rec_press"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="提交反馈"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 

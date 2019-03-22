@@ -82,6 +82,11 @@ public class IdentityActivity extends BaseActivity implements OnClickListener{
 
 	@Override
 	public void onClick(View v) {
+		switch (v.getId()){
+			case R.id.ll_back :
+				finish();
+				break ;
+		}
 
 	}
 }
