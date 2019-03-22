@@ -16,16 +16,16 @@ import com.zzteck.jumin.ui.usercenter.LoginActivity;
 public class MyDialog extends Dialog {
 
 	private TextView positiveButton, negativeButton;
-	private TextView title, content;
+	private TextView mTvTitle, mTvContent;
 	private Context mContext;
 
-	public MyDialog(Context context) {
+	public MyDialog(Context context, final int type) {
 		super(context, R.style.dialog_style);
 		this.mContext = context;
 		View view = LayoutInflater.from(getContext()).inflate(R.layout.global_dialog, null); // 通过LayoutInflater获取布局
 
-		title =  view.findViewById(R.id.title);
-		content =  view.findViewById(R.id.content);
+		mTvTitle =  view.findViewById(R.id.title);
+		mTvContent =  view.findViewById(R.id.content);
 
 		negativeButton = view.findViewById(R.id.refusebtn) ;
 		positiveButton = view.findViewById(R.id.acceptbtn) ;
@@ -40,11 +40,16 @@ public class MyDialog extends Dialog {
 		positiveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				App.getInstance().exit();
-				UserDAO.getInstance(mContext).deleteUser();
-				Intent intent = new Intent(mContext, LoginActivity.class) ;
-				mContext.startActivity(intent);
-				dismiss();
+				if(type == 0){
+					App.getInstance().exit();
+					UserDAO.getInstance(mContext).deleteUser();
+					Intent intent = new Intent(mContext, LoginActivity.class) ;
+					mContext.startActivity(intent);
+					dismiss();
+				}else{
+					dismiss();
+				}
+
 			}
 		});
 
@@ -52,7 +57,7 @@ public class MyDialog extends Dialog {
 
 	// 设置内容
 	public void setContent(String contentString) {
-		content.setText(contentString);
+		mTvContent.setText(contentString);
 	}
 
 	// 确定按钮监听

@@ -130,7 +130,7 @@ public class UserFragment extends Fragment implements OnClickListener {
                 startActivity(intent);
                 break ;
             case R.id.tv_login_out :
-                MyDialog dialog1 = new MyDialog(getActivity()) ;
+                MyDialog dialog1 = new MyDialog(getActivity(),0) ;
                 dialog1.show();
                 break ;
             case R.id.tv_chongzhi:
@@ -138,7 +138,8 @@ public class UserFragment extends Fragment implements OnClickListener {
                 startActivity(intent);
                 break;
 
-            case R.id.tv_qiandao:
+            case R.id.tv_qiandao :
+
                 SignInDialog dialog = new SignInDialog(mContext);
                 dialog.show();
 
@@ -158,8 +159,11 @@ public class UserFragment extends Fragment implements OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.rl_contact_us:
-                intent = new Intent(getActivity(), ContactUsActivity.class);
-                startActivity(intent);
+                MyDialog dialog2 = new MyDialog(getActivity(),1) ;
+                dialog2.setContent("400-800-9995");
+                dialog2.show();
+                /*intent = new Intent(getActivity(), ContactUsActivity.class);
+                startActivity(intent);*/
                 break;
             case R.id.rl_my_spread:
 
