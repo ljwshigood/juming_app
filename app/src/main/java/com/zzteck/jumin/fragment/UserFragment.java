@@ -18,6 +18,9 @@ import com.zzteck.jumin.bean.User;
 import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.ui.business.ChargeActivity;
 import com.zzteck.jumin.ui.mainui.FeedBackActivity;
+import com.zzteck.jumin.ui.usercenter.ContactUsActivity;
+import com.zzteck.jumin.ui.usercenter.FavitorActivity;
+import com.zzteck.jumin.ui.usercenter.IdentityActivity;
 import com.zzteck.jumin.ui.usercenter.MemberUpgradeActivity;
 import com.zzteck.jumin.ui.usercenter.ModifyUserInfoActivity;
 import com.zzteck.jumin.ui.usercenter.MyReleaseActivity;
@@ -72,10 +75,10 @@ public class UserFragment extends Fragment implements OnClickListener {
         mRlMyRelease = view.findViewById(R.id.rl_my_release);
         mRlMyBill = view.findViewById(R.id.rl_my_fav);
         mRlMyFeedBack = view.findViewById(R.id.rl_my_feedback);
-        mRlMyAttendtion = view.findViewById(R.id.rl_my_guanzhu);
+        mRlMyAttendtion = view.findViewById(R.id.rl_contact_us);
         mRlMyRenzhen = view.findViewById(R.id.rl_my_spread);
         mRlHuiyuanshengji = view.findViewById(R.id.rl_ruiyuanshengji);
-        mRlRuheFaBuXuqiu = view.findViewById(R.id.rl_ruhe_fabuxuqiu);
+        mRlRuheFaBuXuqiu = view.findViewById(R.id.rl_identity);
 
         mCvPhoto.setOnClickListener(this);
 
@@ -141,6 +144,8 @@ public class UserFragment extends Fragment implements OnClickListener {
 
                 break;
             case R.id.rl_my_fav:
+                intent = new Intent(getActivity(), FavitorActivity.class);
+                startActivity(intent);
                 break;
 
             case R.id.rl_my_release:
@@ -152,7 +157,9 @@ public class UserFragment extends Fragment implements OnClickListener {
                 intent = new Intent(getActivity(), FeedBackActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.rl_my_guanzhu:
+            case R.id.rl_contact_us:
+                intent = new Intent(getActivity(), ContactUsActivity.class);
+                startActivity(intent);
                 break;
             case R.id.rl_my_spread:
 
@@ -164,7 +171,9 @@ public class UserFragment extends Fragment implements OnClickListener {
                 intent = new Intent(getActivity(), MemberUpgradeActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.rl_ruhe_fabuxuqiu:
+            case R.id.rl_identity:
+                intent = new Intent(getActivity(), IdentityActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;

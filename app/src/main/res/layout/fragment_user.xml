@@ -301,7 +301,7 @@
 
 
             <RelativeLayout
-                android:id="@+id/rl_my_guanzhu"
+                android:id="@+id/rl_contact_us"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@android:color/white">
@@ -429,7 +429,7 @@
                 android:layout_marginRight="20dp"></View>
 
             <RelativeLayout
-                android:id="@+id/rl_ruhe_fabuxuqiu"
+                android:id="@+id/rl_identity"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@android:color/white">
