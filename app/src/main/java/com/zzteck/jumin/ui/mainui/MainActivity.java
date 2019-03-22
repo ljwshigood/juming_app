@@ -24,6 +24,7 @@ import com.zzteck.jumin.fragment.HistoryFragment;
 import com.zzteck.jumin.fragment.UserFragment;
 import com.zzteck.jumin.fragment.WJConversationListFragment;
 import com.zzteck.jumin.ui.business.ReleaseActivity;
+import com.zzteck.jumin.ui.business.ReleaseCategoryActivity;
 import com.zzteck.zzview.WJViewPaper;
 
 import java.util.ArrayList;
@@ -207,7 +208,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 			mTvMessage.setTextColor(mContext.getResources().getColor(R.color.dark));
 			mTvUser.setTextColor(mContext.getResources().getColor(R.color.dark));
 
-			Intent intent = new Intent(mContext, ReleaseActivity.class) ;
+			Intent intent = new Intent(mContext, ReleaseCategoryActivity.class) ;
 			startActivity(intent);
 
 			break;
