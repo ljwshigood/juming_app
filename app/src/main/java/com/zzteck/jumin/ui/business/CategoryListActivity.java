@@ -222,10 +222,10 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 	private void addMyMethod() {
 
 		FilterGroup filterGroup1 = getMyData("距离", MyFilterConfig.TYPE_POPWINDOW_SINGLE,MyFilterConfig.FILTER_TYPE_SINGLE);
-		FilterGroup filterGroup5 = getMyData("价格", MyFilterConfig.TYPE_POPWINDOW_SINGLE,MyFilterConfig.FILTER_TYPE_MUTIFY);//自定义
+		FilterGroup filterGroup5 = getMyData("价格", MyFilterConfig.TYPE_POPWINDOW_SINGLE,MyFilterConfig.FILTER_TYPE_SINGLE);//自定义
 
 		FilterGroup filterGroup3 = getMyData("区域", FilterConfig.TYPE_POPWINDOW_SINGLE,FilterConfig.FILTER_TYPE_SINGLE);
-		FilterGroup filterGroup4 = getMyData("学校", FilterConfig.TYPE_POPWINDOW_SINGLE,FilterConfig.FILTER_TYPE_MUTIFY);
+		FilterGroup filterGroup4 = getMyData("学校", FilterConfig.TYPE_POPWINDOW_SINGLE,FilterConfig.FILTER_TYPE_SINGLE);
 
 		popTabView.setOnPopTabSetListener(this)
 				.setPopEntityLoader(new MyPopEntityLoaderImp()).setResultLoader(new MyResultLoaderImp()) //配置 {筛选类型}  方式
