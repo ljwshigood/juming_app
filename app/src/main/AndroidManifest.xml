@@ -101,6 +101,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.usercenter.PersionIdentityActivity"></activity>
+        <activity android:name=".ui.usercenter.OrgIdentityActivity"></activity>
         <activity android:name=".ui.usercenter.ModifyUserInfoActivity"></activity>
 
         <activity android:name=".ui.mainui.MainCategoryActivity"></activity>
