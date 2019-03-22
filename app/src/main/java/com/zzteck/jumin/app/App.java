@@ -12,6 +12,10 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import java.util.ArrayList;
@@ -191,13 +195,27 @@ public class App extends MultiDexApplication {
         });*/
     }
 
+    public void initImageLoader(Context context) {
+
+        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder ( context );
+        config.threadPriority ( Thread.NORM_PRIORITY - 2 );
+        config.denyCacheImageMultipleSizesInMemory ();
+        config.diskCacheFileNameGenerator ( new Md5FileNameGenerator() );
+        config.diskCacheSize ( 50 * 1024 * 1024 ); // 50 MiB
+        config.tasksProcessingOrder ( QueueProcessingType.LIFO );
+        config.writeDebugLogs (); // Remove for release app
+
+        // Initialize ImageLoader with configuration.
+        ImageLoader.getInstance ().init ( config.build () );
+    }
+
     @Override
     public void onCreate() {
         super.onCreate ();
         ZXingLibrary.initDisplayOpinion(this);
         mContext = getApplicationContext ();
         initBaiduCrab();
-
+        initImageLoader(this) ;
         JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);     		// 初始化 JPush
 

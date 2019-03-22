@@ -19,7 +19,9 @@ import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.ui.business.ChargeActivity;
 import com.zzteck.jumin.ui.mainui.FeedBackActivity;
 import com.zzteck.jumin.ui.usercenter.MemberUpgradeActivity;
+import com.zzteck.jumin.ui.usercenter.ModifyUserInfoActivity;
 import com.zzteck.jumin.ui.usercenter.MyReleaseActivity;
+import com.zzteck.jumin.ui.usercenter.SpreadActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.view.MyDialog;
 import com.zzteck.jumin.view.SignInDialog;
@@ -68,12 +70,14 @@ public class UserFragment extends Fragment implements OnClickListener {
         mTvQianDao = view.findViewById(R.id.tv_qiandao);
 
         mRlMyRelease = view.findViewById(R.id.rl_my_release);
-        mRlMyBill = view.findViewById(R.id.rl_my_bill);
+        mRlMyBill = view.findViewById(R.id.rl_my_fav);
         mRlMyFeedBack = view.findViewById(R.id.rl_my_feedback);
         mRlMyAttendtion = view.findViewById(R.id.rl_my_guanzhu);
-        mRlMyRenzhen = view.findViewById(R.id.rl_my_renzhen);
+        mRlMyRenzhen = view.findViewById(R.id.rl_my_spread);
         mRlHuiyuanshengji = view.findViewById(R.id.rl_ruiyuanshengji);
         mRlRuheFaBuXuqiu = view.findViewById(R.id.rl_ruhe_fabuxuqiu);
+
+        mCvPhoto.setOnClickListener(this);
 
         mTvQianDao.setOnClickListener(this);
         mTvCharge.setOnClickListener(this);
@@ -118,6 +122,10 @@ public class UserFragment extends Fragment implements OnClickListener {
     public void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
+            case R.id.iv_user_icon :
+                intent = new Intent(getActivity(), ModifyUserInfoActivity.class);
+                startActivity(intent);
+                break ;
             case R.id.tv_login_out :
                 MyDialog dialog1 = new MyDialog(getActivity()) ;
                 dialog1.show();
@@ -132,7 +140,7 @@ public class UserFragment extends Fragment implements OnClickListener {
                 dialog.show();
 
                 break;
-            case R.id.rl_my_bill:
+            case R.id.rl_my_fav:
                 break;
 
             case R.id.rl_my_release:
@@ -146,7 +154,10 @@ public class UserFragment extends Fragment implements OnClickListener {
                 break;
             case R.id.rl_my_guanzhu:
                 break;
-            case R.id.rl_my_renzhen:
+            case R.id.rl_my_spread:
+
+                intent = new Intent(getActivity(), SpreadActivity.class);
+                startActivity(intent);
 
                 break;
             case R.id.rl_ruiyuanshengji:

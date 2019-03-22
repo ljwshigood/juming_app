@@ -101,6 +101,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.usercenter.ModifyUserInfoActivity"></activity>
 
         <activity android:name=".ui.mainui.MainCategoryActivity">
         </activity>
@@ -113,9 +114,11 @@
         <activity android:name=".ui.business.CategoryListActivity"></activity>
         <activity android:name=".ui.mainui.FeedBackActivity"></activity>
         <activity android:name=".ui.usercenter.MyReleaseActivity"></activity>
-        <activity android:name=".ui.usercenter.ModifyUserActivity"></activity>
+        <activity android:name=".ui.usercenter.SpreadActivity"></activity>
         <activity android:name=".ui.business.ReleaseActivity"></activity>
         <activity android:name=".ui.mainui.MainActivity"></activity>
+
+        <activity android:name="com.baijiahulian.common.crop.PhotoSelectActivity"></activity>
 
         <service android:name="com.amap.api.location.APSService"></service>
 

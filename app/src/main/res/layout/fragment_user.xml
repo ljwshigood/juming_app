@@ -216,7 +216,7 @@
                 android:layout_marginRight="20dp"></View>
 
             <RelativeLayout
-                android:id="@+id/rl_my_bill"
+                android:id="@+id/rl_my_fav"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@android:color/white">
@@ -344,7 +344,7 @@
 
 
             <RelativeLayout
-                android:id="@+id/rl_my_renzhen"
+                android:id="@+id/rl_my_spread"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"

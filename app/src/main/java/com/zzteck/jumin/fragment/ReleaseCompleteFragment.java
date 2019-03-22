@@ -42,7 +42,7 @@ public class ReleaseCompleteFragment extends Fragment implements OnClickListener
 	public void onClick(View v) {
 		Intent intent = null ;
 		switch (v.getId()) {
-		case R.id.rl_my_bill:
+		case R.id.rl_my_fav:
 			break;
 
 		case R.id.rl_my_release:
@@ -53,7 +53,7 @@ public class ReleaseCompleteFragment extends Fragment implements OnClickListener
 
 		case R.id.rl_my_guanzhu:
 			break;
-		case R.id.rl_my_renzhen:
+		case R.id.rl_my_spread:
 
 			break;
 		case R.id.rl_ruiyuanshengji:
