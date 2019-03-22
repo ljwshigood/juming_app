@@ -1,6 +1,7 @@
 package com.zzteck.jumin.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.ChildCategoryBean;
 import com.zzteck.jumin.bean.Favorite;
 import com.zzteck.jumin.bean.MainCategoryBean;
+import com.zzteck.jumin.ui.business.CategoryListActivity;
 
 import java.util.List;
 
@@ -44,6 +46,13 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     @Override
     public void onBindViewHolder(CategoryListAdapter.ViewHolder holder, int position) {
         holder.name.setText(mFavoriteList.get(position).getChildren().get(0).getCatname());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, CategoryListActivity.class) ;
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override

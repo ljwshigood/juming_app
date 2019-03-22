@@ -81,8 +81,7 @@ public class CategoryFragment extends Fragment {
     }
 
     private void initData() {
-        mRlCate.setLayoutManager(new GridLayoutManager(getActivity(),4));
-        mRlCate.addItemDecoration(new NormalDecoration(ContextCompat.getColor(getActivity(), R.color.mainGrayF8), (int) getActivity().getResources().getDimension(R.dimen.one)));
+        mRlCate.setLayoutManager(new GridLayoutManager(getActivity(),2));
         mGategoryListAdapter = new CategoryListAdapter(getActivity(),null) ;
         mRlCate.setAdapter(mGategoryListAdapter) ;
     }
