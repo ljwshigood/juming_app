@@ -22,20 +22,13 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 
 	private RelativeLayout mRlBack;
 
-	private LinearLayout mLLPersion ;
-
-	private LinearLayout mLLOrg ;
 
 	private void initView() {
-		mLLOrg = findViewById(R.id.ll_org) ;
-		mLLPersion  = findViewById(R.id.ll_persion_identity) ;
 		mTvTitle = findViewById(R.id.tv_main_info) ;
 		mRlBack = findViewById(R.id.ll_back) ;
 		mRlBack.setOnClickListener(this);
 		mTvTitle.setText("企业认证");
 		mRlBack.setVisibility(View.VISIBLE);
-		mLLPersion.setOnClickListener(this);
-		mLLOrg.setOnClickListener(this);
 	}
 
 	@Override
