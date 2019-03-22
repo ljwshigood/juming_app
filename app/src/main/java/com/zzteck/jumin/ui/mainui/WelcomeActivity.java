@@ -50,15 +50,17 @@ public class WelcomeActivity extends BaseActivity implements OnClickListener{
 		 public void handleMessage(Message msg) {
 			 super.handleMessage(msg);
 
-			 if(UserDAO.getInstance(mContext).isExistRecordLogin()){
+			 Intent intent = new Intent(WelcomeActivity.this,MainActivity.class) ;
+			 startActivity(intent);
+			 finish();
+
+			/* if(UserDAO.getInstance(mContext).isExistRecordLogin()){
 				 Intent intent = new Intent(WelcomeActivity.this,MainActivity.class) ;
 				 startActivity(intent);
 				 finish();
 			 }else{
-				 Intent intent = new Intent(WelcomeActivity.this,LoginActivity.class) ;
-				 startActivity(intent);
-				 finish();
-			 }
+
+			 }*/
 
 
 		 }
