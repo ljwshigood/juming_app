@@ -162,8 +162,6 @@ public class UserFragment extends Fragment implements OnClickListener {
                 MyDialog dialog2 = new MyDialog(getActivity(),1) ;
                 dialog2.setContent("400-800-9995");
                 dialog2.show();
-                /*intent = new Intent(getActivity(), ContactUsActivity.class);
-                startActivity(intent);*/
                 break;
             case R.id.rl_my_spread:
 
