@@ -21,6 +21,8 @@ import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.HomeCategoryAdapter;
 import com.zzteck.jumin.adapter.MessageAdapter;
 import com.zzteck.jumin.bean.MainCategoryBean;
+import com.zzteck.jumin.bean.User;
+import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.NormalDecoration;
@@ -54,6 +56,16 @@ public class HistoryFragment extends Fragment implements View.OnClickListener{
 
         Map<String, String> map = new HashMap<>();
         map.put("s", "App.Category.Biglist");
+
+
+
+        List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
+
+        if(userList != null && userList.size() > 0){
+            map.put("token", UtilsTools.md5("juming_"+"App.Category.Biglist")+userList.get(0).getToken());
+        }else{
+            map.put("token", UtilsTools.md5("juming_"+"App.Category.Biglist"));
+        }
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();

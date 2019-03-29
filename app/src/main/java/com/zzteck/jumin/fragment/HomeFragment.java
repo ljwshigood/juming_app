@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.baijiahulian.common.crop.utils.Utils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
@@ -36,7 +37,9 @@ import com.zzteck.jumin.adapter.FeaturedPagerAdapter;
 import com.zzteck.jumin.adapter.VideoAdapter;
 import com.zzteck.jumin.bean.BannerBean;
 import com.zzteck.jumin.bean.CategoryBean;
+import com.zzteck.jumin.bean.User;
 import com.zzteck.jumin.bean.VideoBean;
+import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.ui.business.CategoryListActivity;
 import com.zzteck.jumin.ui.business.MoreCategoryActivity;
 import com.zzteck.jumin.ui.location.LocationActivity;
@@ -153,6 +156,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         map.put("s", "App.Info.Getvideoinfo");
         map.put("cityid", "1");
 
+        List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
+
+        if(userList != null && userList.size() > 0){
+            map.put("token", UtilsTools.md5("juming_"+"App.Info.Getvideoinfo")+userList.get(0).getToken());
+        }else{
+            map.put("token", UtilsTools.md5("juming_"+"App.Info.Getvideoinfo"));
+        }
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
@@ -165,7 +175,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
-                final String responseStr = response.body().string();
+               /* final String responseStr = response.body().string();
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -180,7 +190,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                         }
                         mVideoAdapter.notifyVideoListChange(mVideoList);
                     }
-                });
+                });*/
             }
         });
 
@@ -378,6 +388,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         map.put("type", 3 + "");
 
 
+        List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
+
+        if(userList != null && userList.size() > 0){
+            map.put("token", UtilsTools.md5("juming_"+"App.Category.Pushcat")+userList.get(0).getToken());
+        }else{
+            map.put("token", UtilsTools.md5("juming_"+"App.Category.Pushcat"));
+        }
+
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
         Call call = client.newCall(request);
@@ -390,6 +408,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
                 final String responseStr = response.body().string();
+
+                Log.e("liujw","######################responseStr : "+responseStr);
+
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -419,6 +440,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         map.put("s", "App.Category.Pushcat");
         map.put("type", 1 + "");
 
+
+        List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
+
+        if(userList != null && userList.size() > 0){
+            map.put("token", UtilsTools.md5("juming_"+"App.Category.Pushcat")+userList.get(0).getToken());
+        }else{
+            map.put("token", UtilsTools.md5("juming_"+"App.Category.Pushcat"));
+        }
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
@@ -459,10 +488,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     private void getCategoryTitle2() {
 
+
         Map<String, String> map = new HashMap<>();
         map.put("s", "App.Category.Pushcat");
         map.put("type", 2 + "");
 
+
+        List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
+
+        if(userList != null && userList.size() > 0){
+            map.put("token", UtilsTools.md5("juming_"+"App.Category.Pushcat")+userList.get(0).getToken());
+        }else{
+            map.put("token", UtilsTools.md5("juming_"+"App.Category.Pushcat"));
+        }
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
@@ -479,7 +517,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Gson gson = new Gson();
+                        Gson gson = new Gson() ;
+
                         CategoryBean bean = gson.fromJson(responseStr, CategoryBean.class);
                         if (bean.getData() != null && bean.getData().size() > 0) {
                             for (int i = 0; i < bean.getData().size(); i++) {
@@ -492,6 +531,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                                         .into(mImagePicLogo.get(i));
                             }
                         }
+
                     }
                 });
             }
@@ -581,6 +621,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         Map<String, String> map = new HashMap<>() ;
         map.put("s","App.Index.Banner") ;
 
+
+        List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
+
+        if(userList != null && userList.size() > 0){
+            map.put("token", UtilsTools.md5("juming_"+"App.Index.Banner")+userList.get(0).getToken());
+        }else{
+            map.put("token", UtilsTools.md5("juming_"+"App.Index.Banner"));
+        }
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
         Call call = client.newCall(request);
@@ -610,10 +658,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-        getCategoryTitle1() ;
+      /*  getCategoryTitle1() ;
         getCategoryTitle2();
 
-        getCategoryTitle3();
+        getCategoryTitle3();*/
 
 
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
