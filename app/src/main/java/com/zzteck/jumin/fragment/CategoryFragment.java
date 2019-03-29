@@ -17,12 +17,15 @@ import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.CategoryListAdapter;
 import com.zzteck.jumin.bean.ChildCategoryBean;
 import com.zzteck.jumin.bean.MainCategoryBean;
+import com.zzteck.jumin.bean.User;
+import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.NormalDecoration;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -51,6 +54,13 @@ public class CategoryFragment extends Fragment {
         map.put("s", "App.Category.Lists");
         map.put("catid", catid);
 
+        List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
+
+        if(userList != null && userList.size() > 0){
+            map.put("sign", UtilsTools.md5("jumin_"+"App.Category.Lists")+userList.get(0).getToken());
+        }else{
+            map.put("sign", UtilsTools.md5("jumin_"+"App.Category.Lists"));
+        }
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();

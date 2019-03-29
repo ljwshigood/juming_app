@@ -17,6 +17,8 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.RecommandAdapter;
 import com.zzteck.jumin.bean.HomeInfo;
+import com.zzteck.jumin.bean.User;
+import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.ui.business.CategoryDetailActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.UtilsTools;
@@ -24,6 +26,7 @@ import com.zzteck.jumin.view.NormalDecoration;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -113,6 +116,16 @@ public class RecommandFragment extends Fragment {
         map.put("catid",catId) ;
         map.put("cityid",cityId) ;
         map.put("pages",pages) ;
+
+
+
+        List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
+
+        if(userList != null && userList.size() > 0){
+            map.put("sign", UtilsTools.md5("jumin_"+"App.Info.Getinfos")+userList.get(0).getToken());
+        }else{
+            map.put("sign", UtilsTools.md5("jumin_"+"App.Info.Getinfos"));
+        }
 
 
         OkHttpClient client = new OkHttpClient();

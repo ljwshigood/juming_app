@@ -62,9 +62,9 @@ public class HistoryFragment extends Fragment implements View.OnClickListener{
         List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
 
         if(userList != null && userList.size() > 0){
-            map.put("token", UtilsTools.md5("juming_"+"App.Category.Biglist")+userList.get(0).getToken());
+            map.put("sign", UtilsTools.md5("jumin_"+"App.Category.Biglist")+userList.get(0).getToken());
         }else{
-            map.put("token", UtilsTools.md5("juming_"+"App.Category.Biglist"));
+            map.put("sign", UtilsTools.md5("jumin_"+"App.Category.Biglist"));
         }
 
         OkHttpClient client = new OkHttpClient();
