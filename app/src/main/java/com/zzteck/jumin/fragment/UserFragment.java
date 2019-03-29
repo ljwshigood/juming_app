@@ -156,7 +156,7 @@ public class UserFragment extends Fragment implements OnClickListener {
                     intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
                 }
-                
+
                 break ;
             case R.id.tv_login_out :
                 MyDialog dialog1 = new MyDialog(getActivity(),0) ;
