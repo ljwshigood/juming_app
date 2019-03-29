@@ -118,7 +118,6 @@ public class RecommandFragment extends Fragment {
         map.put("pages",pages) ;
 
 
-
         List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
 
         if(userList != null && userList.size() > 0){

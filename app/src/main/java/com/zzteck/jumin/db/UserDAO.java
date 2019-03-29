@@ -53,7 +53,7 @@ public class UserDAO {
 		insertSQL = String.format(insertSQL, String.valueOf(user.getId()),user.getTname(),user.getTname(),user.getTname(),
 					1,1,1,
 					System.currentTimeMillis(),user.getMobile(),user.getEmail(),
-					String.valueOf(user.getId()),String.valueOf(user.getId()),String.valueOf(user.getId()),isLogin);
+					String.valueOf(user.getId()),String.valueOf(user.getSign()),String.valueOf(user.getId()),isLogin);
 		mDatabaseManager.getmSQLiteDatabase().execSQL(insertSQL);
 	}
 	
@@ -95,7 +95,7 @@ public class UserDAO {
 	public synchronized void editorUserTable(LoginBean.DataBean user){
 		if(isExistRecord(String.valueOf(user.getId()))){
 			String updateSQL = "update user set username = \"%s\",wanjiaToken = \"%s\",head = \"%s\" ,token = \"%s\"  where id = %s" ;
-			updateSQL = String.format(updateSQL, user.getTname(),user.getTname(),"",user.getLogo(),user.getTname(),user.getId());
+			updateSQL = String.format(updateSQL, user.getTname(),user.getSign(),"",user.getLogo(),user.getTname(),user.getId());
 			mDatabaseManager.getmSQLiteDatabase().execSQL(updateSQL);
 		}else{
 			insertUserTable(user,1);
@@ -112,12 +112,20 @@ public class UserDAO {
 	
 	public synchronized void editorUserInfo(User user){
 		if(isExistRecord(user.getUserid())){
-			String updateSQL = "update user set head = \"%s\",nickname = \"%s\"  where id = %s" ;
-			updateSQL = String.format(updateSQL, "","",user.getUserid());
+			String updateSQL = "update user set head = \"%s\" where id = %s" ;
+			updateSQL = String.format(updateSQL,user.getHeader(),user.getUserid());
 			mDatabaseManager.getmSQLiteDatabase().execSQL(updateSQL);
 		}
 	}
-	
+
+	public synchronized void editorUserInfo2(User user){
+		if(isExistRecord(user.getUserid())){
+			String updateSQL = "update user set nickname = \"%s\"  where id = %s" ;
+			updateSQL = String.format(updateSQL, user.getTrueName(),user.getUserid());
+			mDatabaseManager.getmSQLiteDatabase().execSQL(updateSQL);
+		}
+	}
+
 	public synchronized void setUserLogout(int isLogin,long userId){
 		String updateSQL = "update user set isLogin = %d where id = %d" ;
 		updateSQL = String.format(updateSQL,isLogin,userId);
@@ -131,6 +139,8 @@ public class UserDAO {
 		while(cursor != null && cursor.moveToNext()){
 			User user = new User();
 			user.setUserid(cursor.getString(cursor.getColumnIndex("id")));
+			user.setWanjiaToken(cursor.getString(cursor.getColumnIndex("wanjiaToken")));
+			user.setHeader(cursor.getString(cursor.getColumnIndex("head")));
 			userList.add(user);
 		}
 		mDatabaseManager.recyleCursor(cursor) ;

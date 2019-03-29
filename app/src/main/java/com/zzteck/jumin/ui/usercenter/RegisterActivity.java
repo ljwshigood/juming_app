@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.baijiahulian.common.crop.utils.Utils;
 import com.google.gson.Gson;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
@@ -24,6 +25,7 @@ import com.zzteck.jumin.bean.QiandaoBean;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.ui.mainui.MainActivity;
 import com.zzteck.jumin.utils.Constants;
+import com.zzteck.jumin.utils.TimeCountUtil;
 import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.zzview.WindowsToast;
 
@@ -58,12 +60,25 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 
 	private EditText mEtCode ;
 
+	private LinearLayout mLLGetCode ;
+
+	private TimeCountUtil mTimeCountUtil ;
+
+	private void getValideCode() {
+		mTimeCountUtil = new TimeCountUtil ( 60000, 1000, mLLGetCode );
+		mTimeCountUtil.start ();
+		getCode(mEtUserName.getText().toString().trim());
+
+	}
+
 	private void initView() {
+
+		mLLGetCode = findViewById(R.id.ll_code) ;
 		mEtCode = findViewById(R.id.et_code) ;
 		mLlRegister = findViewById(R.id.ll_login) ;
 		mEtPwd = findViewById(R.id.et_user_pwd) ;
 		mEtUserName = findViewById(R.id.et_user_name) ;
-		mTvGetCode = findViewById(R.id.tv_get_code) ;
+		mTvGetCode = findViewById(R.id.tv_code) ;
 		mLLBack = findViewById(R.id.ll_back) ;
 		mTvMainInfo =  findViewById(R.id.tv_main_info);
 		mLLBack.setOnClickListener(this);
@@ -90,6 +105,8 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 		map.put("s", "App.Member.Sendcode");
 		map.put("mobile", mobile);
 
+		map.put("sign", UtilsTools.getSign(mContext,"App.Member.Sendcode")) ;
+
 		OkHttpClient client = new OkHttpClient();
 		Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
 		Call call = client.newCall(request);
@@ -102,6 +119,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 			@Override
 			public void onResponse(Call call, final Response response) throws IOException {
 				final String responseStr = response.body().string();
+				Log.e("liujw", "##########################getCode responseStr : " + responseStr);
 				((Activity)mContext).runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
@@ -123,6 +141,8 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 		map.put("userpwd", userPwd + "");
 		map.put("code", code + "");
 
+		map.put("sign", UtilsTools.getSign(mContext,"App.Member.Register"));
+
 		OkHttpClient client = new OkHttpClient();
 		Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
 		Call call = client.newCall(request);
@@ -135,6 +155,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 			@Override
 			public void onResponse(Call call, final Response response) throws IOException {
 				final String responseStr = response.body().string();
+				Log.e("liujw", "##########################register onResponse : " + responseStr);
 				((Activity)mContext).runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
@@ -142,7 +163,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 
 						WindowsToast.makeText(mContext,"注册成功").show();
 						App.getInstance().exit();
-						Intent intent = new Intent(mContext, MainActivity.class) ;
+						Intent intent = new Intent(mContext, LoginActivity.class) ;
 						startActivity(intent);
 						finish();
 
@@ -177,19 +198,22 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 				finish();
 				break ;
 			case R.id.ll_login :
-				if(!TextUtils.isEmpty(mEtUserName.getText().toString().trim())){
+				if(TextUtils.isEmpty(mEtUserName.getText().toString().trim())){
 					WindowsToast.makeText(mContext,"手机号不能为空").show();
-				} else if (!TextUtils.isEmpty(mEtPwd.getText().toString().trim())) {
+					return ;
+				} else if (TextUtils.isEmpty(mEtPwd.getText().toString().trim())) {
 					WindowsToast.makeText(mContext,"密码不能为空").show();
-				}else if(!TextUtils.isEmpty(mEtCode.getText().toString().trim())){
+					return ;
+				}else if(TextUtils.isEmpty(mEtCode.getText().toString().trim())){
 					WindowsToast.makeText(mContext,"验证码不能为空").show();
+					return ;
 				}else {
 					register(mEtUserName.getText().toString().trim(), mEtPwd.getText().toString().trim(), mEtCode.getText().toString().trim());
 				}
 				break ;
-			case R.id.tv_get_code:
+			case R.id.tv_code:
 				if(!TextUtils.isEmpty(mEtUserName.getText().toString().trim())){
-					getCode(mEtUserName.getText().toString().trim());
+					getValideCode() ;
 				}else{
 					WindowsToast.makeText(mContext,"手机号不能为空").show();
 				}

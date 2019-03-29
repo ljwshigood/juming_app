@@ -7,7 +7,7 @@ public class LoginBean implements Serializable {
 
     /**
      * ret : 200
-     * data : {"id":"321","userid":"18070659079","openid":"","openid_wx":"","catid":"","areaid":"","cname":"","tname":"","introduce":"","sex":"男","tel":"","address":"","busway":"","mappoint":"","latitude":"0.00000000000000000","longitude":"0.00000000000000000","qq":"","msn":"","email":"406784192@qq.com","template":"blue","keywords":"","logo":"/attachment/face/201901/1547369958otnin.jpeg","prelogo":"/attachment/face/201901/pre_1547369958otnin.jpeg","banner":"","safequestion":"","safeanswer":"","levelid":"4","money_own":"137","credit":"0","credits":"0","score":"186","joinip":"113.116.118.70","loginip":"171.111.5.167","jointime":"1545376050","logintime":"1550160319","qdtime":"1549071489","web":"","per_certify":"1","com_certify":"1","if_corp":"1","ifindex":"1","iflist":"1","mobile":"18070659079","levelup_time":"1551288016","hit":"0","cityid":"0","streetid":"0","status":"1","info":"登陆成功","is_login":true}
+     * data : {"id":"11254","userid":"13417434862","openid":"","openid_wx":"","catid":"","areaid":"","cname":"","tname":"","introduce":"","sex":"男","tel":"","address":"","busway":"","mappoint":"","latitude":"0.00000000000000000","longitude":"0.00000000000000000","qq":"","msn":"","email":"","template":"","keywords":"","logo":"","prelogo":"","banner":"","safequestion":"","safeanswer":"","levelid":"1","money_own":"0","credit":"0","credits":"1","score":"0","joinip":"183.15.177.146","loginip":"","jointime":"1553850436","logintime":"1553850682","qdtime":"0","web":"","per_certify":"0","com_certify":"0","if_corp":"0","ifindex":"1","iflist":"1","mobile":"13417434862","levelup_time":"0","hit":"0","cityid":"0","streetid":"0","status":"0","nickname":null,"sign":"c95f95416477c2eef0368fea721f7bc8","info":"登陆成功","is_login":true}
      * msg :
      */
 
@@ -41,8 +41,8 @@ public class LoginBean implements Serializable {
 
     public static class DataBean {
         /**
-         * id : 321
-         * userid : 18070659079
+         * id : 11254
+         * userid : 13417434862
          * openid :
          * openid_wx :
          * catid :
@@ -59,36 +59,38 @@ public class LoginBean implements Serializable {
          * longitude : 0.00000000000000000
          * qq :
          * msn :
-         * email : 406784192@qq.com
-         * template : blue
+         * email :
+         * template :
          * keywords :
-         * logo : /attachment/face/201901/1547369958otnin.jpeg
-         * prelogo : /attachment/face/201901/pre_1547369958otnin.jpeg
+         * logo :
+         * prelogo :
          * banner :
          * safequestion :
          * safeanswer :
-         * levelid : 4
-         * money_own : 137
+         * levelid : 1
+         * money_own : 0
          * credit : 0
-         * credits : 0
-         * score : 186
-         * joinip : 113.116.118.70
-         * loginip : 171.111.5.167
-         * jointime : 1545376050
-         * logintime : 1550160319
-         * qdtime : 1549071489
+         * credits : 1
+         * score : 0
+         * joinip : 183.15.177.146
+         * loginip :
+         * jointime : 1553850436
+         * logintime : 1553850682
+         * qdtime : 0
          * web :
-         * per_certify : 1
-         * com_certify : 1
-         * if_corp : 1
+         * per_certify : 0
+         * com_certify : 0
+         * if_corp : 0
          * ifindex : 1
          * iflist : 1
-         * mobile : 18070659079
-         * levelup_time : 1551288016
+         * mobile : 13417434862
+         * levelup_time : 0
          * hit : 0
          * cityid : 0
          * streetid : 0
-         * status : 1
+         * status : 0
+         * nickname : null
+         * sign : c95f95416477c2eef0368fea721f7bc8
          * info : 登陆成功
          * is_login : true
          */
@@ -141,6 +143,8 @@ public class LoginBean implements Serializable {
         private String cityid;
         private String streetid;
         private String status;
+        private Object nickname;
+        private String sign;
         private String info;
         private boolean is_login;
 
@@ -526,6 +530,22 @@ public class LoginBean implements Serializable {
 
         public void setStatus(String status) {
             this.status = status;
+        }
+
+        public Object getNickname() {
+            return nickname;
+        }
+
+        public void setNickname(Object nickname) {
+            this.nickname = nickname;
+        }
+
+        public String getSign() {
+            return sign;
+        }
+
+        public void setSign(String sign) {
+            this.sign = sign;
         }
 
         public String getInfo() {

@@ -11,23 +11,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.baijiahulian.common.crop.BJCommonImageCropHelper;
 import com.baijiahulian.common.crop.ThemeConfig;
 import com.baijiahulian.common.crop.model.PhotoInfo;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.bean.LoginBean;
 import com.zzteck.jumin.bean.MediaInfo;
+import com.zzteck.jumin.bean.ModifyBean;
+import com.zzteck.jumin.bean.User;
 import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.ui.mainui.MainActivity;
 import com.zzteck.jumin.utils.Constants;
+import com.zzteck.jumin.utils.GlideCircleTransform;
 import com.zzteck.jumin.utils.PictureUtil;
-import com.zzteck.jumin.webmanager.ApiCall;
 import com.zzteck.jumin.webmanager.CountingRequestBody;
 import com.zzteck.jumin.webmanager.RequestBuilder;
 
@@ -38,13 +43,10 @@ import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 
 public class ModifyUserInfoActivity extends BaseActivity implements OnClickListener{
@@ -69,92 +71,82 @@ public class ModifyUserInfoActivity extends BaseActivity implements OnClickListe
 
             @Override
             protected String doInBackground(Integer... params) {
-             /*   try {*/
-                    //response= uploadFiles(file);
-                    // publishProgress();
-                    String fileExtention = getFileExt(file.getName());
-                    String filename = file.getName();
-                   // Log.d("getAbsolutePath ", file.getAbsolutePath() + "");
-                   // Log.d("getCanonicalPath ", file.getCanonicalPath() + "");
-                    MultipartBody body = RequestBuilder.uploadRequestBody(filename, fileExtention, "", file);
+                String fileExtention = getFileExt(file.getName());
+                String filename = file.getName();
+                MultipartBody body = RequestBuilder.uploadRequestBody(ModifyUserInfoActivity.this,filename, fileExtention, "", file);
 
 
-                    CountingRequestBody monitoredRequest = new CountingRequestBody(body, new CountingRequestBody.Listener() {
-                        @Override
-                        public void onRequestProgress(long bytesWritten, long contentLength) {
-                            //Update a progress bar with the following percentage
-                            float percentage = 100f * bytesWritten / contentLength;
-                            if (percentage >= 0) {
-                                publishProgress(Math.round(percentage));
-                                Log.e("progress ", percentage + "");
-                            } else {
-                                Log.e("No progress ", 0 + "");
+                CountingRequestBody monitoredRequest = new CountingRequestBody(body, new CountingRequestBody.Listener() {
+                    @Override
+                    public void onRequestProgress(long bytesWritten, long contentLength) {
+                        float percentage = 100f * bytesWritten / contentLength;
+                        if (percentage >= 0) {
+                            publishProgress(Math.round(percentage));
+                            Log.e("progress ", percentage + "");
+                        } else {
+                            Log.e("No progress ", 0 + "");
+                        }
+                    }
+                });
+
+                Request request = new Request.Builder()
+                        .url(url)
+                        .post(monitoredRequest)
+                        .build();
+                Call response = client.newCall(request) ;
+
+                response.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        Log.e("liujw","####################onFailure");
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        final String responseStr = response.body().string();
+                        Gson gson = new Gson() ;
+                        final ModifyBean bean = gson.fromJson(responseStr,ModifyBean.class) ;
+
+                        if(bean.getData().isIs_success() == true ){
+                            if(users != null && users.size() > 0){
+                                users.get(0).setHeader(bean.getData().getLogo());
+                                UserDAO.getInstance(mContext).editorUserInfo(users.get(0));
                             }
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    Glide.with(mContext)
+                                            .load(bean.getData().getLogo())
+                                            .placeholder(R.mipmap.ic_launcher)
+                                            .error(R.mipmap.ic_launcher)
+                                            .crossFade(300)
+                                            .transform(new GlideCircleTransform(mContext))
+                                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                                            .into(mIvHeader);
+
+                                }
+                            });
+
                         }
-                    });
 
-                    Request request = new Request.Builder()
-                            .url(url)
-                            .post(monitoredRequest)
-                            .build();
-                    Call response = client.newCall(request) ;
+                    }
+                });
 
-                    response.enqueue(new Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            Log.e("liujw","####################onFailure");
-                            Log.e("liujw","####################onFailure");
-                            Log.e("liujw","####################onFailure");
-                            Log.e("liujw","####################onFailure");
-                        }
-
-                        @Override
-                        public void onResponse(Call call, Response response) throws IOException {
-                            final String responseStr = response.body().string();
-                            Log.e("liujw","####################onResponse"+responseStr);
-                            Log.e("liujw","####################onResponse"+responseStr);
-                            Log.e("liujw","####################onResponse"+responseStr);
-                            Log.e("liujw","####################onResponse"+responseStr);
-                        }
-                    });
-
-                    //response = ApiCall.POST(client, url, monitoredRequest);
-               /* } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
                 return "";
             }
 
             @Override
             protected void onPostExecute(String result) {
-                //progressBar.setVisibility(View.GONE);
-                //txt.setText(result);
-               // mBuilder.setContentText("Upload complete");
-                // Removes the progress bar
-               // mBuilder.setProgress(0, 0, false);
-               // mNotifyManager.notify(0, mBuilder.build());
             }
 
             @Override
             protected void onPreExecute() {
-               /* txt.setText("Task Starting...");
-                mNotifyManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                mBuilder = new NotificationCompat.Builder(context);
-                mBuilder.setContentTitle("Uploading")
-                        .setContentText("Upload in progress")
-                        .setSmallIcon(R.drawable.ic_certificate_box);
-                Toast.makeText(context, "Uploading files... The upload progress is on notification bar.", Toast.LENGTH_LONG).show();*/
             }
 
             @Override
             protected void onProgressUpdate( Integer... values) {
-                /*txt.setText("Running..." + values[0]);
-                progressBar.setProgress(values[0]);
-                if ((values[0])%25==0){
-                    mBuilder.setProgress(100, values[0], false);
-                    // Displays the progress bar on notification
-                    mNotifyManager.notify(0, mBuilder.build());
-                }*/
 
             }
 
@@ -165,6 +157,7 @@ public class ModifyUserInfoActivity extends BaseActivity implements OnClickListe
 
 
     private void initView() {
+        mIvHeader = findViewById(R.id.iv_user_icon) ;
 		mRlUploadPhoto = findViewById(R.id.rl_upload_photo) ;
 		mTvTitle = findViewById(R.id.tv_main_info) ;
 		mRlBack = findViewById(R.id.ll_back) ;
@@ -174,6 +167,10 @@ public class ModifyUserInfoActivity extends BaseActivity implements OnClickListe
 		mRlUploadPhoto.setOnClickListener(this);
 
 	}
+
+	private ImageView mIvHeader ;
+
+    private List<User> users ;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -185,6 +182,20 @@ public class ModifyUserInfoActivity extends BaseActivity implements OnClickListe
 		App.getInstance().addActivity(this);
 
  		initView() ;
+
+		 users = UserDAO.getInstance(mContext).selectUserList() ;
+
+ 		if(users != null && users.size() > 0){
+            Glide.with(mContext)
+                    .load(users.get(0).getHeader())
+                    .placeholder(R.mipmap.ic_launcher)
+                    .error(R.mipmap.ic_launcher)
+                    .crossFade(300)
+                    .transform(new GlideCircleTransform(mContext))
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .into(mIvHeader);
+        }
+
 	}
 	
 

@@ -62,7 +62,7 @@ public class ForgetPwdActivity extends BaseActivity implements OnClickListener{
 		mLlRegister = findViewById(R.id.ll_login) ;
 		mEtPwd = findViewById(R.id.et_user_pwd) ;
 		mEtUserName = findViewById(R.id.et_user_name) ;
-		mTvGetCode = findViewById(R.id.tv_get_code) ;
+		mTvGetCode = findViewById(R.id.tv_code) ;
 		mLLBack = findViewById(R.id.ll_back) ;
 		mTvMainInfo =  findViewById(R.id.tv_main_info);
 		mLLBack.setOnClickListener(this);
@@ -184,7 +184,7 @@ public class ForgetPwdActivity extends BaseActivity implements OnClickListener{
 					forgetPwd(mEtUserName.getText().toString().trim(), mEtPwd.getText().toString().trim(), mEtCode.getText().toString().trim());
 				}
 				break;
-			case R.id.tv_get_code:
+			case R.id.tv_code:
 				if(!TextUtils.isEmpty(mEtUserName.getText().toString().trim())){
 					getCode(mEtUserName.getText().toString().trim());
 				}else{

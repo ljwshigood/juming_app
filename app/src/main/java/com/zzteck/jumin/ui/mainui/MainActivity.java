@@ -262,6 +262,8 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 			mIvUser.setImageResource(R.mipmap.icon_wode_pre);
 			mIvMessage.setImageResource(R.mipmap.icon_xiaoxi_nor);
 
+			((UserFragment)mUserFragment).initData() ;
+
 			break ;
 		case R.id.rl_message :
 			mTvHome.setTextColor(mContext.getResources().getColor(R.color.dark));

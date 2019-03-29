@@ -118,6 +118,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 					map.put("username",mEtUserName.getText().toString().trim()) ;
 					map.put("userpwd",mEtPwd.getText().toString().trim()) ;
 
+					map.put("sign",UtilsTools.getSign(mContext,"App.Member.Login")) ;
+
 					OkHttpClient client = new OkHttpClient();
 					//构造Request对象
 					//采用建造者模式，链式调用指明进行Get请求,传入Get的请求地址

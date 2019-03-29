@@ -1,10 +1,15 @@
 package com.zzteck.jumin.utils;
 
+import android.content.Context;
 import android.text.TextUtils;
+
+import com.zzteck.jumin.bean.User;
+import com.zzteck.jumin.db.UserDAO;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -13,6 +18,16 @@ import java.util.Set;
  */
 
 public class UtilsTools {
+
+
+    public static String getSign(Context context, String interfaces){
+        List<User> userList = UserDAO.getInstance(context).selectUserList() ;
+        if(userList != null && userList.size() > 0){
+            return UtilsTools.md5("jumin_"+interfaces)+userList.get(0).getWanjiaToken() ;
+        }else{
+            return UtilsTools.md5("jumin_"+interfaces) ;
+        }
+    }
 
     public static String md5(String string) {
         if (TextUtils.isEmpty(string)) {
