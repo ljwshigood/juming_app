@@ -29,7 +29,7 @@ public class UtilsTools {
         }
     }
 
-    public static String md5(String string) {
+    private static String md5(String string) {
         if (TextUtils.isEmpty(string)) {
             return "";
         }

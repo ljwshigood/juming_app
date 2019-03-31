@@ -156,13 +156,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         map.put("s", "App.Info.Getvideoinfo");
         map.put("cityid", "1");
 
-        List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
+        map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Info.Getinfos"));
+
+       /* List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
 
         if(userList != null && userList.size() > 0){
             map.put("sign", UtilsTools.md5("jumin_"+"App.Info.Getvideoinfo")+userList.get(0).getToken());
         }else{
             map.put("sign", UtilsTools.md5("jumin_"+"App.Info.Getvideoinfo"));
-        }
+        }*/
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
@@ -387,14 +389,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         map.put("s", "App.Category.Pushcat");
         map.put("type", 3 + "");
 
+        map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Category.Pushcat"));
 
-        List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
+       /* List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
 
         if(userList != null && userList.size() > 0){
             map.put("sign", UtilsTools.md5("jumin_"+"App.Category.Pushcat")+userList.get(0).getToken());
         }else{
             map.put("sign", UtilsTools.md5("jumin_"+"App.Category.Pushcat"));
-        }
+        }*/
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
@@ -440,14 +443,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         map.put("s", "App.Category.Pushcat");
         map.put("type", 1 + "");
 
-
-        List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
+        map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Category.Pushcat"));
+      /*  List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
 
         if(userList != null && userList.size() > 0){
             map.put("sign", UtilsTools.md5("jumin_"+"App.Category.Pushcat")+userList.get(0).getToken());
         }else{
             map.put("sign", UtilsTools.md5("jumin_"+"App.Category.Pushcat"));
-        }
+        }*/
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
@@ -492,15 +495,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         Map<String, String> map = new HashMap<>();
         map.put("s", "App.Category.Pushcat");
         map.put("type", 2 + "");
-
-
-        List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
+        map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Category.Pushcat"));
+       /* List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
 
         if(userList != null && userList.size() > 0){
             map.put("sign", UtilsTools.md5("jumin_"+"App.Category.Pushcat")+userList.get(0).getToken());
         }else{
             map.put("sign", UtilsTools.md5("jumin_"+"App.Category.Pushcat"));
-        }
+        }*/
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
@@ -621,14 +623,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         Map<String, String> map = new HashMap<>() ;
         map.put("s","App.Index.Banner") ;
 
+        map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Index.Banner"));
 
-        List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
+        /*List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
 
         if(userList != null && userList.size() > 0){
             map.put("sign", UtilsTools.md5("jumin_"+"App.Index.Banner")+userList.get(0).getToken());
         }else{
             map.put("sign", UtilsTools.md5("jumin_"+"App.Index.Banner"));
-        }
+        }*/
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
         Call call = client.newCall(request);

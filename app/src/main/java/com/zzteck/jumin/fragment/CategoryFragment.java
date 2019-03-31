@@ -54,14 +54,16 @@ public class CategoryFragment extends Fragment {
         map.put("s", "App.Category.Lists");
         map.put("catid", catid);
 
-        List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
+        map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Category.Lists"));
 
-        if(userList != null && userList.size() > 0){
+        //List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
+
+        /*if(userList != null && userList.size() > 0){
             map.put("sign", UtilsTools.md5("jumin_"+"App.Category.Lists")+userList.get(0).getToken());
         }else{
             map.put("sign", UtilsTools.md5("jumin_"+"App.Category.Lists"));
         }
-
+*/
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
         Call call = client.newCall(request);

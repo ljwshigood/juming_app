@@ -55,17 +55,17 @@ public class HistoryFragment extends Fragment implements View.OnClickListener{
     private void getMainCategoryList(){
 
         Map<String, String> map = new HashMap<>();
-        map.put("s", "App.Category.Biglist");
+        map.put("s", "App.Category.Lists");
 
+        map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Category.Lists"));
 
+    //    List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
 
-        List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
-
-        if(userList != null && userList.size() > 0){
+       /* if(userList != null && userList.size() > 0){
             map.put("sign", UtilsTools.md5("jumin_"+"App.Category.Biglist")+userList.get(0).getToken());
         }else{
             map.put("sign", UtilsTools.md5("jumin_"+"App.Category.Biglist"));
-        }
+        }*/
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
@@ -84,8 +84,8 @@ public class HistoryFragment extends Fragment implements View.OnClickListener{
                     public void run() {
                         String message = new String(responseStr);
                         Gson gson = new Gson();
-                        MainCategoryBean bean = gson.fromJson(message,MainCategoryBean.class) ;
-                        initData(bean);
+                     //   MainCategoryBean bean = gson.fromJson(message,MainCategoryBean.class) ;
+                    //    initData(bean);
                     }
                 });
             }

@@ -117,15 +117,15 @@ public class RecommandFragment extends Fragment {
         map.put("cityid",cityId) ;
         map.put("pages",pages) ;
 
-
-        List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
+        map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Info.Getinfos"));
+       /* List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
 
         if(userList != null && userList.size() > 0){
-            map.put("sign", UtilsTools.md5("jumin_"+"App.Info.Getinfos")+userList.get(0).getToken());
+            map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Info.Getinfos")+userList.get(0).getToken());
         }else{
-            map.put("sign", UtilsTools.md5("jumin_"+"App.Info.Getinfos"));
+            map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Info.Getinfos"));
         }
-
+        */
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
@@ -140,13 +140,15 @@ public class RecommandFragment extends Fragment {
             public void onResponse(Call call, final Response response) throws IOException {
                 final String responseStr = response.body().string();
 
-                Log.e("liujw","##########################getInfosList catId : "+catId+" #####################: "+responseStr);
+                Log.e("liujw","##########################getInfosList message : "+responseStr);
 
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
 
                         String message = new String(responseStr) ;
+
+                        Log.e("liujw","##########################getInfosList catId : "+catId+" #####################: "+responseStr);
                         Gson gson = new Gson() ;
                         HomeInfo info = gson.fromJson(message,HomeInfo.class) ;
                         if(mCurrentPage == 1){
