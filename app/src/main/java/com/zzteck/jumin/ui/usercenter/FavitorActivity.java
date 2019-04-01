@@ -46,9 +46,54 @@ public class FavitorActivity extends BaseActivity implements OnClickListener{
 
 	private TextView mTvTitle ;
 
-	private RelativeLayout mRlBack;
+	private RelativeLayout mRlBack ;
 
 	private RecyclerView mRecyleViewFav ;
+
+	private int mCurrentPage = 1 ;
+
+	private void favorList(){
+
+		Map<String, String> map = new HashMap<>() ;
+		map.put("s","App.Shoucang.Lists") ;
+		map.put("page",mCurrentPage+"") ;
+
+		map.put("sign",UtilsTools.getSign(mContext,"App.Shoucang.Lists")) ;
+
+		OkHttpClient client = new OkHttpClient();
+		Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
+		Call call = client.newCall(request);
+		call.enqueue(new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+				Log.e("liujw","##########################IOException : "+e.toString());
+			}
+
+			@Override
+			public void onResponse(Call call, final Response response) throws IOException {
+				final String responseStr = response.body().string();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+
+						String message = new String(responseStr.getBytes()) ;
+						Gson gson = new Gson() ;
+
+						/*LoginBean bean = gson.fromJson(message,LoginBean.class) ;
+						if(bean.getData().isIs_login()){
+
+							UserDAO.getInstance(mContext).editorUserTable(bean.getData());
+
+							Intent intent = new Intent(mContext,MainActivity.class) ;
+							startActivity(intent);
+							finish();
+						}*/
+
+					}
+				});
+			}
+		});
+	}
 
 	private void initView() {
 
@@ -81,6 +126,8 @@ public class FavitorActivity extends BaseActivity implements OnClickListener{
 
  		initView() ;
 		initData() ;
+
+		favorList() ;
 
 	}
 	
