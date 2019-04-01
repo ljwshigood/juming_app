@@ -118,14 +118,6 @@ public class RecommandFragment extends Fragment {
         map.put("pages",pages) ;
 
         map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Info.Getinfos"));
-       /* List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
-
-        if(userList != null && userList.size() > 0){
-            map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Info.Getinfos")+userList.get(0).getToken());
-        }else{
-            map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Info.Getinfos"));
-        }
-        */
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
@@ -157,10 +149,7 @@ public class RecommandFragment extends Fragment {
                             if(recommandAdapter != null){
                                 recommandAdapter.addAll(info.getData());
                             }
-
                         }
-
-
                     }
                 });
             }

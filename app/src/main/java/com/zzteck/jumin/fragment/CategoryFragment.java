@@ -24,6 +24,7 @@ import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.NormalDecoration;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,57 +49,13 @@ public class CategoryFragment extends Fragment {
         mRlCate = view.findViewById(R.id.rl_cate) ;
     }
 
-    private void getCategoryList(String catid) {
-
-        Map<String, String> map = new HashMap<>();
-        map.put("s", "App.Category.Lists");
-        map.put("catid", catid);
-
-        map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Category.Lists"));
-
-        //List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
-
-        /*if(userList != null && userList.size() > 0){
-            map.put("sign", UtilsTools.md5("jumin_"+"App.Category.Lists")+userList.get(0).getToken());
-        }else{
-            map.put("sign", UtilsTools.md5("jumin_"+"App.Category.Lists"));
-        }
-*/
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
-        Call call = client.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e("liujw", "##########################IOException : " + e.toString());
-            }
-
-            @Override
-            public void onResponse(Call call, final Response response) throws IOException {
-                final String responseStr = response.body().string();
-                if(getActivity() == null){
-                    return ;
-                }
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String message = new String(responseStr);
-                        Gson gson = new Gson();
-                        ChildCategoryBean bean = gson.fromJson(message, ChildCategoryBean.class);
-                        mGategoryListAdapter.notifyCategoryList(bean.getData());
-                    }
-                });
-            }
-        });
-    }
-
     private void initData() {
         mRlCate.setLayoutManager(new GridLayoutManager(getActivity(),2));
         mGategoryListAdapter = new CategoryListAdapter(getActivity(),null) ;
         mRlCate.setAdapter(mGategoryListAdapter) ;
     }
 
-    private String mCategoryId ;
+    private List<MainCategoryBean.DataBean.ChildrenBean> mCategoryList ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -108,9 +65,9 @@ public class CategoryFragment extends Fragment {
         initData();
         Bundle bundle = getArguments();
         if (bundle != null) {
-            mCategoryId = bundle.getString("item");
-            Log.e("liujw","#################item : "+mCategoryId) ;
-            getCategoryList(mCategoryId) ;
+            mCategoryList = (List<MainCategoryBean.DataBean.ChildrenBean>) bundle.getSerializable("item");
+            mGategoryListAdapter.notifyCategoryList(mCategoryList);
+
         }
         return mMainView;
     }

@@ -28,6 +28,7 @@ import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.NormalDecoration;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,14 +60,6 @@ public class HistoryFragment extends Fragment implements View.OnClickListener{
 
         map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Category.Lists"));
 
-    //    List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
-
-       /* if(userList != null && userList.size() > 0){
-            map.put("sign", UtilsTools.md5("jumin_"+"App.Category.Biglist")+userList.get(0).getToken());
-        }else{
-            map.put("sign", UtilsTools.md5("jumin_"+"App.Category.Biglist"));
-        }*/
-
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
         Call call = client.newCall(request);
@@ -79,13 +72,16 @@ public class HistoryFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
                 final String responseStr = response.body().string();
+
+                Log.e("liujw", "##########################getMainCategoryList responseStr : " + responseStr);
+
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         String message = new String(responseStr);
                         Gson gson = new Gson();
-                     //   MainCategoryBean bean = gson.fromJson(message,MainCategoryBean.class) ;
-                    //    initData(bean);
+                        MainCategoryBean bean = gson.fromJson(message,MainCategoryBean.class) ;
+                        initData(bean);
                     }
                 });
             }
@@ -133,7 +129,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener{
 
     private SmoothScrollLayoutManager mSmoothScrollLayoutManager ;
 
-    private void initData(MainCategoryBean bean) {
+    private void initData(final MainCategoryBean bean) {
         mSmoothScrollLayoutManager = new SmoothScrollLayoutManager(getActivity()) ;
         mRecyleView.setLayoutManager(mSmoothScrollLayoutManager);
         mRecyleView.addItemDecoration(new NormalDecoration(ContextCompat.getColor(getActivity(), R.color.mainGrayF8), (int) getActivity().getResources().getDimension(R.dimen.one)));
@@ -145,7 +141,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener{
 
         Fragment fragment = new CategoryFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("item", mTitlesList.get(0).getCatid());
+        bundle.putSerializable("item", (Serializable) bean.getData().get(0).getChildren());
         fragment.setArguments(bundle);
 
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.framelayout,fragment).commit();
@@ -164,7 +160,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener{
 
                 Fragment fragment = new CategoryFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("item", mTitlesList.get(position).getCatid());
+                bundle.putSerializable("item", (Serializable) bean.getData().get(position).getChildren());
                 fragment.setArguments(bundle);
 
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.framelayout,fragment).commit();

@@ -8,14 +8,12 @@ public class MainCategoryBean implements Serializable {
 
     /**
      * ret : 200
-     * data : [{"catid":"1","if_view":"2","color":"","catname":"二手转让","icon":"http://www.jumin.cn/template/default/images/index/icon_ershou.gif","usecoin":"0","title":"【{city}二手网_二手货市场_跳蚤市场_闲置旧货买卖】","keywords":"{city}二手网,二手货市场,旧货市场","description":"聚民网{city}二手物品交易频道为您提供发布和查找各种二手手机、二手家具/家电、二手电脑转让信息。买卖二手旧货物品，聚民网是最大的网上{city}二手市场","parentid":"0","modid":"2","catorder":"2","if_upimg":"1","if_mappoint":"0","dir_type":"4","dir_typename":"ershou","template":"list","template_info":"info","html_dir":"/ershou/","htmlpath":"","gid":"1"},{"catid":"2","if_view":"2","color":"","catname":"车辆买卖","icon":"http://www.jumin.cn/template/default/images/index/icon_che.gif","usecoin":"0","title":"【{city}二手车网_{city}二手车估价_{city}二手车交易市场】","keywords":"{city}二手车网,{city}二手车评估","description":"聚民网{city}车辆买卖频道是{city}最大的二手车交易网，{city}二手车交易市场,为您提供{city}二手车交易信息,{city}二手车出手转让信息,免费提供{city}二手车评估,是车友们最值得信赖的{city}二手车交易网站。","parentid":"0","modid":"1","catorder":"3","if_upimg":"1","if_mappoint":"0","dir_type":"4","dir_typename":"che","template":"list","template_info":"info","html_dir":"/che/","htmlpath":"","gid":"2"},{"catid":"3","if_view":"2","color":"","catname":"房屋租售","icon":"http://www.jumin.cn/template/default/images/index/icon_fang.gif","usecoin":"0","title":"【{city}房产网_{city}二手房_{city}租房_商铺房产信息网】","keywords":"二手房买卖，{city}租房，房源发布平台，商铺出租转让","description":"聚民网是{city}规模最大的房地产信息网,每天更新海量{city}楼盘信息,提供全新的{city}二手房、新房、小区、租房、写字楼等房产信息,您可以免费发布房源信息。","parentid":"0","modid":"1","catorder":"1","if_upimg":"1","if_mappoint":"1","dir_type":"4","dir_typename":"fang","template":"list","template_info":"info","html_dir":"/fang/","htmlpath":"","gid":"3"},{"catid":"4","if_view":"2","color":"","catname":"全职招聘","icon":"http://www.jumin.cn/template/default/images/index/icon_zhaopin.gif","usecoin":"0","title":"【{city}全职招聘网_{city}找工作_{city}人才市场网】","keywords":"{city}招聘网,{city}找工作,免费发布招聘信息的网站","description":"聚民网{city}人才网面向全国,每日提供最新最全最准确的招聘网站信息,为企业和求职者提供人才招聘、求职、找工作、全职招聘等在内的全方位的人力资源服务,同时您可以免费发布招聘信息。","parentid":"0","modid":"7","catorder":"5","if_upimg":"1","if_mappoint":"1","dir_type":"4","dir_typename":"zhaopin","template":"list_zhaopin","template_info":"info_zp","html_dir":"/zhaopin/","htmlpath":"","gid":"4"},{"catid":"5","if_view":"2","color":"","catname":"兼职招聘","icon":"http://www.jumin.cn/template/default/images/index/icon_jzzhaopin.gif","usecoin":"0","title":"【{city}兼职招聘|网络兼职招聘网|{city}兼职工作本地兼职招聘信息】","keywords":"{city}兼职,{city}兼职网,{city}兼职招聘","description":"{city}兼职网是国内领先的兼职招聘信息网,提供网上兼职、大学生兼职等信息,免费发布招聘信息、寻求兼职人才、查找兼职工作,{city}为求职者和招聘者提供免费发布信息的平台。","parentid":"0","modid":"8","catorder":"6","if_upimg":"1","if_mappoint":"1","dir_type":"4","dir_typename":"jianzhi","template":"list_zhaopin","template_info":"info_zp","html_dir":"/jianzhi/","htmlpath":"","gid":"5"},{"catid":"6","if_view":"2","color":"","catname":"求职简历","icon":"http://www.jumin.cn/template/default/images/index/icon_jianli.gif","usecoin":"1","title":"【{city}求职招聘_{city}找工作_{city}人才网_{city}求职网】","keywords":"{city}求职网,{city}找工作,{city}求职信息","description":"聚民网求职频道,具有大量的{city}求职招聘信息,您可以寻找想要的职位,也可以发布自己的简历,是高效精准的找工作网站。免费、快速网上找工作就到聚民网{city}人才网","parentid":"0","modid":"9","catorder":"7","if_upimg":"1","if_mappoint":"0","dir_type":"4","dir_typename":"qiuzhi","template":"list_qiuzhi","template_info":"info_resume","html_dir":"/qiuzhi/","htmlpath":"","gid":"6"},{"catid":"7","if_view":"2","color":"","catname":"交友活动","icon":"http://www.jumin.cn/template/default/images/index/icon_love.gif","usecoin":"0","title":"【{city}同城约会_{city}同城交友_美女|帅哥_{city}同城活动信息网】","keywords":"{city}同城约会,{city}同城交友,{city}找对象","description":"{city}聚民网交友频道,&nbsp;汇集{city}最新最全的同城交友信息,所有交友信息都经过严格审核。快速找女友、找男友、找对象、同城约会就上{city}聚民网。","parentid":"0","modid":"1","catorder":"8","if_upimg":"1","if_mappoint":"0","dir_type":"4","dir_typename":"jiaoyou","template":"list","template_info":"info","html_dir":"/jiaoyou/","htmlpath":"","gid":"7"},{"catid":"8","if_view":"2","color":"","catname":"宠物","icon":"http://www.jumin.cn/template/default/images/index/icon_pet.gif","usecoin":"0","title":"【{city}宠物网_宠物买卖_{city}宠物市场_宠物信息发布网】","keywords":"{city}宠物网,{city}宠物买卖市场","description":"{city}宠物网是{city}地区最大的网上宠物交易市场,这里有大量的{city}宠物市场信息供您查询,经过严格审核的{city}宠物市场信息,是您查找{city}宠物网的最佳选择。","parentid":"0","modid":"1","catorder":"9","if_upimg":"1","if_mappoint":"0","dir_type":"4","dir_typename":"chongwu","template":"list","template_info":"info","html_dir":"/chongwu/","htmlpath":"","gid":"8"},{"catid":"9","if_view":"2","color":"","catname":"生活服务","icon":"http://www.jumin.cn/template/default/images/index/icon_life.gif","usecoin":"0","title":"【{city}本地服务_{city}黄页大全_生活服务信息网】","keywords":"{city}黄页本大全,{city}本地服务价格,{city}本地服务","description":"聚民网{city}本地服务频道，为您提供家政/月嫂、搬家/保洁/装修、电脑/网络维修、开锁/修锁、商业投资等丰富信息；是您发布本地服务信息与查找本地服务的明智选择","parentid":"0","modid":"1","catorder":"10","if_upimg":"1","if_mappoint":"0","dir_type":"4","dir_typename":"shenghuo","template":"list_box","template_info":"info","html_dir":"/shenghuo/","htmlpath":"","gid":"9"},{"catid":"10","if_view":"2","color":"","catname":"教育培训","icon":"http://www.jumin.cn/template/default/images/index/icon_edu.gif","usecoin":"0","title":"【{city}培训网|{city}教育网|{city}教育培训】","keywords":"{city}教育网,{city}培训网,{city}教育培训机构","description":"聚民网{city}教育网为您提供优质海量的{city}教育培训信息,{city}培训机构,{city}家教信息。每天都有大量真实的{city}中小学辅导、学历教育、技能培训、外语培训等{city}教育培训机构资讯供您查询。","parentid":"0","modid":"10","catorder":"11","if_upimg":"1","if_mappoint":"0","dir_type":"4","dir_typename":"jiaoyu","template":"list_simple","template_info":"info","html_dir":"/jiaoyu/","htmlpath":"","gid":"10"},{"catid":"244","if_view":"2","color":"","catname":"商务服务","icon":"http://www.jumin.cn/template/default/images/index/icon_business.gif","usecoin":"0","title":"","keywords":"","description":"","parentid":"0","modid":"1","catorder":"270","if_upimg":"1","if_mappoint":"0","dir_type":"2","dir_typename":"shangwufuwu","template":"list","template_info":"info","html_dir":"//","htmlpath":"","gid":"244"}]
+     * data : [{"catid":"3","catname":"房屋租售","color":"","if_view":"2","dir_typename":"fang","usecoin":"0","icon":"http://www.jumin.cn/template/default/images/index/icon_fang.gif","children":[{"catid":"41","catname":" 租房/出租","if_view":"2","color":"","dir_typename":"chuzu","usecoin":"0"},{"catid":"42","catname":"日租/短租","if_view":"2","color":"","dir_typename":"duanzu","usecoin":"0"},{"catid":"43","catname":"二手房出售","if_view":"2","color":"","dir_typename":"ershoufang","usecoin":"0"},{"catid":"45","catname":"商铺出租","if_view":"2","color":"","dir_typename":"zhuanrang","usecoin":"0"},{"catid":"46","catname":"商铺出售","if_view":"2","color":"","dir_typename":"shangpu","usecoin":"0"},{"catid":"251","catname":"商铺转让","if_view":"2","color":"","dir_typename":"shangpuzhuanrang","usecoin":"0"},{"catid":"47","catname":"写字楼出租","if_view":"2","color":"","dir_typename":"xieziloucz","usecoin":"0"},{"catid":"48","catname":"写字楼出售","if_view":"2","color":"","dir_typename":"xieziloucs","usecoin":"0"},{"catid":"49","catname":"厂房/仓库/土地","if_view":"2","color":"","dir_typename":"changfang","usecoin":"0"},{"catid":"50","catname":"求租/求购","if_view":"2","color":"","dir_typename":"qiufang","usecoin":"0"}]},{"catid":"1","catname":"二手转让","color":"","if_view":"2","dir_typename":"ershou","usecoin":"0","icon":"http://www.jumin.cn/template/default/images/index/icon_ershou.gif","children":[{"catid":"11","catname":"手机转让","if_view":"2","color":"#ff0000","dir_typename":"shouji","usecoin":"0"},{"catid":"12","catname":"平板电脑","if_view":"2","color":"","dir_typename":"pingban","usecoin":"0"},{"catid":"13","catname":"台式电脑","if_view":"2","color":"","dir_typename":"diannao","usecoin":"0"},{"catid":"14","catname":"数码产品转让","if_view":"2","color":"#46a200","dir_typename":"shuma","usecoin":"0"},{"catid":"246","catname":"笔记本","if_view":"2","color":"","dir_typename":"bijiben","usecoin":"0"},{"catid":"16","catname":"家用电器","if_view":"2","color":"#ff9900","dir_typename":"jiadian","usecoin":"0"},{"catid":"17","catname":"日常用品","if_view":"2","color":"","dir_typename":"riyongpin","usecoin":"0"},{"catid":"18","catname":"办公经营设备","if_view":"2","color":"","dir_typename":"bangong","usecoin":"0"},{"catid":"19","catname":"收藏品/工艺品","if_view":"2","color":"","dir_typename":"shoucang","usecoin":"0"},{"catid":"20","catname":"服装/配饰/鞋包","if_view":"2","color":"","dir_typename":"fushi","usecoin":"0"},{"catid":"21","catname":"母婴/玩具","if_view":"2","color":"","dir_typename":"yingyou","usecoin":"0"},{"catid":"22","catname":"运动/图书/乐器","if_view":"2","color":"","dir_typename":"wenti","usecoin":"0"},{"catid":"23","catname":"门票卡券","if_view":"2","color":"","dir_typename":"piao","usecoin":"0"},{"catid":"24","catname":"工业设备","if_view":"2","color":"","dir_typename":"gongyeshebei","usecoin":"0"},{"catid":"25","catname":"奇石盆景","if_view":"2","color":"","dir_typename":"penjing","usecoin":"0"},{"catid":"26","catname":"设备租赁","if_view":"2","color":"","dir_typename":"zulin","usecoin":"0"},{"catid":"15","catname":"家具/办公家具","if_view":"2","color":"","dir_typename":"jiaju","usecoin":"0"},{"catid":"247","catname":"照相机","if_view":"2","color":"","dir_typename":"zhaoxiangji","usecoin":"0"},{"catid":"248","catname":"食品农产","if_view":"2","color":"","dir_typename":"shipinnongchan","usecoin":"0"},{"catid":"249","catname":"网游/虚拟物品","if_view":"2","color":"","dir_typename":"wangyou-xuniwupin","usecoin":"0"},{"catid":"27","catname":"其他物品","if_view":"2","color":"","dir_typename":"qitaershou","usecoin":"0"}]},{"catid":"2","catname":"车辆买卖","color":"","if_view":"2","dir_typename":"che","usecoin":"0","icon":"http://www.jumin.cn/template/default/images/index/icon_che.gif","children":[{"catid":"28","catname":"二手轿车","if_view":"2","color":"","dir_typename":"jiaoche","usecoin":"0"},{"catid":"29","catname":"货车/工程车","if_view":"2","color":"","dir_typename":"huoche","usecoin":"0"},{"catid":"30","catname":"面包车/客车","if_view":"2","color":"","dir_typename":"keche","usecoin":"0"},{"catid":"31","catname":"拖拉机/收割机","if_view":"2","color":"","dir_typename":"tuolaji","usecoin":"0"},{"catid":"32","catname":"拼车/顺风车","if_view":"2","color":"","dir_typename":"pinche","usecoin":"0"},{"catid":"33","catname":"新车优惠/4S店","if_view":"2","color":"","dir_typename":"xincheyouhui","usecoin":"0"},{"catid":"34","catname":"汽车用品/配件","if_view":"2","color":"","dir_typename":"peijian","usecoin":"0"},{"catid":"35","catname":"汽修保养","if_view":"2","color":"","dir_typename":"qixiu","usecoin":"0"},{"catid":"36","catname":"车辆收购服务","if_view":"2","color":"","dir_typename":"cheliangsg","usecoin":"0"},{"catid":"37","catname":"摩托车/燃气车","if_view":"2","color":"","dir_typename":"motuoche","usecoin":"0"},{"catid":"38","catname":"电动车","if_view":"2","color":"","dir_typename":"diandongche","usecoin":"0"},{"catid":"39","catname":"自行车","if_view":"2","color":"","dir_typename":"zixingche","usecoin":"0"},{"catid":"40","catname":"本地下线车","if_view":"2","color":"","dir_typename":"xiaxianche","usecoin":"0"}]},{"catid":"4","catname":"全职招聘","color":"","if_view":"2","dir_typename":"zhaopin","usecoin":"0","icon":"http://www.jumin.cn/template/default/images/index/icon_zhaopin.gif","children":[{"catid":"51","catname":"营业员/促销/零售","if_view":"2","color":"","dir_typename":"lingshou","usecoin":"0"},{"catid":"52","catname":"服务员/收银员","if_view":"2","color":"","dir_typename":"fuwuyuan","usecoin":"0"},{"catid":"53","catname":"销售/市场/业务员","if_view":"2","color":"#ff0000","dir_typename":"yewu","usecoin":"0"},{"catid":"54","catname":"文员/客服/助理","if_view":"2","color":"","dir_typename":"wenyuan","usecoin":"0"},{"catid":"55","catname":"保姆/家政","if_view":"2","color":"","dir_typename":"baomu","usecoin":"0"},{"catid":"56","catname":"司机/驾驶员","if_view":"2","color":"","dir_typename":"jiashi","usecoin":"0"},{"catid":"57","catname":"保安/保洁","if_view":"2","color":"","dir_typename":"baoan","usecoin":"0"},{"catid":"58","catname":"厨师/切配","if_view":"2","color":"","dir_typename":"chushi","usecoin":"0"},{"catid":"59","catname":"送货/快递/仓管","if_view":"2","color":"","dir_typename":"kuaidi","usecoin":"0"},{"catid":"60","catname":"工人/技工","if_view":"2","color":"","dir_typename":"gongren","usecoin":"0"},{"catid":"61","catname":"财务/会计","if_view":"2","color":"","dir_typename":"caiwu","usecoin":"0"},{"catid":"62","catname":"老师/培训师","if_view":"2","color":"","dir_typename":"laoshi","usecoin":"0"},{"catid":"63","catname":"美工/设计/程序员","if_view":"2","color":"","dir_typename":"meigong","usecoin":"0"},{"catid":"64","catname":"保健师/美容师","if_view":"2","color":"","dir_typename":"baojianshi","usecoin":"0"},{"catid":"65","catname":"人才招聘会","if_view":"2","color":"","dir_typename":"zhaopinhui","usecoin":"0"},{"catid":"66","catname":"KTV/酒吧","if_view":"2","color":"","dir_typename":"ktv","usecoin":"0"},{"catid":"67","catname":"其他招聘","if_view":"2","color":"","dir_typename":"qitazhaopin","usecoin":"0"}]},{"catid":"5","catname":"兼职招聘","color":"","if_view":"2","dir_typename":"jianzhi","usecoin":"0","icon":"http://www.jumin.cn/template/default/images/index/icon_jzzhaopin.gif","children":[{"catid":"68","catname":"派发/促销","if_view":"2","color":"","dir_typename":"jzcuxiao","usecoin":"0"},{"catid":"69","catname":"家教/老师","if_view":"2","color":"","dir_typename":"jzjiajiao","usecoin":"0"},{"catid":"70","catname":"餐厅/服务员","if_view":"2","color":"","dir_typename":"jzfuwuyuan","usecoin":"0"},{"catid":"71","catname":"模特/礼仪","if_view":"2","color":"","dir_typename":"jzmote","usecoin":"0"},{"catid":"72","catname":"网站/设计","if_view":"2","color":"","dir_typename":"jzwangzhan","usecoin":"0"},{"catid":"73","catname":"会计/财务","if_view":"2","color":"","dir_typename":"jzcaiwu","usecoin":"0"},{"catid":"74","catname":"其他兼职","if_view":"2","color":"","dir_typename":"qitajianzhi","usecoin":"0"}]},{"catid":"6","catname":"求职简历","color":"","if_view":"2","dir_typename":"qiuzhi","usecoin":"1","icon":"http://www.jumin.cn/template/default/images/index/icon_jianli.gif","children":[{"catid":"75","catname":"销售","if_view":"2","color":"","dir_typename":"qzxiaoshou","usecoin":"1"},{"catid":"76","catname":"客服","if_view":"2","color":"","dir_typename":"qzkefu","usecoin":"1"},{"catid":"77","catname":"人事/行政/后勤","if_view":"2","color":"","dir_typename":"qzhouqin","usecoin":"1"},{"catid":"78","catname":"酒店/餐饮/旅游","if_view":"2","color":"","dir_typename":"qzcanyin","usecoin":"1"},{"catid":"79","catname":"美容/美发/保健/健身","if_view":"2","color":"","dir_typename":"qzmeirong","usecoin":"1"},{"catid":"80","catname":"计算机/网络/通信","if_view":"2","color":"","dir_typename":"qzcomputer","usecoin":"1"},{"catid":"81","catname":"建筑/房产/装修/物业","if_view":"2","color":"","dir_typename":"qzfangdichan","usecoin":"1"},{"catid":"82","catname":"普工/技工/生产","if_view":"2","color":"","dir_typename":"qzjigong","usecoin":"1"},{"catid":"83","catname":"司机","if_view":"2","color":"","dir_typename":"qzsiji","usecoin":"1"},{"catid":"84","catname":"家政保洁/安保","if_view":"2","color":"","dir_typename":"qzjiazheng","usecoin":"1"},{"catid":"85","catname":"影视/娱乐/KTV","if_view":"2","color":"","dir_typename":"qzktv","usecoin":"1"},{"catid":"86","catname":"编辑/出版/印刷","if_view":"2","color":"","dir_typename":"qzyinshua","usecoin":"1"},{"catid":"87","catname":"教育培训/翻译","if_view":"2","color":"","dir_typename":"qzjiaoyu","usecoin":"1"},{"catid":"88","catname":"财务/审计/统计","if_view":"2","color":"","dir_typename":"qzshenji","usecoin":"1"},{"catid":"89","catname":"其他职位","if_view":"2","color":"","dir_typename":"qitazhiwei","usecoin":"1"}]},{"catid":"7","catname":"交友活动","color":"","if_view":"2","dir_typename":"jiaoyou","usecoin":"0","icon":"http://www.jumin.cn/template/default/images/index/icon_love.gif","children":[{"catid":"90","catname":"找女友/找男友","if_view":"2","color":"","dir_typename":"zhaoduixiang","usecoin":"0"},{"catid":"91","catname":"征婚","if_view":"2","color":"","dir_typename":"zhenghun","usecoin":"0"},{"catid":"92","catname":"结伴活动","if_view":"2","color":"","dir_typename":"huodong","usecoin":"0"},{"catid":"93","catname":"技能交换","if_view":"2","color":"","dir_typename":"jineng","usecoin":"0"},{"catid":"94","catname":"找人/寻物","if_view":"2","color":"","dir_typename":"zhaoren","usecoin":"0"}]},{"catid":"8","catname":"宠物","color":"","if_view":"2","dir_typename":"chongwu","usecoin":"0","icon":"http://www.jumin.cn/template/default/images/index/icon_pet.gif","children":[{"catid":"95","catname":"狗狗","if_view":"2","color":"","dir_typename":"gou","usecoin":"0"},{"catid":"96","catname":"猫猫/其他宠物","if_view":"2","color":"","dir_typename":"mao","usecoin":"0"},{"catid":"97","catname":"宠物免费赠送","if_view":"2","color":"","dir_typename":"songchongwu","usecoin":"0"},{"catid":"98","catname":"宠物用品/食品","if_view":"2","color":"","dir_typename":"shipin","usecoin":"0"},{"catid":"99","catname":"宠物服务/配种","if_view":"2","color":"","dir_typename":"peizhong","usecoin":"0"}]},{"catid":"9","catname":"生活服务","color":"","if_view":"2","dir_typename":"shenghuo","usecoin":"0","icon":"http://www.jumin.cn/template/default/images/index/icon_life.gif","children":[{"catid":"100","catname":"驾校服务","if_view":"2","color":"","dir_typename":"jiaxiao","usecoin":"0"},{"catid":"101","catname":"陪驾/代驾","if_view":"2","color":"","dir_typename":"daijia","usecoin":"0"},{"catid":"102","catname":"婚庆/化妆","if_view":"2","color":"","dir_typename":"hunqing","usecoin":"0"},{"catid":"103","catname":"摄影摄像","if_view":"2","color":"","dir_typename":"sheying","usecoin":"0"},{"catid":"104","catname":"美容纤体","if_view":"2","color":"","dir_typename":"meirong","usecoin":"0"},{"catid":"105","catname":"房屋装修","if_view":"2","color":"","dir_typename":"zhuangxiu","usecoin":"0"},{"catid":"106","catname":"建材装饰","if_view":"2","color":"","dir_typename":"jiancai","usecoin":"0"},{"catid":"108","catname":"保姆/月嫂","if_view":"2","color":"","dir_typename":"yuesao","usecoin":"0"},{"catid":"109","catname":"保洁/清洗","if_view":"2","color":"","dir_typename":"baojie","usecoin":"0"},{"catid":"110","catname":"搬家服务","if_view":"2","color":"","dir_typename":"banjia","usecoin":"0"},{"catid":"111","catname":"家电维修","if_view":"2","color":"","dir_typename":"xiujiandian","usecoin":"0"},{"catid":"112","catname":"电脑维修","if_view":"2","color":"","dir_typename":"xiudiannao","usecoin":"0"},{"catid":"113","catname":"家居维修","if_view":"2","color":"","dir_typename":"jiajuweixiu","usecoin":"0"},{"catid":"114","catname":"管道疏通","if_view":"2","color":"","dir_typename":"tongguandao","usecoin":"0"},{"catid":"115","catname":"外卖/送水","if_view":"2","color":"","dir_typename":"waimai","usecoin":"0"},{"catid":"116","catname":"开锁/修锁","if_view":"2","color":"","dir_typename":"kaisuo","usecoin":"0"},{"catid":"117","catname":"租车服务","if_view":"2","color":"","dir_typename":"zuche","usecoin":"0"},{"catid":"118","catname":"旅游度假","if_view":"2","color":"","dir_typename":"lvyou","usecoin":"0"},{"catid":"119","catname":"休闲娱乐","if_view":"2","color":"","dir_typename":"yule","usecoin":"0"},{"catid":"120","catname":"酒店/宾馆","if_view":"2","color":"","dir_typename":"jiudian","usecoin":"0"},{"catid":"136","catname":"其它生活服务","if_view":"2","color":"","dir_typename":"qitafuwu","usecoin":"0"}]},{"catid":"10","catname":"教育培训","color":"","if_view":"2","dir_typename":"jiaoyu","usecoin":"0","icon":"http://www.jumin.cn/template/default/images/index/icon_edu.gif","children":[{"catid":"137","catname":"职业培训","if_view":"2","color":"","dir_typename":"zhiyepeixun","usecoin":"0"},{"catid":"138","catname":"外语培训","if_view":"2","color":"","dir_typename":"waiyu","usecoin":"0"},{"catid":"139","catname":"学历教育","if_view":"2","color":"","dir_typename":"xueli","usecoin":"0"},{"catid":"140","catname":"家教","if_view":"2","color":"","dir_typename":"jiajiao","usecoin":"0"},{"catid":"141","catname":"IT培训","if_view":"2","color":"","dir_typename":"jisuanji","usecoin":"0"},{"catid":"142","catname":"留学签证","if_view":"2","color":"","dir_typename":"liuxue","usecoin":"0"},{"catid":"143","catname":"高等教育","if_view":"2","color":"","dir_typename":"gaodengjiaoyu","usecoin":"0"},{"catid":"144","catname":"文体培训","if_view":"2","color":"","dir_typename":"techang","usecoin":"0"},{"catid":"145","catname":"婴幼儿教育","if_view":"2","color":"","dir_typename":"youjiao","usecoin":"0"},{"catid":"146","catname":"中小学教育","if_view":"2","color":"","dir_typename":"zhongxiaoxue","usecoin":"0"},{"catid":"147","catname":"其他培训","if_view":"2","color":"","dir_typename":"qitapeixun","usecoin":"0"}]},{"catid":"244","catname":"商务服务","color":"","if_view":"2","dir_typename":"shangwufuwu","usecoin":"0","icon":"http://www.jumin.cn/template/default/images/index/icon_business.gif","children":[{"catid":"107","catname":"投资理财","if_view":"2","color":"","dir_typename":"licai","usecoin":"0"},{"catid":"121","catname":"机票/签证","if_view":"2","color":"","dir_typename":"qianzheng","usecoin":"0"},{"catid":"122","catname":"招商加盟","if_view":"2","color":"","dir_typename":"zhaoshang","usecoin":"0"},{"catid":"123","catname":"担保/贷款","if_view":"2","color":"","dir_typename":"daikuan","usecoin":"0"},{"catid":"124","catname":"公司注册","if_view":"2","color":"","dir_typename":"gongsizhuce","usecoin":"0"},{"catid":"125","catname":"会计/审计","if_view":"2","color":"","dir_typename":"huiji","usecoin":"0"},{"catid":"126","catname":"网站建设","if_view":"2","color":"","dir_typename":"wangzhan","usecoin":"0"},{"catid":"127","catname":"快递/物流","if_view":"2","color":"","dir_typename":"wuliu","usecoin":"0"},{"catid":"128","catname":"庆典/演出","if_view":"2","color":"","dir_typename":"yanchu","usecoin":"0"},{"catid":"129","catname":"印刷/喷绘","if_view":"2","color":"","dir_typename":"yinshua","usecoin":"0"},{"catid":"130","catname":"设计策划","if_view":"2","color":"","dir_typename":"cehua","usecoin":"0"},{"catid":"131","catname":"律师服务","if_view":"2","color":"","dir_typename":"lvshi","usecoin":"0"},{"catid":"132","catname":"翻译/速记","if_view":"2","color":"","dir_typename":"fanyi","usecoin":"0"},{"catid":"133","catname":"鲜花/盆景","if_view":"2","color":"","dir_typename":"xianhua","usecoin":"0"},{"catid":"134","catname":"礼品定制","if_view":"2","color":"","dir_typename":"lipin","usecoin":"0"},{"catid":"135","catname":"本地名站","if_view":"2","color":"","dir_typename":"mingzhan","usecoin":"0"},{"catid":"245","catname":"其它商务服务","if_view":"2","color":"","dir_typename":"qitashangwu","usecoin":"0"}]}]
      * msg :
-     * debug : {"stack":["[#0 - 0ms - PHALAPI_INIT]/datas/wwwroot/api/public/index.php(8)","[#1 - 0.4ms - PHALAPI_RESPONSE]/datas/wwwroot/api/vendor/phalapi/kernal/src/PhalApi.php(46)","[#2 - 4.9ms - PHALAPI_FINISH]/datas/wwwroot/api/vendor/phalapi/kernal/src/PhalApi.php(74)"],"sqls":["[1 - 0.36ms]SELECT * FROM my_category WHERE (parentid = 0);"],"version":"2.5.0"}
      */
 
     private int ret;
     private String msg;
-    private DebugBean debug;
     private List<DataBean> data;
 
     public int getRet() {
@@ -34,14 +32,6 @@ public class MainCategoryBean implements Serializable {
         this.msg = msg;
     }
 
-    public DebugBean getDebug() {
-        return debug;
-    }
-
-    public void setDebug(DebugBean debug) {
-        this.debug = debug;
-    }
-
     public List<DataBean> getData() {
         return data;
     }
@@ -50,88 +40,26 @@ public class MainCategoryBean implements Serializable {
         this.data = data;
     }
 
-    public static class DebugBean {
+    public static class DataBean implements Serializable{
         /**
-         * stack : ["[#0 - 0ms - PHALAPI_INIT]/datas/wwwroot/api/public/index.php(8)","[#1 - 0.4ms - PHALAPI_RESPONSE]/datas/wwwroot/api/vendor/phalapi/kernal/src/PhalApi.php(46)","[#2 - 4.9ms - PHALAPI_FINISH]/datas/wwwroot/api/vendor/phalapi/kernal/src/PhalApi.php(74)"]
-         * sqls : ["[1 - 0.36ms]SELECT * FROM my_category WHERE (parentid = 0);"]
-         * version : 2.5.0
-         */
-
-        private String version;
-        private List<String> stack;
-        private List<String> sqls;
-
-        public String getVersion() {
-            return version;
-        }
-
-        public void setVersion(String version) {
-            this.version = version;
-        }
-
-        public List<String> getStack() {
-            return stack;
-        }
-
-        public void setStack(List<String> stack) {
-            this.stack = stack;
-        }
-
-        public List<String> getSqls() {
-            return sqls;
-        }
-
-        public void setSqls(List<String> sqls) {
-            this.sqls = sqls;
-        }
-    }
-
-    public static class DataBean {
-        /**
-         * catid : 1
-         * if_view : 2
+         * catid : 3
+         * catname : 房屋租售
          * color :
-         * catname : 二手转让
-         * icon : http://www.jumin.cn/template/default/images/index/icon_ershou.gif
+         * if_view : 2
+         * dir_typename : fang
          * usecoin : 0
-         * title : 【{city}二手网_二手货市场_跳蚤市场_闲置旧货买卖】
-         * keywords : {city}二手网,二手货市场,旧货市场
-         * description : 聚民网{city}二手物品交易频道为您提供发布和查找各种二手手机、二手家具/家电、二手电脑转让信息。买卖二手旧货物品，聚民网是最大的网上{city}二手市场
-         * parentid : 0
-         * modid : 2
-         * catorder : 2
-         * if_upimg : 1
-         * if_mappoint : 0
-         * dir_type : 4
-         * dir_typename : ershou
-         * template : list
-         * template_info : info
-         * html_dir : /ershou/
-         * htmlpath :
-         * gid : 1
+         * icon : http://www.jumin.cn/template/default/images/index/icon_fang.gif
+         * children : [{"catid":"41","catname":" 租房/出租","if_view":"2","color":"","dir_typename":"chuzu","usecoin":"0"},{"catid":"42","catname":"日租/短租","if_view":"2","color":"","dir_typename":"duanzu","usecoin":"0"},{"catid":"43","catname":"二手房出售","if_view":"2","color":"","dir_typename":"ershoufang","usecoin":"0"},{"catid":"45","catname":"商铺出租","if_view":"2","color":"","dir_typename":"zhuanrang","usecoin":"0"},{"catid":"46","catname":"商铺出售","if_view":"2","color":"","dir_typename":"shangpu","usecoin":"0"},{"catid":"251","catname":"商铺转让","if_view":"2","color":"","dir_typename":"shangpuzhuanrang","usecoin":"0"},{"catid":"47","catname":"写字楼出租","if_view":"2","color":"","dir_typename":"xieziloucz","usecoin":"0"},{"catid":"48","catname":"写字楼出售","if_view":"2","color":"","dir_typename":"xieziloucs","usecoin":"0"},{"catid":"49","catname":"厂房/仓库/土地","if_view":"2","color":"","dir_typename":"changfang","usecoin":"0"},{"catid":"50","catname":"求租/求购","if_view":"2","color":"","dir_typename":"qiufang","usecoin":"0"}]
          */
 
         private String catid;
-        private String if_view;
-        private String color;
         private String catname;
-        private String icon;
-        private String usecoin;
-        private String title;
-        private String keywords;
-        private String description;
-        private String parentid;
-        private String modid;
-        private String catorder;
-        private String if_upimg;
-        private String if_mappoint;
-        private String dir_type;
+        private String color;
+        private String if_view;
         private String dir_typename;
-        private String template;
-        private String template_info;
-        private String html_dir;
-        private String htmlpath;
-        private String gid;
+        private String usecoin;
+        private String icon;
+        private List<ChildrenBean> children;
 
         public String getCatid() {
             return catid;
@@ -139,22 +67,6 @@ public class MainCategoryBean implements Serializable {
 
         public void setCatid(String catid) {
             this.catid = catid;
-        }
-
-        public String getIf_view() {
-            return if_view;
-        }
-
-        public void setIf_view(String if_view) {
-            this.if_view = if_view;
-        }
-
-        public String getColor() {
-            return color;
-        }
-
-        public void setColor(String color) {
-            this.color = color;
         }
 
         public String getCatname() {
@@ -165,92 +77,20 @@ public class MainCategoryBean implements Serializable {
             this.catname = catname;
         }
 
-        public String getIcon() {
-            return icon;
+        public String getColor() {
+            return color;
         }
 
-        public void setIcon(String icon) {
-            this.icon = icon;
+        public void setColor(String color) {
+            this.color = color;
         }
 
-        public String getUsecoin() {
-            return usecoin;
+        public String getIf_view() {
+            return if_view;
         }
 
-        public void setUsecoin(String usecoin) {
-            this.usecoin = usecoin;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getKeywords() {
-            return keywords;
-        }
-
-        public void setKeywords(String keywords) {
-            this.keywords = keywords;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
-        public String getParentid() {
-            return parentid;
-        }
-
-        public void setParentid(String parentid) {
-            this.parentid = parentid;
-        }
-
-        public String getModid() {
-            return modid;
-        }
-
-        public void setModid(String modid) {
-            this.modid = modid;
-        }
-
-        public String getCatorder() {
-            return catorder;
-        }
-
-        public void setCatorder(String catorder) {
-            this.catorder = catorder;
-        }
-
-        public String getIf_upimg() {
-            return if_upimg;
-        }
-
-        public void setIf_upimg(String if_upimg) {
-            this.if_upimg = if_upimg;
-        }
-
-        public String getIf_mappoint() {
-            return if_mappoint;
-        }
-
-        public void setIf_mappoint(String if_mappoint) {
-            this.if_mappoint = if_mappoint;
-        }
-
-        public String getDir_type() {
-            return dir_type;
-        }
-
-        public void setDir_type(String dir_type) {
-            this.dir_type = dir_type;
+        public void setIf_view(String if_view) {
+            this.if_view = if_view;
         }
 
         public String getDir_typename() {
@@ -261,44 +101,94 @@ public class MainCategoryBean implements Serializable {
             this.dir_typename = dir_typename;
         }
 
-        public String getTemplate() {
-            return template;
+        public String getUsecoin() {
+            return usecoin;
         }
 
-        public void setTemplate(String template) {
-            this.template = template;
+        public void setUsecoin(String usecoin) {
+            this.usecoin = usecoin;
         }
 
-        public String getTemplate_info() {
-            return template_info;
+        public String getIcon() {
+            return icon;
         }
 
-        public void setTemplate_info(String template_info) {
-            this.template_info = template_info;
+        public void setIcon(String icon) {
+            this.icon = icon;
         }
 
-        public String getHtml_dir() {
-            return html_dir;
+        public List<ChildrenBean> getChildren() {
+            return children;
         }
 
-        public void setHtml_dir(String html_dir) {
-            this.html_dir = html_dir;
+        public void setChildren(List<ChildrenBean> children) {
+            this.children = children;
         }
 
-        public String getHtmlpath() {
-            return htmlpath;
-        }
+        public static class ChildrenBean implements Serializable{
+            /**
+             * catid : 41
+             * catname :  租房/出租
+             * if_view : 2
+             * color :
+             * dir_typename : chuzu
+             * usecoin : 0
+             */
 
-        public void setHtmlpath(String htmlpath) {
-            this.htmlpath = htmlpath;
-        }
+            private String catid;
+            private String catname;
+            private String if_view;
+            private String color;
+            private String dir_typename;
+            private String usecoin;
 
-        public String getGid() {
-            return gid;
-        }
+            public String getCatid() {
+                return catid;
+            }
 
-        public void setGid(String gid) {
-            this.gid = gid;
+            public void setCatid(String catid) {
+                this.catid = catid;
+            }
+
+            public String getCatname() {
+                return catname;
+            }
+
+            public void setCatname(String catname) {
+                this.catname = catname;
+            }
+
+            public String getIf_view() {
+                return if_view;
+            }
+
+            public void setIf_view(String if_view) {
+                this.if_view = if_view;
+            }
+
+            public String getColor() {
+                return color;
+            }
+
+            public void setColor(String color) {
+                this.color = color;
+            }
+
+            public String getDir_typename() {
+                return dir_typename;
+            }
+
+            public void setDir_typename(String dir_typename) {
+                this.dir_typename = dir_typename;
+            }
+
+            public String getUsecoin() {
+                return usecoin;
+            }
+
+            public void setUsecoin(String usecoin) {
+                this.usecoin = usecoin;
+            }
         }
     }
 }

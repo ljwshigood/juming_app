@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zzteck.jumin.R;
-import com.zzteck.jumin.bean.ChildCategoryBean;
-import com.zzteck.jumin.bean.Favorite;
 import com.zzteck.jumin.bean.MainCategoryBean;
 import com.zzteck.jumin.ui.business.CategoryListActivity;
 
@@ -25,15 +23,15 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
     private Context mContext;
 
-    private List<ChildCategoryBean.DataBean> mFavoriteList;
+    private List<MainCategoryBean.DataBean.ChildrenBean> mCategoryList;
 
-    public CategoryListAdapter(Context context, List<ChildCategoryBean.DataBean> list) {
+    public CategoryListAdapter(Context context, List<MainCategoryBean.DataBean.ChildrenBean> list) {
         this.mContext = context;
-        this.mFavoriteList = list;
+        this.mCategoryList = list;
     }
 
-    public void notifyCategoryList(List<ChildCategoryBean.DataBean> mFavoriteList){
-        this.mFavoriteList = mFavoriteList ;
+    public void notifyCategoryList(List<MainCategoryBean.DataBean.ChildrenBean> mFavoriteList){
+        this.mCategoryList = mFavoriteList ;
         notifyDataSetChanged();
     }
 
@@ -45,7 +43,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
     @Override
     public void onBindViewHolder(CategoryListAdapter.ViewHolder holder, int position) {
-        holder.name.setText(mFavoriteList.get(position).getChildren().get(0).getCatname());
+        holder.name.setText(mCategoryList.get(position).getCatname());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,7 +55,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
     @Override
     public int getItemCount() {
-        return mFavoriteList == null ? 0 : mFavoriteList.size();
+        return mCategoryList == null ? 0 : mCategoryList.size();
 
     }
 
