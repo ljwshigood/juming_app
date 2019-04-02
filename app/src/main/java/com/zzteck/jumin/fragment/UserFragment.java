@@ -140,6 +140,10 @@ public class UserFragment extends Fragment implements OnClickListener {
         }
     } ;
 
+
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mMainView = inflater.inflate(R.layout.fragment_user, container, false);

@@ -101,6 +101,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.usercenter.MemberUpgradeDetailActivity"></activity>
 
         <activity android:name=".ui.business.ReleaseCategoryActivity"></activity>
         <activity android:name=".ui.usercenter.PersionIdentityActivity"></activity>
