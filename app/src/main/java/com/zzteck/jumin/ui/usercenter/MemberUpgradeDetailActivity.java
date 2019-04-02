@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.MemeberAdapter;
 import com.zzteck.jumin.app.App;
@@ -25,7 +26,7 @@ import java.util.List;
 
 public class MemberUpgradeDetailActivity extends BaseActivity implements OnClickListener{
 
-
+	private MaterialSpinner mSpinnerUserType ;
 
 	private void initView() {
 
