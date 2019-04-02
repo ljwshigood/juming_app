@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:paddingBottom="15dp"
-    android:paddingTop="15dp">
+    android:paddingTop="15dp"
+    android:paddingLeft="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="fitXY" />
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            tools:text="江兵华府三房两厅两位一厨"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            tools:text="江兵华府三房两厅两位一厨" />
 
     </LinearLayout>
 

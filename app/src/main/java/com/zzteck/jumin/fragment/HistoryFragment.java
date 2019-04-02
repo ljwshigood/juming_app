@@ -14,15 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.HomeCategoryAdapter;
 import com.zzteck.jumin.adapter.MessageAdapter;
 import com.zzteck.jumin.bean.MainCategoryBean;
-import com.zzteck.jumin.bean.User;
-import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.NormalDecoration;
@@ -164,20 +161,6 @@ public class HistoryFragment extends Fragment implements View.OnClickListener{
                 fragment.setArguments(bundle);
 
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.framelayout,fragment).commit();
-
-
-                /*int first = mSmoothScrollLayoutManager.findFirstVisibleItemPosition() ;
-                int last = mSmoothScrollLayoutManager.findLastVisibleItemPosition() ;
-
-                if(mRecyleView.getChildLayoutPosition(view) == first){
-
-                    mRecyleView.smoothScrollToPosition(mRecyleView.getChildLayoutPosition(view) - 1);
-
-                }else if(last == mRecyleView.getChildLayoutPosition(view)){
-
-                    mRecyleView.smoothScrollToPosition(mRecyleView.getChildLayoutPosition(view)+1);
-
-                }*/
 
             }
 

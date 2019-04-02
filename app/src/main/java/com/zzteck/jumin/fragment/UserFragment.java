@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -68,7 +69,11 @@ public class UserFragment extends Fragment implements OnClickListener {
 
     private CircleImageView mCvPhoto ;
 
+    private LinearLayout mLLEditor ;
+
     private void initView(View view) {
+
+        mLLEditor = view.findViewById(R.id.ll_modify_user_info) ;
 
         mCvPhoto = view.findViewById(R.id.iv_user_icon) ;
         mTvNickName = view.findViewById(R.id.tv_nick_name) ;
@@ -113,7 +118,11 @@ public class UserFragment extends Fragment implements OnClickListener {
                     .into(mCvPhoto);
 
             mTvNickName.setText(userList.get(0).getUsername() +"");
+            mLLEditor.setVisibility(View.VISIBLE);
 
+        }else{
+            mTvNickName.setText("点击登陆");
+            mLLEditor.setVisibility(View.GONE);
         }
     }
 

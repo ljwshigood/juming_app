@@ -5,11 +5,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.Favorite;
 import com.zzteck.jumin.bean.MainCategoryBean;
+import com.zzteck.jumin.utils.GlideCircleTransform;
 
 import java.util.List;
 
@@ -54,12 +58,23 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
                 }
             }
         });
+
+
         return holder;
     }
 
     @Override
     public void onBindViewHolder(HomeCategoryAdapter.ViewHolder holder, int position) {
         holder.name.setText(mFavoriteList.get(position).getCatname());
+
+        Glide.with(mContext)
+                .load(mFavoriteList.get(position).getIcon())
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
+                .crossFade(300)
+                .transform(new GlideCircleTransform(mContext))
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(holder.mIv);
     }
 
     @Override
@@ -71,9 +86,10 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView name;
-
+        private ImageView mIv ;
         public ViewHolder(View itemView) {
             super(itemView);
+            mIv = itemView.findViewById(R.id.iv) ;
             name = itemView.findViewById(R.id.tv_title);
         }
     }
