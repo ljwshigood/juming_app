@@ -20,8 +20,9 @@
 
             <ImageView
                 android:id="@+id/iv_memeber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="90dp"
+                android:layout_height="124dp"
+                android:scaleType="fitXY" />
 
 
         </LinearLayout>
@@ -30,35 +31,66 @@
             android:id="@+id/ll_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="80"
+                android:layout_weight="60"
+                android:gravity="center_vertical"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:text="升级时长"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="20"
+                android:layout_weight="40"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/sp_user_type"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
 
 
         </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="你当前的会员级别：普通会员"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="金币余额：667"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,19 +99,15 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/ll_org"
+                android:id="@+id/ll_complete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/pic_yingyezhizhao" />
 
                 <LinearLayout
-                    android:layout_width="70dp"
-                    android:layout_height="30dp"
+                    android:layout_width="200dp"
+                    android:layout_height="45dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/bg_red_rec_press"
                     android:gravity="center"
