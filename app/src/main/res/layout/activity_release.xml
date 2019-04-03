@@ -111,7 +111,7 @@
                     android:layout_height="60dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:background="@drawable/bg_btn_rec_nomal" />
+                    android:background="@drawable/bg_btn_rec_press" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -154,13 +154,15 @@
                 android:id="@+id/ll_category"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:background="@android:color/white"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="80"
+                    android:layout_weight="70"
                     android:orientation="horizontal">
 
                     <TextView
@@ -180,7 +182,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="20"
+                    android:layout_weight="30"
                     android:orientation="horizontal">
 
                     <EditText
@@ -198,13 +200,15 @@
                 android:id="@+id/ll_qone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:background="@android:color/white"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="80"
+                    android:layout_weight="70"
                     android:orientation="horizontal">
 
                     <TextView
@@ -224,7 +228,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="20"
+                    android:layout_weight="30"
                     android:orientation="horizontal">
 
                     <EditText
@@ -242,13 +246,15 @@
                 android:id="@+id/ll_place"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:background="@android:color/white"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="80"
+                    android:layout_weight="70"
                     android:orientation="horizontal">
 
                     <TextView
@@ -268,7 +274,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="20"
+                    android:layout_weight="30"
                     android:orientation="horizontal">
 
                     <EditText
@@ -285,13 +291,15 @@
                 android:id="@+id/ll_contact"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:background="@android:color/white"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="80"
+                    android:layout_weight="70"
                     android:orientation="horizontal">
 
                     <TextView
@@ -311,7 +319,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="20"
+                    android:layout_weight="30"
                     android:orientation="horizontal">
 
                     <EditText
@@ -330,6 +338,9 @@
                 android:id="@+id/ll_privacity"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical"
                 android:background="@android:color/white"
                 android:orientation="horizontal">
 
