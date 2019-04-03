@@ -13,17 +13,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.zzteck.jumin.R;
-import com.zzteck.jumin.adapter.MainCategoryAdapter;
 import com.zzteck.jumin.adapter.ComFragmentAdapter;
-import com.zzteck.jumin.bean.ChapterInfo;
-import com.zzteck.jumin.bean.CourseInfo;
-import com.zzteck.jumin.bean.SectionInfo;
 import com.zzteck.jumin.fragment.RecommandFragment;
 import com.zzteck.jumin.utils.ScreenUtil;
 import com.zzteck.jumin.view.ColorFlipPagerTitleView;
@@ -46,7 +41,6 @@ public class MainCategoryActivity extends BaseActivity implements View.OnClickLi
 
 	private RecyclerView mRecyclerView;
 
-	private CourseInfo mCourseInfo;
 
 	private Toolbar toolbar ;
 
@@ -113,7 +107,7 @@ public class MainCategoryActivity extends BaseActivity implements View.OnClickLi
 
 	private void initData(){
 
-		mCourseInfo = new CourseInfo();
+		/*mCourseInfo = new CourseInfo();
 		mCourseInfo.name = "标题";
 		for(int i = 0; i < 4; i++){
 			ChapterInfo chapterInfo = new ChapterInfo();
@@ -154,7 +148,7 @@ public class MainCategoryActivity extends BaseActivity implements View.OnClickLi
 				}
 			}
 			mCourseInfo.chapterInfos.add(chapterInfo);
-		}
+		}*/
 	}
 
 	private RecommandFragment mRecomandFragment ;
@@ -173,7 +167,7 @@ public class MainCategoryActivity extends BaseActivity implements View.OnClickLi
 
 	private JudgeNestedScrollView scrollView;
 
-	private MainCategoryAdapter mMainCategoryAdapter;
+	//private MainCategoryAdapter mMainCategoryAdapter;
 
 	private int mScrollY = 0;
 
@@ -196,7 +190,7 @@ public class MainCategoryActivity extends BaseActivity implements View.OnClickLi
 		toolbar = findViewById(R.id.home_toolbar) ;
 		mRecyclerView = findViewById(R.id.rv_expand);
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-		mMainCategoryAdapter = new MainCategoryAdapter(this,mCourseInfo);
+	/*	mMainCategoryAdapter = new MainCategoryAdapter(this,mCourseInfo);
 		mRecyclerView.setAdapter(mMainCategoryAdapter);
 		mMainCategoryAdapter.setOnItemClickListener(new MainCategoryAdapter.OnRecyclerViewItemClickListener() {
 			@Override
@@ -234,7 +228,7 @@ public class MainCategoryActivity extends BaseActivity implements View.OnClickLi
 			}
 		});
 
-		mRecyclerView.setLayoutManager(manager);
+		mRecyclerView.setLayoutManager(manager);*/
 
 		toolbar.post(new Runnable() {
 			@Override

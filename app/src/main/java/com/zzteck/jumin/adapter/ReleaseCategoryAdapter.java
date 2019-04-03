@@ -12,9 +12,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.BaseInfo;
-import com.zzteck.jumin.bean.ChapterInfo;
-import com.zzteck.jumin.bean.CourseInfo;
-import com.zzteck.jumin.bean.SectionInfo;
+import com.zzteck.jumin.bean.MainCategoryBean;
+import com.zzteck.jumin.utils.GlideCircleTransform;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,20 +29,18 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
     public static final int VIEW_TYPE_CHAPTER = 1;
     public static final int VIEW_TYPE_SECTION = 2;
 
-    //传进来的课程信息
-    private CourseInfo courseInfo;
+    private MainCategoryBean mainCategoryBean;
 
-    //显示的数据集
     private List<BaseInfo> dataInfos = new ArrayList<>();
-    //当前展开的课时，-1代表没有任何展开
+
     private int curExpandChapterIndex = -1;
 
     private Context mContext ;
 
-    public ReleaseCategoryAdapter(Context context, CourseInfo _courseInfo) {
-        this.courseInfo = _courseInfo;
+    public ReleaseCategoryAdapter(Context context, MainCategoryBean mainCategoryBean) {
+        this.mainCategoryBean = mainCategoryBean;
         this.mContext = context ;
-        for(BaseInfo info : courseInfo.chapterInfos){
+        for(BaseInfo info : this.mainCategoryBean.getData()){
             dataInfos.add(info);
         }
     }
@@ -67,19 +64,20 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
             itemHolder.itemView.setTag(position);
             itemHolder.ivArrow.setTag(position);
 
-            ChapterInfo chapterInfo = (ChapterInfo) dataInfos.get(position);
+            MainCategoryBean.DataBean chapterInfo = (MainCategoryBean.DataBean) dataInfos.get(position);
 
-            itemHolder.mTvTitle.setText(chapterInfo.name);
+            itemHolder.mTvTitle.setText(chapterInfo.getCatname());
 
             Glide.with(mContext)
-                    .load(chapterInfo.res)
+                    .load(chapterInfo.getIcon())
                     .placeholder(R.mipmap.ic_launcher)
                     .error(R.mipmap.ic_launcher)
                     .crossFade(300)
+                    .transform(new GlideCircleTransform(mContext))
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .into(itemHolder.mIvTitleIcon);
 
-            if(chapterInfo.sectionInfos.size() > 0){
+            if(chapterInfo.getChildren().size() > 0){
                 itemHolder.ivArrow.setVisibility(View.VISIBLE);
                 if(curExpandChapterIndex == position){
                     itemHolder.ivArrow.setImageResource(R.mipmap.icon_xiala_nor);
@@ -94,8 +92,8 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
             ItemSectionHolder itemSectionHolder = (ItemSectionHolder) holder;
             itemSectionHolder.tvName.setTag(position);
 
-            SectionInfo sectionInfo = (SectionInfo) dataInfos.get(position);
-            itemSectionHolder.tvName.setText(sectionInfo.name);
+            MainCategoryBean.DataBean.ChildrenBean sectionInfo = (MainCategoryBean.DataBean.ChildrenBean) dataInfos.get(position);
+            itemSectionHolder.tvName.setText(sectionInfo.getCatname());
         }
     }
 
@@ -133,7 +131,7 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
 
     @Override
     public int getItemCount() {
-        if(dataInfos == null){
+        if(mainCategoryBean == null  || mainCategoryBean.getData() == null){
             return 0;
         }else{
             return dataInfos.size();
@@ -142,9 +140,9 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
 
     @Override
     public int getItemViewType(int position) {
-        if(dataInfos.get(position) instanceof ChapterInfo){
+        if(dataInfos.get(position) instanceof MainCategoryBean.DataBean){
             return VIEW_TYPE_CHAPTER;
-        }else if(dataInfos.get(position) instanceof SectionInfo){
+        }else if(dataInfos.get(position) instanceof MainCategoryBean.DataBean.ChildrenBean){
             return VIEW_TYPE_SECTION;
         }
         return super.getItemViewType(position);
@@ -203,14 +201,15 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
             int chapterIndex = -1;
             int sectionIndex = -1;
             if(getItemViewType(position) == VIEW_TYPE_CHAPTER){
-                ChapterInfo chapterInfo = (ChapterInfo) dataInfos.get(position);
-                chapterIndex = chapterInfo.chapterIndex;
+                MainCategoryBean.DataBean chapterInfo = (MainCategoryBean.DataBean) dataInfos.get(position);
+                //chapterIndex = chapterInfo.chapterIndex;
+                chapterIndex = position ;
                 sectionIndex = -1;
                 if(v.getId() == R.id.iv_arrow){
                     viewName = ViewName.CHAPTER_ITEM_PRACTISE;
                 }else{
                     viewName = ViewName.CHAPTER_ITEM;
-                    if(chapterInfo.sectionInfos.size() > 0){
+                    if(chapterInfo.getChildren().size() > 0){
                         if(chapterIndex == curExpandChapterIndex){
                             narrow(curExpandChapterIndex);
                         }else{
@@ -220,10 +219,11 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
                     }
                 }
             }else if(getItemViewType(position) == VIEW_TYPE_SECTION){
-                SectionInfo sectionInfo = (SectionInfo) dataInfos.get(position);
+                MainCategoryBean.DataBean.ChildrenBean sectionInfo = (MainCategoryBean.DataBean.ChildrenBean) dataInfos.get(position);
                 viewName = ViewName.SECTION_ITEM;
-                chapterIndex = sectionInfo.chapterIndex;
-                sectionIndex = sectionInfo.sectionIndex;
+
+               /* chapterIndex = sectionInfo.chapterIndex;
+                sectionIndex = sectionInfo.sectionIndex;*/
             }
             mOnItemClickListener.onClick(v, viewName, chapterIndex, sectionIndex);
         }
@@ -234,9 +234,10 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
      * @param chapterIndex
      */
     private void expand(int chapterIndex){
-        dataInfos.addAll(chapterIndex+1, courseInfo.chapterInfos.get(chapterIndex).sectionInfos);
+        dataInfos.addAll(chapterIndex+1, mainCategoryBean.getData().get(chapterIndex).getChildren());
         curExpandChapterIndex = chapterIndex;
-        notifyItemRangeInserted(chapterIndex+1, courseInfo.chapterInfos.get(chapterIndex).sectionInfos.size());
+       // notifyDataSetChanged();
+        notifyItemRangeInserted(chapterIndex+1, mainCategoryBean.getData().get(chapterIndex).getChildren().size());
         notifyItemRangeChanged(0, getItemCount(), "change_position");
     }
 
@@ -248,10 +249,10 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
         if(chapterIndex != -1){
             int removeStart = chapterIndex + 1;
             int removeCount = 0;
-            for(int i=removeStart; i<dataInfos.size() && getItemViewType(i) == VIEW_TYPE_SECTION; i++){
+            for(int i=removeStart; i< dataInfos.size() && getItemViewType(i) == VIEW_TYPE_SECTION; i++){
                 removeCount++;
             }
-            dataInfos.removeAll(courseInfo.chapterInfos.get(chapterIndex).sectionInfos);
+            dataInfos.removeAll(mainCategoryBean.getData().get(chapterIndex).getChildren());
             curExpandChapterIndex = -1;
             notifyItemRangeRemoved(removeStart, removeCount);
             notifyItemRangeChanged(0, getItemCount(), "change_position");

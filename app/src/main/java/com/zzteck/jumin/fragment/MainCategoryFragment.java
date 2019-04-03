@@ -183,7 +183,7 @@ public class MainCategoryFragment extends Fragment implements View.OnClickListen
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mMainView = inflater.inflate(R.layout.fragment_history, container, false);
+        mMainView = inflater.inflate(R.layout.fragment_main_category, container, false);
         mContext = getActivity();
         initView(mMainView);
 

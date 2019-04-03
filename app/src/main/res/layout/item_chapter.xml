@@ -10,14 +10,15 @@
         android:id="@+id/ll_title_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="80"
-        android:gravity="center"
+        android:layout_weight="40"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/iv_title_info"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginLeft="15dp"
             android:layout_gravity="center_vertical"
             android:src="@mipmap/icon_chushou_dalei" />
 
@@ -35,7 +36,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="40"
+        android:layout_weight="80"
         android:orientation="horizontal">
 
 

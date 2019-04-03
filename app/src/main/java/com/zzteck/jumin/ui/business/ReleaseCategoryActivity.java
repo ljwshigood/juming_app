@@ -11,13 +11,23 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.zzteck.jumin.R;
-import com.zzteck.jumin.adapter.MainCategoryAdapter;
 import com.zzteck.jumin.adapter.ReleaseCategoryAdapter;
-import com.zzteck.jumin.bean.ChapterInfo;
-import com.zzteck.jumin.bean.CourseInfo;
-import com.zzteck.jumin.bean.SectionInfo;
+import com.zzteck.jumin.bean.MainCategoryBean;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
+import com.zzteck.jumin.utils.Constants;
+import com.zzteck.jumin.utils.UtilsTools;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class ReleaseCategoryActivity extends BaseActivity implements View.OnClickListener {
 	
@@ -39,84 +49,53 @@ public class ReleaseCategoryActivity extends BaseActivity implements View.OnClic
 
 	private ReleaseCategoryAdapter mReleaseCategoryAdapter;
 
-	private CourseInfo mCourseInfo;
-
-	private int[] res = new int[]{R.mipmap.icon_cheliang_gengduo,
-			R.mipmap.icon_chongwu_gengduo,
-			R.mipmap.icon_ershou_gengduo,
-			R.mipmap.icon_fangwu_gengduo,
-			R.mipmap.icon_jianzhi_gengduo,
-			R.mipmap.icon_jiaoyu_gengduo,
-			R.mipmap.icon_jiaoyou_gengduo,
-			R.mipmap.icon_qiuzhi_gengduo,
-			R.mipmap.icon_quanzhi_gengduo,
-			R.mipmap.icon_shangjia_gengduo,
-			R.mipmap.icon_shenghuo_gengduo} ;
-
-	private String[] resInfo = new String[]{"车辆",
-			"宠物",
-			"二手",
-			"房屋",
-			"兼职",
-			"教育",
-			"交友",
-			"求职",
-			"全职",
-			"商家",
-			"生活"} ;
+	/*private CourseInfo mCourseInfo;*/
 
 
-	private void initData(){
+	private void getMainCategoryList(){
 
-		mCourseInfo = new CourseInfo();
-		mCourseInfo.name = "标题";
-		for(int i = 0; i < 11; i++){
-			ChapterInfo chapterInfo = new ChapterInfo();
-			chapterInfo.name = resInfo[i];
-			chapterInfo.res = res[i] ;
-			chapterInfo.chapterIndex = i;
-			if(i==0){
-				for(int j = 0; j < 2; j++){
-					SectionInfo sectionInfo = new SectionInfo();
-					sectionInfo.name = "商铺单租";
-					sectionInfo.chapterIndex = i;
-					sectionInfo.sectionIndex = j;
-					chapterInfo.sectionInfos.add(sectionInfo);
-				}
-			}else if(i==1){
-				for(int j = 0; j < 3; j++){
-					SectionInfo sectionInfo = new SectionInfo();
-					sectionInfo.name = "商铺单租";
-					sectionInfo.chapterIndex = i;
-					sectionInfo.sectionIndex = j;
-					chapterInfo.sectionInfos.add(sectionInfo);
-				}
-			}else if(i==2){
-				for (int j = 0; j < 6; j++) {
-					SectionInfo sectionInfo = new SectionInfo();
-					sectionInfo.name = "商铺单租";
-					sectionInfo.chapterIndex = i;
-					sectionInfo.sectionIndex = j;
-					chapterInfo.sectionInfos.add(sectionInfo);
-				}
-			}else{
-				for (int j = 0; j < 4; j++) {
-					SectionInfo sectionInfo = new SectionInfo();
-					sectionInfo.name = "商铺单租";
-					sectionInfo.chapterIndex = i;
-					sectionInfo.sectionIndex = j;
-					chapterInfo.sectionInfos.add(sectionInfo);
-				}
+		Map<String, String> map = new HashMap<>();
+		map.put("s", "App.Category.Lists");
+
+		map.put("sign", UtilsTools.getSign(mContext,"jumin_"+"App.Category.Lists"));
+
+		OkHttpClient client = new OkHttpClient();
+		Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
+		Call call = client.newCall(request);
+		call.enqueue(new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+
 			}
-			mCourseInfo.chapterInfos.add(chapterInfo);
+
+			@Override
+			public void onResponse(Call call, final Response response) throws IOException {
+
+				final String responseStr = response.body().string();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						String message = new String(responseStr);
+						Gson gson = new Gson();
+						MainCategoryBean bean = gson.fromJson(message,MainCategoryBean.class) ;
+						initData(bean);
+					}
+				});
+
+			}
+		});
+	}
+
+	private void initData(final MainCategoryBean bean){
+
+		if(bean == null){
+			return ;
 		}
-
-
 
 		mTvMainInfo.setText("发布");
 
 		mRVCate.setLayoutManager(new LinearLayoutManager(this));
-		mReleaseCategoryAdapter = new ReleaseCategoryAdapter(this,mCourseInfo);
+		mReleaseCategoryAdapter = new ReleaseCategoryAdapter(this,bean);
 		mRVCate.setAdapter(mReleaseCategoryAdapter);
 
 		mReleaseCategoryAdapter.setOnItemClickListener(new ReleaseCategoryAdapter.OnRecyclerViewItemClickListener() {
@@ -124,8 +103,8 @@ public class ReleaseCategoryActivity extends BaseActivity implements View.OnClic
 			public void onClick(View view, ReleaseCategoryAdapter.ViewName viewName, int chapterIndex, int sectionIndex) {
 				switch (viewName){
 					case CHAPTER_ITEM:
-						if(mCourseInfo.chapterInfos.get(chapterIndex).sectionInfos.size() > 0){
-							if(chapterIndex + 1 == mCourseInfo.chapterInfos.size()){
+						if(bean.getData().get(chapterIndex).getChildren().size() > 0){
+							if(chapterIndex + 1 == bean.getData().size()){
 								//如果是最后一个，则滚动到展开的最后一个item
 								mRVCate.smoothScrollToPosition(mReleaseCategoryAdapter.getItemCount());
 							}
@@ -151,12 +130,12 @@ public class ReleaseCategoryActivity extends BaseActivity implements View.OnClic
 
 		//以下是对布局进行控制，让课时占据一行，小节每四个占据一行，结果就是相当于一个ListView嵌套GridView的效果
 
-		final GridLayoutManager manager = new GridLayoutManager(this, 4);
+		final GridLayoutManager manager = new GridLayoutManager(this, 3);
 
 		manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
 			@Override
 			public int getSpanSize(int position) {
-				return mReleaseCategoryAdapter.getItemViewType(position) == MainCategoryAdapter.VIEW_TYPE_CHAPTER ? 4 : 1;
+				return mReleaseCategoryAdapter.getItemViewType(position) == ReleaseCategoryAdapter.VIEW_TYPE_CHAPTER ? 3 : 1;
 			}
 		});
 
@@ -170,7 +149,8 @@ public class ReleaseCategoryActivity extends BaseActivity implements View.OnClic
 		setContentView(R.layout.activity_release_cat);
 		mContext = this ;
 		initView() ;
-		initData();
+		/*initData();*/
+		getMainCategoryList() ;
 	}
 
 	@Override
