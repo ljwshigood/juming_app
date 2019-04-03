@@ -37,7 +37,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class HistoryFragment extends Fragment implements View.OnClickListener{
+public class MainCategoryFragment extends Fragment implements View.OnClickListener{
 
 
     private RecyclerView mRecyleView;

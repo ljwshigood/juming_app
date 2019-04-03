@@ -1,41 +1,17 @@
 package com.zzteck.jumin.ui.mainui;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.tbruyelle.rxpermissions2.Permission;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
-import com.zzteck.jumin.db.UserDAO;
-import com.zzteck.jumin.fragment.HistoryFragment;
-import com.zzteck.jumin.fragment.HomeFragment;
-import com.zzteck.jumin.fragment.UserFragment;
-import com.zzteck.jumin.fragment.WJConversationListFragment;
 import com.zzteck.jumin.service.LocationService;
-import com.zzteck.jumin.ui.business.ReleaseActivity;
-import com.zzteck.jumin.ui.usercenter.LoginActivity;
-import com.zzteck.zzview.WJViewPaper;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import io.reactivex.functions.Consumer;
 
 
 public class WelcomeActivity extends BaseActivity implements OnClickListener{

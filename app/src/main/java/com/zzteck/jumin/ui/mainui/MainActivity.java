@@ -21,10 +21,9 @@ import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.fragment.HomeFragment;
-import com.zzteck.jumin.fragment.HistoryFragment;
+import com.zzteck.jumin.fragment.MainCategoryFragment;
 import com.zzteck.jumin.fragment.UserFragment;
 import com.zzteck.jumin.fragment.WJConversationListFragment;
-import com.zzteck.jumin.ui.business.ReleaseActivity;
 import com.zzteck.jumin.ui.business.ReleaseCategoryActivity;
 import com.zzteck.jumin.ui.usercenter.LoginActivity;
 import com.zzteck.zzview.WJViewPaper;
@@ -112,7 +111,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 		 
 		 mWJViewPaper = findViewById(R.id.content) ;
 		 mHomeFragmemt = new HomeFragment();
-		 mCategoryFragment = new HistoryFragment();
+		 mCategoryFragment = new MainCategoryFragment();
 		 mMessageFragment = new WJConversationListFragment();
 		 mUserFragment = new UserFragment();
 		 
