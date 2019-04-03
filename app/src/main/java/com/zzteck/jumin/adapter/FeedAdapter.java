@@ -48,14 +48,23 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(FeedAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final FeedAdapter.ViewHolder holder, final int position) {
 
         holder.mTvVideo.setText(mFeedBackList.get(position).getFeedBack());
+
+        boolean isSelect = mFeedBackList.get(position).isSelect();
+        if(isSelect){
+            holder.mLLFeedBack.setBackgroundResource(R.drawable.bg_red_rec_press);
+        }else{
+            holder.mLLFeedBack.setBackgroundResource(R.drawable.bg_btn_rec_press);
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                boolean isSelect = mFeedBackList.get(position).isSelect();
+                mFeedBackList.get(position).setSelect(!isSelect);
+                notifyItemChanged(position);
             }
         });
     }
