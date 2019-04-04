@@ -34,11 +34,13 @@
                     android:text="购买金币"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:layout_width="30dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="5" />
+                    android:textSize="16sp"
+                    android:background="@drawable/bg_btn_rec_nomal"
+                    android:hint="5" />
             </LinearLayout>
 
 
@@ -55,7 +57,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text=">" />
+                    android:text=">"
+                    android:visibility="gone" />
 
             </LinearLayout>
 

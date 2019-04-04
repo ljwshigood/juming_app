@@ -100,4 +100,5 @@ dependencies {
     implementation project(':citylib')
     implementation project(':poptabview_lib')
     compile project(path: ':uil')
+    implementation project(':videorecord')
 }
