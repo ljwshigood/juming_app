@@ -231,7 +231,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 			mIvMessage.setImageResource(R.mipmap.icon_xiaoxi_nor);
 
 
-			mWJViewPaper.setCurrentItem(0);
+			mWJViewPaper.setCurrentItem(0,false);
 			break ;
 		case R.id.rl_history:
 			mTvHome.setTextColor(mContext.getResources().getColor(R.color.dark));
@@ -246,7 +246,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 			mIvUser.setImageResource(R.mipmap.icon_wode_nor);
 			mIvMessage.setImageResource(R.mipmap.icon_xiaoxi_nor);
 
-			mWJViewPaper.setCurrentItem(1);
+			mWJViewPaper.setCurrentItem(1,false);
 			break ;
 		case R.id.rl_user:
 			mTvHome.setTextColor(mContext.getResources().getColor(R.color.dark));
@@ -254,7 +254,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 			mTvRelease.setTextColor(mContext.getResources().getColor(R.color.dark));
 			mTvMessage.setTextColor(mContext.getResources().getColor(R.color.dark));
 			mTvUser.setTextColor(mContext.getResources().getColor(R.color.dark_red));
-			mWJViewPaper.setCurrentItem(3);
+			mWJViewPaper.setCurrentItem(3,false);
 
 			mIvHome.setImageResource(R.mipmap.icon_shouye_nor);
 			mIvHistory.setImageResource(R.mipmap.icon_lishi_nor);
@@ -277,7 +277,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 			mIvMessage.setImageResource(R.mipmap.icon_xiaoxi_pre);
 
 
-			mWJViewPaper.setCurrentItem(2);
+			mWJViewPaper.setCurrentItem(2,false);
 			break ;
 
 		default:

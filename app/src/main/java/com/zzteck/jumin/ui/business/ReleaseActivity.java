@@ -11,14 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.icechn.videorecorder.ui.RecordingActivity2;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
+import com.zzteck.jumin.utils.FileUtils;
 
 public class ReleaseActivity extends BaseActivity implements View.OnClickListener {
 	
@@ -31,8 +30,12 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 	private LinearLayout mLLAddVideo ;
 
 	private LinearLayout mLLDaymic ;
+
+	private ImageView mIvVideoThumb ;
 	
 	private void initView(){
+
+		mIvVideoThumb= findViewById(R.id.iv_video_thumb) ;
 		mLLDaymic = findViewById(R.id.ll_daymic) ;
 		mTvMainInfo = findViewById(R.id.tv_main_info) ;
 		mLLAddVideo = findViewById(R.id.ll_add_video) ;
@@ -40,6 +43,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		mRlBack.setOnClickListener(this);
 		mRlBack.setVisibility(View.VISIBLE);
 		mLLAddVideo.setOnClickListener(this);
+
 	}
 	
 	private void initData(){
@@ -137,8 +141,6 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 					ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 			tv33.setLayoutParams(LP_WW);
 			layoutLeft.addView(tv33);
-
-
 
 
 
@@ -249,6 +251,20 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		//addLinearLayout() ;
 	}
 
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if(data == null){
+			return ;
+		}
+
+		String filePath = data.getStringExtra("filepath") ;
+
+		mIvVideoThumb.setImageBitmap(FileUtils.getVideoThumb(filePath));
+	}
+
 	@Override
 	public void onClick(View view) {
 		Intent intent = null ;
@@ -258,7 +274,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				break ;
 			case R.id.ll_add_video :
 				intent = new Intent(mContext, RecordingActivity2.class);
-				startActivity(intent);
+				startActivityForResult(intent,1122);
 				break ;
 		}
 	}

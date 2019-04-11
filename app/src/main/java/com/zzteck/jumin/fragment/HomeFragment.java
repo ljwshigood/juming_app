@@ -159,14 +159,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Info.Getinfos"));
 
-       /* List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
-
-        if(userList != null && userList.size() > 0){
-            map.put("sign", UtilsTools.md5("jumin_"+"App.Info.Getvideoinfo")+userList.get(0).getToken());
-        }else{
-            map.put("sign", UtilsTools.md5("jumin_"+"App.Info.Getvideoinfo"));
-        }*/
-
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
         Call call = client.newCall(request);
@@ -627,13 +619,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Index.Banner"));
 
-        /*List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
-
-        if(userList != null && userList.size() > 0){
-            map.put("sign", UtilsTools.md5("jumin_"+"App.Index.Banner")+userList.get(0).getToken());
-        }else{
-            map.put("sign", UtilsTools.md5("jumin_"+"App.Index.Banner"));
-        }*/
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
         Call call = client.newCall(request);

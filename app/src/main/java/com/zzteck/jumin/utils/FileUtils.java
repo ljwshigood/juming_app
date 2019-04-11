@@ -24,7 +24,7 @@ public class FileUtils {
 		
 	}
 
-	public Bitmap getVideoThumb(String path) {
+	public static Bitmap getVideoThumb(String path) {
 
 		MediaMetadataRetriever media = new MediaMetadataRetriever();
 		media.setDataSource(path);

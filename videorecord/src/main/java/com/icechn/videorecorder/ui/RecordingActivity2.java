@@ -21,6 +21,7 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
@@ -300,6 +301,9 @@ public class RecordingActivity2 extends AppCompatActivity implements
         }
         if(mp4List.size() == 1) {
             new File(mp4List.get(0)).renameTo(new File(mSaveVideoPath));
+            Intent intent = new Intent();
+            intent.putExtra("filepath",mSaveVideoPath) ;
+            setResult(1122,intent);
             Toast.makeText(getApplicationContext(), "视频文件已保存至"+ mSaveVideoPath, Toast.LENGTH_SHORT).show();
             mp4List.clear();
             durationList.clear();
@@ -317,6 +321,9 @@ public class RecordingActivity2 extends AppCompatActivity implements
             public void onMergeEnd(boolean success) {
                 hideProgressDialog();
                 if (success) {
+                    Intent intent = new Intent();
+                    intent.putExtra("filepath",mSaveVideoPath) ;
+                    setResult(1122,intent);
                     Toast.makeText(getApplicationContext(), "视频文件已保存至" + mSaveVideoPath, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "视频文件保存失败!!!", Toast.LENGTH_SHORT).show();

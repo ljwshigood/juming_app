@@ -35,9 +35,13 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/iv_video_thumb"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        app:civ_border_color="@color/white"
+                        app:civ_border_width="2dp"
                         android:src="@mipmap/btn_shipin" />
 
                     <TextView
