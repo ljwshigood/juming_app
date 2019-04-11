@@ -2,7 +2,10 @@ package com.zzteck.jumin.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
@@ -63,6 +66,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -194,6 +198,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         });
 
     }
+
 
     @Nullable
     @Override

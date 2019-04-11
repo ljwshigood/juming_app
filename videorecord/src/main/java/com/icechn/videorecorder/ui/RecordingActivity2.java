@@ -62,8 +62,7 @@ public class RecordingActivity2 extends AppCompatActivity implements
         }
         Rect rect = new Rect();
         DisplayMetrics displayMetrics = new DisplayMetrics();
-        ((WindowManager) context
-                .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(displayMetrics);
+        ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(displayMetrics);
         rect.set(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels);
         return rect;
     }

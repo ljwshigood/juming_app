@@ -2,6 +2,7 @@ package com.zzteck.jumin.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.os.Environment;
 
 import java.io.File;
@@ -21,6 +22,14 @@ public class FileUtils {
 	
 	private FileUtils(){
 		
+	}
+
+	public Bitmap getVideoThumb(String path) {
+
+		MediaMetadataRetriever media = new MediaMetadataRetriever();
+		media.setDataSource(path);
+		return  media.getFrameAtTime();
+
 	}
 	
 	public static FileUtils getInstance(){

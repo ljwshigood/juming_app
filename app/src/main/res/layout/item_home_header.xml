@@ -33,7 +33,7 @@
                     android:id="@+id/iv_one"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_meiliyue"/>
+                    android:src="@mipmap/ic_meiliyue" />
 
                 <TextView
                     android:id="@+id/tv_one"
@@ -62,7 +62,7 @@
                     android:id="@+id/iv_two"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_lirenshenghuo"/>
+                    android:src="@mipmap/ic_lirenshenghuo" />
 
                 <TextView
                     android:id="@+id/tv_two"
@@ -92,7 +92,7 @@
                     android:id="@+id/iv_three"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_xiuxianyule"/>
+                    android:src="@mipmap/ic_xiuxianyule" />
 
                 <TextView
                     android:id="@+id/tv_three"
@@ -121,7 +121,7 @@
                     android:id="@+id/iv_four"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_jujiashenghuo"/>
+                    android:src="@mipmap/ic_jujiashenghuo" />
 
                 <TextView
                     android:id="@+id/tv_four"
@@ -151,7 +151,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_more"/>
+                    android:src="@mipmap/ic_more" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -164,4 +164,5 @@
         </LinearLayout>
 
     </LinearLayout>
+
 </RelativeLayout>

@@ -1,9 +1,12 @@
 package com.icechn.videorecorder.client;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
+import android.media.MediaMetadataRetriever;
 import android.util.Log;
 
 import com.icechn.videorecorder.core.CameraHelper;
@@ -37,6 +40,8 @@ public class VideoClient {
     private boolean isRecording = false;
     private boolean isPreviewing = false;
 
+    private boolean isSave ;
+
     public VideoClient(Context context, MediaMakerConfig parameters) {
         mediaMakerConfig = parameters;
         cameraNum = Camera.getNumberOfCameras();
@@ -45,6 +50,7 @@ public class VideoClient {
         isStreaming = false;
         isRecording = false;
         isPreviewing = false;
+        isSave = false ;
     }
 
     public boolean prepare(RecordConfig config) {
@@ -105,6 +111,16 @@ public class VideoClient {
         return true;
     }
 
+    /**
+
+     * 获取视频文件截图
+
+     * @param path 视频文件的路径
+
+     * @return Bitmap 返回获取的Bitmap
+
+     */
+
     private boolean startVideo() {
         camTexture = new SurfaceTexture(IVideoCore.OVERWATCH_TEXTURE_ID);
         camTexture.setOnFrameAvailableListener(new SurfaceTexture.OnFrameAvailableListener() {
@@ -119,6 +135,7 @@ public class VideoClient {
         });
         try {
             camera.setPreviewTexture(camTexture);
+
         } catch (IOException e) {
             e.printStackTrace();
             camera.release();
