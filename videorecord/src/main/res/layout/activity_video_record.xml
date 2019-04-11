@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="60dp">
+
         <com.icechn.videorecorder.ui.AspectTextureView
             android:id="@+id/preview_textureview"
             android:layout_width="match_parent"
@@ -23,58 +18,62 @@
         android:id="@+id/layout_btns"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:paddingBottom="5dp">
+        android:orientation="horizontal"
+        android:paddingBottom="15dp">
 
         <Button
             android:id="@+id/btn_cap"
-            android:layout_height="80dp"
-            android:layout_width="80dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="cap" />
+            android:background="@drawable/ic_touch_record"
+            android:gravity="center" />
 
         <Button
             android:id="@+id/btn_del"
-            android:layout_height="80dp"
-            android:layout_width="80dp"
-            android:gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginLeft="12dp"
-            android:text="del" />
+            android:background="@drawable/ic_delete"
+            android:gravity="center" />
 
         <Button
             android:id="@+id/btn_ok"
-            android:layout_height="80dp"
-            android:layout_width="80dp"
-            android:gravity="center"
-            android:layout_marginRight="12dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentRight="true"
-            android:text="ok" />
+            android:layout_marginRight="12dp"
+            android:background="@drawable/ic_save"
+            android:gravity="center" />
     </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_tips"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_above="@+id/layout_btns"
-        android:text="tips"
-        android:textColor="#000000"/>
+        android:gravity="center"
+        android:textSize="14sp"
+        android:layout_marginBottom="5dp"
+        android:text="长按录制 松手停止录制"
+        android:textColor="#000000" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="4dp">
+
         <ProgressBar
             android:id="@+id/pb_timeline"
+            style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="match_parent"
-            android:layout_height="4dp"
-            style="@android:style/Widget.ProgressBar.Horizontal"/>
+            android:layout_height="4dp" />
+
         <View
             android:id="@+id/divide_view"
             android:layout_width="2dp"
             android:layout_height="4dp"
-            android:background="#ffffff"/>
+            android:background="#ffffff" />
     </RelativeLayout>
 
     <TextView
@@ -84,24 +83,27 @@
         android:layout_alignParentRight="true"
         android:layout_margin="12dp"
         android:gravity="right"
-        android:text="0s"/>
+        android:text="0s" />
 
 
     <Button
         android:id="@+id/btn_swap"
-        android:layout_height="60dp"
-        android:layout_width="60dp"
-        android:gravity="center"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginTop="20dp"
-        android:text="Swap" />
+        android:layout_marginLeft="25dp"
+        android:background="@drawable/ic_switch_cam"
+        android:gravity="center" />
+
     <Button
         android:id="@+id/btn_flash"
-        android:layout_height="60dp"
-        android:layout_width="60dp"
-        android:gravity="center"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
         android:layout_toRightOf="@+id/btn_swap"
-        android:text="Flash"
-        android:visibility="gone"/>
+        android:background="@drawable/ic_flash"
+        android:gravity="center"
+        android:visibility="gone" />
 
 </RelativeLayout>
