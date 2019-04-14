@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +15,26 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.icechn.videorecorder.ui.RecordingActivity2;
 import com.zzteck.jumin.R;
+import com.zzteck.jumin.bean.LoginBean;
+import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
+import com.zzteck.jumin.ui.mainui.MainActivity;
+import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.FileUtils;
+import com.zzteck.jumin.utils.UtilsTools;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class ReleaseActivity extends BaseActivity implements View.OnClickListener {
 	
@@ -45,9 +62,64 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		mLLAddVideo.setOnClickListener(this);
 
 	}
-	
+
+	private void getExternelInfo(int catId,int id){
+
+		if(mCatId == -1  || mId == -1){
+			return ;
+		}
+		Map<String, String> map = new HashMap<>() ;
+		map.put("s","App.Info.Typeoptions") ;
+		map.put("catid",catId+id+"") ;
+		map.put("id",id+"") ;
+
+		map.put("sign", UtilsTools.getSign(mContext,"App.Info.Typeoptions")) ;
+
+		OkHttpClient client = new OkHttpClient();
+		//构造Request对象
+		//采用建造者模式，链式调用指明进行Get请求,传入Get的请求地址
+		Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
+		Call call = client.newCall(request);
+		//异步调用并设置回调函数
+		call.enqueue(new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+				Log.e("liujw","##########################IOException : "+e.toString());
+			}
+
+			@Override
+			public void onResponse(Call call, final Response response) throws IOException {
+				final String responseStr = response.body().string();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+
+						String message = new String(responseStr.getBytes()) ;
+						Gson gson = new Gson() ;
+						LoginBean bean = gson.fromJson(message,LoginBean.class) ;
+						if(bean.getData().isIs_login()){
+
+							UserDAO.getInstance(mContext).editorUserTable(bean.getData());
+
+							Intent intent = new Intent(mContext,MainActivity.class) ;
+							startActivity(intent);
+							finish();
+						}
+
+					}
+				});
+			}
+		});
+	}
+
+	private int mCatId ;
+
+	private int mId ;
+
 	private void initData(){
 		mTvMainInfo.setText("发布");
+		mCatId = getIntent().getIntExtra("catid",-1) ;
+		mId = getIntent().getIntExtra("id",-1) ;
 	}
 
 	/**
@@ -249,6 +321,8 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		initData();
 		daymicLayout();
 		//addLinearLayout() ;
+
+		getExternelInfo(mCatId,mId);
 	}
 
 
