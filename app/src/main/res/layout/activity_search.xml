@@ -6,21 +6,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="25dp"
         android:background="@android:color/white"
-        android:layout_marginTop="25dp">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/ll_back"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:paddingLeft="15dp"
+            android:layout_weight="80"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="15dp">
 
 
             <ImageView
@@ -30,25 +33,51 @@
                 android:src="@mipmap/ic_back" />
         </LinearLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="40"
+            android:background="@drawable/bg_city_shape_rec">
 
-        <LinearLayout
-            android:id="@+id/ll_search"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/ll_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-            <include layout="@layout/view_search_text"></include>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp"
+                    android:src="@mipmap/icon_search_black" />
 
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/tv_search"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="请输入要搜索的内容"
+                    android:textColor="@color/dark"
+                    android:textColorHint="@color/dark"
+                    android:textSize="16sp"></EditText>
+            </LinearLayout>
+
+        </RelativeLayout>
+
 
         <LinearLayout
             android:id="@+id/ll_right"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
+            android:layout_weight="80"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
@@ -58,7 +87,7 @@
                 android:text="搜索"
                 android:textSize="16sp" />
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
 
     <LinearLayout
@@ -70,19 +99,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="推荐产品"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:text="历史记录"
             android:textSize="16sp" />
 
         <com.zzteck.zzview.WJSpandGridView
             android:id="@+id/gv_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:horizontalSpacing="3dp"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:layout_marginTop="20dp"
+            android:horizontalSpacing="3dp"
             android:listSelector="@android:color/transparent"
             android:numColumns="4"
             android:scrollbars="none"
