@@ -190,19 +190,25 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
     }
 
     public interface OnRecyclerViewItemClickListener {
-        void onClick(View view, ViewName viewName, int chapterIndex, int sectionIndex);
+        void onClick(View view, ViewName viewName, int chapterIndex, int sectionIndex,String catId,String subCatId);
     }
 
     @Override
     public void onClick(View v) {
         if (mOnItemClickListener != null) {
+
+            String catId = "" ;
+            String subCatId  = "" ;
+
             int position = (int) v.getTag();
             ViewName viewName = ViewName.CHAPTER_ITEM;
             int chapterIndex = -1;
             int sectionIndex = -1;
             if(getItemViewType(position) == VIEW_TYPE_CHAPTER){
                 MainCategoryBean.DataBean chapterInfo = (MainCategoryBean.DataBean) dataInfos.get(position);
-                //chapterIndex = chapterInfo.chapterIndex;
+
+                catId = chapterInfo.getCatid() ;
+
                 chapterIndex = position ;
                 sectionIndex = -1;
                 if(v.getId() == R.id.iv_arrow){
@@ -219,13 +225,12 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
                     }
                 }
             }else if(getItemViewType(position) == VIEW_TYPE_SECTION){
-                MainCategoryBean.DataBean.ChildrenBean sectionInfo = (MainCategoryBean.DataBean.ChildrenBean) dataInfos.get(position);
-                viewName = ViewName.SECTION_ITEM;
-
-               /* chapterIndex = sectionInfo.chapterIndex;
-                sectionIndex = sectionInfo.sectionIndex;*/
+                MainCategoryBean.DataBean.ChildrenBean sectionInfo = (MainCategoryBean.DataBean.ChildrenBean) dataInfos.get(position) ;
+                viewName = ViewName.SECTION_ITEM ;
+                subCatId = sectionInfo.getCatid() ;
             }
-            mOnItemClickListener.onClick(v, viewName, chapterIndex, sectionIndex);
+
+            mOnItemClickListener.onClick(v, viewName, chapterIndex, sectionIndex,catId,subCatId);
         }
     }
 

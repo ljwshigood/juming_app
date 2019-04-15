@@ -49,9 +49,6 @@ public class ReleaseCategoryActivity extends BaseActivity implements View.OnClic
 
 	private ReleaseCategoryAdapter mReleaseCategoryAdapter;
 
-	/*private CourseInfo mCourseInfo;*/
-
-
 	private void getMainCategoryList(){
 
 		Map<String, String> map = new HashMap<>();
@@ -100,7 +97,7 @@ public class ReleaseCategoryActivity extends BaseActivity implements View.OnClic
 
 		mReleaseCategoryAdapter.setOnItemClickListener(new ReleaseCategoryAdapter.OnRecyclerViewItemClickListener() {
 			@Override
-			public void onClick(View view, ReleaseCategoryAdapter.ViewName viewName, int chapterIndex, int sectionIndex) {
+			public void onClick(View view, ReleaseCategoryAdapter.ViewName viewName, int chapterIndex, int sectionIndex,String catId,String subCatId) {
 				switch (viewName){
 					case CHAPTER_ITEM:
 						if(bean.getData().get(chapterIndex).getChildren().size() > 0){
@@ -114,13 +111,15 @@ public class ReleaseCategoryActivity extends BaseActivity implements View.OnClic
 						break;
 					case CHAPTER_ITEM_PRACTISE:
 
-						Intent intent = new Intent(mContext,ReleaseActivity.class) ;
-						startActivity(intent);
+						/*Intent intent = new Intent(mContext,ReleaseActivity.class) ;
+						startActivity(intent);*/
 
 						//onClickPractise(chapterIndex);
 						break;
 					case SECTION_ITEM:
 						Intent intent1 = new Intent(mContext,ReleaseActivity.class) ;
+						intent1.putExtra("catId",catId) ;
+						intent1.putExtra("subCatId",subCatId) ;
 						startActivity(intent1);
 						//onClickSection(chapterIndex, sectionIndex);
 						break;

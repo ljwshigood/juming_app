@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -63,24 +64,22 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 	}
 
-	private void getExternelInfo(int catId,int id){
+	private void getExternelInfo(String catId,String id){
 
-		if(mCatId == -1  || mId == -1){
+		if(TextUtils.isEmpty(mCatId) || TextUtils.isEmpty(mId)){
 			return ;
 		}
+
 		Map<String, String> map = new HashMap<>() ;
 		map.put("s","App.Info.Typeoptions") ;
-		map.put("catid",catId+id+"") ;
-		map.put("id",id+"") ;
+		map.put("catid",catId) ;
+		map.put("id",id) ;
 
 		map.put("sign", UtilsTools.getSign(mContext,"App.Info.Typeoptions")) ;
 
 		OkHttpClient client = new OkHttpClient();
-		//构造Request对象
-		//采用建造者模式，链式调用指明进行Get请求,传入Get的请求地址
 		Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
 		Call call = client.newCall(request);
-		//异步调用并设置回调函数
 		call.enqueue(new Callback() {
 			@Override
 			public void onFailure(Call call, IOException e) {
@@ -97,14 +96,18 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 						String message = new String(responseStr.getBytes()) ;
 						Gson gson = new Gson() ;
 						LoginBean bean = gson.fromJson(message,LoginBean.class) ;
-						if(bean.getData().isIs_login()){
+
+						/*if(bean.getData().isIs_login()){
 
 							UserDAO.getInstance(mContext).editorUserTable(bean.getData());
 
 							Intent intent = new Intent(mContext,MainActivity.class) ;
 							startActivity(intent);
 							finish();
-						}
+						}*/
+
+
+
 
 					}
 				});
@@ -112,14 +115,14 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		});
 	}
 
-	private int mCatId ;
+	private String mCatId ;
 
-	private int mId ;
+	private String mId ;
 
 	private void initData(){
 		mTvMainInfo.setText("发布");
-		mCatId = getIntent().getIntExtra("catid",-1) ;
-		mId = getIntent().getIntExtra("id",-1) ;
+		mCatId = getIntent().getStringExtra("catId") ;
+		mId = getIntent().getStringExtra("subCatId") ;
 	}
 
 	/**
