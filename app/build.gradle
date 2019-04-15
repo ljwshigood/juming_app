@@ -5,7 +5,7 @@ android {
         debug {
             keyAlias 'juming'
             keyPassword '123456'
-            storeFile file('D:/SourceTest/juming_app/app/juming.jks')
+            storeFile file('D:/git/juming_app/app/juming.jks')
             storePassword '123456'
         }
     }
