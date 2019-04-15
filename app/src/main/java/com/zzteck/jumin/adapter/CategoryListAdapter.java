@@ -42,12 +42,13 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     }
 
     @Override
-    public void onBindViewHolder(CategoryListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(CategoryListAdapter.ViewHolder holder, final int position) {
         holder.name.setText(mCategoryList.get(position).getCatname());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, CategoryListActivity.class) ;
+                intent.putExtra("title",mCategoryList.get(position).getCatname()) ;
                 mContext.startActivity(intent);
             }
         });

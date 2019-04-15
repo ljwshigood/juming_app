@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.LoginBean;
+import com.zzteck.jumin.bean.PayInfo;
 import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.ui.mainui.MainActivity;
@@ -70,15 +71,17 @@ public class ChargeActivity extends BaseActivity implements View.OnClickListener
 
 						String message = new String(responseStr.getBytes()) ;
 						Gson gson = new Gson() ;
-					/*	LoginBean bean = gson.fromJson(message,LoginBean.class) ;
-						if(bean.getData().isIs_login()){
+						PayInfo bean = gson.fromJson(message,PayInfo.class) ;
 
-							UserDAO.getInstance(mContext).editorUserTable(bean.getData());
-
-							Intent intent = new Intent(mContext,MainActivity.class) ;
+						if(bean.getData().getIs_success() == 1){
+							Intent intent = new Intent(mContext,ChargeSuccessActivity.class) ;
 							startActivity(intent);
 							finish();
-						}*/
+						}else{
+							Intent intent = new Intent(mContext,ChargeFailActivity.class) ;
+							startActivity(intent);
+							finish();
+						}
 
 					}
 				});
@@ -104,6 +107,7 @@ public class ChargeActivity extends BaseActivity implements View.OnClickListener
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_charge);
+		mContext = ChargeActivity.this ;
 		initView() ;
 		initData();
 	}
@@ -116,8 +120,6 @@ public class ChargeActivity extends BaseActivity implements View.OnClickListener
 				break ;
 			case R.id.ll_charge :
 				charge(6+"",5+"");
-			    /*Intent intent = new Intent(this,ChargeFailActivity.class) ;
-			    startActivity(intent);*/
 				break ;
 		}
 	}

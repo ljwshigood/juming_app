@@ -244,13 +244,20 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 		setContentView(R.layout.activity_categroy_list);
 		mContext = CategoryListActivity.this ;
 		App.getInstance().addActivity(this);
-
  		initView() ;
-		addMyMethod() ;
+		initData() ;
 
+		addMyMethod() ;
 		getInfosList(mCategoryId,0+"",mCurrentPage+"") ;
+
 	}
-	
+
+	private void initData(){
+		Intent intent = getIntent() ;
+		String title = intent.getStringExtra("title") ;
+		mTvTitle.setText(title+"");
+	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

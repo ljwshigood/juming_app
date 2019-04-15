@@ -807,42 +807,52 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         switch (view.getId()){
             case R.id.tv_more_video:
                 intent = new Intent(getActivity(), CategoryListActivity.class) ;
+                intent.putExtra("title","更多视频") ;
                 startActivity(intent);
                 break ;
             case R.id.iv_one :
                 intent = new Intent(getActivity(), CategoryListActivity.class) ;
+                intent.putExtra("title","二手车转让") ;
                 startActivity(intent);
                 break ;
             case R.id.iv_two :
                 intent = new Intent(getActivity(), CategoryListActivity.class) ;
+                intent.putExtra("title","车辆买卖") ;
                 startActivity(intent);
                 break ;
             case R.id.iv_three :
                 intent = new Intent(getActivity(), CategoryListActivity.class) ;
+                intent.putExtra("title","房屋租赁") ;
                 startActivity(intent);
                 break ;
             case R.id.iv_four :
                 intent = new Intent(getActivity(), CategoryListActivity.class) ;
+                intent.putExtra("title","全职招聘") ;
                 startActivity(intent);
                 break ;
             case R.id.iv_xinfang :
                 intent = new Intent(getActivity(), MainCategoryActivity.class) ;
+                intent.putExtra("title","新房") ;
                 startActivity(intent);
                 break ;
             case R.id.iv_chuzu :
                 intent = new Intent(getActivity(), MainCategoryActivity.class) ;
+                intent.putExtra("title","新房出租") ;
                 startActivity(intent);
                 break ;
             case R.id.iv_shangpuchuzu :
                 intent = new Intent(getActivity(), MainCategoryActivity.class) ;
+                intent.putExtra("title","商铺出租") ;
                 startActivity(intent);
                 break ;
             case R.id.iv_ershoufang :
                 intent = new Intent(getActivity(), MainCategoryActivity.class) ;
+                intent.putExtra("title","房屋出售") ;
                 startActivity(intent);
                 break ;
             case R.id.iv_shangpuzhuanrang :
                 intent = new Intent(getActivity(), MainCategoryActivity.class) ;
+                intent.putExtra("title","商铺转让") ;
                 startActivity(intent);
                 break ;
             case R.id.ll_more:
