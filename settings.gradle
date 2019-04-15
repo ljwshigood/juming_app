@@ -1,1 +1,1 @@
-include ':app', ':zzview', ':barlibrary', ':permissionlib', ':LRecyclerview_library', ':uil', ':FlycoTabLayout_Lib', ':lib-zxing', ':photoselectcompont', ':videorecord', /*':volley-master',*/ ':citylib', ':poptabview_lib', ':magicindicator'
+include ':app', ':zzview', ':barlibrary', ':permissionlib', ':LRecyclerview_library', ':uil', ':FlycoTabLayout_Lib', ':lib-zxing', ':photoselectcompont', ':videorecord', /*':volley-master',*/ ':citylib', ':poptabview_lib', ':magicindicator', ':FingerthDialogUtilsLibrary'
