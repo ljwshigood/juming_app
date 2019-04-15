@@ -225,6 +225,10 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 	private void daymicLayout(ExternalInfo info){
 
+		if(info == null || info.getData() == null){
+			return ;
+		}
+
 		mLLDaymic.removeAllViews();
 		mLLDaymic.setOrientation(LinearLayout.VERTICAL);
 
