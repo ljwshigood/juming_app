@@ -193,12 +193,14 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
         void onClick(View view, ViewName viewName, int chapterIndex, int sectionIndex,String catId,String subCatId);
     }
 
+    private String catId = "" ;
+
+    private String subCatId  = "" ;
+
     @Override
     public void onClick(View v) {
-        if (mOnItemClickListener != null) {
 
-            String catId = "" ;
-            String subCatId  = "" ;
+        if (mOnItemClickListener != null) {
 
             int position = (int) v.getTag();
             ViewName viewName = ViewName.CHAPTER_ITEM;
@@ -232,6 +234,7 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
 
             mOnItemClickListener.onClick(v, viewName, chapterIndex, sectionIndex,catId,subCatId);
         }
+
     }
 
     /**

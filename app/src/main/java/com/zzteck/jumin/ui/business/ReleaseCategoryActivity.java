@@ -121,7 +121,6 @@ public class ReleaseCategoryActivity extends BaseActivity implements View.OnClic
 						intent1.putExtra("catId",catId) ;
 						intent1.putExtra("subCatId",subCatId) ;
 						startActivity(intent1);
-						//onClickSection(chapterIndex, sectionIndex);
 						break;
 				}
 			}

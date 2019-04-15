@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.icechn.videorecorder.ui.RecordingActivity2;
 import com.zzteck.jumin.R;
+import com.zzteck.jumin.bean.ExternalInfo;
 import com.zzteck.jumin.bean.LoginBean;
 import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
@@ -95,20 +96,8 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 						String message = new String(responseStr.getBytes()) ;
 						Gson gson = new Gson() ;
-						LoginBean bean = gson.fromJson(message,LoginBean.class) ;
-
-						/*if(bean.getData().isIs_login()){
-
-							UserDAO.getInstance(mContext).editorUserTable(bean.getData());
-
-							Intent intent = new Intent(mContext,MainActivity.class) ;
-							startActivity(intent);
-							finish();
-						}*/
-
-
-
-
+						ExternalInfo bean = gson.fromJson(message,ExternalInfo.class) ;
+						daymicLayout(bean);
 					}
 				});
 			}
@@ -230,7 +219,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 	}
 
-	private void daymicLayout(){
+	private void daymicLayout(ExternalInfo info){
 
 		mLLDaymic.removeAllViews();
 		mLLDaymic.setOrientation(LinearLayout.VERTICAL);
@@ -245,13 +234,16 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			tv1.setGravity(Gravity.CENTER);
 			tv2.setGravity(Gravity.CENTER);
 			tv3.setGravity(Gravity.CENTER);
+
 			tv1.setTextSize(16f);
 			tv2.setTextSize(16f);
 			tv3.setTextSize(16f);
+
 			//设置权重
 			tv1.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,1.0f));
 			tv2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,1.0f));
 			tv3.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,1.0f));
+
 			//设置内容
 			tv1.setText("aa:"+i);//项目
 			tv2.setText("bb:"+i);
@@ -269,50 +261,6 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 			mLLDaymic.addView(ll);
 		}
-
-
-
-		/*LinearLayout.LayoutParams lpLeftWeight = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-		LinearLayout.LayoutParams lpRightWeight = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-
-		LinearLayout layoutLeft = new LinearLayout(this); // 线性布局方式
-		layoutLeft.setOrientation(LinearLayout.HORIZONTAL); //
-		layoutLeft.setBackgroundColor(0xff00ffff);
-		layoutLeft.setLayoutParams(lpLeftWeight);
-
-
-		LinearLayout layoutRight = new LinearLayout(this); // 线性布局方式
-		layoutRight.setOrientation(LinearLayout.HORIZONTAL); //
-		layoutRight.setBackgroundColor(0xff00ffff);
-		layoutRight.setLayoutParams(lpRightWeight);
-
-
-		layoutLeft.addView(layoutRight);*/
-
-
-		/*//添加一个ImageView,设置成layout_width:50;layout_height:50;
-		ImageView imageView = new ImageView(this);
-		imageView.setBackgroundResource(R.drawable.ic_loading_rotate);
-		LinearLayout.LayoutParams PARA = new LinearLayout.LayoutParams(50, 50);//
-		imageView.setLayoutParams(PARA);
-		layoutLeft.addView(imageView);
-
-		//添加一个TextView，设置成layout_width:wrap_content;layout_height:wrap_content;
-		TextView tv = new TextView(this); // 普通聊天对话
-		tv.setText("我和猫猫是新添加的");
-		tv.setBackgroundColor(Color.GRAY);
-		LinearLayout.LayoutParams LP_WW = new LinearLayout.LayoutParams(
-				ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		tv.setLayoutParams(LP_WW);
-		layoutLeft.addView(tv);*/
-
-		//将动态增加的布局添加到当前布局中；
-		//mLLDaymic.addView(layoutLeft);
-		//mLLDaymic.addView(layoutRight);
-
-
 	}
 
 	@Override
@@ -322,7 +270,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		mContext = this ;
 		initView() ;
 		initData();
-		daymicLayout();
+		//daymicLayout();
 		//addLinearLayout() ;
 
 		getExternelInfo(mCatId,mId);

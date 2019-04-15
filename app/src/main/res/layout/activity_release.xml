@@ -118,6 +118,7 @@
                     android:layout_marginRight="15dp"
                     android:textSize="14sp"
                     android:padding="5dp"
+                    android:gravity="left|top"
                     android:background="@drawable/bg_btn_rec_press"
                     android:hint="输入描述文字，伟了防止对您造成骚扰，请勿在信息中留下联系方式（手机号，微信，QQ等）" />
 
