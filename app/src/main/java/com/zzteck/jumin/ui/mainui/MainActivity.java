@@ -154,6 +154,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 		RxPermissions rxPermissions1 = new RxPermissions(this);
 
 		rxPermissions1.requestEach(
+				Manifest.permission.CALL_PHONE,
 				Manifest.permission.ACCESS_FINE_LOCATION,
 				Manifest.permission.ACCESS_COARSE_LOCATION,
 				Manifest.permission.CAMERA,

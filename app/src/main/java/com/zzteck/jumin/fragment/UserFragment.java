@@ -2,6 +2,7 @@ package com.zzteck.jumin.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -156,6 +157,17 @@ public class UserFragment extends Fragment implements OnClickListener {
         return mMainView;
     }
 
+    /**
+     * 拨打电话（直接拨打电话）
+     * @param phoneNum 电话号码
+     */
+    public void callPhone(String phoneNum){
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        Uri data = Uri.parse("tel:" + phoneNum);
+        intent.setData(data);
+        startActivity(intent);
+    }
+
     @Override
     public void onClick(View v) {
         Intent intent = null;
@@ -224,9 +236,18 @@ public class UserFragment extends Fragment implements OnClickListener {
 
                 break;
             case R.id.rl_contact_us:
-                MyDialog dialog2 = new MyDialog(getActivity(),1) ;
+                final MyDialog dialog2 = new MyDialog(getActivity(),1) ;
                 dialog2.setContent("400-800-9995");
                 dialog2.show();
+
+                dialog2.setOnPositiveListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        callPhone("4008009995") ;
+                        dialog2.dismiss();
+                    }
+                });
+
                 break;
             case R.id.rl_my_spread:
 

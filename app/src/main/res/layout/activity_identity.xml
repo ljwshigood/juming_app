@@ -51,11 +51,13 @@
                     android:src="@mipmap/pic_shenfenrenzheng" />
 
                 <LinearLayout
-                    android:layout_width="70dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/bg_red_rec_press"
                     android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -109,11 +111,13 @@
                     android:src="@mipmap/pic_yingyezhizhao" />
 
                 <LinearLayout
-                    android:layout_width="70dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/bg_red_rec_press"
                     android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
                     android:orientation="vertical">
 
                     <TextView
