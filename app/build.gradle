@@ -5,7 +5,7 @@ android {
         debug {
             keyAlias 'juming'
             keyPassword '123456'
-            storeFile file('D:/git/juming_app/app/juming.jks')
+            storeFile file('juming.jks')
             storePassword '123456'
         }
     }
@@ -43,14 +43,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    //使用uniapp时，需复制下面代码
-    /*代码开始*/
-    aaptOptions {
-        additionalParameters '--auto-add-overlay'
-        //noCompress 'foo', 'bar'
-        ignoreAssetsPattern "!.svn:!.git:.*:!CVS:!thumbs.db:!picasa.ini:!*.scc:*~"
-    }
-    /*代码结束*/
 }
 
 repositories {
@@ -101,4 +93,5 @@ dependencies {
     compile project(path: ':uil')
     implementation project(':videorecord')
     implementation project(':magicindicator')
+    implementation project(':FingerthDialogUtilsLibrary')
 }

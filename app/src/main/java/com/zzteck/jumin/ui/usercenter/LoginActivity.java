@@ -1,5 +1,6 @@
 package com.zzteck.jumin.ui.usercenter;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.fingerth.supdialogutils.SYSDiaLogUtils;
 import com.google.gson.Gson;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
@@ -112,6 +114,16 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 			case R.id.ll_login :
 				if(!TextUtils.isEmpty(mEtUserName.getText().toString()) && !TextUtils.isEmpty(mEtPwd.getText().toString())){
 
+					/*
+					*
+					* */
+
+					SYSDiaLogUtils.showProgressDialog(this, SYSDiaLogUtils.SYSDiaLogType.IosType, "加载中...", false, new DialogInterface.OnCancelListener() {
+						@Override
+						public void onCancel(DialogInterface dialog) {
+
+						}
+					});
 
 					Map<String, String> map = new HashMap<>() ;
 					map.put("s","App.Member.Login") ;
@@ -127,6 +139,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 					Call call = client.newCall(request);
 					//异步调用并设置回调函数
 					call.enqueue(new Callback() {
+
 						@Override
 						public void onFailure(Call call, IOException e) {
 							Log.e("liujw","##########################IOException : "+e.toString());
@@ -142,6 +155,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 									String message = new String(responseStr.getBytes()) ;
 									Gson gson = new Gson() ;
 									LoginBean bean = gson.fromJson(message,LoginBean.class) ;
+
+									SYSDiaLogUtils.dismissProgress();
+
 									if(bean.getData().isIs_login()){
 
 										UserDAO.getInstance(mContext).editorUserTable(bean.getData());
