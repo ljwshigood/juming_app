@@ -11,25 +11,29 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.icechn.videorecorder.ui.RecordingActivity2;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.ExternalInfo;
-import com.zzteck.jumin.bean.LoginBean;
-import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
-import com.zzteck.jumin.ui.mainui.MainActivity;
 import com.zzteck.jumin.utils.Constants;
+import com.zzteck.jumin.utils.DeviceUtil;
 import com.zzteck.jumin.utils.FileUtils;
 import com.zzteck.jumin.utils.UtilsTools;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -223,41 +227,98 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 		mLLDaymic.removeAllViews();
 		mLLDaymic.setOrientation(LinearLayout.VERTICAL);
-		//根据商品数量,动态生成布局
-		for(int i = 0 ; i< 4;i++){
 
-			//生成三个TextView
-			TextView tv1 = new TextView(this);
-			TextView tv2 = new TextView(this);
-			TextView tv3 = new TextView(this);
-			//文字居中
-			tv1.setGravity(Gravity.CENTER);
-			tv2.setGravity(Gravity.CENTER);
-			tv3.setGravity(Gravity.CENTER);
+		for(int i = 0 ; i< info.getData().size() ;i++){
 
-			tv1.setTextSize(16f);
-			tv2.setTextSize(16f);
-			tv3.setTextSize(16f);
 
-			//设置权重
-			tv1.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,1.0f));
-			tv2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,1.0f));
-			tv3.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,1.0f));
+			LinearLayout linearLayoutLeft  = new LinearLayout(mContext) ;
+			linearLayoutLeft.setLayoutParams(new ViewGroup.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT,LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
+			linearLayoutLeft.setOrientation(LinearLayout.HORIZONTAL);
+			linearLayoutLeft.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.7f));
 
-			//设置内容
-			tv1.setText("aa:"+i);//项目
-			tv2.setText("bb:"+i);
-			tv3.setText("否");
+			TextView tvTitle = new TextView(this);
+			tvTitle.setGravity(Gravity.CENTER);
+			tvTitle.setTextSize(16f);
+			tvTitle.setText(info.getData().get(i).getTitle());
+			linearLayoutLeft.addView(tvTitle);
 
-			//每一行的属性
+			LinearLayout linearLayoutRight  = new LinearLayout(mContext) ;
+			linearLayoutRight.setLayoutParams(new ViewGroup.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT,LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
+			linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
+			linearLayoutRight.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.3f));
+
+			if(info.getData().get(i).getType().equals("radio")){
+
+				RadioGroup radioGroup = new RadioGroup(this);
+				radioGroup.setLayoutParams(new RadioGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+				radioGroup.setOrientation(LinearLayout.HORIZONTAL);
+
+				String choices = info.getData().get(i).getExtra().getChoices();
+				String[] arrayChoices = choices.split("\\r\\n") ;
+
+				for(int j = 0 ; j< arrayChoices.length ; j++){
+					final RadioButton radioButton = new RadioButton(this) ;
+					int index = arrayChoices[j].indexOf("=") ;
+					radioButton.setText(arrayChoices[j].substring(index+1,arrayChoices[j].length()));
+					radioButton.setLayoutParams(new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT,RadioGroup.LayoutParams.WRAP_CONTENT)) ;
+					radioGroup.addView(radioButton);
+				}
+
+				linearLayoutRight.addView(radioGroup);
+
+
+			}else if(info.getData().get(i).getType().equals("number")){
+
+				EditText tvPrice = new EditText(this);
+				tvPrice.setHint("请输入价格");
+				tvPrice.setLayoutParams(new LinearLayout.LayoutParams(200,ViewGroup.LayoutParams.WRAP_CONTENT,0.8f));
+
+				TextView tvUnit = new TextView(this);
+				tvUnit.setText("元");
+				tvUnit.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
+
+				linearLayoutRight.addView(tvPrice);
+				linearLayoutRight.addView(tvUnit);
+
+			}else if(info.getData().get(i).getType().equals("select")){
+
+
+				MaterialSpinner spinner = new MaterialSpinner(mContext) ;
+				spinner.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+
+				String[] attray = info.getData().get(i).getExtra().getChoices().split("\\r\\n") ;
+
+				List<String> spinnerList = new ArrayList<>() ;
+
+				for(int j = 0 ;j < attray.length ;j++){
+					int index = attray[j].indexOf("=") ;
+					String temp = attray[j].substring(index+1,attray[j].length());
+					spinnerList.add(temp);
+				}
+
+				spinner.setItems(spinnerList);
+				spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+					@Override
+					public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+						//Logger.e(item);
+					}
+				});
+
+				linearLayoutRight.addView(spinner);
+			}
+
+
 			LinearLayout ll = new LinearLayout(this);
-			ll.setLayoutParams(new ViewGroup.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT,LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
+
+			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, DeviceUtil.dip2px(mContext,50)) ;
+
+			ll.setLayoutParams(params);
 			ll.setOrientation(LinearLayout.HORIZONTAL);
 
+			ll.addView(linearLayoutLeft);
+			ll.addView(linearLayoutRight);
 
-			ll.addView(tv1);
-			ll.addView(tv2);
-			ll.addView(tv3);
+			ll.setGravity(Gravity.CENTER_VERTICAL);
 
 			mLLDaymic.addView(ll);
 		}
@@ -270,9 +331,6 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		mContext = this ;
 		initView() ;
 		initData();
-		//daymicLayout();
-		//addLinearLayout() ;
-
 		getExternelInfo(mCatId,mId);
 	}
 

@@ -120,7 +120,7 @@
                     android:padding="5dp"
                     android:gravity="left|top"
                     android:background="@drawable/bg_btn_rec_press"
-                    android:hint="输入描述文字，伟了防止对您造成骚扰，请勿在信息中留下联系方式（手机号，微信，QQ等）" />
+                    android:hint="输入描述文字，为了防止对您造成骚扰，请勿在信息中留下联系方式（手机号，微信，QQ等）" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -271,6 +271,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
                 android:background="@android:color/white"
                 android:orientation="horizontal">
 
