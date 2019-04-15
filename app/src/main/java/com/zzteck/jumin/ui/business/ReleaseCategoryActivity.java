@@ -53,7 +53,6 @@ public class ReleaseCategoryActivity extends BaseActivity implements View.OnClic
 
 		Map<String, String> map = new HashMap<>();
 		map.put("s", "App.Category.Lists");
-
 		map.put("sign", UtilsTools.getSign(mContext,"jumin_"+"App.Category.Lists"));
 
 		OkHttpClient client = new OkHttpClient();
@@ -110,11 +109,6 @@ public class ReleaseCategoryActivity extends BaseActivity implements View.OnClic
 						}
 						break;
 					case CHAPTER_ITEM_PRACTISE:
-
-						/*Intent intent = new Intent(mContext,ReleaseActivity.class) ;
-						startActivity(intent);*/
-
-						//onClickPractise(chapterIndex);
 						break;
 					case SECTION_ITEM:
 						Intent intent1 = new Intent(mContext,ReleaseActivity.class) ;
@@ -147,7 +141,6 @@ public class ReleaseCategoryActivity extends BaseActivity implements View.OnClic
 		setContentView(R.layout.activity_release_cat);
 		mContext = this ;
 		initView() ;
-		/*initData();*/
 		getMainCategoryList() ;
 	}
 

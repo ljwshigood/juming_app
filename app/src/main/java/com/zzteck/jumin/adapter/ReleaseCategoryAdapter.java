@@ -40,8 +40,10 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
     public ReleaseCategoryAdapter(Context context, MainCategoryBean mainCategoryBean) {
         this.mainCategoryBean = mainCategoryBean;
         this.mContext = context ;
-        for(BaseInfo info : this.mainCategoryBean.getData()){
-            dataInfos.add(info);
+        for(int i = 0 ; i < mainCategoryBean.getData().size() ;i++){
+            MainCategoryBean.DataBean bean = mainCategoryBean.getData().get(i) ;
+            bean.setIndex(i);
+            dataInfos.add(bean);
         }
     }
 
@@ -207,17 +209,17 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
             int chapterIndex = -1;
             int sectionIndex = -1;
             if(getItemViewType(position) == VIEW_TYPE_CHAPTER){
-                MainCategoryBean.DataBean chapterInfo = (MainCategoryBean.DataBean) dataInfos.get(position);
+                MainCategoryBean.DataBean mainInfo = (MainCategoryBean.DataBean) dataInfos.get(position);
 
-                catId = chapterInfo.getCatid() ;
+                catId = mainInfo.getCatid() ;
 
-                chapterIndex = position ;
+                chapterIndex = mainInfo.getIndex() ;
                 sectionIndex = -1;
                 if(v.getId() == R.id.iv_arrow){
                     viewName = ViewName.CHAPTER_ITEM_PRACTISE;
                 }else{
                     viewName = ViewName.CHAPTER_ITEM;
-                    if(chapterInfo.getChildren().size() > 0){
+                    if(mainInfo.getChildren().size() > 0){
                         if(chapterIndex == curExpandChapterIndex){
                             narrow(curExpandChapterIndex);
                         }else{
