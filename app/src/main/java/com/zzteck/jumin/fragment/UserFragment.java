@@ -110,7 +110,7 @@ public class UserFragment extends Fragment implements OnClickListener {
     public void initData() {
         List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
         if(userList != null && userList.size() > 0){
-            Glide.with(mContext)
+            Glide.with(getActivity())
                     .load(userList.get(0).getHeader())
                     .placeholder(R.mipmap.ic_launcher)
                     .error(R.mipmap.ic_launcher)
