@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -245,7 +246,7 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
     private void setDataView(CatoryDetailInfo bean){
         mTvContentTitle.setText(bean.getData().getTitle());
         mTvPlace.setText(bean.getData().getAreaname());
-        mTvDes.setText(bean.getData().getContent());
+        mTvDes.setText(Html.fromHtml(bean.getData().getContent()));
     }
 
     @Override
