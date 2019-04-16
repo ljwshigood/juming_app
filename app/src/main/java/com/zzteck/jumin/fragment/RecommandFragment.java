@@ -77,6 +77,8 @@ public class RecommandFragment extends Fragment {
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent(getActivity(), CategoryDetailActivity.class) ;
+                HomeInfo.DataBean bean = recommandAdapter.getItem(position) ;
+                intent.putExtra("id",bean.getId()) ;
                 startActivity(intent);
             }
         });
