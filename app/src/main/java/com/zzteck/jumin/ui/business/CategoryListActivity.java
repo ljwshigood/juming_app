@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,7 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.RecommandAdapter;
 import com.zzteck.jumin.app.App;
+import com.zzteck.jumin.bean.FilterInfo;
 import com.zzteck.jumin.bean.HomeInfo;
 import com.zzteck.jumin.bean.MyFilterConfig;
 import com.zzteck.jumin.bean.MyFilterParamsBean;
@@ -77,6 +79,47 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 		popTabView = findViewById(R.id.expandpop);
 
 	}
+
+	private void getInfoExtra(final String catId){
+
+		if(TextUtils.isEmpty(catId)){
+			return ;
+		}
+
+		Map<String, String> map = new HashMap<>() ;
+		map.put("s","App.Info.Extra") ;
+		map.put("catid",catId) ;
+
+		map.put("sign", UtilsTools.getSign(mContext,"jumin_"+"App.Info.Extra"));
+
+		OkHttpClient client = new OkHttpClient();
+		Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
+		Call call = client.newCall(request);
+		call.enqueue(new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+				Log.e("liujw","##########################IOException : "+e.toString());
+			}
+
+			@Override
+			public void onResponse(Call call, final Response response) throws IOException {
+				final String responseStr = response.body().string();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+
+						String message = new String(responseStr) ;
+						Gson gson = new Gson() ;
+						FilterInfo info = gson.fromJson(message,FilterInfo.class) ;
+						addMyMethod(info);
+
+					}
+				});
+			}
+		});
+
+	}
+
 
 	private String mCategoryId = "41" ;
 
@@ -180,23 +223,27 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 	 * 要点:泛型处理,集合都用父类,实体都用子类表示.
 	 * @return
 	 */
-	public FilterGroup getMyData(String groupName, int groupType, int singleOrMutiply ) {
+	public FilterGroup getMyData(FilterInfo.DataBean bean, int groupType, int singleOrMutiply ) {
 
 		FilterGroup filterGroup = new FilterGroup();
 
-		filterGroup.setTab_group_name(groupName);
+		filterGroup.setTab_group_name(bean.getTitle());
 		filterGroup.setTab_group_type(groupType);
 		filterGroup.setSingle_or_mutiply(singleOrMutiply);
 
 		List<BaseFilterTabBean> singleFilterList = new ArrayList<>();
-		for (int i = 0; i < 8; i++) {//一级fitler
+
+		String[] choices = bean.getExtra().getChoices().split("\\r\\n");
+
+
+		for (int i = 0; i < choices.length ; i++) {//一级fitler
 			MyFilterTabBean myFilterBean = new MyFilterTabBean();
-			myFilterBean.setTab_name(groupName + "_" + i);
+			myFilterBean.setTab_name(choices[i]);
 			myFilterBean.setTag_ids("tagid" + "_" + i );
 			myFilterBean.setMall_ids("mallid" + "_" + i );
 			myFilterBean.setCategory_ids("Categoryid" + "_" + i);
 
-			List<MyFilterTabBean.MyChildFilterBean> childFilterList = new ArrayList<>();
+			/*List<MyFilterTabBean.MyChildFilterBean> childFilterList = new ArrayList<>();
 			for (int j = 0; j < 5; j++) {//二级filter
 				MyFilterTabBean.MyChildFilterBean myChildFilterBean = new MyFilterTabBean.MyChildFilterBean();
 				myChildFilterBean.setTab_name(groupName + "_" + i + "__" + j);
@@ -207,7 +254,7 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 				childFilterList.add(myChildFilterBean);
 			}
 			//增加二级tab
-			myFilterBean.setTabs(childFilterList);
+			myFilterBean.setTabs(childFilterList);*/
 
 			//增加一级tab
 			singleFilterList.add(myFilterBean);
@@ -219,20 +266,19 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 
 	}
 
-	private void addMyMethod() {
+	private void addMyMethod(FilterInfo info) {
 
-		FilterGroup filterGroup1 = getMyData("距离", MyFilterConfig.TYPE_POPWINDOW_SINGLE,MyFilterConfig.FILTER_TYPE_SINGLE);
-		FilterGroup filterGroup5 = getMyData("价格", MyFilterConfig.TYPE_POPWINDOW_SINGLE,MyFilterConfig.FILTER_TYPE_SINGLE);//自定义
 
-		FilterGroup filterGroup3 = getMyData("区域", FilterConfig.TYPE_POPWINDOW_SINGLE,FilterConfig.FILTER_TYPE_SINGLE);
-		FilterGroup filterGroup4 = getMyData("学校", FilterConfig.TYPE_POPWINDOW_SINGLE,FilterConfig.FILTER_TYPE_SINGLE);
+		if(info == null || info.getData() == null){
+			return ;
+		}
 
-		popTabView.setOnPopTabSetListener(this)
-				.setPopEntityLoader(new MyPopEntityLoaderImp()).setResultLoader(new MyResultLoaderImp()) //配置 {筛选类型}  方式
-				.addFilterItem(filterGroup1.getTab_group_name(), filterGroup1.getFilter_tab(), filterGroup1.getTab_group_type(), filterGroup1.getSingle_or_mutiply())
-				.addFilterItem(filterGroup5.getTab_group_name(), filterGroup5.getFilter_tab(), filterGroup5.getTab_group_type(), filterGroup5.getSingle_or_mutiply())
-				.addFilterItem(filterGroup3.getTab_group_name(), filterGroup3.getFilter_tab(), filterGroup3.getTab_group_type(), filterGroup3.getSingle_or_mutiply())
-				.addFilterItem(filterGroup4.getTab_group_name(), filterGroup4.getFilter_tab(), filterGroup4.getTab_group_type(), filterGroup4.getSingle_or_mutiply()) ;
+		PopTabView ptv = popTabView.setOnPopTabSetListener(this).setPopEntityLoader(new MyPopEntityLoaderImp()).setResultLoader(new MyResultLoaderImp()) ;
+
+		for(int i = 0 ;i < info.getData().size() ;i++){
+			FilterGroup filterGroup = getMyData(info.getData().get(i), MyFilterConfig.TYPE_POPWINDOW_SINGLE,MyFilterConfig.FILTER_TYPE_SINGLE);
+			ptv.addFilterItem(filterGroup.getTab_group_name(), filterGroup.getFilter_tab(), filterGroup.getTab_group_type(), filterGroup.getSingle_or_mutiply()) ;
+		}
 
 	}
 
@@ -246,15 +292,18 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 		App.getInstance().addActivity(this);
  		initView() ;
 		initData() ;
-
-		addMyMethod() ;
+		//addMyMethod() ;
+		getInfoExtra(mId) ;
 		getInfosList(mCategoryId,0+"",mCurrentPage+"") ;
 
 	}
 
+	private String mId ;
+
 	private void initData(){
 		Intent intent = getIntent() ;
 		String title = intent.getStringExtra("title") ;
+		mId = intent.getStringExtra("id") ;
 		mTvTitle.setText(title+"");
 	}
 
@@ -285,6 +334,7 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 
 	@Override
 	public void onPopTabSet(int index, String lable, MyFilterParamsBean params, String value) {
-
+		//TODO 数据更新在这里
+		Log.e("liujw","#################onPopTabSet : "+params.toString());
 	}
 }
