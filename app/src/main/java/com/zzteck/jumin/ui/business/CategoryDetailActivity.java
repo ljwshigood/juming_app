@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.CategoryPagerAdapter;
 import com.zzteck.jumin.adapter.FeaturedPagerAdapter;
+import com.zzteck.jumin.bean.AttentionInfo;
 import com.zzteck.jumin.bean.BannerBean;
 import com.zzteck.jumin.bean.CatoryDetailInfo;
 import com.zzteck.jumin.bean.LoginBean;
@@ -27,6 +28,7 @@ import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.utils.ActivityIntentUtils;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.UtilsTools;
+import com.zzteck.zzview.WindowsToast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -225,6 +227,54 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
         mIvShare.setOnClickListener(this);
     }
 
+
+    private void attentAction(String id){
+
+        if(TextUtils.isEmpty(id)){
+            return ;
+        }
+
+        Map<String, String> map = new HashMap<>() ;
+        map.put("s","App.Shoucang.Add") ;
+        map.put("infoid",id) ;
+
+        map.put("sign", UtilsTools.getSign(mContext,"App.Shoucang.Add")) ;
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
+        Call call = client.newCall(request);
+
+        call.enqueue(new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("liujw","##########################IOException : "+e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                final String responseStr = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String message = new String(responseStr.getBytes()) ;
+                        Gson gson = new Gson() ;
+                        AttentionInfo bean = gson.fromJson(message,AttentionInfo.class) ;
+
+                        if(bean.getData().isIs_success()){
+                            WindowsToast.makeText(mContext,bean.getData().getInfo()).show();
+                            mIvAttention.setImageResource(R.mipmap.btn_guanzhu_pre);
+                        }else{
+                            WindowsToast.makeText(mContext,bean.getData().getInfo()).show();
+                        }
+                    }
+                });
+            }
+        });
+
+
+    }
+
     private void getCatoryDetail(String id){
 
         if(TextUtils.isEmpty(id)){
@@ -307,7 +357,7 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
 
                 break ;
             case R.id.iv_guanzhu :
-
+                attentAction(mId) ;
                 break ;
             case R.id.iv_dian :
 

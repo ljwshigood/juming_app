@@ -2,6 +2,7 @@ package com.zzteck.jumin.ui.usercenter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
@@ -18,16 +19,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.FavAdapter;
+import com.zzteck.jumin.adapter.FavListAdapter;
+import com.zzteck.jumin.adapter.RecommandAdapter;
 import com.zzteck.jumin.adapter.VideoAdapter;
 import com.zzteck.jumin.app.App;
+import com.zzteck.jumin.bean.AttentionList;
+import com.zzteck.jumin.bean.HomeInfo;
 import com.zzteck.jumin.bean.LoginBean;
 import com.zzteck.jumin.db.UserDAO;
+import com.zzteck.jumin.ui.business.CategoryDetailActivity;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.ui.mainui.MainActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.UtilsTools;
+import com.zzteck.jumin.view.NormalDecoration;
 import com.zzteck.zzview.WindowsToast;
 
 import java.io.IOException;
@@ -75,20 +83,10 @@ public class FavitorActivity extends BaseActivity implements OnClickListener{
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-
 						String message = new String(responseStr.getBytes()) ;
 						Gson gson = new Gson() ;
-
-						/*LoginBean bean = gson.fromJson(message,LoginBean.class) ;
-						if(bean.getData().isIs_login()){
-
-							UserDAO.getInstance(mContext).editorUserTable(bean.getData());
-
-							Intent intent = new Intent(mContext,MainActivity.class) ;
-							startActivity(intent);
-							finish();
-						}*/
-
+						AttentionList bean = gson.fromJson(message,AttentionList.class) ;
+						initData(bean) ;
 					}
 				});
 			}
@@ -113,6 +111,45 @@ public class FavitorActivity extends BaseActivity implements OnClickListener{
 		mRecyleViewFav.setLayoutManager(linearLayoutManager);
 		mFavAdapter = new FavAdapter(this, null);
 		mRecyleViewFav.setAdapter(mFavAdapter);
+	}
+
+	private FavListAdapter mFavListAdapter ;
+
+
+	private void initData(AttentionList info) {
+
+		mRecyleViewFav.setLayoutManager(new LinearLayoutManager(mContext));
+		mRecyleViewFav.addItemDecoration(new NormalDecoration(ContextCompat.getColor(mContext, R.color.mainGrayF8), (int) mContext.getResources().getDimension(R.dimen.one)));
+		mFavListAdapter = new FavListAdapter(mContext,info.getData()) ;
+		mRecyleViewFav.setAdapter(mFavListAdapter) ;
+
+		mFavListAdapter.setNoMore(R.layout.view_no_more);
+		mFavListAdapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
+			@Override
+			public void onMoreShow() {
+				/*if(mCategoryId != null){
+					mCurrentPage++ ;
+					getInfosList(mCategoryId,0+"",mCurrentPage+"") ;
+				}*/
+
+			}
+
+			@Override
+			public void onMoreClick() {
+
+			}
+		});
+
+		mFavListAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+			@Override
+			public void onItemClick(int position) {
+				Intent intent = new Intent(mContext, CategoryDetailActivity.class) ;
+				AttentionList.DataBean bean = mFavListAdapter.getItem(position) ;
+				intent.putExtra("id",bean.getId()) ;
+				startActivity(intent);
+			}
+		});
+
 	}
 
 	@Override
