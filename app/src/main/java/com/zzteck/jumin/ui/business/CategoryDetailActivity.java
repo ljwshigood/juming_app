@@ -1,5 +1,6 @@
 package com.zzteck.jumin.ui.business;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +11,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,6 +24,7 @@ import com.zzteck.jumin.bean.BannerBean;
 import com.zzteck.jumin.bean.CatoryDetailInfo;
 import com.zzteck.jumin.bean.LoginBean;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
+import com.zzteck.jumin.utils.ActivityIntentUtils;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.UtilsTools;
 
@@ -180,7 +183,27 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
 
     private TextView mTvDes ;
 
+    private LinearLayout mLLWechat ;
+
+    private LinearLayout mLLMessage ;
+
+    private LinearLayout mLLOrder ;
+
+    private ImageView mIvShare ;
+
+    private ImageView mIvAttention ;
+
+    private ImageView mIvDot ;
+
     private void initView(){
+
+        mIvAttention = findViewById(R.id.iv_guanzhu) ;
+        mIvDot = findViewById(R.id.iv_dian) ;
+        mIvShare = findViewById(R.id.iv_share) ;
+
+        mLLWechat= findViewById(R.id.ll_wechat) ;
+        mLLMessage = findViewById(R.id.ll_message) ;
+        mLLOrder = findViewById(R.id.ll_order) ;
         mTvDes = findViewById(R.id.tv_des) ;
         mTvPlace = findViewById(R.id.tv_place) ;
         mTvContentTitle = findViewById(R.id.tv_title) ;
@@ -192,6 +215,14 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
         mRlBack.setOnClickListener(this);
         mTvTitle.setText("详情");
         mRlBack.setVisibility(View.VISIBLE);
+
+        mLLWechat.setOnClickListener(this);
+        mLLMessage.setOnClickListener(this);
+        mLLOrder.setOnClickListener(this);
+
+        mIvAttention.setOnClickListener(this);
+        mIvDot.setOnClickListener(this);
+        mIvShare.setOnClickListener(this);
     }
 
     private void getCatoryDetail(String id){
@@ -260,9 +291,26 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
+
         switch (v.getId()){
             case R.id.ll_back :
                 finish();
+                break ;
+            case R.id.ll_message :
+                break ;
+            case R.id.ll_order :
+                ActivityIntentUtils.jumpActivity(mContext,ChargeActivity.class);
+                break ;
+            case R.id.ll_wechat :
+                break ;
+            case R.id.iv_share :
+
+                break ;
+            case R.id.iv_guanzhu :
+
+                break ;
+            case R.id.iv_dian :
+
                 break ;
         }
     }
