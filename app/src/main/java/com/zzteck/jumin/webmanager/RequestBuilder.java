@@ -33,6 +33,22 @@ public class RequestBuilder {
                 .add("logintoken", token)
                 .build();
     }
+
+    public static MultipartBody uploadRequestBody2(Context context, String title, String imageFormat, String token, File fileFront,File fileRear) {
+
+        String content_type = getMimeType(fileFront.getPath());
+        String file_path = fileFront.getAbsolutePath();
+        RequestBody file_body = RequestBody.create(MediaType.parse(content_type), fileFront);
+
+        return new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("type", content_type)
+                .addFormDataPart("s", "App.Member.Upface")
+                .addFormDataPart("sign", UtilsTools.getSign(context,"App.Member.Upface"))
+                .addFormDataPart("logo", file_path.substring(file_path.lastIndexOf("/") + 1), file_body).build();
+
+    }
+
     public static MultipartBody uploadRequestBody(Context context, String title, String imageFormat, String token, File file) {
 
         String content_type = getMimeType(file.getPath());

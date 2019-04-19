@@ -52,6 +52,7 @@ repositories {
 }
 
 dependencies {
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation fileTree(include: ['*.aar'], dir: 'libs')
     configurations.all {
@@ -59,16 +60,18 @@ dependencies {
             force 'com.android.support:support-annotations:26.1.0'
         }
     }
-    compile 'com.jaredrummler:material-spinner:1.3.1'
-    compile 'com.jude:easyrecyclerview:4.4.2'
-    compile 'com.jakewharton:butterknife:8.7.0'
-    compile 'org.simple:androideventbus:1.0.5.1'
-    implementation 'com.android.support:multidex:1.0.3'
+
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+
+    implementation 'com.jaredrummler:material-spinner:1.3.1'
+    implementation 'com.jude:easyrecyclerview:4.4.2'
+    implementation 'com.jakewharton:butterknife:8.7.0'
+    implementation 'org.simple:androideventbus:1.0.5.1'
+    implementation 'com.android.support:multidex:1.0.3'
     //banner
     implementation 'com.youth.banner:banner:1.4.10'
-    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-4'
-    compile 'de.hdodenhof:circleimageview:2.1.0'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-4'
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
     //RecyclerView
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
@@ -85,13 +88,12 @@ dependencies {
     implementation project(':LRecyclerview_library')
     implementation project(':FlycoTabLayout_Lib')
     implementation project(':lib-zxing')
-    //    implementation project(':photoselect')
     implementation project(':photoselectcompont')
-    //    implementation project(':volley-master')
     implementation project(':citylib')
     implementation project(':poptabview_lib')
     compile project(path: ':uil')
     implementation project(':videorecord')
     implementation project(':magicindicator')
     implementation project(':FingerthDialogUtilsLibrary')
+    implementation project(':library')
 }
