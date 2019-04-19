@@ -23,6 +23,7 @@ import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.MemeberAdapter;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.bean.AttentionList;
+import com.zzteck.jumin.bean.UpgradeMemInfo;
 import com.zzteck.jumin.bean.UpgradeMemeberBean;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.utils.Constants;
@@ -105,7 +106,7 @@ public class MemberUpgradeDetailActivity extends BaseActivity implements OnClick
         Map<String, String> map = new HashMap<>() ;
         map.put("s","App.Member.Levelup") ;
         map.put("forwardlevel",forwardlevel) ;
-        map.put("veluptime",veluptime) ;
+        map.put("leveluptime",veluptime) ;
 
         map.put("sign", UtilsTools.getSign(mContext,"App.Member.Levelup")) ;
 
@@ -126,7 +127,7 @@ public class MemberUpgradeDetailActivity extends BaseActivity implements OnClick
                     public void run() {
                         String message = new String(responseStr.getBytes()) ;
                         Gson gson = new Gson() ;
-                        AttentionList bean = gson.fromJson(message,AttentionList.class) ;
+                        UpgradeMemInfo bean = gson.fromJson(message,UpgradeMemInfo.class) ;
                     }
                 });
             }
@@ -170,7 +171,7 @@ public class MemberUpgradeDetailActivity extends BaseActivity implements OnClick
                 finish();
                 break;
             case R.id.ll_complete :
-                levelUp("1",mLevelType+"");
+                levelUp("5",mLevelType+"");
                 break ;
         }
     }
