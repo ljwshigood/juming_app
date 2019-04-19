@@ -335,6 +335,6 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 	@Override
 	public void onPopTabSet(int index, String lable, MyFilterParamsBean params, String value) {
 		//TODO 数据更新在这里
-		Log.e("liujw","#################onPopTabSet : "+params.toString());
+//		Log.e("liujw","#################onPopTabSet : "+params.toString());
 	}
 }

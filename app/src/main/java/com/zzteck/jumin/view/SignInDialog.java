@@ -57,6 +57,8 @@ public class SignInDialog extends Dialog{
 		map.put("s", "App.Member.Qiandao");
 		map.put("userid", uid + "");
 
+		map.put("sign",UtilsTools.getSign(mContext,"App.Member.Qiandao")) ;
+
 		OkHttpClient client = new OkHttpClient();
 		Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
 		Call call = client.newCall(request);
@@ -75,7 +77,7 @@ public class SignInDialog extends Dialog{
 						Gson gson = new Gson();
 						QiandaoBean bean = gson.fromJson(responseStr, QiandaoBean.class);
 						if(bean.getData().isIs_success() == true){
-
+							WindowsToast.makeText(mContext,"签到成功啦").show();
 						}else{
 							WindowsToast.makeText(mContext,bean.getData().getInfo()).show();
 						}
