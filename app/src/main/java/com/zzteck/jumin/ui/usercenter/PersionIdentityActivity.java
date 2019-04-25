@@ -2,11 +2,8 @@ package com.zzteck.jumin.ui.usercenter;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -25,35 +22,25 @@ import com.baijiahulian.common.crop.ThemeConfig;
 import com.baijiahulian.common.crop.model.PhotoInfo;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.google.gson.Gson;
 import com.zx.uploadlibrary.listener.ProgressListener;
 import com.zx.uploadlibrary.listener.impl.UIProgressListener;
-import com.zx.uploadlibrary.utils.OKHttpUtils;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.bean.MediaInfo;
-import com.zzteck.jumin.bean.ModifyBean;
-import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.utils.Constants;
-import com.zzteck.jumin.utils.GlideCircleTransform;
+import com.zzteck.jumin.utils.OKHttpUtils;
 import com.zzteck.jumin.utils.PictureUtil;
 import com.zzteck.jumin.utils.UtilsTools;
-import com.zzteck.jumin.webmanager.CountingRequestBody;
-import com.zzteck.jumin.webmanager.RequestBuilder;
+import com.zzteck.zzview.WindowsToast;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.Response;
 
 
@@ -208,7 +195,7 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 	}
 
 	//多文件上传（带进度）
-	private void upload() {
+	private void identity() {
 		//这个是非ui线程回调，不可直接操作UI
 		final ProgressListener progressListener = new ProgressListener() {
 			@Override
@@ -273,54 +260,11 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 			public void onResponse(Call call, Response response) throws IOException {
 				Log.i("TAG", "success---->"+response.body().string());
 			}
-		});
+		},mEtName.getText().toString().trim(),mEtNumber.getText().toString().trim(), UtilsTools.getSign(mContext,"App.Member.Personcer"));
 
 	}
 
 
-	private void identity(String cname,String idc){
-
-		Map<String, String> map = new HashMap<>() ;
-		map.put("s","App.Member.Personcer") ;
-		map.put("cname",cname) ;
-		map.put("idc",idc) ;
-
-		map.put("sign", UtilsTools.getSign(mContext,"App.Member.Personcer")) ;
-
-		OkHttpClient client = new OkHttpClient();
-		Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
-		Call call = client.newCall(request);
-		call.enqueue(new Callback() {
-			@Override
-			public void onFailure(Call call, IOException e) {
-				Log.e("liujw","##########################IOException : "+e.toString());
-			}
-
-			@Override
-			public void onResponse(Call call, final Response response) throws IOException {
-				final String responseStr = response.body().string();
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-
-						String message = new String(responseStr.getBytes()) ;
-						Gson gson = new Gson() ;
-
-						/*LoginBean bean = gson.fromJson(message,LoginBean.class) ;
-						if(bean.getData().isIs_login()){
-
-							UserDAO.getInstance(mContext).editorUserTable(bean.getData());
-
-							Intent intent = new Intent(mContext,MainActivity.class) ;
-							startActivity(intent);
-							finish();
-						}*/
-
-					}
-				});
-			}
-		});
-	}
 
 	@Override
 	public void onClick(View v) {
@@ -374,11 +318,13 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 				break ;
 			case R.id.ll_complete :
 				if(TextUtils.isEmpty(mEtName.getText().toString().trim())){
+					WindowsToast.makeText(mContext,"名称不能为空").show();
 					return ;
 				}else if(TextUtils.isEmpty(mEtNumber.getText().toString().trim())){
+					WindowsToast.makeText(mContext,"身份证不能为空").show();
 					return ;
 				}else {
-					identity(mEtName.getText().toString().trim(),mEtNumber.getText().toString().trim());
+					identity();
 				}
 				break ;
 		}
