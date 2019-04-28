@@ -120,9 +120,6 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 
 	}
 
-
-	private String mCategoryId = "41" ;
-
 	private int mCurrentPage = 1  ;
 
 	/**
@@ -191,9 +188,9 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 			@Override
 			public void onMoreShow() {
 				Log.e("liujw", "@@@@@@@@@@@@@@@@@@@@@@@@@@@@onMoreShow");
-				if(mCategoryId != null){
+				if(mId != null){
 					mCurrentPage++ ;
-					getInfosList(mCategoryId,0+"",mCurrentPage+"") ;
+					getInfosList(mId,0+"",mCurrentPage+"") ;
 				}
 
 			}
@@ -237,11 +234,16 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 
 
 		for (int i = 0; i < choices.length ; i++) {//一级fitler
+
+			String tempChoices = choices[i] ;
+
+			String[] splite = tempChoices.split("=") ;
+
 			MyFilterTabBean myFilterBean = new MyFilterTabBean();
-			myFilterBean.setTab_name(choices[i]);
+			myFilterBean.setTab_name(splite[1]);
 			myFilterBean.setTag_ids("tagid" + "_" + i );
 			myFilterBean.setMall_ids("mallid" + "_" + i );
-			myFilterBean.setCategory_ids("Categoryid" + "_" + i);
+			myFilterBean.setCategory_ids(splite[0]);
 
 			/*List<MyFilterTabBean.MyChildFilterBean> childFilterList = new ArrayList<>();
 			for (int j = 0; j < 5; j++) {//二级filter
@@ -292,9 +294,8 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 		App.getInstance().addActivity(this);
  		initView() ;
 		initData() ;
-		//addMyMethod() ;
 		getInfoExtra(mId) ;
-		getInfosList(mCategoryId,0+"",mCurrentPage+"") ;
+		getInfosList(mId,0+"",mCurrentPage+"") ;
 
 	}
 

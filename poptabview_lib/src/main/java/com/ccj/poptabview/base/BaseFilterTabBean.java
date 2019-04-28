@@ -27,4 +27,8 @@ public abstract class BaseFilterTabBean<T extends BaseFilterTabBean> {
 
     public abstract  void setTabs(List<T> tabs);
 
+
+    public String filter ;
+
+
 }
