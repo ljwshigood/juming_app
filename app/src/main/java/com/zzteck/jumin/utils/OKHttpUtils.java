@@ -206,12 +206,20 @@ public class OKHttpUtils {
     private static RequestBody getRequestBody(List<String> fileNames,String cname,String idc,String sign) {
         //创建MultipartBody.Builder，用于添加请求的数据
         MultipartBody.Builder builder = new MultipartBody.Builder();
+
+
         for (int i = 0; i < fileNames.size(); i++) { //对文件进行遍历
             File file = new File(fileNames.get(i)); //生成文件
             //根据文件的后缀名，获得文件类型
+            String fileParam = "image" ;
+            if(i == 0){
+                fileParam = "fimage" ;
+            }else if(i == 1){
+                fileParam = "bimage" ;
+            }
             String fileType = getMimeType(file.getName());
             builder.addFormDataPart( //给Builder添加上传的文件
-                    "image",  //请求的名字
+                    fileParam,  //请求的名字
                     file.getName(), //文件的文字，服务器端用来解析的
                     RequestBody.create(MediaType.parse(fileType), file) //创建RequestBody，把上传的文件放入
             );

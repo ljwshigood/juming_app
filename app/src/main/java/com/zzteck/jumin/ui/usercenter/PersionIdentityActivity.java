@@ -1,5 +1,6 @@
 package com.zzteck.jumin.ui.usercenter;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.baijiahulian.common.crop.ThemeConfig;
 import com.baijiahulian.common.crop.model.PhotoInfo;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.fingerth.supdialogutils.SYSDiaLogUtils;
 import com.zx.uploadlibrary.listener.ProgressListener;
 import com.zx.uploadlibrary.listener.impl.UIProgressListener;
 import com.zzteck.jumin.R;
@@ -182,19 +184,15 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 
 	//初始化上传文件的数据
 	private List<String> initUploadFile(){
-		List<String> fileNames = new ArrayList<>();
-		fileNames.add(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-				+ File.separator + "test.txt"); //txt文件
-		fileNames.add(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-				+ File.separator + "bell.png"); //图片
-		fileNames.add(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES)
-				+ File.separator + "kobe.mp4"); //视频
-		fileNames.add(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)
-				+ File.separator + "xinnian.mp3"); //音乐
+
+		List<String> fileNames = new ArrayList<>() ;
+
+		fileNames.add(mMediaFront.getCompressFile()) ;
+		fileNames.add(mMediaOrg.getCompressFile()) ;
+
 		return fileNames;
 	}
 
-	//多文件上传（带进度）
 	private void identity() {
 		//这个是非ui线程回调，不可直接操作UI
 		final ProgressListener progressListener = new ProgressListener() {
@@ -228,7 +226,20 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 			@Override
 			public void onUIStart(long bytesWrite, long contentLength, boolean done) {
 				super.onUIStart(bytesWrite, contentLength, done);
-				Toast.makeText(getApplicationContext(),"开始上传",Toast.LENGTH_SHORT).show();
+
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+
+						SYSDiaLogUtils.showProgressDialog(PersionIdentityActivity.this, SYSDiaLogUtils.SYSDiaLogType.IosType, "正在上传...", false, new DialogInterface.OnCancelListener() {
+							@Override
+							public void onCancel(DialogInterface dialog) {
+
+							}
+						});
+					}
+				});
+				//Toast.makeText(getApplicationContext(),"开始上传",Toast.LENGTH_SHORT).show();
 			}
 
 			//上传结束
@@ -236,7 +247,14 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 			public void onUIFinish(long bytesWrite, long contentLength, boolean done) {
 				super.onUIFinish(bytesWrite, contentLength, done);
 				//uploadProgress.setVisibility(View.GONE); //设置进度条不可见
-				Toast.makeText(getApplicationContext(),"上传成功",Toast.LENGTH_SHORT).show();
+
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						SYSDiaLogUtils.dismissProgress();
+						finish();
+					}
+				});
 
 			}
 		};
@@ -250,7 +268,7 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						Toast.makeText(PersionIdentityActivity.this, "上传失败"+e.getMessage(), Toast.LENGTH_SHORT).show();
+						Toast.makeText(PersionIdentityActivity.this, "Network Error"+e.getMessage(), Toast.LENGTH_SHORT).show();
 					}
 				});
 
@@ -258,9 +276,12 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 
 			@Override
 			public void onResponse(Call call, Response response) throws IOException {
-				Log.i("TAG", "success---->"+response.body().string());
+				Log.i("TAG", "success---->"+response.toString());
+				Log.i("TAG", "success---->"+response.toString());
+				Log.i("TAG", "success---->"+response.toString());
+				Log.i("TAG", "success---->"+response.toString());
 			}
-		},mEtName.getText().toString().trim(),mEtNumber.getText().toString().trim(), UtilsTools.getSign(mContext,"App.Member.Personcer"));
+		},mEtName.getText().toString().trim(),mEtNumber.getText().toString().trim(), UtilsTools.getSign(mContext,"App.Member.Comcer"));
 
 	}
 
@@ -323,7 +344,13 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 				}else if(TextUtils.isEmpty(mEtNumber.getText().toString().trim())){
 					WindowsToast.makeText(mContext,"身份证不能为空").show();
 					return ;
-				}else {
+				}else if(mMediaFront == null || TextUtils.isEmpty(mMediaFront.getCompressFile())){
+					WindowsToast.makeText(mContext,"请上传身份正面照片").show();
+					return ;
+				}else if(mMediaOrg == null || TextUtils.isEmpty(mMediaOrg.getCompressFile())){
+					WindowsToast.makeText(mContext,"请上传身份证反面照片").show();
+					return ;
+				}else{
 					identity();
 				}
 				break ;

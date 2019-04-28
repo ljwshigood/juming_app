@@ -38,7 +38,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:text="真是姓名"
+                        android:text="公司名"
                         android:textSize="16sp" />
 
                     <EditText
@@ -47,7 +47,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:background="@null"
-                        android:hint="请输入姓名"
+                        android:hint="请输入公司名"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -63,7 +63,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:text="身份证号"
+                        android:text="营业执照号"
                         android:textSize="16sp" />
 
                     <EditText
@@ -73,7 +73,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="25dp"
                         android:background="@null"
-                        android:hint="请输入身份证号码"
+                        android:hint="请输入营业执照号码"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -114,7 +114,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="请上传身份证的反面"
+                            android:text="请上传营业执照的反面"
                             android:textSize="15sp" />
 
                     </LinearLayout>
@@ -151,7 +151,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="请上传身份证的正面"
+                            android:text="请上传营业执照的正面"
                             android:textSize="15sp" />
 
                     </LinearLayout>
@@ -196,6 +196,7 @@
                 android:gravity="center">
 
                 <LinearLayout
+                    android:id="@+id/ll_complete"
                     android:layout_width="250dp"
                     android:layout_height="50dp"
                     android:background="@drawable/bg_red_rec_press"
