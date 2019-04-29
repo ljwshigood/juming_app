@@ -19,6 +19,7 @@ public class MyFilterTabBean extends BaseFilterTabBean<MyFilterTabBean.MyChildFi
     protected String mall_ids;
     protected List<MyChildFilterBean> tabs;
 
+
     @Override
     public String getTab_name() {
         return show_name;

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ import com.zzteck.jumin.bean.ChildCategoryBean;
 import com.zzteck.jumin.db.DatabaseManager;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.utils.Constants;
+import com.zzteck.jumin.utils.SharePerfenceUtil;
 import com.zzteck.jumin.utils.UtilsTools;
 
 import org.simple.eventbus.EventBus;
@@ -268,6 +270,19 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
 
         cityListAdapter = new CityListAdapter(this, allCities, hotCities, historyCities, letterIndex);
         city_container.setAdapter(cityListAdapter);
+
+
+        city_container.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                CityCompentBean.DataBeanX.DataBean bean = (CityCompentBean.DataBeanX.DataBean) cityListAdapter.getItem(position);
+                SharePerfenceUtil.setParam(mContext,"city_id",bean.getCityid()+"");
+
+            }
+        });
+
+
     }
 
 

@@ -34,6 +34,7 @@ import com.zzteck.jumin.bean.MyPopEntityLoaderImp;
 import com.zzteck.jumin.bean.MyResultLoaderImp;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.utils.Constants;
+import com.zzteck.jumin.utils.SharePerfenceUtil;
 import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.NormalDecoration;
 
@@ -50,200 +51,202 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class CategoryListActivity extends BaseActivity implements OnClickListener,OnPopTabSetListener<MyFilterParamsBean> {
+public class CategoryListActivity extends BaseActivity implements OnClickListener, OnPopTabSetListener<MyFilterParamsBean> {
 
-	private String TAG = "liujw" ;
+    private String TAG = "liujw";
 
-	private View mMainView ;
+    private View mMainView;
 
-	private Context mContext ;
+    private Context mContext;
 
-	private RecyclerView mGvCommand ;
+    private RecyclerView mGvCommand;
 
-	private RecommandAdapter mCommandAdapter ;
+    private RecommandAdapter mCommandAdapter;
 
-	private TextView mTvTitle ;
+    private TextView mTvTitle;
 
-	private RelativeLayout mRlBack;
+    private RelativeLayout mRlBack;
 
-	private PopTabView popTabView;
+    private PopTabView popTabView;
 
-	private void initView(){
-		mGvCommand = findViewById(R.id.rl_cate_list) ;
-		mTvTitle = findViewById(R.id.tv_main_info) ;
-		mRlBack = findViewById(R.id.ll_back) ;
-		mRlBack.setOnClickListener(this);
-		mTvTitle.setText("二手房");
-		mRlBack.setVisibility(View.VISIBLE);
+    private void initView() {
+        mGvCommand = findViewById(R.id.rl_cate_list);
+        mTvTitle = findViewById(R.id.tv_main_info);
+        mRlBack = findViewById(R.id.ll_back);
+        mRlBack.setOnClickListener(this);
+        mTvTitle.setText("二手房");
+        mRlBack.setVisibility(View.VISIBLE);
 
-		popTabView = findViewById(R.id.expandpop);
+        popTabView = findViewById(R.id.expandpop);
 
-	}
+    }
 
-	private void getInfoExtra(final String catId){
+    private void getInfoExtra(final String catId) {
 
-		if(TextUtils.isEmpty(catId)){
-			return ;
-		}
+        if (TextUtils.isEmpty(catId)) {
+            return;
+        }
 
-		Map<String, String> map = new HashMap<>() ;
-		map.put("s","App.Info.Extra") ;
-		map.put("catid",catId) ;
+        Map<String, String> map = new HashMap<>();
+        map.put("s", "App.Info.Extra");
+        map.put("catid", catId);
 
-		map.put("sign", UtilsTools.getSign(mContext,"jumin_"+"App.Info.Extra"));
+        map.put("sign", UtilsTools.getSign(mContext, "jumin_" + "App.Info.Extra"));
 
-		OkHttpClient client = new OkHttpClient();
-		Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
-		Call call = client.newCall(request);
-		call.enqueue(new Callback() {
-			@Override
-			public void onFailure(Call call, IOException e) {
-				Log.e("liujw","##########################IOException : "+e.toString());
-			}
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("liujw", "##########################IOException : " + e.toString());
+            }
 
-			@Override
-			public void onResponse(Call call, final Response response) throws IOException {
-				final String responseStr = response.body().string();
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                final String responseStr = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
 
-						String message = new String(responseStr) ;
-						Gson gson = new Gson() ;
-						FilterInfo info = gson.fromJson(message,FilterInfo.class) ;
-						addMyMethod(info);
+                        String message = new String(responseStr);
+                        Gson gson = new Gson();
+                        FilterInfo info = gson.fromJson(message, FilterInfo.class);
+                        addMyMethod(info);
 
-					}
-				});
-			}
-		});
+                    }
+                });
+            }
+        });
 
-	}
+    }
 
-	private int mCurrentPage = 1  ;
+    private int mCurrentPage = 1;
 
-	/**
-	 * @param catId
-	 * @param cityId
-	 * @param pages
-	 *
-	 */
-	private void getInfosList(final String catId, final String cityId, String pages){
+    /**
+     * @param catId
+     * @param cityId
+     * @param pages
+     */
+    private void getInfosList(final String catId, final String cityId, String pages, String json) {
 
-		Map<String, String> map = new HashMap<>() ;
-		map.put("s","App.Info.Getinfos") ;
-		map.put("catid",catId) ;
-		map.put("cityid",cityId) ;
-		map.put("pages",pages) ;
+        Map<String, String> map = new HashMap<>();
+        map.put("s", "App.Info.Getinfos");
+        map.put("catid", catId);
+        map.put("cityid", cityId);
+        map.put("pages", pages);
+        if (mJson != null) {
+            map.put("extra", json);
+        }
 
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("liujw", "##########################IOException : " + e.toString());
+            }
 
-		OkHttpClient client = new OkHttpClient();
-		Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
-		Call call = client.newCall(request);
-		call.enqueue(new Callback() {
-			@Override
-			public void onFailure(Call call, IOException e) {
-				Log.e("liujw","##########################IOException : "+e.toString());
-			}
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                final String responseStr = response.body().string();
 
-			@Override
-			public void onResponse(Call call, final Response response) throws IOException {
-				final String responseStr = response.body().string();
+                Log.e("liujw", "##########################getInfosList catId : " + catId + " #####################: " + responseStr);
 
-				Log.e("liujw","##########################getInfosList catId : "+catId+" #####################: "+responseStr);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
 
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
+                        String message = new String(responseStr);
+                        Gson gson = new Gson();
+                        HomeInfo info = gson.fromJson(message, HomeInfo.class);
+                        if (mCurrentPage == 1) {
+                            initData(info);
+                        } else {
+                            if (mCommandAdapter != null) {
+                                mCommandAdapter.addAll(info.getData());
+                            }
 
-						String message = new String(responseStr) ;
-						Gson gson = new Gson() ;
-						HomeInfo info = gson.fromJson(message,HomeInfo.class) ;
-						if(mCurrentPage == 1){
-							initData(info);
-						}else{
-							if(mCommandAdapter != null){
-								mCommandAdapter.addAll(info.getData());
-							}
-
-						}
-
-
-					}
-				});
-			}
-		});
-
-	}
-
-	private void initData(HomeInfo info) {
-
-		mGvCommand.setLayoutManager(new LinearLayoutManager(this));
-		mGvCommand.addItemDecoration(new NormalDecoration(ContextCompat.getColor(this, R.color.mainGrayF8), (int) this.getResources().getDimension(R.dimen.one)));
-		mCommandAdapter = new RecommandAdapter(this,info.getData()) ;
-		mGvCommand.setAdapter(mCommandAdapter) ;
-
-		mCommandAdapter.setNoMore(R.layout.view_no_more);
-		mCommandAdapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
-			@Override
-			public void onMoreShow() {
-				Log.e("liujw", "@@@@@@@@@@@@@@@@@@@@@@@@@@@@onMoreShow");
-				if(mId != null){
-					mCurrentPage++ ;
-					getInfosList(mId,0+"",mCurrentPage+"") ;
-				}
-
-			}
-
-			@Override
-			public void onMoreClick() {
-
-			}
-		});
-
-		mCommandAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
-			@Override
-			public void onItemClick(int position) {
-
-				Intent intent = new Intent(mContext, CategoryDetailActivity.class) ;
-				startActivity(intent);
-
-			}
-		});
-
-	}
+                        }
 
 
-	/**
-	 * 模拟数据
-	 * 筛选器的 数据格式 都是大同小异
-	 * 要点:泛型处理,集合都用父类,实体都用子类表示.
-	 * @return
-	 */
-	public FilterGroup getMyData(FilterInfo.DataBean bean, int groupType, int singleOrMutiply ) {
+                    }
+                });
+            }
+        });
 
-		FilterGroup filterGroup = new FilterGroup();
+    }
 
-		filterGroup.setTab_group_name(bean.getTitle());
-		filterGroup.setTab_group_type(groupType);
-		filterGroup.setSingle_or_mutiply(singleOrMutiply);
+    private void initData(HomeInfo info) {
 
-		List<BaseFilterTabBean> singleFilterList = new ArrayList<>();
+        mGvCommand.setLayoutManager(new LinearLayoutManager(this));
+        mGvCommand.addItemDecoration(new NormalDecoration(ContextCompat.getColor(this, R.color.mainGrayF8), (int) this.getResources().getDimension(R.dimen.one)));
+        mCommandAdapter = new RecommandAdapter(this, info.getData());
+        mGvCommand.setAdapter(mCommandAdapter);
 
-		String[] choices = bean.getExtra().getChoices().split("\\r\\n");
+        mCommandAdapter.setNoMore(R.layout.view_no_more);
+        mCommandAdapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
+            @Override
+            public void onMoreShow() {
+                Log.e("liujw", "@@@@@@@@@@@@@@@@@@@@@@@@@@@@onMoreShow");
+                if (mId != null) {
+                    mCurrentPage++;
+                    getInfosList(mId, 0 + "", mCurrentPage + "", mJson);
+                }
+
+            }
+
+            @Override
+            public void onMoreClick() {
+
+            }
+        });
+
+        mCommandAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+
+                Intent intent = new Intent(mContext, CategoryDetailActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+    }
 
 
-		for (int i = 0; i < choices.length ; i++) {//一级fitler
+    /**
+     * 模拟数据
+     * 筛选器的 数据格式 都是大同小异
+     * 要点:泛型处理,集合都用父类,实体都用子类表示.
+     *
+     * @return
+     */
+    public FilterGroup getMyData(FilterInfo.DataBean bean, int groupType, int singleOrMutiply) {
 
-			String tempChoices = choices[i] ;
+        FilterGroup filterGroup = new FilterGroup();
 
-			String[] splite = tempChoices.split("=") ;
+        filterGroup.setTab_group_name(bean.getTitle());
+        filterGroup.setTab_group_type(groupType);
+        filterGroup.setSingle_or_mutiply(singleOrMutiply);
 
-			MyFilterTabBean myFilterBean = new MyFilterTabBean();
-			myFilterBean.setTab_name(splite[1]);
-			myFilterBean.setTag_ids("tagid" + "_" + i );
-			myFilterBean.setMall_ids("mallid" + "_" + i );
-			myFilterBean.setCategory_ids(splite[0]);
+        List<BaseFilterTabBean> singleFilterList = new ArrayList<>();
+
+        String[] choices = bean.getExtra().getChoices().split("\\r\\n");
+
+
+        for (int i = 0; i < choices.length; i++) {//一级fitler
+
+            String tempChoices = choices[i];
+
+            String[] splite = tempChoices.split("=");
+
+            MyFilterTabBean myFilterBean = new MyFilterTabBean();
+            myFilterBean.setTab_name(splite[1]);
+            myFilterBean.setTag_ids(bean.getIdentifier());
+            myFilterBean.setMall_ids("mallid" + "_" + i);
+            myFilterBean.setCategory_ids(splite[0]);
 
 			/*List<MyFilterTabBean.MyChildFilterBean> childFilterList = new ArrayList<>();
 			for (int j = 0; j < 5; j++) {//二级filter
@@ -258,84 +261,110 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 			//增加二级tab
 			myFilterBean.setTabs(childFilterList);*/
 
-			//增加一级tab
-			singleFilterList.add(myFilterBean);
+            //增加一级tab
+            singleFilterList.add(myFilterBean);
 
-		}
+        }
 
-		filterGroup.setFilter_tab(singleFilterList);
-		return filterGroup;
+        filterGroup.setFilter_tab(singleFilterList);
+        return filterGroup;
 
-	}
+    }
 
-	private void addMyMethod(FilterInfo info) {
-
-
-		if(info == null || info.getData() == null){
-			return ;
-		}
-
-		PopTabView ptv = popTabView.setOnPopTabSetListener(this).setPopEntityLoader(new MyPopEntityLoaderImp()).setResultLoader(new MyResultLoaderImp()) ;
-
-		for(int i = 0 ;i < info.getData().size() ;i++){
-			FilterGroup filterGroup = getMyData(info.getData().get(i), MyFilterConfig.TYPE_POPWINDOW_SINGLE,MyFilterConfig.FILTER_TYPE_SINGLE);
-			ptv.addFilterItem(filterGroup.getTab_group_name(), filterGroup.getFilter_tab(), filterGroup.getTab_group_type(), filterGroup.getSingle_or_mutiply()) ;
-		}
-
-	}
+    private void addMyMethod(FilterInfo info) {
 
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+        if (info == null || info.getData() == null) {
+            return;
+        }
 
-		setContentView(R.layout.activity_categroy_list);
-		mContext = CategoryListActivity.this ;
-		App.getInstance().addActivity(this);
- 		initView() ;
-		initData() ;
-		getInfoExtra(mId) ;
-		getInfosList(mId,0+"",mCurrentPage+"") ;
+        PopTabView ptv = popTabView.setOnPopTabSetListener(this).setPopEntityLoader(new MyPopEntityLoaderImp()).setResultLoader(new MyResultLoaderImp());
 
-	}
+        for (int i = 0; i < info.getData().size(); i++) {
+            FilterGroup filterGroup = getMyData(info.getData().get(i), MyFilterConfig.TYPE_POPWINDOW_SINGLE, MyFilterConfig.FILTER_TYPE_SINGLE);
+            ptv.addFilterItem(filterGroup.getTab_group_name(), filterGroup.getFilter_tab(), filterGroup.getTab_group_type(), filterGroup.getSingle_or_mutiply());
+        }
 
-	private String mId ;
-
-	private void initData(){
-		Intent intent = getIntent() ;
-		String title = intent.getStringExtra("title") ;
-		mId = intent.getStringExtra("id") ;
-		mTvTitle.setText(title+"");
-	}
+    }
 
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		return true;
-	}
+    private String mJson;
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		return super.onOptionsItemSelected(item);
-	}
+    private  Map mFilterMap = new HashMap();
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-	}
+    private String mCityId ;
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-			case R.id.ll_back :
-				finish();
-				break ;
-		}
-	}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-	@Override
-	public void onPopTabSet(int index, String lable, MyFilterParamsBean params, String value) {
-		//TODO 数据更新在这里
-//		Log.e("liujw","#################onPopTabSet : "+params.toString());
-	}
+        setContentView(R.layout.activity_categroy_list);
+        mContext = CategoryListActivity.this;
+        App.getInstance().addActivity(this);
+
+        mCityId = (String) SharePerfenceUtil.getParam(mContext,"city_id","0");
+
+        initView();
+        initData();
+        getInfoExtra(mId);
+
+
+        getInfosList(mId, mCityId + "", mCurrentPage + "", mJson);
+
+
+    }
+
+    private String mId;
+
+    private void initData() {
+        Intent intent = getIntent();
+        String title = intent.getStringExtra("title");
+        mId = intent.getStringExtra("id");
+        mTvTitle.setText(title + "");
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ll_back:
+                finish();
+                break;
+        }
+    }
+
+    @Override
+    public void onPopTabSet(int index, String lable, MyFilterParamsBean params, String value) {
+        //TODO 数据更新在这里
+        if (!TextUtils.isEmpty(value)) {
+            mFilterMap.put(params.getBeanList().get(0).getTag_ids(),params.getBeanList().get(0).getCategory_ids()) ;
+        }
+
+        if(mFilterMap.size() > 0){
+
+            mCurrentPage = 1 ;
+            Gson gson = new Gson() ;
+            mJson =  gson.toJson(mFilterMap);
+            Log.e("liujw", "#################onPopTabSet json : " + mJson);
+            getInfosList(mId, 0 + "", mCurrentPage + "", mJson);
+
+        }
+
+        Log.e("liujw", "#################onPopTabSet : " + "&筛选项=" + index + "\n&筛选传参=" + params + "\n&筛选值=" + value);
+    }
 }
