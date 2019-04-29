@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">聚民网</string>
 
+
+    <string name="share">分享</string>
     <string name="sign">签到</string>
     <string name="integral">积分</string>
     <string name="Japanese_currency">日币</string>

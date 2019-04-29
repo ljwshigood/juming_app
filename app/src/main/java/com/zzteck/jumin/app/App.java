@@ -12,6 +12,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
+import com.mob.MobSDK;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -223,6 +224,7 @@ public class App extends MultiDexApplication {
         JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);     		// 初始化 JPush
 
+        MobSDK.init(this);
     }
 
     /**
