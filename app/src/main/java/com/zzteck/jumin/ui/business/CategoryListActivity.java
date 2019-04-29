@@ -151,6 +151,7 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
                 final String responseStr = response.body().string();
+                //final String responseStr = "{\"ret\":200,\"data\":[],\"msg\":\"\"}" ;
 
                 Log.e("liujw", "##########################getInfosList catId : " + catId + " #####################: " + responseStr);
 
@@ -158,18 +159,23 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
                     @Override
                     public void run() {
 
-                        String message = new String(responseStr);
-                        Gson gson = new Gson();
-                        HomeInfo info = gson.fromJson(message, HomeInfo.class);
-                        if (mCurrentPage == 1) {
-                            initData(info);
-                        } else {
-                            if (mCommandAdapter != null) {
-                                mCommandAdapter.addAll(info.getData());
+                        try{
+                            String message = new String(responseStr);
+                            Gson gson = new Gson();
+                            HomeInfo info = gson.fromJson(message, HomeInfo.class);
+                            if (mCurrentPage == 1) {
+                                initData(info);
+                            } else {
+                                if (mCommandAdapter != null) {
+                                    mCommandAdapter.addAll(info.getData());
+                                }
+
                             }
+                        }catch (Exception e){
 
+                            Log.e("liujw","####################getInfosList Exception "+e.toString());
+                            e.printStackTrace();
                         }
-
 
                     }
                 });
