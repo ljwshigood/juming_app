@@ -55,7 +55,10 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 	private LinearLayout mLLDaymic ;
 
 	private ImageView mIvVideoThumb ;
-	
+
+
+
+
 	private void initView(){
 
 		mIvVideoThumb= findViewById(R.id.iv_video_thumb) ;
@@ -68,6 +71,8 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		mLLAddVideo.setOnClickListener(this);
 
 	}
+
+	private HashMap mHashExtra = new HashMap() ;
 
 	private void getExternelInfo(String catId,String id){
 
