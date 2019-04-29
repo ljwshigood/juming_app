@@ -30,6 +30,7 @@ import com.iasii.app.citylist.utils.DensityUtil;
 import com.iasii.app.citylist.utils.PingYinUtil;
 import com.iasii.app.citylist.view.LetterListView;
 import com.zzteck.jumin.R;
+import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.bean.ChildCategoryBean;
 import com.zzteck.jumin.db.DatabaseManager;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
@@ -103,6 +104,12 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
         getCityist() ;
 
         EventBus.getDefault().register(this);
+
+
+        if(cityListAdapter != null && !TextUtils.isEmpty(App.getInstance().locationCity)){
+            cityListAdapter.notifyLocationCity(App.getInstance().locationCity);
+        }
+
     }
 
     private void getCityist() {
@@ -138,7 +145,6 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
             }
         });
     }
-
 
 
     @Subscriber
@@ -277,6 +283,9 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
                 CityCompentBean.DataBeanX.DataBean bean = (CityCompentBean.DataBeanX.DataBean) cityListAdapter.getItem(position);
+
+                App.getInstance().isSelectCity = true ;
+
                 SharePerfenceUtil.setParam(mContext,"city_id",bean.getCityid()+"");
 
             }

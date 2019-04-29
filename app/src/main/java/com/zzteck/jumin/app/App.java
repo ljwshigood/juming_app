@@ -51,6 +51,10 @@ public class App extends MultiDexApplication {
 
     private static App mInstance;
 
+    public boolean isSelectCity ;
+
+    public String locationCity ;
+
     public App() {
         super ();
     }

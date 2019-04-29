@@ -141,6 +141,11 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 
 	 }
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		App.getInstance().isSelectCity = false ;
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

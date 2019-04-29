@@ -1,16 +1,38 @@
 package com.zzteck.jumin.service;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.google.gson.Gson;
+import com.iasii.app.citylist.entity.CityCompentBean;
+import com.zzteck.jumin.app.App;
+import com.zzteck.jumin.utils.Constants;
+import com.zzteck.jumin.utils.SharePerfenceUtil;
+import com.zzteck.jumin.utils.UtilsTools;
 
 import org.simple.eventbus.EventBus;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by Administrator on 2019/2/28 0028.
@@ -45,11 +67,24 @@ public class LocationService extends Service {
     AMapLocationListener locationListener = new AMapLocationListener() {
         @Override
         public void onLocationChanged(AMapLocation loc) {
+
+            if(App.getInstance().isSelectCity){
+                return ;
+            }
+
             if (null != loc) {
+
                 EventBus.getDefault().post(loc.getCity());
-                /*if(cityListAdapter != null){
-                    cityListAdapter.notifyLocationCity(loc.getCity());
-                }*/
+                App.getInstance().locationCity  = loc.getCity() ;
+                stopLocation();
+
+                for(int i= 0 ;i < citiesData.size() ;i++){
+                    if(loc.getCity().equals(citiesData.get(i).getCityname())){
+                        SharePerfenceUtil.setParam(mContext,"city_id",citiesData.get(i).getCityid());
+                        break ;
+                    }
+                }
+
             }
         }
     };
@@ -160,15 +195,78 @@ public class LocationService extends Service {
         return null;
     }
 
+    private Context mContext ;
+
     @Override
     public void onCreate() {
         super.onCreate();
-
+        mContext = this ;
         initLocation();
         locationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
 
         startLocation();
+
+        getCityist() ;
+
     }
+
+    private List<CityCompentBean.DataBeanX.DataBean> citiesData;
+
+    private void getCityist() {
+
+        Map<String, String> map = new HashMap<>();
+        map.put("s", "App.City.Index");
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("liujw", "##########################IOException : " + e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                final String responseStr = response.body().string();
+                String message = new String(responseStr);
+                Gson gson = new Gson();
+                CityCompentBean bean  = gson.fromJson(message,CityCompentBean.class) ;
+                citiesData = getCityList(bean);
+            }
+        });
+    }
+
+
+    private ArrayList<CityCompentBean.DataBeanX.DataBean> getCityList(CityCompentBean bean) {
+        ArrayList<CityCompentBean.DataBeanX.DataBean> list = new ArrayList<>();
+        if(bean != null && bean.getData() != null && bean.getData().getData() != null){
+            for(int i = 0 ;i < bean.getData().getData().size() ;i++){
+                list.add(bean.getData().getData().get(i)) ;
+            }
+        }
+
+        Collections.sort(list, comparator);
+        return list;
+    }
+
+
+    /**
+     * a-z排序
+     */
+    Comparator comparator = new Comparator<CityCompentBean.DataBeanX.DataBean>() {
+        @Override
+        public int compare(CityCompentBean.DataBeanX.DataBean lhs, CityCompentBean.DataBeanX.DataBean rhs) {
+            String a = lhs.getCitypy().substring(0, 1);
+            String b = rhs.getCitypy().substring(0, 1);
+            int flag = a.compareTo(b);
+            if (flag == 0) {
+                return a.compareTo(b);
+            } else {
+                return flag;
+            }
+        }
+    };
 
     @Override
     public void onDestroy() {
