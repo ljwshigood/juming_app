@@ -3,6 +3,7 @@ package com.zzteck.jumin.ui.usercenter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,24 +24,32 @@ import com.baijiahulian.common.crop.model.PhotoInfo;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.fingerth.supdialogutils.SYSDiaLogUtils;
+import com.google.gson.Gson;
 import com.zx.uploadlibrary.listener.ProgressListener;
 import com.zx.uploadlibrary.listener.impl.UIProgressListener;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.bean.MediaInfo;
+import com.zzteck.jumin.bean.UploadInfo;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.OKHttpUtils;
 import com.zzteck.jumin.utils.PictureUtil;
 import com.zzteck.jumin.utils.UtilsTools;
+import com.zzteck.jumin.webmanager.CountingRequestBody;
+import com.zzteck.jumin.webmanager.RequestBuilder;
 import com.zzteck.zzview.WindowsToast;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.Response;
 
 
@@ -156,6 +165,8 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 		mLLComplete.setOnClickListener(this);
 	}
 
+	private OkHttpClient client ;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -164,6 +175,8 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 
 		mContext = OrgIdentityActivity.this ;
 		App.getInstance().addActivity(this);
+
+		client = new OkHttpClient() ;
 
  		initView() ;
 	}
@@ -248,7 +261,11 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 					WindowsToast.makeText(mContext,"请上传营业执照反面照片").show();
 					return ;
 				}else{
-					identity();
+					try {
+						upload(Constants.HOST);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
 
 				break ;
@@ -256,105 +273,79 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 
 	}
 
-	private void identity() {
-		//这个是非ui线程回调，不可直接操作UI
-		final ProgressListener progressListener = new ProgressListener() {
+	private void upload(final String url) throws Exception {
+
+		new AsyncTask<Integer, Integer, String>() {
+
 			@Override
-			public void onProgress(long bytesWrite, long contentLength, boolean done) {
-				Log.i("TAG", "bytesWrite:" + bytesWrite);
-				Log.i("TAG", "contentLength" + contentLength);
-				Log.i("TAG", (100 * bytesWrite) / contentLength + " % done ");
-				Log.i("TAG", "done:" + done);
-				Log.i("TAG", "================================");
-			}
-		};
+			protected String doInBackground(Integer... params) {
+				MultipartBody body = RequestBuilder.uploadRequestBody3(OrgIdentityActivity.this,mEtName.getText().toString().trim(),mEtNumber.getText().toString().trim(),
+						new File(mMediaFront.getCompressFile()),new File(mMediaOrg.getCompressFile()));
 
 
-		//这个是ui线程回调，可直接操作UI
-		UIProgressListener uiProgressRequestListener = new UIProgressListener() {
-			@Override
-			public void onUIProgress(long bytesWrite, long contentLength, boolean done) {
-				Log.i("TAG", "bytesWrite:" + bytesWrite);
-				Log.i("TAG", "contentLength" + contentLength);
-				Log.i("TAG", (100 * bytesWrite) / contentLength + " % done ");
-				Log.i("TAG", "done:" + done);
-				Log.i("TAG", "================================");
-				//ui层回调,设置当前上传的进度值
-				int progress = (int) ((100 * bytesWrite) / contentLength);
-				//	uploadProgress.setProgress(progress);
-				//uploadTV.setText("上传进度值：" + progress + "%");
-			}
-
-			//上传开始
-			@Override
-			public void onUIStart(long bytesWrite, long contentLength, boolean done) {
-				super.onUIStart(bytesWrite, contentLength, done);
-
-				runOnUiThread(new Runnable() {
+				CountingRequestBody monitoredRequest = new CountingRequestBody(body, new CountingRequestBody.Listener() {
 					@Override
-					public void run() {
+					public void onRequestProgress(long bytesWritten, long contentLength) {
+						float percentage = 100f * bytesWritten / contentLength;
+						if (percentage >= 0) {
+							publishProgress(Math.round(percentage));
+							Log.e("progress ", percentage + "");
+						} else {
+							Log.e("No progress ", 0 + "");
+						}
+					}
+				});
 
-						SYSDiaLogUtils.showProgressDialog(OrgIdentityActivity.this, SYSDiaLogUtils.SYSDiaLogType.IosType, "正在上传...", false, new DialogInterface.OnCancelListener() {
+				Request request = new Request.Builder()
+						.url(url)
+						.post(monitoredRequest)
+						.build();
+				Call response = client.newCall(request) ;
+
+				response.enqueue(new Callback() {
+					@Override
+					public void onFailure(Call call, IOException e) {
+						Log.e("liujw","####################onFailure");
+					}
+
+					@Override
+					public void onResponse(Call call, Response response) throws IOException {
+						final String responseStr = response.body().string();
+						Gson gson = new Gson() ;
+						final UploadInfo bean = gson.fromJson(responseStr, UploadInfo.class) ;
+						runOnUiThread(new Runnable() {
 							@Override
-							public void onCancel(DialogInterface dialog) {
-
+							public void run() {
+								WindowsToast.makeText(mContext,bean.getData().getInfo()).show();
+								if(bean.getData().isIs_login()){
+									finish();
+								}
+								Log.e("liujw","####################responseStr "+responseStr);
 							}
 						});
-					}
-				});
-			}
 
-			//上传结束
-			@Override
-			public void onUIFinish(long bytesWrite, long contentLength, boolean done) {
-				super.onUIFinish(bytesWrite, contentLength, done);
-
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						SYSDiaLogUtils.dismissProgress();
-						finish();
 					}
 				});
 
-			}
-		};
-
-
-		//开始Post请求,上传文件
-		OKHttpUtils.doPostRequest(Constants.HOST, initUploadFile(), uiProgressRequestListener, new Callback() {
-			@Override
-			public void onFailure(Call call, final IOException e) {
-				Log.i("TAG", "error------> "+e.getMessage());
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						Toast.makeText(OrgIdentityActivity.this, "Network Error"+e.getMessage(), Toast.LENGTH_SHORT).show();
-					}
-				});
-
+				return "";
 			}
 
 			@Override
-			public void onResponse(Call call, Response response) throws IOException {
-				Log.i("TAG", "success---->"+response.toString());
-				Log.i("TAG", "success---->"+response.toString());
-				Log.i("TAG", "success---->"+response.toString());
-				Log.i("TAG", "success---->"+response.toString());
+			protected void onPostExecute(String result) {
 			}
-		},mEtName.getText().toString().trim(),mEtNumber.getText().toString().trim(), UtilsTools.getSign(mContext,"App.Member.Comcer"));
 
+			@Override
+			protected void onPreExecute() {
+			}
+
+			@Override
+			protected void onProgressUpdate( Integer... values) {
+
+			}
+
+
+		}.execute();
 	}
 
-	//初始化上传文件的数据
-	private List<String> initUploadFile(){
-
-		List<String> fileNames = new ArrayList<>() ;
-
-		fileNames.add(mMediaFront.getCompressFile()) ;
-		fileNames.add(mMediaOrg.getCompressFile()) ;
-
-		return fileNames;
-	}
 
 }

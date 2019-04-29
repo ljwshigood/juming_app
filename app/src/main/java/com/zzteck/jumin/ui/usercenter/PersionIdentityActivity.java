@@ -292,7 +292,6 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 	}
 
 
-
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()){

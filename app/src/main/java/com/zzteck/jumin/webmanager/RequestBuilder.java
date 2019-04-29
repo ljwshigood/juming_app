@@ -50,6 +50,28 @@ public class RequestBuilder {
     }
 
 
+    public static MultipartBody uploadRequestBody3(Context context, String cname, String idc, File ffile,File bimage) {
+
+        String content_type = getMimeType(ffile.getPath());
+        String file_path = ffile.getAbsolutePath();
+        RequestBody file_body = RequestBody.create(MediaType.parse(content_type), ffile);
+
+        String content_type1 = getMimeType(bimage.getPath());
+        String file_path1 = ffile.getAbsolutePath();
+        RequestBody file_body1 = RequestBody.create(MediaType.parse(content_type1), bimage);
+
+        return new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("type", content_type)
+                .addFormDataPart("cname",cname)
+                .addFormDataPart("s", "App.Member.Personcer")
+                .addFormDataPart("idc",idc)
+                .addFormDataPart("sign", UtilsTools.getSign(context,"App.Member.Personcer"))
+                .addFormDataPart("bimage", file_path1.substring(file_path.lastIndexOf("/") + 1), file_body1)
+                .addFormDataPart("fimage", file_path.substring(file_path.lastIndexOf("/") + 1), file_body).build();
+
+    }
+
     public static MultipartBody uploadRequestBody2(Context context, String cname, String idc, File ffile,File bimage) {
 
         String content_type = getMimeType(ffile.getPath());
