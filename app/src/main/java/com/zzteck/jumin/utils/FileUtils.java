@@ -24,6 +24,11 @@ public class FileUtils {
 		
 	}
 
+	public static String getFileExt(String fileName) {
+		return fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
+	}
+
+
 	public static Bitmap getVideoThumb(String path) {
 
 		MediaMetadataRetriever media = new MediaMetadataRetriever();

@@ -34,22 +34,7 @@ public class RequestBuilder {
                 .build();
     }
 
-    public static MultipartBody uploadRequestBody2(Context context, String title, String imageFormat, String token, File fileFront,File fileRear) {
-
-        String content_type = getMimeType(fileFront.getPath());
-        String file_path = fileFront.getAbsolutePath();
-        RequestBody file_body = RequestBody.create(MediaType.parse(content_type), fileFront);
-
-        return new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("type", content_type)
-                .addFormDataPart("s", "App.Member.Upface")
-                .addFormDataPart("sign", UtilsTools.getSign(context,"App.Member.Upface"))
-                .addFormDataPart("logo", file_path.substring(file_path.lastIndexOf("/") + 1), file_body).build();
-
-    }
-
-    public static MultipartBody uploadRequestBody(Context context, String title, String imageFormat, String token, File file) {
+    public static MultipartBody uploadRequestBody(Context context, File file) {
 
         String content_type = getMimeType(file.getPath());
         String file_path = file.getAbsolutePath();
@@ -63,6 +48,30 @@ public class RequestBuilder {
                 .addFormDataPart("logo", file_path.substring(file_path.lastIndexOf("/") + 1), file_body).build();
 
     }
+
+
+    public static MultipartBody uploadRequestBody2(Context context, String cname, String idc, File ffile,File bimage) {
+
+        String content_type = getMimeType(ffile.getPath());
+        String file_path = ffile.getAbsolutePath();
+        RequestBody file_body = RequestBody.create(MediaType.parse(content_type), ffile);
+
+        String content_type1 = getMimeType(bimage.getPath());
+        String file_path1 = ffile.getAbsolutePath();
+        RequestBody file_body1 = RequestBody.create(MediaType.parse(content_type1), bimage);
+
+        return new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("type", content_type)
+                .addFormDataPart("cname",cname)
+                .addFormDataPart("s", "App.Member.Personcer")
+                .addFormDataPart("idc",idc)
+                .addFormDataPart("sign", UtilsTools.getSign(context,"App.Member.Personcer"))
+                .addFormDataPart("bimage", file_path1.substring(file_path.lastIndexOf("/") + 1), file_body1)
+                .addFormDataPart("fimage", file_path.substring(file_path.lastIndexOf("/") + 1), file_body).build();
+
+    }
+
     private static String getMimeType(String path) {
         String extension = MimeTypeMap.getFileExtensionFromUrl(path);
         return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
