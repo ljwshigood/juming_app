@@ -31,6 +31,7 @@ import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.ui.mainui.MainActivity;
 import com.zzteck.jumin.utils.Constants;
+import com.zzteck.jumin.utils.FileUtils;
 import com.zzteck.jumin.utils.GlideCircleTransform;
 import com.zzteck.jumin.utils.PictureUtil;
 import com.zzteck.jumin.webmanager.CountingRequestBody;
@@ -61,20 +62,14 @@ public class ModifyUserInfoActivity extends BaseActivity implements OnClickListe
 
     private OkHttpClient client ;
 
-    public static String getFileExt(String fileName) {
-        return fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
-    }
-
     private void upload(final File file,final String url) throws Exception {
 
         new AsyncTask<Integer, Integer, String>() {
 
             @Override
             protected String doInBackground(Integer... params) {
-                String fileExtention = getFileExt(file.getName());
-                String filename = file.getName();
-                MultipartBody body = RequestBuilder.uploadRequestBody(ModifyUserInfoActivity.this,filename, fileExtention, "", file);
 
+                MultipartBody body = RequestBuilder.uploadRequestBody(ModifyUserInfoActivity.this, file);
 
                 CountingRequestBody monitoredRequest = new CountingRequestBody(body, new CountingRequestBody.Listener() {
                     @Override

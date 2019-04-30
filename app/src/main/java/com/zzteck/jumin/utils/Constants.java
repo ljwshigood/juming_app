@@ -13,5 +13,4 @@ public class Constants {
 
     public static final String HOST = "http://api.jumin.cn/" ;
 
-
 }

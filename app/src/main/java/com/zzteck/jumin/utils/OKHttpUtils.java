@@ -208,7 +208,7 @@ public class OKHttpUtils {
         MultipartBody.Builder builder = new MultipartBody.Builder();
 
 
-        for (int i = 0; i < fileNames.size(); i++) { //对文件进行遍历
+        /*for (int i = 0; i < fileNames.size(); i++) { //对文件进行遍历
             File file = new File(fileNames.get(i)); //生成文件
             //根据文件的后缀名，获得文件类型
             String fileParam = "image" ;
@@ -223,13 +223,14 @@ public class OKHttpUtils {
                     file.getName(), //文件的文字，服务器端用来解析的
                     RequestBody.create(MediaType.parse(fileType), file) //创建RequestBody，把上传的文件放入
             );
-        }
+        }*/
 
         //TODO liujianwei 增加参数
         builder.addFormDataPart("s", "App.Member.Personcer")
                 .addFormDataPart("cname", cname)
                 .addFormDataPart("idc",idc)
-                .addFormDataPart("sign", sign) ;
+                .addFormDataPart("sign", sign)
+                .addFormDataPart("__debug__",1+"");
 
         return builder.build(); //根据Builder创建请求
     }

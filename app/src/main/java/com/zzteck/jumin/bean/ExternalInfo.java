@@ -138,7 +138,17 @@ public class ExternalInfo implements Serializable {
 
             private String units ;
 
-            private String choices;
+            private String choices ;
+
+            public String getParentid() {
+                return parentid;
+            }
+
+            public void setParentid(String parentid) {
+                this.parentid = parentid;
+            }
+
+            private String parentid ;
 
             public String getChoices() {
                 return choices;
