@@ -3,17 +3,22 @@ package com.zzteck.jumin.ui.business;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -24,6 +29,9 @@ import com.icechn.videorecorder.ui.RecordingActivity2;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.ExternalInfo;
+import com.zzteck.jumin.bean.LoginBean;
+import com.zzteck.jumin.pop.CityAdapter;
+import com.zzteck.jumin.pop.CityEntity;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.DeviceUtil;
@@ -36,6 +44,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import me.yokeyword.indexablerv.EntityWrapper;
+import me.yokeyword.indexablerv.IndexableAdapter;
+import me.yokeyword.indexablerv.IndexableLayout;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -55,9 +66,6 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 	private LinearLayout mLLDaymic ;
 
 	private ImageView mIvVideoThumb ;
-
-
-
 
 	private void initView(){
 
@@ -123,112 +131,140 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		mId = getIntent().getStringExtra("subCatId") ;
 	}
 
-	/**
-	 * 动态添加线性布局
-	 */
-	private void addLinearLayout() {
-		//initMissionList：存储几条测试数据
-		for (int i = 0; i < 4 ; i++) {
-			//LinearLayout默认是水平(0)居中，现在改为垂直居中
-			mLLDaymic.setOrientation(LinearLayout.VERTICAL);
-			//实例化一个LinearLayout
-			LinearLayout linearLayout = new LinearLayout(this);
-			//设置LinearLayout属性(宽和高)
-			/*LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 120);
-			//设置边距
-			layoutParams.setMargins(54, 0, 84, 0);
-			//将以上的属性赋给LinearLayout
-			linearLayout.setLayoutParams(layoutParams);
-			//实例化一个TextView
-			TextView tv = new TextView(this);
-			//设置宽高以及权重
-			LinearLayout.LayoutParams tvParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
-			//设置textview垂直居中
-			tvParams.gravity = Gravity.CENTER_VERTICAL;
-			tv.setLayoutParams(tvParams);
-			tv.setTextSize(14);
-			tv.setTextColor(getResources().getColor(R.color.blue));
-			tv.setText("fafasfdsafs");
 
-			RadioGroup radioGroup = new RadioGroup(this);
-			radioGroup.setLayoutParams(new RadioGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 120));
-			radioGroup.setOrientation(0);
+	public enum Location {
 
-			RadioGroup.LayoutParams rbtnParams = new RadioGroup.LayoutParams(72, 72);
-			rbtnParams.gravity=Gravity.CENTER_VERTICAL;
+		LEFT,
+		RIGHT,
+		TOP,
+		BOTTOM;
 
-			RadioGroup.LayoutParams rbtnParamsf = new RadioGroup.LayoutParams(72, 72);
-			rbtnParamsf.gravity=Gravity.CENTER_VERTICAL;
-			rbtnParamsf.leftMargin=84;
-			rbtnParamsf.rightMargin=90;
+	}
 
-			final RadioButton radioButtonF = new RadioButton(this);
-			radioButtonF.setLayoutParams(rbtnParamsf);
-			radioButtonF.setButtonDrawable(android.R.color.transparent);
-			radioButtonF.setBackground(getResources().getDrawable(R.drawable.ic_tip));
+	private PopupWindow popupWindow ;
 
-			final RadioButton radioButtonT = new RadioButton(this);
-			radioButtonT.setLayoutParams(rbtnParams);
-			radioButtonT.setButtonDrawable(android.R.color.transparent);
-			radioButtonT.setBackground(getResources().getDrawable(R.drawable.ic_tip));
-
-			radioGroup.addView(radioButtonF);
-			radioGroup.addView(radioButtonT);
+	private int from = 0 ;
 
 
+	private List<CityEntity> initPopData(){
 
-			TextView tv1 = new TextView(this);
-			tv1.setText("fdasf"+i);
-			tv1.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,1.0f));
+		return null ;
+	}
 
-			TextView tv2 = new TextView(this);
-			tv2.setText("tv222222fdasf"+i);
-			tv2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,1.0f));*/
+	private List<CityEntity> mDatas ;
+
+	protected void initPopupWindow(){
+
+		View popupWindowView = getLayoutInflater().inflate(R.layout.right_pop_memu, null);
+		if(Location.BOTTOM.ordinal() == from){
+			popupWindow = new PopupWindow(popupWindowView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+		}else{
+			popupWindow = new PopupWindow(popupWindowView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
+		}
+		if(Location.LEFT.ordinal() == from){
+			popupWindow.setAnimationStyle(R.style.AnimationLeftFade);
+		}else if(Location.RIGHT.ordinal() == from){
+			popupWindow.setAnimationStyle(R.style.AnimationRightFade);
+		}else if(Location.BOTTOM.ordinal() == from){
+			popupWindow.setAnimationStyle(R.style.AnimationBottomFade);
+		}
+		ColorDrawable dw = new ColorDrawable(0xffffffff);
+		popupWindow.setBackgroundDrawable(dw);
+
+		if(Location.LEFT.ordinal() == from){
+			popupWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_release, null), Gravity.LEFT, 0, 500);
+		}else if(Location.RIGHT.ordinal() == from){
+			popupWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_release, null), Gravity.RIGHT, 0, 500);
+		}else if(Location.BOTTOM.ordinal() == from){
+			popupWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_release, null), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+		}
+		backgroundAlpha(0.5f);
+		popupWindow.setOnDismissListener(new popupDismissListener());
+
+		/*
+		*
+		* 	Button open = (Button)popupWindowView.findViewById(R.id.open);
+            Button save = (Button)popupWindowView.findViewById(R.id.save);
+		    Button close = (Button)popupWindowView.findViewById(R.id.close);
+
+		* */
+
+        IndexableLayout indexableLayout = findViewById(R.id.indexableLayout);
+        indexableLayout.setLayoutManager(new LinearLayoutManager(this));
+
+		indexableLayout.setCompareMode(IndexableLayout.MODE_FAST);
+
+		CityAdapter adapter = new CityAdapter(this);
+		indexableLayout.setAdapter(adapter);
+		mDatas = initPopData();
+
+		adapter.setDatas(mDatas, new IndexableAdapter.IndexCallback<CityEntity>() {
+			@Override
+			public void onFinished(List<EntityWrapper<CityEntity>> datas) {
+				// 数据处理完成后回调
+			}
+		});
+
+		// set Center OverlayView
+		indexableLayout.setOverlayStyle_Center();
+
+		// set Listener
+		adapter.setOnItemContentClickListener(new IndexableAdapter.OnItemContentClickListener<CityEntity>() {
+			@Override
+			public void onItemClick(View v, int originalPosition, int currentPosition, CityEntity entity) {
+				if (originalPosition >= 0) {
+					//ToastUtil.showShort(PickCityActivity.this, "选中:" + entity.getName() + "  当前位置:" + currentPosition + "  原始所在数组位置:" + originalPosition);
+				} else {
+					//ToastUtil.showShort(PickCityActivity.this, "选中Header:" + entity.getName() + "  当前位置:" + currentPosition);
+				}
+			}
+		});
+
+		adapter.setOnItemTitleClickListener(new IndexableAdapter.OnItemTitleClickListener() {
+			@Override
+			public void onItemClick(View v, int currentPosition, String indexTitle) {
+				//ToastUtil.showShort(PickCityActivity.this, "选中:" + indexTitle + "  当前位置:" + currentPosition);
+			}
+		});
 
 
+		popupWindowView.setOnTouchListener(new View.OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+
+				/*if( popupWindow!=null && popupWindow.isShowing()){
+					popupWindow.dismiss();
+					popupWindow=null;
+				}*/
+
+				return false;
+			}
+		});
 
 
-			LinearLayout layoutLeft = new LinearLayout(this); // 线性布局方式
-			layoutLeft.setOrientation(LinearLayout.HORIZONTAL); //
-			layoutLeft.setBackgroundColor(mContext.getResources().getColor(R.color.colorRed));
-			layoutLeft.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,1.0f));
+	}
 
+	class popupDismissListener implements PopupWindow.OnDismissListener{
 
-			LinearLayout layoutRight = new LinearLayout(this); // 线性布局方式
-			layoutRight.setOrientation(LinearLayout.HORIZONTAL); //
-			layoutRight.setBackgroundColor(mContext.getResources().getColor(R.color.colorGreen));
-			layoutRight.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,1.0f));
-
-
-			ImageView imageView = new ImageView(this);
-			imageView.setBackgroundResource(R.drawable.ic_loading_rotate);
-			LinearLayout.LayoutParams PARA = new LinearLayout.LayoutParams(50, 50);//
-			imageView.setLayoutParams(PARA);
-			layoutRight.addView(imageView);
-
-			//添加一个TextView，设置成layout_width:wrap_content;layout_height:wrap_content;
-			TextView tv33 = new TextView(this); // 普通聊天对话
-			tv33.setText("我和猫猫是新添加的");
-			tv33.setBackgroundColor(Color.GRAY);
-			LinearLayout.LayoutParams LP_WW = new LinearLayout.LayoutParams(
-					ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-			tv33.setLayoutParams(LP_WW);
-			layoutLeft.addView(tv33);
-
-
-
-			linearLayout.addView(layoutLeft);
-			linearLayout.addView(layoutRight);
-
-			/*linearLayout.addView(tv);
-			linearLayout.addView(radioGroup);*/
-
-			mLLDaymic.addView(linearLayout);
+		@Override
+		public void onDismiss() {
+			backgroundAlpha(1f);
 		}
 
 	}
 
-	private void daymicLayout(ExternalInfo info){
+	/**
+	 *
+	 */
+
+	public void backgroundAlpha(float bgAlpha){
+		WindowManager.LayoutParams lp = getWindow().getAttributes();
+		lp.alpha = bgAlpha; //0.0-1.0
+		getWindow().setAttributes(lp);
+	}
+
+	private void daymicLayout(final ExternalInfo info){
 
 		if(info == null || info.getData() == null){
 			return ;
@@ -278,22 +314,23 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 			}else if(info.getData().get(i).getType().equals("number")){
 
-				EditText tvPrice = new EditText(this);
-				tvPrice.setHint("请输入价格");
-				tvPrice.setLayoutParams(new LinearLayout.LayoutParams(200,ViewGroup.LayoutParams.WRAP_CONTENT,0.8f));
+				EditText etPrice = new EditText(this);
+				etPrice.setHint("请输入价格");
+				etPrice.setBackground(null);
+				etPrice.setLayoutParams(new LinearLayout.LayoutParams(200,ViewGroup.LayoutParams.WRAP_CONTENT,0.8f));
 
 				TextView tvUnit = new TextView(this);
 				tvUnit.setText("元");
 				tvUnit.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
 
-				linearLayoutRight.addView(tvPrice);
+				linearLayoutRight.addView(etPrice);
 				linearLayoutRight.addView(tvUnit);
 
 			}else if(info.getData().get(i).getType().equals("select")){
 
 
 				MaterialSpinner spinner = new MaterialSpinner(mContext) ;
-				spinner.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+				spinner.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
 
 				String[] attray = info.getData().get(i).getExtra().getChoices().split("\\r\\n") ;
 
@@ -314,8 +351,63 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				});
 
 				linearLayoutRight.addView(spinner);
-			}
+			}else if(info.getData().get(i).getType().equals("text")){
 
+				EditText tvText = new EditText(this);
+				tvText.setHint(info.getData().get(i).getTitle());
+				tvText.setSingleLine();
+				tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
+
+				linearLayoutRight.addView(tvText) ;
+
+
+			}else if(info.getData().get(i).getType().equals("textarea")){
+
+				EditText tvText = new EditText(this);
+				tvText.setHint(info.getData().get(i).getTitle());
+				tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
+
+				linearLayoutRight.addView(tvText) ;
+
+
+
+			}else if(info.getData().get(i).getType().equals("checkbox")){
+
+				LinearLayout llContainer = new LinearLayout(this);
+				llContainer.setLayoutParams(new RadioGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+				llContainer.setOrientation(LinearLayout.HORIZONTAL);
+
+				String choices = info.getData().get(i).getExtra().getChoices();
+				String[] arrayChoices = choices.split("\\r\\n") ;
+
+
+				for(int j = 0 ; j< arrayChoices.length ; j++){
+					final CheckBox checkButton = new CheckBox(this) ;
+					int index = arrayChoices[j].indexOf("=") ;
+					checkButton.setText(arrayChoices[j].substring(index+1,arrayChoices[j].length()));
+					checkButton.setLayoutParams(new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT,RadioGroup.LayoutParams.WRAP_CONTENT)) ;
+					llContainer.addView(checkButton);
+				}
+
+				linearLayoutRight.addView(llContainer);
+
+			}else if(info.getData().get(i).getType().equals("link")){
+
+				TextView tvText = new TextView(this);
+				tvText.setHint(info.getData().get(i).getTitle());
+				tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
+
+				linearLayoutRight.addView(tvText) ;
+
+                final int position = i ;
+				tvText.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						initPopupWindow() ;
+					}
+				});
+
+			}
 
 			LinearLayout ll = new LinearLayout(this);
 
@@ -332,6 +424,44 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			mLLDaymic.addView(ll);
 		}
 	}
+
+	private void linkcat(String catid){
+
+        Map<String, String> map = new HashMap<>() ;
+        map.put("s","App.Category.Linkcat") ;
+        map.put("catid",catid) ;
+
+        map.put("sign",UtilsTools.getSign(mContext,"App.Category.Linkcat")) ;
+
+        OkHttpClient client = new OkHttpClient();
+        //构造Request对象
+        //采用建造者模式，链式调用指明进行Get请求,传入Get的请求地址
+        Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
+        Call call = client.newCall(request);
+        //异步调用并设置回调函数
+        call.enqueue(new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("liujw","##########################IOException : "+e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                final String responseStr = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        String message = new String(responseStr.getBytes()) ;
+                        Gson gson = new Gson() ;
+                        LoginBean bean = gson.fromJson(message,LoginBean.class) ;
+
+                    }
+                });
+            }
+        });
+    }
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
