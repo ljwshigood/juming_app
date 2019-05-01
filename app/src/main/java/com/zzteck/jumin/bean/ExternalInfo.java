@@ -57,7 +57,7 @@ public class ExternalInfo implements Serializable {
          * value :
          */
 
-        private int required;
+        private String required;
         private String title;
         private String type;
         private String placeholder;
@@ -65,11 +65,11 @@ public class ExternalInfo implements Serializable {
         private ExtraBean extra;
         private String value;
 
-        public int getRequired() {
+        public String getRequired() {
             return required;
         }
 
-        public void setRequired(int required) {
+        public void setRequired(String required) {
             this.required = required;
         }
 

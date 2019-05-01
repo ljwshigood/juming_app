@@ -29,9 +29,11 @@ import com.icechn.videorecorder.ui.RecordingActivity2;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.ExternalInfo;
+import com.zzteck.jumin.bean.LinkCat;
 import com.zzteck.jumin.bean.LoginBean;
 import com.zzteck.jumin.pop.CityAdapter;
 import com.zzteck.jumin.pop.CityEntity;
+import com.zzteck.jumin.pop.LinkCatAdapter;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.DeviceUtil;
@@ -67,8 +69,10 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 	private ImageView mIvVideoThumb ;
 
-	private void initView(){
+	private LinearLayout mLLComplete ;
 
+	private void initView(){
+		mLLComplete = findViewById(R.id.ll_complete) ;
 		mIvVideoThumb= findViewById(R.id.iv_video_thumb) ;
 		mLLDaymic = findViewById(R.id.ll_daymic) ;
 		mTvMainInfo = findViewById(R.id.tv_main_info) ;
@@ -77,20 +81,20 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		mRlBack.setOnClickListener(this);
 		mRlBack.setVisibility(View.VISIBLE);
 		mLLAddVideo.setOnClickListener(this);
-
+		mLLComplete.setOnClickListener(this);
 	}
 
 	private HashMap mHashExtra = new HashMap() ;
 
 	private void getExternelInfo(String catId,String id){
 
-		if(TextUtils.isEmpty(mCatId) || TextUtils.isEmpty(mId)){
+		if(TextUtils.isEmpty(mCatId) || TextUtils.isEmpty(mSubId)){
 			return ;
 		}
 
 		Map<String, String> map = new HashMap<>() ;
 		map.put("s","App.Info.Typeoptions") ;
-		map.put("catid",catId) ;
+		map.put("catid",mSubId) ;
 		map.put("id",id) ;
 
 		map.put("sign", UtilsTools.getSign(mContext,"App.Info.Typeoptions")) ;
@@ -107,6 +111,8 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			@Override
 			public void onResponse(Call call, final Response response) throws IOException {
 				final String responseStr = response.body().string();
+
+				Log.e("liujw","##########################getExternelInfo responseStr : "+responseStr);
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
@@ -123,12 +129,12 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 	private String mCatId ;
 
-	private String mId ;
+	private String mSubId;
 
 	private void initData(){
 		mTvMainInfo.setText("发布");
 		mCatId = getIntent().getStringExtra("catId") ;
-		mId = getIntent().getStringExtra("subCatId") ;
+		mSubId = getIntent().getStringExtra("subCatId") ;
 	}
 
 
@@ -146,12 +152,14 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 	private int from = 0 ;
 
 
-	private List<CityEntity> initPopData(){
+	private List<LinkCat.DataBean> initPopData(){
 
 		return null ;
 	}
 
-	private List<CityEntity> mDatas ;
+	private List<LinkCat.DataBean> mDatas = new ArrayList<>() ;
+
+	private LinkCatAdapter mLinkCatadapter ;
 
 	protected void initPopupWindow(){
 
@@ -181,37 +189,30 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		backgroundAlpha(0.5f);
 		popupWindow.setOnDismissListener(new popupDismissListener());
 
-		/*
-		*
-		* 	Button open = (Button)popupWindowView.findViewById(R.id.open);
-            Button save = (Button)popupWindowView.findViewById(R.id.save);
-		    Button close = (Button)popupWindowView.findViewById(R.id.close);
-
-		* */
-
-        IndexableLayout indexableLayout = findViewById(R.id.indexableLayout);
-        indexableLayout.setLayoutManager(new LinearLayoutManager(this));
+        IndexableLayout indexableLayout = popupWindowView.findViewById(R.id.indexableLayout);
+		indexableLayout.setLayoutManager(new LinearLayoutManager(this));
 
 		indexableLayout.setCompareMode(IndexableLayout.MODE_FAST);
 
-		CityAdapter adapter = new CityAdapter(this);
-		indexableLayout.setAdapter(adapter);
-		mDatas = initPopData();
+		mLinkCatadapter = new LinkCatAdapter(this);
+		indexableLayout.setAdapter(mLinkCatadapter);
 
-		adapter.setDatas(mDatas, new IndexableAdapter.IndexCallback<CityEntity>() {
+		mLinkCatadapter.setDatas(mDatas, new IndexableAdapter.IndexCallback<LinkCat.DataBean>() {
 			@Override
-			public void onFinished(List<EntityWrapper<CityEntity>> datas) {
+			public void onFinished(List<EntityWrapper<LinkCat.DataBean>> datas) {
 				// 数据处理完成后回调
 			}
 		});
+
+		linkcat(mCatId);
 
 		// set Center OverlayView
 		indexableLayout.setOverlayStyle_Center();
 
 		// set Listener
-		adapter.setOnItemContentClickListener(new IndexableAdapter.OnItemContentClickListener<CityEntity>() {
+		mLinkCatadapter.setOnItemContentClickListener(new IndexableAdapter.OnItemContentClickListener<LinkCat.DataBean>() {
 			@Override
-			public void onItemClick(View v, int originalPosition, int currentPosition, CityEntity entity) {
+			public void onItemClick(View v, int originalPosition, int currentPosition, LinkCat.DataBean entity) {
 				if (originalPosition >= 0) {
 					//ToastUtil.showShort(PickCityActivity.this, "选中:" + entity.getName() + "  当前位置:" + currentPosition + "  原始所在数组位置:" + originalPosition);
 				} else {
@@ -220,7 +221,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			}
 		});
 
-		adapter.setOnItemTitleClickListener(new IndexableAdapter.OnItemTitleClickListener() {
+		mLinkCatadapter.setOnItemTitleClickListener(new IndexableAdapter.OnItemTitleClickListener() {
 			@Override
 			public void onItemClick(View v, int currentPosition, String indexTitle) {
 				//ToastUtil.showShort(PickCityActivity.this, "选中:" + indexTitle + "  当前位置:" + currentPosition);
@@ -449,14 +450,22 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
                 final String responseStr = response.body().string();
+
+				Log.e("liujw","##########################linkcat : "+responseStr);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
 
                         String message = new String(responseStr.getBytes()) ;
                         Gson gson = new Gson() ;
-                        LoginBean bean = gson.fromJson(message,LoginBean.class) ;
+                        LinkCat bean = gson.fromJson(message,LinkCat.class) ;
+						mLinkCatadapter.setDatas(bean.getData(), new IndexableAdapter.IndexCallback<LinkCat.DataBean>() {
+							@Override
+							public void onFinished(List<EntityWrapper<LinkCat.DataBean>> datas) {
+								// 数据处理完成后回调
 
+							}
+						});
                     }
                 });
             }
@@ -470,7 +479,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		mContext = this ;
 		initView() ;
 		initData();
-		getExternelInfo(mCatId,mId);
+		getExternelInfo(mCatId, mSubId);
 	}
 
 
@@ -497,6 +506,9 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			case R.id.ll_add_video :
 				intent = new Intent(mContext, RecordingActivity2.class);
 				startActivityForResult(intent,1122);
+				break ;
+			case R.id.ll_complete :
+				initPopupWindow();
 				break ;
 		}
 	}

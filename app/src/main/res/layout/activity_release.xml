@@ -458,6 +458,7 @@
                 android:gravity="center">
 
                 <LinearLayout
+                    android:id="@+id/ll_complete"
                     android:layout_width="250dp"
                     android:layout_height="50dp"
                     android:background="@drawable/bg_red_rec_press"
