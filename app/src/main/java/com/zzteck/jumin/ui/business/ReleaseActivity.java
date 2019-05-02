@@ -164,7 +164,9 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 	protected void initPopupWindow(){
 
 		View popupWindowView = getLayoutInflater().inflate(R.layout.right_pop_memu, null);
-		if(Location.BOTTOM.ordinal() == from){
+		popupWindow = new PopupWindow(popupWindowView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
+
+	/*	if(Location.BOTTOM.ordinal() == from){
 			popupWindow = new PopupWindow(popupWindowView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
 		}else{
 			popupWindow = new PopupWindow(popupWindowView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
@@ -175,17 +177,24 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			popupWindow.setAnimationStyle(R.style.AnimationRightFade);
 		}else if(Location.BOTTOM.ordinal() == from){
 			popupWindow.setAnimationStyle(R.style.AnimationBottomFade);
-		}
+		}*/
+
+
+		popupWindow.setAnimationStyle(R.style.AnimationRightFade);
+
 		ColorDrawable dw = new ColorDrawable(0xffffffff);
 		popupWindow.setBackgroundDrawable(dw);
 
-		if(Location.LEFT.ordinal() == from){
+		/*if(Location.LEFT.ordinal() == from){
 			popupWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_release, null), Gravity.LEFT, 0, 500);
 		}else if(Location.RIGHT.ordinal() == from){
 			popupWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_release, null), Gravity.RIGHT, 0, 500);
 		}else if(Location.BOTTOM.ordinal() == from){
 			popupWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_release, null), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-		}
+		}*/
+
+		popupWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_release, null), Gravity.RIGHT, 0, 500);
+
 		backgroundAlpha(0.5f);
 		popupWindow.setOnDismissListener(new popupDismissListener());
 
@@ -316,12 +325,12 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			}else if(info.getData().get(i).getType().equals("number")){
 
 				EditText etPrice = new EditText(this);
-				etPrice.setHint("请输入价格");
+				etPrice.setHint("请输入"+info.getData().get(i).getTitle());
 				etPrice.setBackground(null);
 				etPrice.setLayoutParams(new LinearLayout.LayoutParams(200,ViewGroup.LayoutParams.WRAP_CONTENT,0.8f));
 
 				TextView tvUnit = new TextView(this);
-				tvUnit.setText("元");
+				tvUnit.setText(info.getData().get(i).getExtra().getUnits());
 				tvUnit.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
 
 				linearLayoutRight.addView(etPrice);
@@ -355,8 +364,9 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			}else if(info.getData().get(i).getType().equals("text")){
 
 				EditText tvText = new EditText(this);
-				tvText.setHint(info.getData().get(i).getTitle());
+				tvText.setHint("请输入"+info.getData().get(i).getTitle());
 				tvText.setSingleLine();
+				tvText.setBackground(null);
 				tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
 
 				linearLayoutRight.addView(tvText) ;
@@ -365,7 +375,8 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			}else if(info.getData().get(i).getType().equals("textarea")){
 
 				EditText tvText = new EditText(this);
-				tvText.setHint(info.getData().get(i).getTitle());
+				tvText.setHint("请输入"+info.getData().get(i).getTitle());
+				tvText.setBackground(null);
 				tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
 
 				linearLayoutRight.addView(tvText) ;
@@ -395,7 +406,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			}else if(info.getData().get(i).getType().equals("link")){
 
 				TextView tvText = new TextView(this);
-				tvText.setHint(info.getData().get(i).getTitle());
+				tvText.setHint("请选择"+info.getData().get(i).getTitle());
 				tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
 
 				linearLayoutRight.addView(tvText) ;
