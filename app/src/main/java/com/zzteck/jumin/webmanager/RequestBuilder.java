@@ -33,6 +33,38 @@ public class RequestBuilder {
                 .add("logintoken", token)
                 .build();
     }
+    //App.Info.Upvideo
+
+
+    public static MultipartBody uploadRequestBody4(Context context, File file) {
+
+        String content_type = getMimeType(file.getPath());
+        String file_path = file.getAbsolutePath();
+        RequestBody file_body = RequestBody.create(MediaType.parse(content_type), file);
+
+        return new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("type", content_type)
+                .addFormDataPart("s", "App.Info.Upvideo")
+                .addFormDataPart("sign", UtilsTools.getSign(context,"App.Info.Upvideo"))
+                .addFormDataPart("video", file_path.substring(file_path.lastIndexOf("/") + 1), file_body).build();
+
+    }
+
+    public static MultipartBody uploadRequestBody3(Context context, File file) {
+
+        String content_type = getMimeType(file.getPath());
+        String file_path = file.getAbsolutePath();
+        RequestBody file_body = RequestBody.create(MediaType.parse(content_type), file);
+
+        return new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("type", content_type)
+                .addFormDataPart("s", "App.Info.Upimg")
+                .addFormDataPart("sign", UtilsTools.getSign(context,"App.Info.Upimg"))
+                .addFormDataPart("img", file_path.substring(file_path.lastIndexOf("/") + 1), file_body).build();
+
+    }
 
     public static MultipartBody uploadRequestBody(Context context, File file) {
 

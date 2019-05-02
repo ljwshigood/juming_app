@@ -68,18 +68,16 @@ public class LocationService extends Service {
         @Override
         public void onLocationChanged(AMapLocation loc) {
 
-            if(App.getInstance().isSelectCity){
-                return ;
-            }
-
             if (null != loc) {
 
                 EventBus.getDefault().post(loc.getCity());
                 App.getInstance().locationCity  = loc.getCity() ;
                 stopLocation();
 
+                String city = loc.getCity().substring(0,loc.getCity().length() - 1) ;
+
                 for(int i= 0 ;i < citiesData.size() ;i++){
-                    if(loc.getCity().equals(citiesData.get(i).getCityname())){
+                    if(city.equals(citiesData.get(i).getCityname())){
                         SharePerfenceUtil.setParam(mContext,"city_id",citiesData.get(i).getCityid());
                         break ;
                     }
@@ -200,11 +198,15 @@ public class LocationService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Log.e("liujw","#############################AMapLocationClientOption oncreate");
+        Log.e("liujw","#############################AMapLocationClientOption oncreate");
+        Log.e("liujw","#############################AMapLocationClientOption oncreate");
+        Log.e("liujw","#############################AMapLocationClientOption oncreate");
+
         mContext = this ;
         initLocation();
         locationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-
-        startLocation();
 
         getCityist() ;
 
@@ -233,6 +235,8 @@ public class LocationService extends Service {
                 Gson gson = new Gson();
                 CityCompentBean bean  = gson.fromJson(message,CityCompentBean.class) ;
                 citiesData = getCityList(bean);
+
+                startLocation();
             }
         });
     }

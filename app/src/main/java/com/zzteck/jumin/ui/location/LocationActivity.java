@@ -17,22 +17,15 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
 import com.google.gson.Gson;
 import com.iasii.app.citylist.adapter.CityListAdapter;
 import com.iasii.app.citylist.db.DatabaseHelper;
-import com.iasii.app.citylist.entity.City;
 import com.iasii.app.citylist.entity.CityCompentBean;
 import com.iasii.app.citylist.utils.DensityUtil;
 import com.iasii.app.citylist.utils.PingYinUtil;
 import com.iasii.app.citylist.view.LetterListView;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
-import com.zzteck.jumin.bean.ChildCategoryBean;
-import com.zzteck.jumin.db.DatabaseManager;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.SharePerfenceUtil;
@@ -139,7 +132,7 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
                         citiesData = getCityList(bean);
 
                         allCities.addAll(citiesData);
-
+                        cityListAdapter.notifyDataSetChanged();
                     }
                 });
             }
