@@ -851,7 +851,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 break ;
             case R.id.iv_zxing:
                 intent = new Intent(getActivity(),ZxingActivity.class) ;
-                startActivityForResult(intent,1122) ;
+                getActivity().startActivityForResult(intent,1122) ;
                 break ;
         }
     }

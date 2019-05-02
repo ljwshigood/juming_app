@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -16,6 +17,10 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import com.icechn.videorecorder.R;
 import com.icechn.videorecorder.ui.RecordingActivity;
 import com.icechn.videorecorder.ui.RecordingActivity2;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +33,13 @@ public class MainActivity extends AppCompatActivity {
 
     boolean authorized = false;
     boolean continuedRecord = false;
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

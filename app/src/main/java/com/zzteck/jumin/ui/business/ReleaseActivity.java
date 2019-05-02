@@ -36,6 +36,7 @@ import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.DeviceUtil;
 import com.zzteck.jumin.utils.FileUtils;
 import com.zzteck.jumin.utils.UtilsTools;
+import com.zzteck.zzview.WindowsToast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -158,7 +159,10 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 	private LinkCatAdapter mLinkCatadapter ;
 
-	protected void initPopupWindow(String link){
+	TextView ptv  ;
+	ImageView piv ;
+
+	protected void initPopupWindow(final String info , final String link, boolean isShowBack){
 
 		View popupWindowView = getLayoutInflater().inflate(R.layout.right_pop_memu, null);
 		popupWindow = new PopupWindow(popupWindowView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
@@ -166,6 +170,26 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 		ColorDrawable dw = new ColorDrawable(0xffffffff);
 		popupWindow.setBackgroundDrawable(dw);
+
+
+
+		ptv = popupWindowView.findViewById(R.id.tv_info) ;
+		piv = popupWindowView.findViewById(R.id.iv_back) ;
+		ptv.setText(info);
+		if(isShowBack){
+			piv.setVisibility(View.VISIBLE);
+		}else{
+			piv.setVisibility(View.INVISIBLE);
+		}
+
+		piv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				piv.setVisibility(View.INVISIBLE);
+				ptv.setText(info);
+				linkcat(link);
+			}
+		});
 
 		popupWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_release, null), Gravity.RIGHT, 0, 500);
 
@@ -197,9 +221,13 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			@Override
 			public void onItemClick(View v, int originalPosition, int currentPosition, LinkCat.DataBean entity) {
 				if (originalPosition >= 0) {
-					//ToastUtil.showShort(PickCityActivity.this, "选中:" + entity.getName() + "  当前位置:" + currentPosition + "  原始所在数组位置:" + originalPosition);
+					piv.setVisibility(View.VISIBLE);
+					ptv.setText(entity.getCatname());
+					linkcat(entity.getCatid());
+
+					//WindowsToast.makeText(ReleaseActivity.this, "选中:" + entity.getCatname() + "  当前位置:" + currentPosition + "  原始所在数组位置:" + originalPosition).show();
 				} else {
-					//ToastUtil.showShort(PickCityActivity.this, "选中Header:" + entity.getName() + "  当前位置:" + currentPosition);
+					//WindowsToast.makeText(ReleaseActivity.this, "选中Header:" + entity.getCatname() + "  当前位置:" + currentPosition);
 				}
 			}
 		});
@@ -207,7 +235,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		mLinkCatadapter.setOnItemTitleClickListener(new IndexableAdapter.OnItemTitleClickListener() {
 			@Override
 			public void onItemClick(View v, int currentPosition, String indexTitle) {
-				//ToastUtil.showShort(PickCityActivity.this, "选中:" + indexTitle + "  当前位置:" + currentPosition);
+				//WindowsToast.makeText(ReleaseActivity.this, "选中:" + indexTitle + "  当前位置:" + currentPosition);
 			}
 		});
 
@@ -385,11 +413,12 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 				linearLayoutRight.addView(tvText) ;
 
-                final String link = info.getData().get(i).getExtra().getParentid() ;
+                final String link = info.getData().get(i).getExtra().getParentid()  ;
+				final String title = info.getData().get(i).getTitle() ;
 				tvText.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						initPopupWindow(link) ;
+						initPopupWindow(title,link,false) ;
 					}
 				});
 
@@ -415,7 +444,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
         Map<String, String> map = new HashMap<>() ;
         map.put("s","App.Category.Linkcat") ;
-        map.put("catid",1+"") ;
+        map.put("catid",catid) ;
 
         map.put("sign",UtilsTools.getSign(mContext,"App.Category.Linkcat")) ;
 
