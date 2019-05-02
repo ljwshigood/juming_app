@@ -136,12 +136,12 @@ public class LinkCat implements Serializable {
 
         @Override
         public String getFieldIndexBy() {
-            return null;
+            return catname;
         }
 
         @Override
         public void setFieldIndexBy(String indexField) {
-
+            this.catname = indexField ;
         }
 
         @Override

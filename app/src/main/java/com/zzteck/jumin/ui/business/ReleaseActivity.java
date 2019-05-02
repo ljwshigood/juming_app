@@ -30,9 +30,6 @@ import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.ExternalInfo;
 import com.zzteck.jumin.bean.LinkCat;
-import com.zzteck.jumin.bean.LoginBean;
-import com.zzteck.jumin.pop.CityAdapter;
-import com.zzteck.jumin.pop.CityEntity;
 import com.zzteck.jumin.pop.LinkCatAdapter;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.utils.Constants;
@@ -161,37 +158,14 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 	private LinkCatAdapter mLinkCatadapter ;
 
-	protected void initPopupWindow(){
+	protected void initPopupWindow(String link){
 
 		View popupWindowView = getLayoutInflater().inflate(R.layout.right_pop_memu, null);
 		popupWindow = new PopupWindow(popupWindowView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
-
-	/*	if(Location.BOTTOM.ordinal() == from){
-			popupWindow = new PopupWindow(popupWindowView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-		}else{
-			popupWindow = new PopupWindow(popupWindowView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
-		}
-		if(Location.LEFT.ordinal() == from){
-			popupWindow.setAnimationStyle(R.style.AnimationLeftFade);
-		}else if(Location.RIGHT.ordinal() == from){
-			popupWindow.setAnimationStyle(R.style.AnimationRightFade);
-		}else if(Location.BOTTOM.ordinal() == from){
-			popupWindow.setAnimationStyle(R.style.AnimationBottomFade);
-		}*/
-
-
 		popupWindow.setAnimationStyle(R.style.AnimationRightFade);
 
 		ColorDrawable dw = new ColorDrawable(0xffffffff);
 		popupWindow.setBackgroundDrawable(dw);
-
-		/*if(Location.LEFT.ordinal() == from){
-			popupWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_release, null), Gravity.LEFT, 0, 500);
-		}else if(Location.RIGHT.ordinal() == from){
-			popupWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_release, null), Gravity.RIGHT, 0, 500);
-		}else if(Location.BOTTOM.ordinal() == from){
-			popupWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_release, null), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-		}*/
 
 		popupWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_release, null), Gravity.RIGHT, 0, 500);
 
@@ -213,7 +187,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			}
 		});
 
-		linkcat(mCatId);
+		linkcat(link+"");
 
 		// set Center OverlayView
 		indexableLayout.setOverlayStyle_Center();
@@ -411,11 +385,11 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 				linearLayoutRight.addView(tvText) ;
 
-                final int position = i ;
+                final String link = info.getData().get(i).getExtra().getParentid() ;
 				tvText.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						initPopupWindow() ;
+						initPopupWindow(link) ;
 					}
 				});
 
@@ -441,7 +415,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
         Map<String, String> map = new HashMap<>() ;
         map.put("s","App.Category.Linkcat") ;
-        map.put("catid",catid) ;
+        map.put("catid",1+"") ;
 
         map.put("sign",UtilsTools.getSign(mContext,"App.Category.Linkcat")) ;
 
@@ -519,7 +493,6 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				startActivityForResult(intent,1122);
 				break ;
 			case R.id.ll_complete :
-				initPopupWindow();
 				break ;
 		}
 	}
