@@ -96,7 +96,7 @@ public class ReleaseCategoryActivity extends BaseActivity implements View.OnClic
 
 		mReleaseCategoryAdapter.setOnItemClickListener(new ReleaseCategoryAdapter.OnRecyclerViewItemClickListener() {
 			@Override
-			public void onClick(View view, ReleaseCategoryAdapter.ViewName viewName, int chapterIndex, int sectionIndex,String catId,String subCatId) {
+			public void onClick(View view, ReleaseCategoryAdapter.ViewName viewName, int chapterIndex, int sectionIndex,String catId,String subCatId,String name) {
 				switch (viewName){
 					case CHAPTER_ITEM:
 						if(bean.getData().get(chapterIndex).getChildren().size() > 0){
@@ -114,6 +114,7 @@ public class ReleaseCategoryActivity extends BaseActivity implements View.OnClic
 						Intent intent1 = new Intent(mContext,ReleaseActivity.class) ;
 						intent1.putExtra("catId",catId) ;
 						intent1.putExtra("subCatId",subCatId) ;
+						intent1.putExtra("category",name) ;
 						startActivity(intent1);
 						break;
 				}

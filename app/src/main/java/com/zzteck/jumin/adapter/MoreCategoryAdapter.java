@@ -54,7 +54,7 @@ public class MoreCategoryAdapter extends RecyclerView.Adapter<MoreCategoryAdapte
     }
 
     @Override
-    public void onBindViewHolder(MoreCategoryAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(MoreCategoryAdapter.ViewHolder holder, final int position) {
 
         Glide.with(mContext)
                 .load(mMoreCategoryList.get(position).getRes())
@@ -70,6 +70,8 @@ public class MoreCategoryAdapter extends RecyclerView.Adapter<MoreCategoryAdapte
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, CategoryListActivity.class) ;
+                intent.putExtra("title",mMoreCategoryList.get(position).getInfo()) ;
+                intent.putExtra("id",1+"") ;
                 mContext.startActivity(intent);
             }
         });

@@ -3,9 +3,13 @@ package com.zzteck.jumin.ui.business;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +30,9 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.baijiahulian.common.crop.BJCommonImageCropHelper;
+import com.baijiahulian.common.crop.ThemeConfig;
+import com.baijiahulian.common.crop.model.PhotoInfo;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.fingerth.supdialogutils.SYSDiaLogUtils;
@@ -34,25 +41,32 @@ import com.icechn.videorecorder.ui.RecordingActivity2;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.CheckAdapter;
+import com.zzteck.jumin.adapter.ImageAdapter;
 import com.zzteck.jumin.adapter.QoneAdapter;
 import com.zzteck.jumin.adapter.StreamAdapter;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.bean.AreaInfo;
 import com.zzteck.jumin.bean.CheckInfo;
 import com.zzteck.jumin.bean.ExternalInfo;
+import com.zzteck.jumin.bean.ImageInfo;
 import com.zzteck.jumin.bean.LinkCat;
 import com.zzteck.jumin.bean.LoginBean;
+import com.zzteck.jumin.bean.MediaInfo;
 import com.zzteck.jumin.bean.ModifyBean;
 import com.zzteck.jumin.bean.QoneInfo;
+import com.zzteck.jumin.bean.ReleaseRet;
+import com.zzteck.jumin.bean.VideoInfo;
 import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.pop.LinkCatAdapter;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
+import com.zzteck.jumin.ui.mainui.FeedBackActivity;
 import com.zzteck.jumin.ui.mainui.MainActivity;
 import com.zzteck.jumin.ui.usercenter.ModifyUserInfoActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.DeviceUtil;
 import com.zzteck.jumin.utils.FileUtils;
 import com.zzteck.jumin.utils.GlideCircleTransform;
+import com.zzteck.jumin.utils.PictureUtil;
 import com.zzteck.jumin.utils.ScreenUtil;
 import com.zzteck.jumin.utils.SharePerfenceUtil;
 import com.zzteck.jumin.utils.UtilsTools;
@@ -98,8 +112,34 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 	private RecyclerView mRlStream ;
 
-	private void initView(){
+	private EditText mEtTitle ;
 
+	private EditText mEtDes ;
+
+	private TextView mTvCat ;
+
+	private EditText mEtContact ;
+
+	private EditText mEtMobile ;
+
+	private String mQone ;
+
+	private EditText mEtWeiXin ;
+
+	private EditText mEtQQ ;
+
+	private RecyclerView mRvPic ;
+
+	private void initView(){
+		mRvPic = findViewById(R.id.rv_pic) ;
+		mIvAddPicture = findViewById(R.id.iv_add_pic) ;
+		mEtWeiXin = findViewById(R.id.et_weixin) ;
+		mEtQQ = findViewById(R.id.et_qq) ;
+		mEtContact = findViewById(R.id.et_cantact) ;
+		mEtMobile = findViewById(R.id.et_mobile) ;
+		mTvCat = findViewById(R.id.tv_cat) ;
+		mEtTitle = findViewById(R.id.et_title) ;
+		mEtDes = findViewById(R.id.et_des) ;
 		mTvSelectQone = findViewById(R.id.tv_select_qone) ;
 		mLLComplete = findViewById(R.id.ll_complete) ;
 		mIvVideoThumb= findViewById(R.id.iv_video_thumb) ;
@@ -112,6 +152,13 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		mLLAddVideo.setOnClickListener(this);
 		mLLComplete.setOnClickListener(this);
 		mTvSelectQone.setOnClickListener(this);
+		mIvAddPicture.setOnClickListener(this);
+
+		mImageAdapter = new ImageAdapter(mContext,null) ;
+
+		GridLayoutManager linearLayoutManager1 = new GridLayoutManager(this,4);
+		mRvPic.setLayoutManager(linearLayoutManager1);
+		mRvPic.setAdapter(mImageAdapter);
 	}
 
 	private HashMap mHashExtra = new HashMap() ;
@@ -166,10 +213,13 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 	private String mSubId;
 
+	private String mCategoryName ;
+
 	private void initData(){
 		mTvMainInfo.setText("发布");
 		mCatId = getIntent().getStringExtra("catId") ;
 		mSubId = getIntent().getStringExtra("subCatId") ;
+        mCategoryName = getIntent().getStringExtra("category") ;
 	}
 
 
@@ -185,7 +235,6 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 	private PopupWindow popupWindow ;
 
 	private int from = 0 ;
-
 
 	private List<LinkCat.DataBean> initPopData(){
 
@@ -376,6 +425,12 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 	private RecyclerView mRlArea ;
 
+	private String mAreaId = "" ;
+
+	private String mStreetId ="";
+
+	private String  mQoneString = "";
+
 	protected void initQonePopupWindow(final String info , boolean isShowBack){
 
 		if(popupWindow != null){
@@ -434,13 +489,19 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		mStreamAdapter.setmIOnItemClick(new StreamAdapter.IOnCityItemLister() {
 			@Override
 			public void onItemCityClick(AreaInfo.DataBean bean) {
+				mStreetId = bean.getStreetid() ;
+				mQoneString += bean.getStreetname() ;
+				popupWindow.dismiss();
 
+				mTvSelectQone.setText(mQoneString);
 			}
 		});
 
 		mQoneAdpater.setmIOnItemClick(new QoneAdapter.IOnCityItemLister() {
 			@Override
 			public void onItemCityClick(QoneInfo.DataBean bean) {
+				mAreaId = bean.getAreaid() ;
+				mQoneString += bean.getAreaname() ;
 				AppStreamArea(bean.getAreaid()) ;
 			}
 		});
@@ -488,10 +549,14 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 						mRlStream.setVisibility(View.VISIBLE);
 						piv.setVisibility(View.VISIBLE);
 
-						String message = new String(responseStr.getBytes()) ;
-						Gson gson = new Gson() ;
-						AreaInfo bean = gson.fromJson(message,AreaInfo.class) ;
-						mStreamAdapter.notifyVideoListChange(bean.getData());
+						try{
+							String message = new String(responseStr.getBytes()) ;
+							Gson gson = new Gson() ;
+							AreaInfo bean = gson.fromJson(message,AreaInfo.class) ;
+							mStreamAdapter.notifyVideoListChange(bean.getData());
+						}catch (Exception e){
+							e.printStackTrace();
+						}
 					}
 				});
 			}
@@ -654,10 +719,10 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			}else if(info.getData().get(i).getType().equals("select")){
 
 				linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
-				MaterialSpinner spinner = new MaterialSpinner(mContext) ;
+				final MaterialSpinner spinner = new MaterialSpinner(mContext) ;
 				spinner.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
 
-				String[] attray = info.getData().get(i).getExtra().getChoices().split("\\r\\n") ;
+				final String[] attray = info.getData().get(i).getExtra().getChoices().split("\\r\\n") ;
 
 				List<String> spinnerList = new ArrayList<>() ;
 
@@ -668,10 +733,16 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				}
 
 				spinner.setItems(spinnerList);
+				spinner.setTag(info.getData().get(i).getIdentifier());
 				spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 					@Override
 					public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-						//Logger.e(item);
+						String temp = attray[position] ;
+						String[] splites = temp.split("=") ;
+						String identifier = (String) spinner.getTag();
+						mHashExtra.put(identifier,splites[0]) ;
+
+						Log.e("liujw","########setOnItemSelectedListener mHashExtra : "+mHashExtra.toString()) ;
 					}
 				});
 
@@ -857,6 +928,8 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 	private String mCityId ;
 
+	private ImageView mIvAddPicture ;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -867,6 +940,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		initView() ;
 		initData();
 		getExternelInfo(mCatId, mSubId);
+		mTvCat.setText(mCategoryName);
 	}
 
 
@@ -877,16 +951,113 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		if(data == null){
 			return ;
 		}
-
 		String filePath = data.getStringExtra("filepath") ;
-
 		mIvVideoThumb.setImageBitmap(FileUtils.getVideoThumb(filePath));
+
+		try {
+			uploadVideo(new File(filePath),Constants.HOST);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
+
+	private List<MediaInfo> mPictureList = new ArrayList<>() ;
+
+	private Handler mHandler = new Handler(){
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+
+			if (msg.what == 0) {
+				for(int i = 0 ;i < mPictureList.size() ;i++){
+					MediaInfo info = mPictureList.get(i) ;
+					try {
+						uploadImage(new File(info.getCompressFile()),Constants.HOST);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+
+			} else {
+				if (mPhotoList != null && mPhotoList.size() > 0) {
+					mIvAddPicture.setVisibility(View.GONE);
+				} else {
+					mIvAddPicture.setVisibility(View.VISIBLE);
+				}
+
+				mPictureList = new ArrayList<>();
+
+				for (int i = 0; i < mPhotoList.size(); i++) {
+					MediaInfo mMediaOrg = new MediaInfo();
+					mMediaOrg.setType(0);
+					mMediaOrg.setFilePath(mPhotoList.get(0).getPhotoPath());
+					mPictureList.add(mMediaOrg);
+				}
+
+				initMeidaList(mPictureList);
+				compressFileList() ;
+			}
+		}
+	} ;
+
+	private void compressFileList(){
+		new Thread(){
+
+			public void run() {
+
+				for(int i = 0 ;i < mPictureList.size() ;i++){
+					MediaInfo info = mPictureList.get(i) ;
+					if(info.getIsCompressFile() == 0){
+						String compressString = PictureUtil.compressPicture(mContext,info.getFilePath());
+						if(compressString != null){
+							info.setCompressFile(compressString);
+							info.setIsCompressFile(1);
+						}else{
+							info.setLoadFlag(2);
+						}
+					}
+				}
+				mHandler.sendEmptyMessage(0);
+			}
+
+		}.start();
+	}
+
+
+	private ImageAdapter mImageAdapter ;
+
+	private void initMeidaList(List<MediaInfo> infoList){
+		mImageAdapter.notifyImageListChange(infoList);
+	}
+
+
+	private List<PhotoInfo> mPhotoList = new ArrayList<>() ;
 
 	@Override
 	public void onClick(View view) {
 		Intent intent = null ;
 		switch (view.getId()){
+			case R.id.iv_add_pic :
+
+				BJCommonImageCropHelper.openImageMulti(ReleaseActivity.this, mPhotoList,4,
+						new ThemeConfig.Builder().setMainElementsColor(Color.parseColor("#00ccff")).setTitlebarRightButtonText(R.string.complete).build(), new BJCommonImageCropHelper.OnHandlerResultCallback(){
+
+							@Override
+							public void onHandlerSuccess(List<PhotoInfo> resultList) {
+
+								mPhotoList = resultList ;
+								mHandler.sendEmptyMessage(2) ;
+							}
+
+							@Override
+							public void onHandlerFailure(String errorMsg) {
+
+							}
+
+						});
+
+				break ;
 			case R.id.tv_select_qone :
 
 				initQonePopupWindow("选择城市",false);
@@ -951,13 +1122,44 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 					}
 				}
 
+				if(TextUtils.isEmpty(mEtTitle.getText().toString().trim())){
+					WindowsToast.makeText(mContext,"标题不能为空").show();
+					return ;
+				}else if(TextUtils.isEmpty(mEtDes.getText().toString().trim())){
+					WindowsToast.makeText(mContext,"描述不能为空").show();
+					return ;
+				}else if(TextUtils.isEmpty(mEtContact.getText().toString().trim())){
+					WindowsToast.makeText(mContext,"联系人不能为空").show();
+					return ;
+				}else if(TextUtils.isEmpty(mEtMobile.getText().toString().trim())){
+					WindowsToast.makeText(mContext,"手机号不能为空").show();
+					return ;
+				}else if(TextUtils.isEmpty(mEtWeiXin.getText().toString().trim())){
+					WindowsToast.makeText(mContext,"微信号不能为空").show();
+					return ;
+				}else if(TextUtils.isEmpty(mEtQQ.getText().toString().trim())){
+					WindowsToast.makeText(mContext,"QQ号不能为空").show();
+					return ;
+				}
 
+				String extra = "";
+				if(mHashExtra.size() > 0){
+					Gson gson = new Gson() ;
+					extra =  gson.toJson(mHashExtra);
+				}
 
+				AppInfoAdd(mSubId,mEtTitle.getText().toString().trim(),mAreaId,mStreetId,
+						mEtDes.getText().toString().trim(),"","","",mTvSelectQone.getText().toString().trim(),
+						extra,mVideUrl,mImageUrl,mEtContact.getText().toString().trim(),mEtMobile.getText().toString().trim(),
+						mEtQQ.getText().toString().trim(),mEtWeiXin.getText().toString().trim()) ;
 
 				break ;
 		}
 	}
 
+	private String mImageUrl = "";
+
+	private String mVideUrl= "" ;
 
 	private void uploadImage(final File file,final String url) throws Exception {
 
@@ -974,9 +1176,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 						float percentage = 100f * bytesWritten / contentLength;
 						if (percentage >= 0) {
 							publishProgress(Math.round(percentage));
-						//	Log.e("progress ", percentage + "");
 						} else {
-						//	Log.e("No progress ", 0 + "");
 						}
 					}
 				});
@@ -996,12 +1196,10 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 					@Override
 					public void onResponse(Call call, Response response) throws IOException {
 						final String responseStr = response.body().string();
+						Log.e("liujw","####################responseStr upload File : "+responseStr);
 						Gson gson = new Gson() ;
-						final ModifyBean bean = gson.fromJson(responseStr,ModifyBean.class) ;
-						if(bean.getData().isIs_success() == true ){
-
-						}
-
+						ImageInfo bean = gson.fromJson(responseStr,ImageInfo.class) ;
+						mImageUrl += bean.getData().getImg() ;
 					}
 				});
 				return "";
@@ -1040,9 +1238,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 						float percentage = 100f * bytesWritten / contentLength;
 						if (percentage >= 0) {
 							publishProgress(Math.round(percentage));
-							//	Log.e("progress ", percentage + "");
 						} else {
-							//	Log.e("No progress ", 0 + "");
 						}
 					}
 				});
@@ -1062,12 +1258,10 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 					@Override
 					public void onResponse(Call call, Response response) throws IOException {
 						final String responseStr = response.body().string();
+						Log.e("liujw","####################uploadVideo responseStr ; "+responseStr);
 						Gson gson = new Gson() ;
-						final ModifyBean bean = gson.fromJson(responseStr,ModifyBean.class) ;
-						if(bean.getData().isIs_success() == true ){
-
-						}
-
+						VideoInfo bean = gson.fromJson(responseStr,VideoInfo.class) ;
+						mVideUrl = bean.getData().getVideo() ;
 					}
 				});
 				return "";
@@ -1088,6 +1282,61 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 
 		}.execute();
+	}
+
+	public void AppInfoAdd(String catid,String title,String areaid,String streetid,String content,String lat,String lng,
+						   String mappoint,String webAddress,String extra,String video,String img,String conatctWho,String tel,
+						   String qq,String wexin){
+		Map<String, String> map = new HashMap<>() ;
+		map.put("s","App.Info.Add") ;
+		map.put("catid",catid) ;
+		map.put("title",title) ;
+		map.put("areaid",areaid) ;
+		map.put("streetid",streetid) ;
+		map.put("content",content) ;
+		map.put("lat",lat) ;
+		map.put("lng",lng) ;
+		map.put("mappoint",mappoint) ;
+		map.put("web_address",webAddress) ;
+		map.put("extra",extra) ;
+		map.put("video",video) ;
+		map.put("img",img) ;
+		map.put("contact_who",conatctWho) ;
+		map.put("tel",tel) ;
+		map.put("qq",qq) ;
+		map.put("weixin",wexin) ;
+		map.put("sign",UtilsTools.getSign(mContext,"App.Info.Add")) ;
+
+		OkHttpClient client = new OkHttpClient();
+		Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
+		Call call = client.newCall(request);
+		call.enqueue(new Callback() {
+
+			@Override
+			public void onFailure(Call call, IOException e) {
+				Log.e("liujw","##########################IOException : "+e.toString());
+			}
+
+			@Override
+			public void onResponse(Call call, final Response response) throws IOException {
+				final String responseStr = response.body().string();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						String message = new String(responseStr.getBytes()) ;
+
+						Log.e("liujw","############################message AppInfoAdd: "+message);
+						Gson gson = new Gson() ;
+						ReleaseRet bean = gson.fromJson(message,ReleaseRet.class) ;
+						if(Integer.valueOf(bean.getData().getId()) > 0 ){
+							WindowsToast.makeText(mContext,bean.getData().getMsg()).show();
+							finish();
+						}
+					}
+				});
+			}
+		});
+
 	}
 
 

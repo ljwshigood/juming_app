@@ -459,6 +459,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                                         .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                                         .into(mIvCategoryList.get(i));
                                 mTvCategoryList.get(i).setText(bean.getData().get(i).getCatname());
+                                mTvCategoryList.get(i).setTag(bean.getData().get(i).getCatid());
                             }
                         }
                     }
@@ -786,26 +787,31 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             case R.id.tv_more_video:
                 intent = new Intent(getActivity(), CategoryListActivity.class) ;
                 intent.putExtra("title","更多视频") ;
+                intent.putExtra("id","1") ;
                 startActivity(intent);
                 break ;
             case R.id.iv_one :
                 intent = new Intent(getActivity(), CategoryListActivity.class) ;
                 intent.putExtra("title","二手车转让") ;
+                intent.putExtra("id",(String)mTvCategoryList.get(0).getTag()) ;
                 startActivity(intent);
                 break ;
             case R.id.iv_two :
                 intent = new Intent(getActivity(), CategoryListActivity.class) ;
                 intent.putExtra("title","车辆买卖") ;
+                intent.putExtra("id",(String)mTvCategoryList.get(1).getTag()) ;
                 startActivity(intent);
                 break ;
             case R.id.iv_three :
                 intent = new Intent(getActivity(), CategoryListActivity.class) ;
                 intent.putExtra("title","房屋租赁") ;
+                intent.putExtra("id",(String)mTvCategoryList.get(2).getTag()) ;
                 startActivity(intent);
                 break ;
             case R.id.iv_four :
                 intent = new Intent(getActivity(), CategoryListActivity.class) ;
                 intent.putExtra("title","全职招聘") ;
+                intent.putExtra("id",(String)mTvCategoryList.get(3).getTag()) ;
                 startActivity(intent);
                 break ;
             case R.id.iv_xinfang :

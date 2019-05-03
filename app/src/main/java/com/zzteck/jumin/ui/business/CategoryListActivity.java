@@ -294,7 +294,7 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
     }
 
 
-    private String mJson;
+    private String mJson ;
 
     private  Map mFilterMap = new HashMap();
 

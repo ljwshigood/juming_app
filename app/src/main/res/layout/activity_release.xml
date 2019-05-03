@@ -112,6 +112,7 @@
 
 
                 <EditText
+                    android:id="@+id/et_des"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_marginLeft="15dp"
@@ -139,7 +140,8 @@
                             android:id="@+id/rv_pic"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:visibility="gone"></android.support.v7.widget.RecyclerView>
+                            android:layout_marginLeft="25dp"
+                          ></android.support.v7.widget.RecyclerView>
                     </LinearLayout>
 
                     <LinearLayout
@@ -150,6 +152,7 @@
                         android:orientation="horizontal">
 
                         <ImageView
+                            android:id="@+id/iv_add_pic"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@mipmap/btn_tianjiatupian" />
@@ -195,6 +198,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_cat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null" />
@@ -303,6 +307,7 @@
                     android:orientation="horizontal">
 
                     <EditText
+                        android:id="@+id/et_cantact"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
@@ -350,6 +355,7 @@
                     android:orientation="horizontal">
 
                     <EditText
+                        android:id="@+id/et_mobile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
@@ -396,6 +402,7 @@
                     android:orientation="horizontal">
 
                     <EditText
+                        android:id="@+id/et_weixin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
@@ -442,6 +449,7 @@
                     android:orientation="horizontal">
 
                     <EditText
+                        android:id="@+id/et_qq"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
