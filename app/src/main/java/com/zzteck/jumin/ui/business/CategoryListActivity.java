@@ -218,6 +218,7 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
             public void onItemClick(int position) {
 
                 Intent intent = new Intent(mContext, CategoryDetailActivity.class);
+                intent.putExtra("id",mCommandAdapter.getmHomeList().get(position).getId());
                 startActivity(intent);
 
             }
