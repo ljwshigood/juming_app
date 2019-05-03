@@ -109,10 +109,14 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
                     @Override
                     public void run() {
 
-                        String message = new String(responseStr);
-                        Gson gson = new Gson();
-                        FilterInfo info = gson.fromJson(message, FilterInfo.class);
-                        addMyMethod(info);
+                        try{
+                            String message = new String(responseStr);
+                            Gson gson = new Gson();
+                            FilterInfo info = gson.fromJson(message, FilterInfo.class);
+                            addMyMethod(info);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
 
                     }
                 });

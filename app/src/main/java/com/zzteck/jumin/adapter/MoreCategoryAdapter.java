@@ -16,6 +16,7 @@ import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.MoreCategory;
 import com.zzteck.jumin.ui.business.CategoryListActivity;
 import com.zzteck.jumin.ui.business.MoreCategoryListActivity;
+import com.zzteck.jumin.utils.GlideCircleTransform;
 
 import java.util.List;
 
@@ -28,11 +29,16 @@ public class MoreCategoryAdapter extends RecyclerView.Adapter<MoreCategoryAdapte
 
     private Context mContext ;
 
-    private List<MoreCategory> mMoreCategoryList;
+    private List<MoreCategory.DataBean> mMoreCategoryList;
 
-    public MoreCategoryAdapter(Context context, List<MoreCategory> list) {
+    public MoreCategoryAdapter(Context context, List<MoreCategory.DataBean> list) {
         this.mContext = context ;
         this.mMoreCategoryList = list ;
+    }
+
+    public void notifyMoreCategoryAdapter(List<MoreCategory.DataBean> list){
+        this.mMoreCategoryList = list ;
+        notifyDataSetChanged();
     }
 
 
@@ -40,16 +46,6 @@ public class MoreCategoryAdapter extends RecyclerView.Adapter<MoreCategoryAdapte
     @Override
     public MoreCategoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_more_category,parent,false);
-
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, MoreCategoryListActivity.class) ;
-                mContext.startActivity(intent);
-            }
-        });
-
-
         return new ViewHolder(view);
     }
 
@@ -57,21 +53,22 @@ public class MoreCategoryAdapter extends RecyclerView.Adapter<MoreCategoryAdapte
     public void onBindViewHolder(MoreCategoryAdapter.ViewHolder holder, final int position) {
 
         Glide.with(mContext)
-                .load(mMoreCategoryList.get(position).getRes())
+                .load(mMoreCategoryList.get(position).getIcon())
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .crossFade(300)
+                .transform(new GlideCircleTransform(mContext))
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(holder.mIv);
 
-        holder.name.setText(mMoreCategoryList.get(position).getInfo());
+        holder.name.setText(mMoreCategoryList.get(position).getCatname());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, CategoryListActivity.class) ;
-                intent.putExtra("title",mMoreCategoryList.get(position).getInfo()) ;
-                intent.putExtra("id",1+"") ;
+                intent.putExtra("title",mMoreCategoryList.get(position).getCatname()) ;
+                intent.putExtra("id",mMoreCategoryList.get(position).getCatid()+"") ;
                 mContext.startActivity(intent);
             }
         });

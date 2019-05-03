@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,15 +13,31 @@ import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.fingerth.supdialogutils.SYSDiaLogUtils;
+import com.google.gson.Gson;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.MoreCategoryAdapter;
 import com.zzteck.jumin.app.App;
+import com.zzteck.jumin.bean.LoginBean;
 import com.zzteck.jumin.bean.MoreCategory;
+import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
+import com.zzteck.jumin.ui.mainui.MainActivity;
+import com.zzteck.jumin.utils.Constants;
+import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.NormalDecoration;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class MoreCategoryActivity extends BaseActivity implements OnClickListener{
@@ -72,19 +89,56 @@ public class MoreCategoryActivity extends BaseActivity implements OnClickListene
 	private List<MoreCategory> mMoreCategoryList = new ArrayList<>() ;
 
 	private void initData(){
-
+/*
 		for(int i = 0 ;i < res.length ;i++){
 			MoreCategory bean = new MoreCategory() ;
 			bean.setInfo(resInfo[i]);
 			bean.setRes(res[i]);
 			mMoreCategoryList.add(bean) ;
-		}
+		}*/
 
 		mRvCategory.setLayoutManager(new GridLayoutManager(this,2));
 		mRvCategory.addItemDecoration(new NormalDecoration(ContextCompat.getColor(this, R.color.mainGrayF8), (int) getResources().getDimension(R.dimen.one)));
-		mMoreCategoryAdapter = new MoreCategoryAdapter(mContext,mMoreCategoryList) ;
+		mMoreCategoryAdapter = new MoreCategoryAdapter(mContext,null) ;
 		mRvCategory.setAdapter(mMoreCategoryAdapter);
 	}
+
+	private void AppCategoryLists(){
+
+		Map<String, String> map = new HashMap<>() ;
+		map.put("s","App.Category.Lists") ;
+		map.put("catid",0+"") ;
+
+		map.put("sign", UtilsTools.getSign(mContext,"App.Category.Lists")) ;
+
+		OkHttpClient client = new OkHttpClient();
+		Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
+		Call call = client.newCall(request);
+		call.enqueue(new Callback() {
+
+			@Override
+			public void onFailure(Call call, IOException e) {
+				Log.e("liujw","##########################IOException : "+e.toString());
+			}
+
+			@Override
+			public void onResponse(Call call, final Response response) throws IOException {
+				final String responseStr = response.body().string();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+
+						String message = new String(responseStr.getBytes()) ;
+						Gson gson = new Gson() ;
+						MoreCategory bean = gson.fromJson(message,MoreCategory.class) ;
+						mMoreCategoryAdapter.notifyMoreCategoryAdapter(bean.getData());
+					}
+				});
+			}
+		});
+
+	}
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +151,7 @@ public class MoreCategoryActivity extends BaseActivity implements OnClickListene
 
  		initView() ;
 		initData() ;
+		AppCategoryLists() ;
 	}
 	
 
