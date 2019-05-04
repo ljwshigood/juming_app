@@ -31,6 +31,7 @@ import com.zzteck.jumin.fragment.WJConversationListFragment;
 import com.zzteck.jumin.ui.business.ReleaseCategoryActivity;
 import com.zzteck.jumin.ui.usercenter.LoginActivity;
 import com.zzteck.jumin.utils.Constants;
+import com.zzteck.jumin.utils.SharePerfenceUtil;
 import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.zzview.WJViewPaper;
 import com.zzteck.zzview.WindowsToast;
@@ -160,6 +161,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 	protected void onDestroy() {
 		super.onDestroy();
 		App.getInstance().isSelectCity = false ;
+		SharePerfenceUtil.setParam(mContext,"city_name","") ;
 	}
 
 	@Override

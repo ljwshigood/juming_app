@@ -18,13 +18,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.iasii.app.citylist.adapter.CityListAdapter;
 import com.iasii.app.citylist.db.DatabaseHelper;
 import com.iasii.app.citylist.entity.CityCompentBean;
+import com.iasii.app.citylist.entity.EventCity;
 import com.iasii.app.citylist.utils.DensityUtil;
 import com.iasii.app.citylist.utils.PingYinUtil;
 import com.iasii.app.citylist.view.LetterListView;
 import com.zzteck.jumin.R;
+import com.zzteck.jumin.adapter.CityListAdapter;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.utils.Constants;
@@ -56,7 +57,7 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
     private LetterListView letter_container;
 
     private List<CityCompentBean.DataBeanX.DataBean> allCities = new ArrayList<>();
-    private List<CityCompentBean.DataBeanX.DataBean> hotCities = new ArrayList<>();
+    private List<CityCompentBean.DataBeanX.HotcityBean> hotCities = new ArrayList<>();
     private List<String> historyCities = new ArrayList<>();
     private List<CityCompentBean.DataBeanX.DataBean> citiesData;
     private Map<String, Integer> letterIndex = new HashMap<>();
@@ -89,8 +90,8 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
         handler = new Handler();
         initView() ;
         initCity();
-        initHotCity();
-        initHistoryCity();
+        //initHotCity();
+       // initHistoryCity();
         setupView();
         initOverlay();
 
@@ -128,10 +129,10 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
                         String message = new String(responseStr);
                         Gson gson = new Gson();
                         CityCompentBean bean  = gson.fromJson(message,CityCompentBean.class) ;
-
                         citiesData = getCityList(bean);
-
                         allCities.addAll(citiesData);
+                        cityListAdapter.setHotCities(hotCities);
+
                         cityListAdapter.notifyDataSetChanged();
                     }
                 });
@@ -142,10 +143,18 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
 
     @Subscriber
     public void onEventMainThread(String event) {
-       if(cityListAdapter != null){
+       /*if(cityListAdapter != null){
            cityListAdapter.notifyLocationCity(event);
-       }
+       }*/
     }
+
+    @Subscriber
+    public void onEventMainThread(EventCity event) {
+        SharePerfenceUtil.setParam(mContext,"city_id",event.getId()+"");
+        SharePerfenceUtil.setParam(mContext,"city_name",event.getName()) ;
+        finish();
+    }
+
 
 
     @Override
@@ -178,7 +187,9 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
      * 热门城市
      */
     public void initHotCity() {
-        CityCompentBean.DataBeanX.DataBean city = new CityCompentBean.DataBeanX.DataBean("北京", "2");
+
+
+       /* CityCompentBean.DataBeanX.DataBean city = new CityCompentBean.DataBeanX.DataBean("北京", "2");
         hotCities.add(city);
         city = new CityCompentBean.DataBeanX.DataBean("上海", "2");
         hotCities.add(city);
@@ -199,7 +210,9 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
         city = new CityCompentBean.DataBeanX.DataBean("成都", "2");
         hotCities.add(city);
         city = new CityCompentBean.DataBeanX.DataBean("重庆", "2");
-        hotCities.add(city);
+        hotCities.add(city);*/
+
+
     }
 
     private void initHistoryCity() {
@@ -242,6 +255,10 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
         }
 
         Collections.sort(list, comparator);
+
+        hotCities = bean.getData().getHotcity() ;
+
+
         return list;
     }
 
@@ -278,8 +295,9 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
                 CityCompentBean.DataBeanX.DataBean bean = (CityCompentBean.DataBeanX.DataBean) cityListAdapter.getItem(position);
 
                 App.getInstance().isSelectCity = true ;
-
+                SharePerfenceUtil.setParam(mContext,"city_name",bean.getCityname()) ;
                 SharePerfenceUtil.setParam(mContext,"city_id",bean.getCityid()+"");
+                finish();
 
             }
         });

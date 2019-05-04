@@ -72,7 +72,6 @@ public class LocationService extends Service {
 
                 EventBus.getDefault().post(loc.getCity());
                 App.getInstance().locationCity  = loc.getCity() ;
-                stopLocation();
 
                 String city = loc.getCity().substring(0,loc.getCity().length() - 1) ;
 

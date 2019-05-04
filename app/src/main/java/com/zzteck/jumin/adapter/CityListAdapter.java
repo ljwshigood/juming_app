@@ -1,4 +1,4 @@
-package com.iasii.app.citylist.adapter;
+package com.zzteck.jumin.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,8 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iasii.app.citylist.R;
-import com.iasii.app.citylist.entity.City;
+import com.iasii.app.citylist.adapter.HotCityAdapter;
 import com.iasii.app.citylist.entity.CityCompentBean;
+import com.iasii.app.citylist.entity.EventCity;
+
+import org.simple.eventbus.EventBus;
 
 import java.util.List;
 import java.util.Map;
@@ -25,7 +28,16 @@ public class CityListAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private List<CityCompentBean.DataBeanX.DataBean> allCities;
-    private List<CityCompentBean.DataBeanX.DataBean> hotCities;
+
+    public List<CityCompentBean.DataBeanX.HotcityBean> getHotCities() {
+        return hotCities;
+    }
+
+    public void setHotCities(List<CityCompentBean.DataBeanX.HotcityBean> hotCities) {
+        this.hotCities = hotCities;
+    }
+
+    private List<CityCompentBean.DataBeanX.HotcityBean> hotCities;
     private List<String> historyCities;
     private String[] firstLetterArray;// 存放存在的汉语拼音首字母
     private Map<String, Integer> letterIndex;
@@ -38,7 +50,7 @@ public class CityListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public CityListAdapter(Context context, List<CityCompentBean.DataBeanX.DataBean> allCities, List<CityCompentBean.DataBeanX.DataBean> hotCities, List<String> historyCities, Map<String, Integer> letterIndex) {
+    public CityListAdapter(Context context, List<CityCompentBean.DataBeanX.DataBean> allCities, List<CityCompentBean.DataBeanX.HotcityBean> hotCities, List<String> historyCities, Map<String, Integer> letterIndex) {
         this.context = context;
         this.allCities = allCities;
         this.hotCities = hotCities;
@@ -109,15 +121,16 @@ public class CityListAdapter extends BaseAdapter {
 
             convertView = inflater.inflate(R.layout.item_city_grid, null);
             final GridView hotCity =  convertView.findViewById(R.id.grid_city);
-            hotCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+            HotCityAdapter adapter = new HotCityAdapter(context, this.hotCities) ;
+            hotCity.setAdapter(adapter);
+            adapter.setmOnItemClick(new HotCityAdapter.IOnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(context, hotCities.get(position).getCityname(), Toast.LENGTH_SHORT).show();
-
+                public void onItemClick(CityCompentBean.DataBeanX.HotcityBean bean) {
+                    EventCity event = new EventCity(bean.getCityname(),"") ;
+                    event.setId(bean.getCityid());
+                    EventBus.getDefault().post(event);
                 }
             });
-            hotCity.setAdapter(new HotCityAdapter(context, this.hotCities));
             TextView hotHint =  convertView.findViewById(R.id.recentHint);
             hotHint.setText("热门城市");
 

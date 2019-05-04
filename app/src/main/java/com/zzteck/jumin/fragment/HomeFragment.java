@@ -17,6 +17,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -49,6 +50,7 @@ import com.zzteck.jumin.ui.mainui.ZxingActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.GlideCircleTransform;
 import com.zzteck.jumin.utils.ScreenUtil;
+import com.zzteck.jumin.utils.SharePerfenceUtil;
 import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.ColorFlipPagerTitleView;
 import com.zzteck.jumin.view.JudgeNestedScrollView;
@@ -142,7 +144,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     @Subscriber
     public void onEventMainThread(String event) {
-        mTvLocation.setText(event);
+        String city = (String) SharePerfenceUtil.getParam(mContext,"city_name","");
+        if(TextUtils.isEmpty(city)){
+            mTvLocation.setText(event);
+        }else {
+            mTvLocation.setText(city);
+        }
     }
 
     private void initData() {
