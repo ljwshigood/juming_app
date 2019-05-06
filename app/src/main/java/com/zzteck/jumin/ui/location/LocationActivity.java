@@ -145,7 +145,9 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
 
     @Subscriber
     public void onEventMainThread(EventCity event) {
-        SharePerfenceUtil.setParam(mContext,"city_id",event.getId()+"");
+        if(!event.getId().equals("-1")){
+            SharePerfenceUtil.setParam(mContext,"city_id",event.getId()+"");
+        }
         SharePerfenceUtil.setParam(mContext,"city_name",event.getName()) ;
         finish();
     }

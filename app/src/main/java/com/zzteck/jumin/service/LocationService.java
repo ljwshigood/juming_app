@@ -70,6 +70,13 @@ public class LocationService extends Service {
 
             if (null != loc) {
 
+
+                if(App.getInstance().isSelectCity){
+                    /*String city = (String) SharePerfenceUtil.getParam(mContext,"city_name","");
+                    EventBus.getDefault().post(city);*/
+                    return ;
+                }
+
                 EventBus.getDefault().post(loc.getCity());
                 App.getInstance().locationCity  = loc.getCity() ;
 

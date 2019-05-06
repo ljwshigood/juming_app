@@ -11,9 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iasii.app.citylist.R;
+import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.cityselect.adapter.HotCityAdapter;
 import com.zzteck.jumin.cityselect.entity.CityCompentBean;
 import com.zzteck.jumin.cityselect.entity.EventCity;
+import com.zzteck.jumin.utils.SharePerfenceUtil;
 
 import org.simple.eventbus.EventBus;
 
@@ -117,6 +119,19 @@ public class CityListAdapter extends BaseAdapter {
 
             holder.mTvLocation.setText(mCity);
 
+            holder.mTvLocation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    App.getInstance().isSelectCity = true ;
+                    SharePerfenceUtil.setParam(context,"city_name",mCity) ;
+
+                    EventCity event = new EventCity(mCity,"") ;
+                    event.setId("-1");
+                    EventBus.getDefault().post(event);
+                }
+            });
+
         } else if (viewType == 1) {
 
             convertView = inflater.inflate(R.layout.item_city_grid, null);
@@ -126,6 +141,11 @@ public class CityListAdapter extends BaseAdapter {
             adapter.setmOnItemClick(new HotCityAdapter.IOnItemClickListener() {
                 @Override
                 public void onItemClick(CityCompentBean.DataBeanX.HotcityBean bean) {
+
+                    App.getInstance().isSelectCity = true ;
+                    SharePerfenceUtil.setParam(context,"city_name",bean.getCityname()) ;
+                    SharePerfenceUtil.setParam(context,"city_id",bean.getCityid()+"");
+
                     EventCity event = new EventCity(bean.getCityname(),"") ;
                     event.setId(bean.getCityid());
                     EventBus.getDefault().post(event);

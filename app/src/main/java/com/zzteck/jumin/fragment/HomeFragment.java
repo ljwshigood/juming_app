@@ -167,8 +167,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         mRVVideo.setLayoutManager(linearLayoutManager);
         mVideoAdapter = new VideoAdapter(getActivity(), mVideoList);
         mRVVideo.setAdapter(mVideoAdapter);
-
         String cityId = (String) SharePerfenceUtil.getParam(mContext,"city_id","");
+        String cityName = (String)SharePerfenceUtil.getParam(mContext,"city_name","") ;
+
+        if(!TextUtils.isEmpty(cityName)){
+            mTvLocation.setText(cityName);
+        }
+
+        EventBus.getDefault().post(1);
+
 
         Map<String, String> map = new HashMap<>();
         map.put("s", "App.Info.Getvideoinfo");

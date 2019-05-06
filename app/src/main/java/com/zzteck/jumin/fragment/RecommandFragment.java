@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +22,12 @@ import com.zzteck.jumin.bean.User;
 import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.ui.business.CategoryDetailActivity;
 import com.zzteck.jumin.utils.Constants;
+import com.zzteck.jumin.utils.SharePerfenceUtil;
 import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.NormalDecoration;
+
+import org.simple.eventbus.EventBus;
+import org.simple.eventbus.Subscriber;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -62,7 +67,7 @@ public class RecommandFragment extends Fragment {
             public void onMoreShow() {
                 if(mCategoryId != null){
                     mCurrentPage++ ;
-                    getInfosList(mCategoryId,0+"",mCurrentPage+"") ;
+                    getInfosList(mCategoryId,mCurrentPage+"") ;
                 }
 
             }
@@ -89,29 +94,46 @@ public class RecommandFragment extends Fragment {
 
     private String mCategoryId ;
 
+    @Subscriber
+    public void onEventMainThread(int event) {
+        mCurrentPage = 1 ;
+        getInfosList(mCategoryId,mCurrentPage+"") ;
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mMainView = inflater.inflate(R.layout.fragment_recommand, container, false);
         mContext = getActivity();
         initView(mMainView);
 
+        EventBus.getDefault().register(this);
+
         Bundle bundle = getArguments();
         if (bundle != null) {
             mCategoryId = bundle.getString("item");
             Log.e("liujw","#################item : "+mCategoryId) ;
-            getInfosList(mCategoryId,0+"",mCurrentPage+"") ;
+            getInfosList(mCategoryId,mCurrentPage+"") ;
         }
 
         return mMainView;
     }
 
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        EventBus.getDefault().unregister(this);
+    }
+
     /**
      * @param catId
-     * @param cityId
      * @param pages
      */
-    private void getInfosList(final String catId, final String cityId, String pages){
+    private void getInfosList(final String catId,String pages){
+
+        String cityId = (String) SharePerfenceUtil.getParam(mContext,"city_id","");
 
         Map<String, String> map = new HashMap<>() ;
         map.put("s","App.Info.Getinfos") ;
@@ -136,22 +158,32 @@ public class RecommandFragment extends Fragment {
 
                 Log.e("liujw","##########################getInfosList message : "+responseStr);
 
+                if(getActivity() == null){
+                    return ;
+                }
+
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
 
-                        String message = new String(responseStr) ;
+                        try{
 
-                        Log.e("liujw","##########################getInfosList catId : "+catId+" #####################: "+responseStr);
-                        Gson gson = new Gson() ;
-                        HomeInfo info = gson.fromJson(message,HomeInfo.class) ;
-                        if(mCurrentPage == 1){
-                            initData(info);
-                        }else{
-                            if(recommandAdapter != null){
-                                recommandAdapter.addAll(info.getData());
+                            String message = new String(responseStr) ;
+
+                            Log.e("liujw","##########################getInfosList catId : "+catId+" #####################: "+responseStr);
+                            Gson gson = new Gson() ;
+                            HomeInfo info = gson.fromJson(message,HomeInfo.class) ;
+                            if(mCurrentPage == 1){
+                                initData(info);
+                            }else{
+                                if(recommandAdapter != null){
+                                    recommandAdapter.addAll(info.getData());
+                                }
                             }
+                        }catch (Exception e){
+                            e.printStackTrace();
                         }
+
                     }
                 });
             }

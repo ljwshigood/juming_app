@@ -161,7 +161,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 	protected void onDestroy() {
 		super.onDestroy();
 		App.getInstance().isSelectCity = false ;
-		SharePerfenceUtil.setParam(mContext,"city_name","") ;
+		SharePerfenceUtil.clearSharePrefrences(this);
 	}
 
 	@Override
@@ -279,6 +279,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ll_realease:
+
 			mTvHome.setTextColor(mContext.getResources().getColor(R.color.dark));
 			mTvHistory.setTextColor(mContext.getResources().getColor(R.color.dark));
 			mTvRelease.setTextColor(mContext.getResources().getColor(R.color.dark_red));
