@@ -1,6 +1,5 @@
 package com.zzteck.jumin.ui.usercenter;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -16,33 +15,26 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.baijiahulian.common.crop.BJCommonImageCropHelper;
 import com.baijiahulian.common.crop.ThemeConfig;
 import com.baijiahulian.common.crop.model.PhotoInfo;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.fingerth.supdialogutils.SYSDiaLogUtils;
 import com.google.gson.Gson;
-import com.zx.uploadlibrary.listener.ProgressListener;
-import com.zx.uploadlibrary.listener.impl.UIProgressListener;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.bean.MediaInfo;
 import com.zzteck.jumin.bean.UploadInfo;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.utils.Constants;
-import com.zzteck.jumin.utils.OKHttpUtils;
 import com.zzteck.jumin.utils.PictureUtil;
-import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.webmanager.CountingRequestBody;
 import com.zzteck.jumin.webmanager.RequestBuilder;
 import com.zzteck.zzview.WindowsToast;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Call;

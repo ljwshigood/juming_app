@@ -117,7 +117,8 @@
         <activity android:name=".ui.mainui.FeedBackActivity"></activity>
         <activity android:name=".ui.usercenter.MyReleaseActivity"></activity>
         <activity android:name=".ui.usercenter.SpreadActivity"></activity>
-        <activity android:name=".ui.business.ReleaseActivity"></activity>
+        <activity android:name=".ui.business.ReleaseActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".ui.mainui.MainActivity"></activity>
 
         <activity android:name=".ui.usercenter.ContactUsActivity"></activity>

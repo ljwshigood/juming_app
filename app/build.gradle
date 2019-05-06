@@ -96,7 +96,6 @@ dependencies {
         }
     }
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
-    implementation 'com.jaredrummler:material-spinner:1.3.1'
     implementation 'com.jude:easyrecyclerview:4.4.2'
     implementation 'com.jakewharton:butterknife:8.7.0'
     implementation 'org.simple:androideventbus:1.0.5.1'
@@ -125,8 +124,8 @@ dependencies {
     implementation project(':videorecord')
     implementation project(':magicindicator')
     implementation project(':FingerthDialogUtilsLibrary')
-    implementation project(':library')
     implementation project(':indexablerecyclerview')
     implementation files('libs/pinyin4android1.0.jar')
     implementation files('libs/pinyin4j-2.5.0.jar')
+    implementation project(':library')
 }

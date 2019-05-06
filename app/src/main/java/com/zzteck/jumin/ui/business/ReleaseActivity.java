@@ -710,6 +710,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 				TextView tvUnit = new TextView(this);
 				tvUnit.setText(info.getData().get(i).getExtra().getUnits());
+				tvUnit.setGravity(Gravity.CENTER_VERTICAL|Gravity.RIGHT);
 				tvUnit.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
 
 				linearLayoutRight.addView(etPrice);

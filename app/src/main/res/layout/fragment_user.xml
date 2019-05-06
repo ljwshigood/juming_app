@@ -22,7 +22,7 @@
             <LinearLayout
                 android:id="@+id/ll_header"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="200dp"
                 android:background="@mipmap/pic_bg"
                 android:gravity="center"
                 android:orientation="vertical">
