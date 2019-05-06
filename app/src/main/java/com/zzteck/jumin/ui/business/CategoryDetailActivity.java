@@ -269,7 +269,16 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
         oks.show(this);*/
     }
 
+    private TextView mTvPrice ;
+
+    private TextView mTvBaseInfo ;
+
+    private TextView mTvTipInfo ;
+
     private void initView() {
+        mTvTipInfo = findViewById(R.id.tv_tip_contnet) ;
+        mTvBaseInfo = findViewById(R.id.tv_base_info) ;
+        mTvPrice = findViewById(R.id.tv_price) ;
         mIvAttention = findViewById(R.id.iv_guanzhu);
         mIvDot = findViewById(R.id.iv_dian);
         mIvShare = findViewById(R.id.iv_share);
@@ -401,6 +410,10 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
         mTvContentTitle.setText(bean.getData().getTitle());
         mTvPlace.setText(bean.getData().getAreaname());
         mTvDes.setText(Html.fromHtml(bean.getData().getContent()));
+        mTvBaseInfo.setText("联系人 ："+bean.getData().getContact_who()+"\n\n"
+                            +"QQ ："+bean.getData().getQq()+"\n\n"
+                            +"微信 ："+bean.getData().getWeixin()+"\n\n");
+        mTvTipInfo.setText("1: 聚民网不承担任何交易损\n\n2 :本页信息由用户和第三方平台提供\n\n3: 联系我时，说是在聚民网看到的");
     }
 
     private ShareDialog mShareDialog;

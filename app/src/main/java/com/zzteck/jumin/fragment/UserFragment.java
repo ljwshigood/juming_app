@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -118,10 +119,16 @@ public class UserFragment extends Fragment implements OnClickListener {
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .into(mCvPhoto);
 
-            mTvNickName.setText(userList.get(0).getUsername() +"");
+            if(TextUtils.isEmpty(userList.get(0).getUsername())){
+                mTvNickName.setVisibility(View.GONE);
+            }else {
+                mTvNickName.setVisibility(View.VISIBLE);
+                mTvNickName.setText(userList.get(0).getUsername() + "");
+            }
             mLLEditor.setVisibility(View.VISIBLE);
 
         }else{
+
             mTvNickName.setText("点击登陆");
             mLLEditor.setVisibility(View.GONE);
         }
@@ -140,10 +147,6 @@ public class UserFragment extends Fragment implements OnClickListener {
             }
         }
     } ;
-
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

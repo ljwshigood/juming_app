@@ -174,16 +174,17 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="15dp"
-                                            android:text="江滨华府"
                                             android:textColor="@android:color/black"
-                                            android:textSize="16sp" />
+                                            android:textSize="16sp"
+                                            tools:text="江滨华府" />
 
                                     </LinearLayout>
 
-                                    <RelativeLayout
+                                    <LinearLayout
                                         android:layout_width="match_parent"
-                                        android:layout_height="50dp"
-                                        android:background="@android:color/white">
+                                        android:layout_height="60dp"
+                                        android:background="@android:color/white"
+                                        android:orientation="vertical">
 
                                         <TextView
                                             android:id="@+id/tv_price"
@@ -191,27 +192,28 @@
                                             android:layout_height="wrap_content"
                                             android:layout_centerVertical="true"
                                             android:layout_marginLeft="15dp"
-                                            android:text="128元"
                                             android:textColor="@color/dark_red"
-                                            android:textSize="20sp" />
+                                            android:textSize="20sp"
+                                            android:visibility="gone"
+                                            android:layout_marginBottom="15dp"
+                                            tools:text="128元" />
 
 
                                         <TextView
                                             android:id="@+id/tv_time"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_alignParentRight="true"
                                             android:layout_centerVertical="true"
-                                            android:layout_marginRight="15dp"
+                                            android:layout_marginLeft="15dp"
                                             android:text="6分钟钱发布/15人浏览" />
 
-                                    </RelativeLayout>
+                                    </LinearLayout>
 
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="50dp"
-                                        android:layout_marginTop="15dp"
+                                        android:layout_marginTop="10dp"
                                         android:background="@android:color/white"
                                         android:gravity="center_vertical"
                                         android:orientation="horizontal">
@@ -236,7 +238,7 @@
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
-                                        android:layout_height="50dp"
+                                        android:layout_height="wrap_content"
                                         android:background="@android:color/white"
                                         android:gravity="center_vertical"
                                         android:orientation="vertical">
@@ -266,7 +268,16 @@
                                         <LinearLayout
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
+                                            android:layout_marginLeft="25sp"
+                                            android:layout_marginTop="10dp"
                                             android:orientation="vertical">
+
+
+                                            <TextView
+                                                android:id="@+id/tv_base_info"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:textSize="14sp" />
 
                                         </LinearLayout>
 
@@ -277,7 +288,7 @@
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="15dp"
+                                        android:layout_marginTop="10dp"
                                         android:background="@android:color/white"
                                         android:orientation="vertical">
 
@@ -349,7 +360,7 @@
                                             android:layout_marginLeft="25dp"
                                             android:layout_marginRight="25dp"
                                             android:layout_marginTop="10dp"
-                                            android:text="asdfafasffasfaffsafasfafaf" />
+                                            tools:text="asdfafasffasfaffsafasfafaf" />
 
                                     </LinearLayout>
 

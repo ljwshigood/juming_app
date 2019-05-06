@@ -34,7 +34,7 @@ public class WeiXinDialog extends Dialog {
 		negativeButton = view.findViewById(R.id.refusebtn) ;
 		positiveButton = view.findViewById(R.id.acceptbtn) ;
 		negativeButton.setVisibility(View.GONE);
-        positiveButton.setText("复制");
+        positiveButton.setText("点击复制");
 		setContentView(view);
 
 		negativeButton.setOnClickListener(new View.OnClickListener() {
