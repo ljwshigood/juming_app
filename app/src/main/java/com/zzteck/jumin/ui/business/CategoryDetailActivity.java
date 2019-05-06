@@ -1,9 +1,13 @@
 package com.zzteck.jumin.ui.business;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
@@ -28,8 +32,12 @@ import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.utils.ActivityIntentUtils;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.UtilsTools;
+import com.zzteck.jumin.view.MyDialog;
 import com.zzteck.jumin.view.ShareDialog;
+import com.zzteck.jumin.view.WeiXinDialog;
 import com.zzteck.zzview.WindowsToast;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,20 +56,26 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class CategoryDetailActivity extends BaseActivity implements View.OnClickListener{
+public class CategoryDetailActivity extends BaseActivity implements View.OnClickListener {
 
-    private TextView mTvTitle ;
+    private TextView mTvTitle;
 
     private RelativeLayout mRlBack;
 
     ///////////////////// 轮播图
-    private ViewPager mBannerViewPaper ;
+    private ViewPager mBannerViewPaper;
 
-    private int mPlayTimeInterval = 2500 ;
+    private int mPlayTimeInterval = 2500;
 
-    private LinearLayout mPoints ;
+    private LinearLayout mPoints;
 
-    private List<String> modelList = new ArrayList<>() ;
+    private List<String> modelList = new ArrayList<>();
+
+    private LinearLayout mLLCall;
+
+    private LinearLayout mLLWeiXin;
+
+    private LinearLayout mLLMessage;
 
     private void initViewPager() {
         mPlayTimeInterval = (int) 2.5 * 2000;
@@ -70,16 +84,16 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
                 View view = new View(mContext);
                 view.setBackgroundResource(R.drawable.dot_normal);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(20, 20);
-                params.leftMargin = 18 ;
-                view.setLayoutParams(params) ;
+                params.leftMargin = 18;
+                view.setLayoutParams(params);
                 if (mPoints.getChildCount() == i) {
-                    mPoints.addView(view) ;
+                    mPoints.addView(view);
                 }
             }
 
             mPoints.getChildAt(0).setBackgroundResource(R.drawable.dot_focused);
             //设置适配器
-            CategoryPagerAdapter adapter = new CategoryPagerAdapter(mContext, modelList,0);
+            CategoryPagerAdapter adapter = new CategoryPagerAdapter(mContext, modelList, 0);
             mBannerViewPaper.setAdapter(adapter);
             mBannerViewPaper.setOffscreenPageLimit(3);
             mBannerViewPaper.setCurrentItem(0);
@@ -88,9 +102,9 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
 
                 @Override
                 public void onPageSelected(int position) {
-                    mPoints.getChildAt(prePosition).setBackgroundResource(R.drawable.dot_normal) ;
-                    mPoints.getChildAt(position % mPoints.getChildCount()).setBackgroundResource(R.drawable.dot_focused) ;
-                    prePosition = position % mPoints.getChildCount() ;
+                    mPoints.getChildAt(prePosition).setBackgroundResource(R.drawable.dot_normal);
+                    mPoints.getChildAt(position % mPoints.getChildCount()).setBackgroundResource(R.drawable.dot_focused);
+                    prePosition = position % mPoints.getChildCount();
                 }
 
                 @Override
@@ -102,7 +116,7 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
                 public void onPageScrollStateChanged(int arg0) {
 
                 }
-            }) ;
+            });
         }
 
         if (modelList != null && modelList.size() > 1) {
@@ -133,9 +147,9 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
         }
     }
 
-    private boolean mIsPlay = false ;
+    private boolean mIsPlay = false;
 
-    private int prePosition ;
+    private int prePosition;
 
     /**
      * 描述：开始自动轮播.
@@ -185,23 +199,21 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
 
     ///////////////////
 
-    private TextView mTvContentTitle ;
+    private TextView mTvContentTitle;
 
-    private TextView mTvPlace ;
+    private TextView mTvPlace;
 
-    private TextView mTvDes ;
+    private TextView mTvDes;
 
-    private LinearLayout mLLWechat ;
+    private LinearLayout mLLWechat;
 
-    private LinearLayout mLLMessage ;
+    private LinearLayout mLLOrder;
 
-    private LinearLayout mLLOrder ;
+    private ImageView mIvShare;
 
-    private ImageView mIvShare ;
+    private ImageView mIvAttention;
 
-    private ImageView mIvAttention ;
-
-    private ImageView mIvDot ;
+    private ImageView mIvDot;
 
     private void showShare(String platform) {
         final OnekeyShare oks = new OnekeyShare();
@@ -257,23 +269,22 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
         oks.show(this);*/
     }
 
-    private void initView(){
+    private void initView() {
+        mIvAttention = findViewById(R.id.iv_guanzhu);
+        mIvDot = findViewById(R.id.iv_dian);
+        mIvShare = findViewById(R.id.iv_share);
 
-        mIvAttention = findViewById(R.id.iv_guanzhu) ;
-        mIvDot = findViewById(R.id.iv_dian) ;
-        mIvShare = findViewById(R.id.iv_share) ;
-
-        mLLWechat= findViewById(R.id.ll_wechat) ;
-        mLLMessage = findViewById(R.id.ll_message) ;
-        mLLOrder = findViewById(R.id.ll_order) ;
-        mTvDes = findViewById(R.id.tv_des) ;
-        mTvPlace = findViewById(R.id.tv_place) ;
-        mTvContentTitle = findViewById(R.id.tv_title) ;
+        mLLWechat = findViewById(R.id.ll_wechat);
+        mLLMessage = findViewById(R.id.ll_message);
+        mLLOrder = findViewById(R.id.ll_order);
+        mTvDes = findViewById(R.id.tv_des);
+        mTvPlace = findViewById(R.id.tv_place);
+        mTvContentTitle = findViewById(R.id.tv_title);
         mPoints = findViewById(R.id.layout_points);
         mBannerViewPaper = findViewById(R.id.vp_banner);
 
-        mTvTitle = findViewById(R.id.tv_main_info) ;
-        mRlBack = findViewById(R.id.ll_back) ;
+        mTvTitle = findViewById(R.id.tv_main_info);
+        mRlBack = findViewById(R.id.ll_back);
         mRlBack.setOnClickListener(this);
         mTvTitle.setText("详情");
         mRlBack.setVisibility(View.VISIBLE);
@@ -288,27 +299,27 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
     }
 
 
-    private void attentAction(String id){
+    private void attentAction(String id) {
 
-        if(TextUtils.isEmpty(id)){
-            return ;
+        if (TextUtils.isEmpty(id)) {
+            return;
         }
 
-        Map<String, String> map = new HashMap<>() ;
-        map.put("s","App.Shoucang.Add") ;
-        map.put("infoid",id) ;
+        Map<String, String> map = new HashMap<>();
+        map.put("s", "App.Shoucang.Add");
+        map.put("infoid", id);
 
-        map.put("sign", UtilsTools.getSign(mContext,"App.Shoucang.Add")) ;
+        map.put("sign", UtilsTools.getSign(mContext, "App.Shoucang.Add"));
 
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
+        Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
         Call call = client.newCall(request);
 
         call.enqueue(new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e("liujw","##########################IOException : "+e.toString());
+                Log.e("liujw", "##########################IOException : " + e.toString());
             }
 
             @Override
@@ -317,15 +328,15 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        String message = new String(responseStr.getBytes()) ;
-                        Gson gson = new Gson() ;
-                        AttentionInfo bean = gson.fromJson(message,AttentionInfo.class) ;
+                        String message = new String(responseStr.getBytes());
+                        Gson gson = new Gson();
+                        AttentionInfo bean = gson.fromJson(message, AttentionInfo.class);
 
-                        if(bean.getData().isIs_success()){
-                            WindowsToast.makeText(mContext,bean.getData().getInfo()).show();
+                        if (bean.getData().isIs_success()) {
+                            WindowsToast.makeText(mContext, bean.getData().getInfo()).show();
                             mIvAttention.setImageResource(R.mipmap.btn_guanzhu_pre);
-                        }else{
-                            WindowsToast.makeText(mContext,bean.getData().getInfo()).show();
+                        } else {
+                            WindowsToast.makeText(mContext, bean.getData().getInfo()).show();
                         }
                     }
                 });
@@ -335,27 +346,29 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
 
     }
 
-    private void getCatoryDetail(String id){
+    private CatoryDetailInfo mCategoryBean;
 
-        if(TextUtils.isEmpty(id)){
-            return ;
+    private void getCatoryDetail(String id) {
+
+        if (TextUtils.isEmpty(id)) {
+            return;
         }
 
-        Map<String, String> map = new HashMap<>() ;
-        map.put("s","App.Info.Show") ;
-        map.put("id",id) ;
+        Map<String, String> map = new HashMap<>();
+        map.put("s", "App.Info.Show");
+        map.put("id", id);
 
-        map.put("sign", UtilsTools.getSign(mContext,"App.Info.Show")) ;
+        map.put("sign", UtilsTools.getSign(mContext, "App.Info.Show"));
 
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
+        Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
         Call call = client.newCall(request);
 
         call.enqueue(new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e("liujw","##########################IOException : "+e.toString());
+                Log.e("liujw", "##########################IOException : " + e.toString());
             }
 
             @Override
@@ -364,12 +377,12 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        String message = new String(responseStr.getBytes()) ;
-                        Gson gson = new Gson() ;
-                        CatoryDetailInfo bean = gson.fromJson(message,CatoryDetailInfo.class) ;
-                        modelList.add(bean.getData().getImg_path()) ;
-                        initViewPager() ;
-                        setDataView(bean) ;
+                        String message = new String(responseStr.getBytes());
+                        Gson gson = new Gson();
+                        mCategoryBean = gson.fromJson(message, CatoryDetailInfo.class);
+                        modelList.add(mCategoryBean.getData().getImg_path());
+                        initViewPager();
+                        setDataView(mCategoryBean);
                     }
                 });
             }
@@ -378,52 +391,71 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
 
     }
 
-    private String mId ;
+    private String mId;
 
-    private void initData(){
-        mId = getIntent().getStringExtra("id") ;
+    private void initData() {
+        mId = getIntent().getStringExtra("id");
     }
 
-    private void setDataView(CatoryDetailInfo bean){
+    private void setDataView(CatoryDetailInfo bean) {
         mTvContentTitle.setText(bean.getData().getTitle());
         mTvPlace.setText(bean.getData().getAreaname());
         mTvDes.setText(Html.fromHtml(bean.getData().getContent()));
     }
 
-    private ShareDialog mShareDialog ;
+    private ShareDialog mShareDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate ( savedInstanceState );
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_detail);
-        initView() ;
+        initView();
         initData();
-        getCatoryDetail(mId) ;
+        getCatoryDetail(mId);
 
-        mShareDialog = new ShareDialog(mContext) ;
+        mShareDialog = new ShareDialog(mContext);
         mShareDialog.setOnClickListener(new ShareDialog.OnClickListener() {
             @Override
             public void OnClick(View v, int position) {
-                switch (position){
+                switch (position) {
                     case 0:
                         showShare(QQ.NAME);
-                        break ;
+                        break;
                     case 1:
                         showShare(Wechat.NAME);
-                        break ;
+                        break;
                     case 2:
                         showShare(WechatMoments.NAME);
-                        break ;
+                        break;
                     case 3:
                         showShare(SinaWeibo.NAME);
-                        break ;
+                        break;
                 }
             }
         });
     }
 
+    /**
+     * 拨打电话（直接拨打电话）
+     * @param phoneNum 电话号码
+     */
+    public void callPhone(String phoneNum) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        Uri data = Uri.parse("tel:" + phoneNum);
+        intent.setData(data);
+        startActivity(intent);
+    }
 
-
+    public void doSendSMSTo(String phoneNumber,String message){
+       // if(PhoneNumberUtils.isGlobalPhoneNumber(phoneNumber)){
+            Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:"+phoneNumber));
+            intent.putExtra("sms_body", message);
+            startActivity(intent);
+      // }
+    }
 
     @Override
     public void onClick(View v) {
@@ -433,11 +465,25 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
                 finish();
                 break ;
             case R.id.ll_message :
+                if(mCategoryBean != null){
+                    doSendSMSTo(mCategoryBean.getData().getTel(),"") ;
+                }
+
                 break ;
             case R.id.ll_order :
-                ActivityIntentUtils.jumpActivity(mContext,ChargeActivity.class);
+                if(mCategoryBean != null) {
+                    callPhone(mCategoryBean.getData().getTel());
+                }
                 break ;
             case R.id.ll_wechat :
+                String info = "" ;
+                if(TextUtils.isEmpty((String)mCategoryBean.getData().getWeixin())){
+                    info = "微信号: 暂无" ;
+                }else{
+                    info = "微信号："+(String)mCategoryBean.getData().getWeixin() ;
+                }
+                WeiXinDialog dialog1 = new WeiXinDialog(this,info) ;
+                dialog1.show();
                 break ;
             case R.id.iv_share :
                 if(!mShareDialog.isShowing()){
