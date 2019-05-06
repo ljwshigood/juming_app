@@ -75,8 +75,8 @@ public class RecommandAdapter extends RecyclerArrayAdapter<HomeInfo.DataBean> {
 
             Glide.with(mContext)
                     .load(data.getImg_path())
-                    .placeholder(R.mipmap.ic_launcher)
-                    .error(R.mipmap.ic_launcher)
+                    .placeholder(R.mipmap.default_pic)
+                    .error(R.mipmap.default_pic)
                     .crossFade(300)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .into(mIvLogo);

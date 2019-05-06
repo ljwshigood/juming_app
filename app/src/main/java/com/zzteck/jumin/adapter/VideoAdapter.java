@@ -50,8 +50,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
         Glide.with(mContext)
                 .load(mVideoList.get(position).getImg_path())
-                .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
+                .placeholder(R.mipmap.default_pic)
+                .error(R.mipmap.default_pic)
                 .crossFade(300)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(holder.mIvVideo);

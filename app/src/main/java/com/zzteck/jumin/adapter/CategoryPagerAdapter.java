@@ -48,8 +48,8 @@ public class CategoryPagerAdapter extends PagerAdapter {
         String img = data.get(position % data.size());
         Glide.with(context)
                 .load(img)
-                .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
+                .placeholder(R.mipmap.default_pic)
+                .error(R.mipmap.default_pic)
                 .crossFade(300)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(view);

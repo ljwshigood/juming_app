@@ -114,8 +114,8 @@ public class ModifyUserInfoActivity extends BaseActivity implements OnClickListe
 
                                     Glide.with(mContext)
                                             .load(bean.getData().getLogo())
-                                            .placeholder(R.mipmap.ic_launcher)
-                                            .error(R.mipmap.ic_launcher)
+                                            .placeholder(R.mipmap.default_pic)
+                                            .error(R.mipmap.default_pic)
                                             .crossFade(300)
                                             .transform(new GlideCircleTransform(mContext))
                                             .diskCacheStrategy(DiskCacheStrategy.SOURCE)
@@ -183,8 +183,8 @@ public class ModifyUserInfoActivity extends BaseActivity implements OnClickListe
  		if(users != null && users.size() > 0){
             Glide.with(mContext)
                     .load(users.get(0).getHeader())
-                    .placeholder(R.mipmap.ic_launcher)
-                    .error(R.mipmap.ic_launcher)
+                    .placeholder(R.mipmap.default_pic)
+                    .error(R.mipmap.default_pic)
                     .crossFade(300)
                     .transform(new GlideCircleTransform(mContext))
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)

@@ -62,8 +62,8 @@ public class MemeberAdapter extends RecyclerView.Adapter<MemeberAdapter.ViewHold
 
         Glide.with(mContext)
                 .load(mMemberList.get(position).getRes())
-                .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
+                .placeholder(R.mipmap.default_pic)
+                .error(R.mipmap.default_pic)
                 .crossFade(300)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(holder.mIvMemeber);

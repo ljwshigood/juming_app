@@ -64,8 +64,8 @@ public class MemberUpgradeDetailActivity extends BaseActivity implements OnClick
         if(mType != -1){
             Glide.with(mContext)
                     .load(res[mType])
-                    .placeholder(R.mipmap.ic_launcher)
-                    .error(R.mipmap.ic_launcher)
+                    .placeholder(R.mipmap.default_pic)
+                    .error(R.mipmap.default_pic)
                     .crossFade(300)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .into(mIvMemeber);

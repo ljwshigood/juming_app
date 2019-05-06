@@ -69,8 +69,8 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
 
         Glide.with(mContext)
                 .load(mFavoriteList.get(position).getIcon())
-                .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
+                .placeholder(R.mipmap.default_pic)
+                .error(R.mipmap.default_pic)
                 .crossFade(300)
                 .transform(new GlideCircleTransform(mContext))
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)

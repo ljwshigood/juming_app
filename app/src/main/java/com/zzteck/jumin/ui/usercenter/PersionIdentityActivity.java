@@ -139,8 +139,8 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 
 		Glide.with(mContext)
 				.load(info.getFilePath())
-				.placeholder(R.mipmap.ic_launcher)
-				.error(R.mipmap.ic_launcher)
+				.placeholder(R.mipmap.default_pic)
+				.error(R.mipmap.default_pic)
 				.crossFade(300)
 				.diskCacheStrategy(DiskCacheStrategy.SOURCE)
 				.into(mIvOrg);
@@ -152,8 +152,8 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 
 		Glide.with(mContext)
 				.load(info.getFilePath())
-				.placeholder(R.mipmap.ic_launcher)
-				.error(R.mipmap.ic_launcher)
+				.placeholder(R.mipmap.default_pic)
+				.error(R.mipmap.default_pic)
 				.crossFade(300)
 				.diskCacheStrategy(DiskCacheStrategy.SOURCE)
 				.into(mIvFront);

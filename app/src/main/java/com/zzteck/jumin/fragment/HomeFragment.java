@@ -459,8 +459,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                             for (int i = 0; i < bean.getData().size(); i++) {
                                 Glide.with(getActivity())
                                         .load(bean.getData().get(i).getIcon())
-                                        .placeholder(R.mipmap.ic_launcher)
-                                        .error(R.mipmap.ic_launcher)
+                                        .placeholder(R.mipmap.default_pic)
+                                        .error(R.mipmap.default_pic)
                                         .crossFade(300)
                                         .transform(new GlideCircleTransform(getActivity()))
                                         .diskCacheStrategy(DiskCacheStrategy.SOURCE)
@@ -506,8 +506,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                             for (int i = 0; i < bean.getData().size(); i++) {
                                 Glide.with(getActivity())
                                         .load(bean.getData().get(i).getIcon())
-                                        .placeholder(R.mipmap.ic_launcher)
-                                        .error(R.mipmap.ic_launcher)
+                                        .placeholder(R.mipmap.default_pic)
+                                        .error(R.mipmap.default_pic)
                                         .crossFade(300)
                                         .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                                         .into(mImagePicLogo.get(i));

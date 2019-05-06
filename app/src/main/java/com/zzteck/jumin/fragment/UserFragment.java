@@ -112,8 +112,8 @@ public class UserFragment extends Fragment implements OnClickListener {
         if(userList != null && userList.size() > 0){
             Glide.with(getActivity())
                     .load(userList.get(0).getHeader())
-                    .placeholder(R.mipmap.ic_launcher)
-                    .error(R.mipmap.ic_launcher)
+                    .placeholder(R.mipmap.default_pic)
+                    .error(R.mipmap.default_pic)
                     .crossFade(300)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .into(mCvPhoto);
