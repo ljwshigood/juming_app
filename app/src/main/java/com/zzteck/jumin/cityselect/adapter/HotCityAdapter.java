@@ -1,4 +1,4 @@
-package com.iasii.app.citylist.adapter;
+package com.zzteck.jumin.cityselect.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,11 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.iasii.app.citylist.R;
-import com.iasii.app.citylist.entity.City;
-import com.iasii.app.citylist.entity.CityCompentBean;
+import com.zzteck.jumin.cityselect.entity.CityCompentBean;
 
 import java.util.List;
 

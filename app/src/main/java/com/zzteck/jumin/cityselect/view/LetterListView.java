@@ -1,4 +1,4 @@
-package com.iasii.app.citylist.view;
+package com.zzteck.jumin.cityselect.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.iasii.app.citylist.utils.DensityUtil;
+import com.zzteck.jumin.cityselect.utils.DensityUtil;
 
 
 /**

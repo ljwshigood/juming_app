@@ -1,4 +1,4 @@
-package com.iasii.app.citylist.utils;
+package com.zzteck.jumin.cityselect.utils;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;

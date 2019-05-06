@@ -18,15 +18,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.iasii.app.citylist.db.DatabaseHelper;
-import com.iasii.app.citylist.entity.CityCompentBean;
-import com.iasii.app.citylist.entity.EventCity;
-import com.iasii.app.citylist.utils.DensityUtil;
-import com.iasii.app.citylist.utils.PingYinUtil;
-import com.iasii.app.citylist.view.LetterListView;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.CityListAdapter;
 import com.zzteck.jumin.app.App;
+import com.zzteck.jumin.cityselect.entity.CityCompentBean;
+import com.zzteck.jumin.cityselect.entity.EventCity;
+import com.zzteck.jumin.cityselect.utils.DensityUtil;
+import com.zzteck.jumin.cityselect.utils.PingYinUtil;
+import com.zzteck.jumin.cityselect.view.LetterListView;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.SharePerfenceUtil;
@@ -66,7 +65,6 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
 
     private TextView letterOverlay; // 对话框首字母textview
     private OverlayThread overlayThread; // 显示首字母对话框
-    private DatabaseHelper databaseHelper;
 
     private boolean isScroll;
     private boolean isOverlayReady;
@@ -86,7 +84,6 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
         city_container = findViewById(R.id.city_container);
         letter_container = findViewById(R.id.letter_container);
 
-        databaseHelper = new DatabaseHelper(this);
         handler = new Handler();
         initView() ;
         initCity();
@@ -131,6 +128,8 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
                         allCities.addAll(citiesData);
                         cityListAdapter.setHotCities(hotCities);
 
+                        cityListAdapter.setup() ;
+
                         cityListAdapter.notifyDataSetChanged();
                     }
                 });
@@ -141,9 +140,7 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
 
     @Subscriber
     public void onEventMainThread(String event) {
-       /*if(cityListAdapter != null){
-           cityListAdapter.notifyLocationCity(event);
-       }*/
+
     }
 
     @Subscriber
@@ -212,27 +209,6 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
 
 
     }
-
-    private void initHistoryCity() {
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from recent_city order by date desc limit 0, 3", null);
-        while (cursor.moveToNext()) {
-            historyCities.add(cursor.getString(1));
-        }
-        cursor.close();
-        db.close();
-    }
-
-    public void addHistoryCity(String name) {
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from recent_city where name = '" + name + "'", null);
-        if (cursor.getCount() > 0) {
-            db.delete("recent_city", "name = ?", new String[]{name});
-        }
-        db.execSQL("insert into recent_city(name, date) values('" + name + "', " + System.currentTimeMillis() + ")");
-        db.close();
-    }
-
 
     private ArrayList<CityCompentBean.DataBeanX.DataBean> getCityList(CityCompentBean bean) {
         ArrayList<CityCompentBean.DataBeanX.DataBean> list = new ArrayList<>();

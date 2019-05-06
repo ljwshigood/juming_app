@@ -1,4 +1,4 @@
-package com.iasii.app.citylist.utils;
+package com.zzteck.jumin.cityselect.utils;
 
 import android.content.Context;
 import android.util.TypedValue;

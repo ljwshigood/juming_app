@@ -11,9 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iasii.app.citylist.R;
-import com.iasii.app.citylist.adapter.HotCityAdapter;
-import com.iasii.app.citylist.entity.CityCompentBean;
-import com.iasii.app.citylist.entity.EventCity;
+import com.zzteck.jumin.cityselect.adapter.HotCityAdapter;
+import com.zzteck.jumin.cityselect.entity.CityCompentBean;
+import com.zzteck.jumin.cityselect.entity.EventCity;
 
 import org.simple.eventbus.EventBus;
 
@@ -58,10 +58,10 @@ public class CityListAdapter extends BaseAdapter {
         this.letterIndex = letterIndex;
         inflater = LayoutInflater.from(this.context);
 
-        setup();
+       // setup();
     }
 
-    private void setup() {
+    public void setup() {
         firstLetterArray = new String[allCities.size()];
         for (int i = 0; i < allCities.size(); i++) {
             // 当前汉语拼音首字母

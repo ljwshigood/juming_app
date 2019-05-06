@@ -1,4 +1,4 @@
-package com.iasii.app.citylist.adapter;
+package com.zzteck.jumin.cityselect.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

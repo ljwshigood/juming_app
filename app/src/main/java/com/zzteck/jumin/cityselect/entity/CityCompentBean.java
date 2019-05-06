@@ -1,4 +1,4 @@
-package com.iasii.app.citylist.entity;
+package com.zzteck.jumin.cityselect.entity;
 
 import java.io.Serializable;
 import java.util.List;

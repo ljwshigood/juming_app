@@ -1,4 +1,4 @@
-package com.iasii.app.citylist.view;
+package com.zzteck.jumin.cityselect.view;
 
 import android.util.AttributeSet;
 import android.widget.GridView;

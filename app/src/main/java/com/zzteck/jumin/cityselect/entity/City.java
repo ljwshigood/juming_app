@@ -1,29 +1,19 @@
-package com.iasii.app.citylist.entity;
+package com.zzteck.jumin.cityselect.entity;
 
 /**
  * Created by next on 2016/3/24.
  */
-public class EventCity {
+public class City {
 
     private String name;
     private String pinyin;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    private String id ;
-
-    public EventCity(String name, String pinyin) {
+    public City(String name, String pinyin) {
         this.name = name;
         this.pinyin = pinyin;
     }
 
-    public EventCity() {
+    public City() {
     }
 
     public String getName() {
