@@ -199,9 +199,6 @@ public class LocationService extends Service {
         super.onCreate();
 
         Log.e("liujw","#############################AMapLocationClientOption oncreate");
-        Log.e("liujw","#############################AMapLocationClientOption oncreate");
-        Log.e("liujw","#############################AMapLocationClientOption oncreate");
-        Log.e("liujw","#############################AMapLocationClientOption oncreate");
 
         mContext = this ;
         initLocation();

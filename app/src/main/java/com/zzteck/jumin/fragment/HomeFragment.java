@@ -154,6 +154,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData() ;
+    }
+
     private void initData() {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -162,9 +168,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         mVideoAdapter = new VideoAdapter(getActivity(), mVideoList);
         mRVVideo.setAdapter(mVideoAdapter);
 
+        String cityId = (String) SharePerfenceUtil.getParam(mContext,"city_id","");
+
         Map<String, String> map = new HashMap<>();
         map.put("s", "App.Info.Getvideoinfo");
-        map.put("cityid", "1");
+        if(TextUtils.isEmpty(cityId)){
+            map.put("cityid", "1");
+        }else{
+            map.put("cityid", cityId);
+        }
+
 
         map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Info.Getinfos"));
 
@@ -183,16 +196,25 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+
+                        mLLVideos.setVisibility(View.VISIBLE);
                         String message = new String(responseStr);
                         Gson gson = new Gson();
-                        VideoBean bean = gson.fromJson(message, VideoBean.class);
+                        try{
+                            VideoBean bean = gson.fromJson(message, VideoBean.class);
 
-                        if (bean != null && bean.getData() != null && bean.getData().size() > 0) {
-                            for (int i = 0; i < bean.getData().size(); i++) {
-                                mVideoList.add(bean.getData().get(i));
+                            if (bean != null && bean.getData() != null && bean.getData().size() > 0) {
+                                for (int i = 0; i < bean.getData().size(); i++) {
+                                    mVideoList.add(bean.getData().get(i));
+                                }
                             }
+                            mVideoAdapter.notifyVideoListChange(mVideoList);
+                        }catch (Exception e){
+
+                            mLLVideos.setVisibility(View.GONE);
+
+                            e.printStackTrace();
                         }
-                        mVideoAdapter.notifyVideoListChange(mVideoList);
                     }
                 });
             }
@@ -201,7 +223,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     }
 
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -209,7 +230,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         mContext = getActivity();
         initView(mMainView);
         EventBus.getDefault().register(this);
-        initData();
+        //initData();
 
         return mMainView ;
     }
@@ -525,8 +546,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     private TextView mTvMoreVideo ;
 
+    private LinearLayout mLLVideos ;
+
     private void initView(View view) {
 
+        mLLVideos = view.findViewById(R.id.ll_videos) ;
         mTvMoreVideo = view.findViewById(R.id.tv_more_video) ;
 
         mTvLocation = view.findViewById(R.id.tv_location) ;
