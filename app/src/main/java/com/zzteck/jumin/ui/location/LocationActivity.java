@@ -90,8 +90,6 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
         handler = new Handler();
         initView() ;
         initCity();
-        //initHotCity();
-       // initHistoryCity();
         setupView();
         initOverlay();
 

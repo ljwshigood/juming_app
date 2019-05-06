@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     public static final String TAG = HomeFragment.class.getSimpleName();
 
-    private SmartRefreshLayout refreshLayout;
+    //private SmartRefreshLayout refreshLayout;
 
     private ViewPager viewPager;
 
@@ -528,7 +528,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         mTvMoreVideo = view.findViewById(R.id.tv_more_video) ;
 
         mTvLocation = view.findViewById(R.id.tv_location) ;
-        refreshLayout = view.findViewById(R.id.refreshLayout) ;
+      //  refreshLayout = view.findViewById(R.id.refreshLayout) ;
         toolbar = view.findViewById(R.id.home_toolbar) ;
         viewPager = view.findViewById(R.id.view_pager) ;
         scrollView = view.findViewById(R.id.scrollView) ;
@@ -640,7 +640,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         getCategoryTitle3();
 
 
-        refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
+        /*refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
             public void onHeaderPulling(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
                 mOffset = offset / 2;
@@ -653,7 +653,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 toolbar.setAlpha(1 - Math.min(percent, 1));
             }
         });
-
+*/
         toolbar.post(new Runnable() {
             @Override
             public void run() {
