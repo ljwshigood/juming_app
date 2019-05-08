@@ -26,6 +26,7 @@ import com.zzteck.jumin.ui.mainui.MainActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.NormalDecoration;
+import com.zzteck.jumin.view.TimeItemDecoration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -89,16 +90,10 @@ public class MoreCategoryActivity extends BaseActivity implements OnClickListene
 	private List<MoreCategory> mMoreCategoryList = new ArrayList<>() ;
 
 	private void initData(){
-/*
-		for(int i = 0 ;i < res.length ;i++){
-			MoreCategory bean = new MoreCategory() ;
-			bean.setInfo(resInfo[i]);
-			bean.setRes(res[i]);
-			mMoreCategoryList.add(bean) ;
-		}*/
 
-		mRvCategory.setLayoutManager(new GridLayoutManager(this,2));
-		mRvCategory.addItemDecoration(new NormalDecoration(ContextCompat.getColor(this, R.color.mainGrayF8), (int) getResources().getDimension(R.dimen.one)));
+		mRvCategory.setLayoutManager(new GridLayoutManager(this,3));
+		mRvCategory.addItemDecoration(new TimeItemDecoration(this));
+		//mRvCategory.addItemDecoration(new NormalDecoration(ContextCompat.getColor(this, R.color.mainGrayF8), (int) getResources().getDimension(R.dimen.one)));
 		mMoreCategoryAdapter = new MoreCategoryAdapter(mContext,null) ;
 		mRvCategory.setAdapter(mMoreCategoryAdapter);
 	}

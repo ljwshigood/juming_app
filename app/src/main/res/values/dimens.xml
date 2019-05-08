@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="divider">1dp</dimen>
     <!--basic font size-->
     <dimen name="font_11">11sp</dimen>
     <dimen name="font_12">12sp</dimen>

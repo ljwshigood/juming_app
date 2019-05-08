@@ -1,10 +1,20 @@
 package com.zzteck.jumin.ui.mainui;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,13 +26,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fingerth.supdialogutils.SYSDiaLogUtils;
 import com.google.gson.Gson;
+import com.mainaer.wjoklib.okhttp.download.DownLoadTask;
+import com.mainaer.wjoklib.okhttp.download.DownloadManager;
+import com.mainaer.wjoklib.okhttp.download.DownloadTaskListener;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.bean.LoginBean;
+import com.zzteck.jumin.bean.VersionInfo;
 import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.fragment.MainCategoryFragment;
 import com.zzteck.jumin.fragment.HomeFragment;
@@ -33,9 +48,15 @@ import com.zzteck.jumin.ui.usercenter.LoginActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.SharePerfenceUtil;
 import com.zzteck.jumin.utils.UtilsTools;
+import com.zzteck.jumin.utils.ZZNotificationManager;
+import com.zzteck.jumin.view.MyDialog;
+import com.zzteck.jumin.view.VersionDialog;
 import com.zzteck.zzview.WJViewPaper;
 import com.zzteck.zzview.WindowsToast;
 
+import junit.runner.Version;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -97,7 +118,141 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 	 private RelativeLayout mRlUser ;
 	 
 	 private List<Fragment> mFragment = new ArrayList<>();
-	 
+
+	public static int getLocalVersion(Context ctx) {
+		int localVersion = 0;
+		try {
+			PackageInfo packageInfo = ctx.getApplicationContext()
+					.getPackageManager()
+					.getPackageInfo(ctx.getPackageName(), 0);
+			localVersion = packageInfo.versionCode;
+		} catch (PackageManager.NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		return localVersion;
+	}
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void showNotification(Context context, String id, String title, String content) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            ZZNotificationManager.sendNotification(context, Integer.valueOf(id), ZZNotificationManager.Channel.COMMENT, context.getString(R.string.app_name), content);
+
+        } else {
+
+            Intent intent = new Intent(context, MainActivity.class);
+
+            Notification notification1 = new NotificationCompat.Builder(context)
+                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setTicker(context.getString(R.string.app_name))
+                    .setContentTitle(context.getString(R.string.app_name))
+                    .setContentText(content)
+                    .setWhen(System.currentTimeMillis())
+                    .setPriority(Notification.PRIORITY_DEFAULT)
+                    .setAutoCancel(true)
+                    .setOngoing(false)
+                    .setDefaults(Notification.DEFAULT_SOUND)
+                    .setContentIntent(PendingIntent.getActivity(context, 1, intent, PendingIntent.FLAG_CANCEL_CURRENT))
+                    .build();
+
+            NotificationManager notificationManager1 = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+            notificationManager1.notify(Integer.valueOf(id), notification1);
+        }
+    }
+
+	@RequiresApi(api = Build.VERSION_CODES.O)
+	private void initDownload(String url, String des){
+
+		showNotification(mContext,1+"",mContext.getResources().getString(R.string.app_name),des) ;
+		DownLoadTask task = new DownLoadTask.Builder().setId(URL_ID).setUrl(url).setListener(new DownloadTaskListener(){
+
+			@Override
+			public void onDownloading(DownLoadTask downloadTask, long completedSize, long totalSize, int percent) {
+				ZZNotificationManager.setProgress(mContext,percent,1);
+			}
+
+			@Override
+			public void onPause(DownLoadTask downloadTask, long completedSize, long totalSize, int percent) {
+
+			}
+
+			@Override
+			public void onCancel(DownLoadTask downloadTask) {
+
+			}
+
+			@Override
+			public void onDownloadSuccess(DownLoadTask downloadTask, File file) {
+				ZZNotificationManager.deleteChannel(mContext,mContext.getResources().getString(R.string.app_name));
+			}
+
+			@Override
+			public void onError(DownLoadTask downloadTask, int errorCode) {
+
+
+			}
+
+		}).build();
+
+		downloadManager.addDownloadTask(task);
+	}
+
+	private static String URL_ID = "url";
+
+	private DownloadManager downloadManager ;
+
+	private void commonVersion(){
+
+		 Map<String, String> map = new HashMap<>() ;
+		 map.put("s","App.Common.Version") ;
+
+		 map.put("sign",UtilsTools.getSign(mContext,"App.Common.Version")) ;
+
+		 OkHttpClient client = new OkHttpClient();
+		 Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
+		 Call call = client.newCall(request);
+		 call.enqueue(new Callback() {
+
+			 @Override
+			 public void onFailure(Call call, IOException e) {
+				 Log.e("liujw","##########################IOException : "+e.toString());
+			 }
+
+			 @Override
+			 public void onResponse(Call call, final Response response) throws IOException {
+				 final String responseStr = response.body().string();
+				 runOnUiThread(new Runnable() {
+					 @Override
+					 public void run() {
+
+						 String message = new String(responseStr.getBytes()) ;
+						 Gson gson = new Gson() ;
+						 VersionInfo bean = gson.fromJson(message,VersionInfo.class) ;
+
+						 if(Integer.valueOf(bean.getData().getVersion()) > getLocalVersion(mContext)){
+							 VersionDialog dialog1 = new VersionDialog(mContext,bean.getData()) ;
+
+							 dialog1.setmIDownloadClickListener(new VersionDialog.IDownloadClickListener() {
+								 @RequiresApi(api = Build.VERSION_CODES.O)
+								 @Override
+								 public void downloadClick(String url,String des) {
+									 initDownload(url,des) ;
+								 }
+							 });
+
+							 dialog1.show();
+						 }
+
+					 }
+				 });
+			 }
+		 });
+
+
+	 }
+
 	 private void initView(){
 		 
 		 mRlHome = findViewById(R.id.rl_home) ;
@@ -173,6 +328,8 @@ public class MainActivity extends BaseActivity implements OnClickListener{
  		initView() ;
 		App.getInstance().addActivity(this);
 
+		downloadManager = DownloadManager.getInstance();
+
 		RxPermissions rxPermissions1 = new RxPermissions(this);
 
 		rxPermissions1.requestEach(
@@ -193,6 +350,9 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 		});
 
 		setStyleCustom() ;
+
+		commonVersion() ;
+
 
 	}
 
