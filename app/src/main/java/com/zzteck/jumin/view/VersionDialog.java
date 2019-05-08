@@ -2,21 +2,12 @@ package com.zzteck.jumin.view;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.mainaer.wjoklib.okhttp.download.DownLoadTask;
-import com.mainaer.wjoklib.okhttp.download.DownloadManager;
-import com.mainaer.wjoklib.okhttp.download.DownloadTaskListener;
 import com.zzteck.jumin.R;
-import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.bean.VersionInfo;
-import com.zzteck.jumin.db.UserDAO;
-import com.zzteck.jumin.ui.usercenter.LoginActivity;
-
-import java.io.File;
 
 
 public class VersionDialog extends Dialog {
@@ -72,7 +63,7 @@ public class VersionDialog extends Dialog {
 		positiveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-
+				dismiss();
 				if(mIDownloadClickListener != null){
 					mIDownloadClickListener.downloadClick(bean.getAppurl(),bean.getDescription());
 				}

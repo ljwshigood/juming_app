@@ -1,20 +1,27 @@
 package com.zzteck.jumin.ui.mainui;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,14 +30,12 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fingerth.supdialogutils.SYSDiaLogUtils;
 import com.google.gson.Gson;
-import com.mainaer.wjoklib.okhttp.download.DownLoadTask;
-import com.mainaer.wjoklib.okhttp.download.DownloadManager;
-import com.mainaer.wjoklib.okhttp.download.DownloadTaskListener;
+import com.maning.updatelibrary.InstallUtils;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
@@ -39,25 +44,24 @@ import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.bean.LoginBean;
 import com.zzteck.jumin.bean.VersionInfo;
 import com.zzteck.jumin.db.UserDAO;
-import com.zzteck.jumin.fragment.MainCategoryFragment;
 import com.zzteck.jumin.fragment.HomeFragment;
+import com.zzteck.jumin.fragment.MainCategoryFragment;
 import com.zzteck.jumin.fragment.UserFragment;
 import com.zzteck.jumin.fragment.WJConversationListFragment;
 import com.zzteck.jumin.ui.business.ReleaseCategoryActivity;
 import com.zzteck.jumin.ui.usercenter.LoginActivity;
 import com.zzteck.jumin.utils.Constants;
+import com.zzteck.jumin.utils.PermissionUtils;
 import com.zzteck.jumin.utils.SharePerfenceUtil;
 import com.zzteck.jumin.utils.UtilsTools;
-import com.zzteck.jumin.utils.ZZNotificationManager;
-import com.zzteck.jumin.view.MyDialog;
 import com.zzteck.jumin.view.VersionDialog;
 import com.zzteck.zzview.WJViewPaper;
 import com.zzteck.zzview.WindowsToast;
 
-import junit.runner.Version;
-
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -133,75 +137,160 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 	}
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void showNotification(Context context, String id, String title, String content) {
+	private NotificationManager mNotificationManager;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            ZZNotificationManager.sendNotification(context, Integer.valueOf(id), ZZNotificationManager.Channel.COMMENT, context.getString(R.string.app_name), content);
+	private Notification mNotification;
 
-        } else {
+	private String CHANNEL_ID = "my_channel_01";
 
-            Intent intent = new Intent(context, MainActivity.class);
-
-            Notification notification1 = new NotificationCompat.Builder(context)
-                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setTicker(context.getString(R.string.app_name))
-                    .setContentTitle(context.getString(R.string.app_name))
-                    .setContentText(content)
-                    .setWhen(System.currentTimeMillis())
-                    .setPriority(Notification.PRIORITY_DEFAULT)
-                    .setAutoCancel(true)
-                    .setOngoing(false)
-                    .setDefaults(Notification.DEFAULT_SOUND)
-                    .setContentIntent(PendingIntent.getActivity(context, 1, intent, PendingIntent.FLAG_CANCEL_CURRENT))
-                    .build();
-
-            NotificationManager notificationManager1 = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-            notificationManager1.notify(Integer.valueOf(id), notification1);
-        }
-    }
-
-	@RequiresApi(api = Build.VERSION_CODES.O)
-	private void initDownload(String url, String des){
-
-		showNotification(mContext,1+"",mContext.getResources().getString(R.string.app_name),des) ;
-		DownLoadTask task = new DownLoadTask.Builder().setId(URL_ID).setUrl(url).setListener(new DownloadTaskListener(){
-
-			@Override
-			public void onDownloading(DownLoadTask downloadTask, long completedSize, long totalSize, int percent) {
-				ZZNotificationManager.setProgress(mContext,percent,1);
-			}
-
-			@Override
-			public void onPause(DownLoadTask downloadTask, long completedSize, long totalSize, int percent) {
-
-			}
-
-			@Override
-			public void onCancel(DownLoadTask downloadTask) {
-
-			}
-
-			@Override
-			public void onDownloadSuccess(DownLoadTask downloadTask, File file) {
-				ZZNotificationManager.deleteChannel(mContext,mContext.getResources().getString(R.string.app_name));
-			}
-
-			@Override
-			public void onError(DownLoadTask downloadTask, int errorCode) {
+	private static final int NOTIFY_ID = 0;
 
 
-			}
+	@TargetApi(Build.VERSION_CODES.O)
+	@SuppressWarnings("deprecation")
+	private void setUpNotification(String packageName, Context context) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			CharSequence name = getString(R.string.app_name);
+			String description = getString(R.string.app_name);
+			int importance = NotificationManager.IMPORTANCE_LOW;
+			@SuppressLint("WrongConstant") NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+			mChannel.setDescription(description);
+			NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+			notificationManager.createNotificationChannel(mChannel);
 
-		}).build();
 
-		downloadManager.addDownloadTask(task);
+			mNotification = new Notification.Builder(MainActivity.this)
+					.setContentTitle("正在下载")
+					.setContentText("请稍等")
+					.setWhen(System.currentTimeMillis())
+					.setSmallIcon(R.mipmap.ic_launcher)
+					.setChannelId(CHANNEL_ID)
+					.build();
+
+			mNotification.flags = Notification.FLAG_ONGOING_EVENT;
+			RemoteViews contentView = new RemoteViews(packageName, R.layout.download_notification_layout);
+			mNotification.contentView = contentView;
+
+			mNotificationManager.notify(NOTIFY_ID, mNotification);
+
+		}else{
+			setUpNotificationLow(packageName,context) ;
+		}
+
 	}
 
-	private static String URL_ID = "url";
+	@SuppressWarnings("deprecation")
+	private void setUpNotificationLow(String packageName, Context context) {
+		mNotification = new Notification(R.mipmap.ic_launcher, "正在下载",  System.currentTimeMillis());
+		mNotification.flags = Notification.FLAG_ONGOING_EVENT;
+		RemoteViews contentView = new RemoteViews(packageName, R.layout.download_notification_layout);
+		mNotification.contentView = contentView;
 
-	private DownloadManager downloadManager ;
+		mNotificationManager.notify(NOTIFY_ID, mNotification);
+
+	}
+
+
+	private InstallUtils.DownloadCallBack downloadCallBack;
+
+	private String apkDownloadPath;
+
+	private void installApk(String path) {
+		InstallUtils.installAPK(MainActivity.this, path, new InstallUtils.InstallCallBack() {
+			@Override
+			public void onSuccess() {
+				//onSuccess：表示系统的安装界面被打开
+				//防止用户取消安装，在这里可以关闭当前应用，以免出现安装被取消
+				Toast.makeText(mContext, "正在安装程序", Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onFail(Exception e) {
+				//tv_info.setText("安装失败:" + e.toString());
+			}
+		});
+	}
+
+	public static final String APK_SAVE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/jumin.apk";
+
+	private void initCallBack() {
+		downloadCallBack = new InstallUtils.DownloadCallBack() {
+			@Override
+			public void onStart() {
+				Log.e("liujw", "InstallUtils---onStart");
+				setUpNotification(mContext.getPackageName(),mContext);
+			}
+
+			@Override
+			public void onComplete(String path) {
+				mNotificationManager.cancel(NOTIFY_ID);
+				Log.e("liujw", "InstallUtils---onComplete:" + path);
+				apkDownloadPath = path ;
+				//先判断有没有安装权限
+				InstallUtils.checkInstallPermission(MainActivity.this, new InstallUtils.InstallPermissionCallBack() {
+					@Override
+					public void onGranted() {
+						//去安装APK
+						installApk(apkDownloadPath);
+					}
+
+					@Override
+					public void onDenied() {
+						//弹出弹框提醒用户
+						AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
+								.setTitle("温馨提示")
+								.setMessage("必须授权才能安装APK，请设置允许安装")
+								.setNegativeButton("取消", null)
+								.setPositiveButton("设置", new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialog, int which) {
+										//打开设置页面
+										InstallUtils.openInstallPermissionSetting(MainActivity.this, new InstallUtils.InstallPermissionCallBack() {
+											@Override
+											public void onGranted() {
+												//去安装APK
+												installApk(apkDownloadPath);
+											}
+
+											@Override
+											public void onDenied() {
+												//还是不允许咋搞？
+												//Toast.makeText(MainActivity.this, "强制更新就退出应用程序吧！", Toast.LENGTH_SHORT).show();
+											}
+										});
+									}
+								})
+								.create();
+						alertDialog.show();
+					}
+				});
+			}
+
+			@Override
+			public void onLoading(long total, long current) {
+				//内部做了处理，onLoading 进度转回progress必须是+1，防止频率过快
+				Log.e("liujw", "InstallUtils----onLoading:-----total:" + total + ",current:" + current);
+				int progress = (int) (current * 100 / total);
+
+				RemoteViews contentview = mNotification.contentView;
+				contentview.setProgressBar(R.id.pb_download, 100, progress, false);
+				mNotificationManager.notify(NOTIFY_ID, mNotification);
+			}
+
+			@Override
+			public void onFail(Exception e) {
+				mNotificationManager.cancel(NOTIFY_ID);
+				Log.e("liujw", "InstallUtils---onFail:" + e.getMessage());
+			}
+
+			@Override
+			public void cancle() {
+				mNotificationManager.cancel(NOTIFY_ID);
+				Log.e("liujw", "InstallUtils---cancle");
+			}
+		};
+	}
+
 
 	private void commonVersion(){
 
@@ -238,7 +327,21 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 								 @RequiresApi(api = Build.VERSION_CODES.O)
 								 @Override
 								 public void downloadClick(String url,String des) {
-									 initDownload(url,des) ;
+									 //initDownload(url,des) ;
+
+                                     if (!PermissionUtils.isGrantSDCardReadPermission(MainActivity.this)) {
+                                         PermissionUtils.requestSDCardReadPermission(MainActivity.this, 100);
+                                     } else {
+                                         InstallUtils.with(MainActivity.this)
+                                                 //必须-下载地址
+                                                 .setApkUrl(url)
+                                                 //非必须-下载保存的文件的完整路径+name.apk
+                                                 .setApkPath(APK_SAVE_PATH)
+                                                 //非必须-下载回调
+                                                 .setCallBack(downloadCallBack)
+                                                 //开始下载
+                                                 .startDownload();
+                                     }
 								 }
 							 });
 
@@ -328,7 +431,8 @@ public class MainActivity extends BaseActivity implements OnClickListener{
  		initView() ;
 		App.getInstance().addActivity(this);
 
-		downloadManager = DownloadManager.getInstance();
+
+		mNotificationManager = (NotificationManager) getSystemService(android.content.Context.NOTIFICATION_SERVICE);
 
 		RxPermissions rxPermissions1 = new RxPermissions(this);
 
@@ -352,7 +456,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 		setStyleCustom() ;
 
 		commonVersion() ;
-
+		initCallBack() ;
 
 	}
 
@@ -401,11 +505,8 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 		map.put("sign", UtilsTools.getSign(mContext,"App.Member.Scan")) ;
 
 		OkHttpClient client = new OkHttpClient();
-		//构造Request对象
-		//采用建造者模式，链式调用指明进行Get请求,传入Get的请求地址
 		Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
 		Call call = client.newCall(request);
-		//异步调用并设置回调函数
 		call.enqueue(new Callback() {
 
 			@Override
@@ -435,7 +536,8 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 		});
 	}
 
-	@Override
+	@RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ll_realease:

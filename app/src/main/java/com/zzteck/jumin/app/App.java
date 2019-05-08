@@ -8,7 +8,6 @@ package com.zzteck.jumin.app;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
@@ -225,6 +224,7 @@ public class App extends MultiDexApplication {
         JPushInterface.init(this);     		// 初始化 JPush
 
         MobSDK.init(this);
+
     }
 
     /**

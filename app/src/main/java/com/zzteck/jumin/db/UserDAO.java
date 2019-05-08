@@ -45,10 +45,7 @@ public class UserDAO {
 		if(user == null){
 			return ;
 		}
-		String insertSQL = "insert into user values (%s,\"%s\",\"%s\",\"%s\"," +
-										"%d,%d,%d," +
-										"%d,\"%s\",\"%s\"," +
-										"%s,\"%s\",\"%s\",%d)" ;
+		String insertSQL = "insert into user values (\"%s\",\"%s\",\"%s\",\"%s\",%d,%d,%d,%d,\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",%d)" ;
 		
 		insertSQL = String.format(insertSQL, String.valueOf(user.getId()),user.getTname(),user.getTname(),user.getTname(),
 					1,1,1,
@@ -58,7 +55,7 @@ public class UserDAO {
 	}
 	
 	public synchronized boolean isExistRecord(String id){
-		String sqlSQL = "select * from user where id = %s";
+		String sqlSQL = "select * from user where id = \"%s\"";
 		sqlSQL = String.format(sqlSQL, id);
 		Cursor cursor  = mDatabaseManager.getmSQLiteDatabase().rawQuery(sqlSQL,null);
 		while(cursor != null && cursor.moveToNext()){
@@ -79,8 +76,8 @@ public class UserDAO {
 	}
 	
 	public synchronized void updateLoginStatus(User user){
-		String updateSQL = "update user set isLogin = 1 where id = %s" ;
-		String updateSQL_1 = "update user set isLogin = 0 where id != %s" ;
+		String updateSQL = "update user set isLogin = 1 where id = \"%s\"" ;
+		String updateSQL_1 = "update user set isLogin = 0 where id != \"%s\"" ;
 		updateSQL = String.format(updateSQL, user.getUserid());
 		updateSQL_1 = String.format(updateSQL_1, user.getUserid());
 		mDatabaseManager.getmSQLiteDatabase().execSQL(updateSQL);
@@ -104,7 +101,7 @@ public class UserDAO {
 	
 	public synchronized void editorUserTableInviteCode(User user){
 		if(isExistRecord(user.getUserid())){
-			String updateSQL = "update user set inviteCode = \"%s\"  where id = %s" ;
+			String updateSQL = "update user set inviteCode = \"%s\"  where id = \"%s\"" ;
 			updateSQL = String.format(updateSQL, "",user.getUserid());
 			mDatabaseManager.getmSQLiteDatabase().execSQL(updateSQL);
 		}
@@ -112,7 +109,7 @@ public class UserDAO {
 	
 	public synchronized void editorUserInfo(User user){
 		if(isExistRecord(user.getUserid())){
-			String updateSQL = "update user set head = \"%s\" where id = %s" ;
+			String updateSQL = "update user set head = \"%s\" where id = \"%s\"" ;
 			updateSQL = String.format(updateSQL,user.getHeader(),user.getUserid());
 			mDatabaseManager.getmSQLiteDatabase().execSQL(updateSQL);
 		}
@@ -120,7 +117,7 @@ public class UserDAO {
 
 	public synchronized void editorUserInfo2(User user){
 		if(isExistRecord(user.getUserid())){
-			String updateSQL = "update user set nickname = \"%s\"  where id = %s" ;
+			String updateSQL = "update user set nickname = \"%s\"  where id = \"%s\"" ;
 			updateSQL = String.format(updateSQL, user.getTrueName(),user.getUserid());
 			mDatabaseManager.getmSQLiteDatabase().execSQL(updateSQL);
 		}
