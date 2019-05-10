@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.MyReleaseAdapter;
 import com.zzteck.jumin.bean.LoginBean;
+import com.zzteck.jumin.bean.MyReleaseBean;
 import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.ui.mainui.MainActivity;
 import com.zzteck.jumin.ui.usercenter.MyReleaseActivity;
@@ -74,7 +75,7 @@ public class ReleaseCompleteFragment extends Fragment implements OnClickListener
 		map.put("pages",page+"") ;
 
 		map.put("sign", UtilsTools.getSign(mContext,"App.Info.Myinfos")) ;
-
+		//294a2aa521966c86a78afba7e4b4a31028c59f509579973a7800539ced5a98a7
 		OkHttpClient client = new OkHttpClient();
 		Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
 		Call call = client.newCall(request);
@@ -91,10 +92,9 @@ public class ReleaseCompleteFragment extends Fragment implements OnClickListener
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-
 						String message = new String(responseStr.getBytes()) ;
 						Gson gson = new Gson() ;
-						LoginBean bean = gson.fromJson(message,LoginBean.class) ;
+						MyReleaseBean bean = gson.fromJson(message,MyReleaseBean.class) ;
 
 					}
 				});

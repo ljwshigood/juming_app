@@ -114,7 +114,6 @@ public class MyReleaseActivity extends BaseActivity implements OnClickListener{
 			@Override
 			public IPagerIndicator getIndicator(Context context) {
 
-
 				LinePagerIndicator linePagerIndicator = new LinePagerIndicator(context);
 				linePagerIndicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
 				linePagerIndicator.setColors(ContextCompat.getColor(mContext, R.color.mainRed));

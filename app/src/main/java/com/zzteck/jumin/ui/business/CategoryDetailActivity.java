@@ -45,11 +45,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.sharesdk.onekeyshare.OnekeyShare;
+/*import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.wechat.friends.Wechat;
-import cn.sharesdk.wechat.moments.WechatMoments;
+import cn.sharesdk.wechat.moments.WechatMoments;*/
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -214,7 +214,7 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
     private ImageView mIvAttention;
 
     private ImageView mIvDot;
-
+/*
     private void showShare(String platform) {
         final OnekeyShare oks = new OnekeyShare();
         //指定分享的平台，如果为空，还是会调用九宫格的平台列表界面
@@ -244,7 +244,7 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
 
         //启动分享
         oks.show(this);
-    }
+    }*/
 
 
     private void showShare() {
@@ -430,7 +430,7 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
         mShareDialog.setOnClickListener(new ShareDialog.OnClickListener() {
             @Override
             public void OnClick(View v, int position) {
-                switch (position) {
+               /* switch (position) {
                     case 0:
                         showShare(QQ.NAME);
                         break;
@@ -443,7 +443,7 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
                     case 3:
                         showShare(SinaWeibo.NAME);
                         break;
-                }
+                }*/
             }
         });
     }

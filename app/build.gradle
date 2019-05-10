@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.mob.sdk'
 
 
-MobSDK {
+/*MobSDK {
     appKey "27d76c2dec976"
     appSecret "043f433b3af1caeaf10e7c4edf2f8859"
 
@@ -33,7 +33,7 @@ MobSDK {
         }
     }
 
-}
+}*/
 
 android {
     signingConfigs {

@@ -18,8 +18,8 @@ public class ShareDialog extends BaseDialog {
 
     private String[] mTexts = {"QQ好友","微信好友", "微信朋友圈", "新浪微博"};
 
-    private int[] mImgs = {R.drawable.ssdk_oks_classic_qq, R.drawable.ssdk_oks_classic_wechat,
-            R.drawable.ssdk_oks_classic_wechatmoments, R.drawable.ssdk_oks_classic_sinaweibo
+    private int[] mImgs = {/*R.drawable.ssdk_oks_classic_qq, R.drawable.ssdk_oks_classic_wechat,
+            R.drawable.ssdk_oks_classic_wechatmoments, R.drawable.ssdk_oks_classic_sinaweibo*/
     };
 
     public OnClickListener getmListener() {
