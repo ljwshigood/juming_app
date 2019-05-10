@@ -75,7 +75,7 @@ public class ReleaseCompleteFragment extends Fragment implements OnClickListener
 		map.put("pages",page+"") ;
 
 		map.put("sign", UtilsTools.getSign(mContext,"App.Info.Myinfos")) ;
-		//294a2aa521966c86a78afba7e4b4a31028c59f509579973a7800539ced5a98a7
+
 		OkHttpClient client = new OkHttpClient();
 		Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
 		Call call = client.newCall(request);
@@ -95,7 +95,7 @@ public class ReleaseCompleteFragment extends Fragment implements OnClickListener
 						String message = new String(responseStr.getBytes()) ;
 						Gson gson = new Gson() ;
 						MyReleaseBean bean = gson.fromJson(message,MyReleaseBean.class) ;
-
+						mMyReleaseAdapter.notifyMyReleaseAdapter(bean.getData());
 					}
 				});
 			}

@@ -113,6 +113,7 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_display"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -128,6 +129,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -143,6 +145,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -158,6 +161,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_refresh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
