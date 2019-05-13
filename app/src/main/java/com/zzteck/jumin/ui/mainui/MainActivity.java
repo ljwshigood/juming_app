@@ -11,16 +11,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Menu;
@@ -58,10 +54,7 @@ import com.zzteck.jumin.view.VersionDialog;
 import com.zzteck.zzview.WJViewPaper;
 import com.zzteck.zzview.WindowsToast;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -359,7 +352,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 	 private void initView(){
 		 
 		 mRlHome = findViewById(R.id.rl_home) ;
-		 mRlNear = findViewById(R.id.rl_history) ;
+		 mRlNear = findViewById(R.id.rv_history) ;
 		 mRlRelease = findViewById(R.id.ll_realease) ;
 		 mRlMessage = findViewById(R.id.rl_message) ;
 		 mRlUser = findViewById(R.id.rl_user) ;
@@ -572,7 +565,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 
 			mWJViewPaper.setCurrentItem(0,false);
 			break ;
-		case R.id.rl_history:
+		case R.id.rv_history:
 			mTvHome.setTextColor(mContext.getResources().getColor(R.color.dark));
 			mTvHistory.setTextColor(mContext.getResources().getColor(R.color.dark_red));
 			mTvRelease.setTextColor(mContext.getResources().getColor(R.color.dark));

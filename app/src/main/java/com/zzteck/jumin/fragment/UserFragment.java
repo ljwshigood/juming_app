@@ -73,10 +73,13 @@ public class UserFragment extends Fragment implements OnClickListener {
 
     private LinearLayout mLLEditor ;
 
+    private LinearLayout mLLHeader ;
+
     private void initView(View view) {
 
+        mLLHeader = view.findViewById(R.id.ll_header) ;
+        mLLHeader.setOnClickListener(this);
         mLLEditor = view.findViewById(R.id.ll_modify_user_info) ;
-
         mCvPhoto = view.findViewById(R.id.iv_user_icon) ;
         mTvNickName = view.findViewById(R.id.tv_nick_name) ;
         mTvLoginOut = view.findViewById(R.id.tv_login_out);
@@ -91,8 +94,6 @@ public class UserFragment extends Fragment implements OnClickListener {
         mRlMyRenzhen = view.findViewById(R.id.rl_my_spread);
         mRlHuiyuanshengji = view.findViewById(R.id.rl_ruiyuanshengji);
         mRlRuheFaBuXuqiu = view.findViewById(R.id.rl_identity);
-
-        mCvPhoto.setOnClickListener(this);
 
         mTvQianDao.setOnClickListener(this);
         mTvCharge.setOnClickListener(this);
@@ -175,8 +176,7 @@ public class UserFragment extends Fragment implements OnClickListener {
     public void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
-            case R.id.iv_user_icon :
-
+            case R.id.ll_header :
                 if(userList != null && userList.size() > 0){
                     intent = new Intent(getActivity(), ModifyUserInfoActivity.class);
                     startActivity(intent);
