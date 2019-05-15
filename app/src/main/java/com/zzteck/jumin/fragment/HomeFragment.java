@@ -87,8 +87,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     public static final String TAG = HomeFragment.class.getSimpleName();
 
-    //private SmartRefreshLayout refreshLayout;
-
     private ViewPager viewPager;
 
     private JudgeNestedScrollView scrollView;

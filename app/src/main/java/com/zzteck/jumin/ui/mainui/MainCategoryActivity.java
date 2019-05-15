@@ -107,48 +107,6 @@ public class MainCategoryActivity extends BaseActivity implements View.OnClickLi
 
 	private void initData(){
 
-		/*mCourseInfo = new CourseInfo();
-		mCourseInfo.name = "标题";
-		for(int i = 0; i < 4; i++){
-			ChapterInfo chapterInfo = new ChapterInfo();
-			chapterInfo.name = mString[i];
-			chapterInfo.res = mRes[i] ;
-			chapterInfo.chapterIndex = i;
-			if(i==0){
-				for(int j = 0; j < 2; j++){
-					SectionInfo sectionInfo = new SectionInfo();
-					sectionInfo.name = "商铺单租";
-					sectionInfo.chapterIndex = i;
-					sectionInfo.sectionIndex = j;
-					chapterInfo.sectionInfos.add(sectionInfo);
-				}
-			}else if(i==1){
-				for(int j = 0; j < 3; j++){
-					SectionInfo sectionInfo = new SectionInfo();
-					sectionInfo.name = "商铺单租";
-					sectionInfo.chapterIndex = i;
-					sectionInfo.sectionIndex = j;
-					chapterInfo.sectionInfos.add(sectionInfo);
-				}
-			}else if(i==2){
-				for (int j = 0; j < 6; j++) {
-					SectionInfo sectionInfo = new SectionInfo();
-					sectionInfo.name = "商铺单租";
-					sectionInfo.chapterIndex = i;
-					sectionInfo.sectionIndex = j;
-					chapterInfo.sectionInfos.add(sectionInfo);
-				}
-			}else{
-				for (int j = 0; j < 4; j++) {
-					SectionInfo sectionInfo = new SectionInfo();
-					sectionInfo.name = "商铺单租";
-					sectionInfo.chapterIndex = i;
-					sectionInfo.sectionIndex = j;
-					chapterInfo.sectionInfos.add(sectionInfo);
-				}
-			}
-			mCourseInfo.chapterInfos.add(chapterInfo);
-		}*/
 	}
 
 	private RecommandFragment mRecomandFragment ;
@@ -260,7 +218,7 @@ public class MainCategoryActivity extends BaseActivity implements View.OnClickLi
 				if (lastScrollY > maxh) {
 					scrollY = Math.min(maxh, scrollY);
 					mScrollY = scrollY > maxh ? maxh : scrollY;
-					toolbar.setVisibility(View.VISIBLE);
+					toolbar.setVisibility(View.GONE);
 					toolbar.setBackgroundColor(((255 * mScrollY / maxh) << 24) | color);
 				}
 
