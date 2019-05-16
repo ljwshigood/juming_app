@@ -1045,7 +1045,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 				PictureSelector.create(ReleaseActivity.this)
 						.openGallery(PictureMimeType.ofAll())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
-						.theme(R.style.picture_default_style)// 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
+						.theme(R.style.picture_white_style)// 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
 						.maxSelectNum(4)// 最大图片选择数量
 						.minSelectNum(1)// 最小选择数量
 						.imageSpanCount(4)// 每行显示个数

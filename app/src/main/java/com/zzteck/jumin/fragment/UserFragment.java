@@ -119,6 +119,7 @@ public class UserFragment extends Fragment implements OnClickListener {
                     .centerCrop()
                     .placeholder(R.mipmap.default_pic)
                     .diskCacheStrategy(DiskCacheStrategy.ALL);
+
             Glide.with(mContext)
                     .load(userList.get(0).getHeader())
                     .apply(options)

@@ -71,6 +71,7 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
         RequestOptions options = new RequestOptions()
                 .centerCrop()
                 .placeholder(R.mipmap.default_pic)
+                .transform(new GlideCircleTransform(mContext))
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
         Glide.with(mContext)

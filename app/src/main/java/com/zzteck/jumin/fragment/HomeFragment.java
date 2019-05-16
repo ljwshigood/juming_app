@@ -523,7 +523,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                                 RequestOptions options = new RequestOptions()
                                         .centerCrop()
                                         .placeholder(R.mipmap.default_pic)
+                                        .transform(new GlideCircleTransform(getActivity()))
                                         .diskCacheStrategy(DiskCacheStrategy.ALL);
+
                                 Glide.with(mContext)
                                         .load(bean.getData().get(i).getIcon())
                                         .apply(options)
