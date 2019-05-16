@@ -7,19 +7,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
+import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.RecommandAdapter;
 import com.zzteck.jumin.bean.HomeInfo;
-import com.zzteck.jumin.bean.User;
-import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.ui.business.CategoryDetailActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.SharePerfenceUtil;
@@ -30,8 +29,8 @@ import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -46,21 +45,53 @@ public class RecommandFragment extends Fragment {
 
     private Context mContext;
 
-    private RecyclerView mRlCategory;
+    private EasyRecyclerView mRVCategory;
 
     private RecommandAdapter recommandAdapter;
 
     private void initView(View view) {
-        mRlCategory = view.findViewById(R.id.rl_history) ;
+        mRVCategory = view.findViewById(R.id.rl_history) ;
+    }
+
+    public ITransferScrollListener getmITransferScrollListener() {
+        return mITransferScrollListener;
+    }
+
+    public void setmITransferScrollListener(ITransferScrollListener mITransferScrollListener) {
+        this.mITransferScrollListener = mITransferScrollListener;
+    }
+
+    private ITransferScrollListener mITransferScrollListener ;
+
+    public interface  ITransferScrollListener{
+        public void transferScrollListener(boolean flag) ;
     }
 
     private void initData(HomeInfo info) {
 
-        mRlCategory.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRlCategory.addItemDecoration(new NormalDecoration(ContextCompat.getColor(getActivity(), R.color.mainGrayF8), (int) getActivity().getResources().getDimension(R.dimen.one)));
-        recommandAdapter = new RecommandAdapter(getActivity(),info.getData()) ;
-        mRlCategory.setAdapter(recommandAdapter) ;
+        mRVCategory.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRVCategory.addItemDecoration(new NormalDecoration(ContextCompat.getColor(getActivity(), R.color.mainGrayF8), (int) getActivity().getResources().getDimension(R.dimen.one)));
 
+        if(mITransferScrollListener != null){
+            if(info == null || info.getData() == null || info.getData().size() == 0){
+                mITransferScrollListener.transferScrollListener(true);
+            }else{
+                mITransferScrollListener.transferScrollListener(false);
+            }
+        }
+
+        recommandAdapter = new RecommandAdapter(getActivity(),info.getData()) ;
+        mRVCategory.setAdapter(recommandAdapter) ;
+
+
+        mRVCategory.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.e("liujw","#################onTouch mRVCategory");
+
+                return false;
+            }
+        });
         recommandAdapter.setNoMore(R.layout.view_no_more);
         recommandAdapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
             @Override
@@ -119,11 +150,14 @@ public class RecommandFragment extends Fragment {
         return mMainView;
     }
 
+    public void refresh(){
+        mCurrentPage = 1;
+        getInfosList(mCategoryId,mCurrentPage+"") ;
+    }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
         EventBus.getDefault().unregister(this);
     }
 
@@ -181,6 +215,9 @@ public class RecommandFragment extends Fragment {
                                 }
                             }
                         }catch (Exception e){
+                            if(mITransferScrollListener != null){
+                                mITransferScrollListener.transferScrollListener(true);
+                            }
                             e.printStackTrace();
                         }
 

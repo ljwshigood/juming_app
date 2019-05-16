@@ -121,6 +121,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     private TextView mTvLocation ;
 
+    private List<Fragment> mFragmentList = new ArrayList<>() ;
+
     private List<Fragment> getFragments(List<CategoryBean.DataBean> data) {
 
         List<Fragment> fragments = new ArrayList<>();
@@ -134,6 +136,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 bundle.putString("item", data.get(i).getCatid());
                 mRecomandFragment.setArguments(bundle);
                 fragments.add(mRecomandFragment);
+
+                mRecomandFragment.setmITransferScrollListener(new RecommandFragment.ITransferScrollListener() {
+                    @Override
+                    public void transferScrollListener(boolean flag) {
+                        isCanScroll = flag ;
+                        if(isCanScroll){
+                            scrollView.setNeedScroll(true);
+                        }else {
+                            scrollView.setNeedScroll(false);
+                        }
+                    }
+                });
 
             }
         }
@@ -403,6 +417,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 int currentItem = mBannerViewPaper.getCurrentItem();
                 mBannerViewPaper.setCurrentItem(currentItem + 1);
                 mHandler.postDelayed(mRunnable, 3000);
+            }else if(msg.what == 1){
+                dealWithViewPager();
             }
         }
 
@@ -447,8 +463,25 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
                             initMagicIndicator();
                             initMagicIndicatorTitle();
-                            viewPager.setAdapter(new ComFragmentAdapter(getActivity().getSupportFragmentManager(), getFragments(bean.getData())));
+                            mFragmentList = getFragments(bean.getData()) ;
+                            viewPager.setAdapter(new ComFragmentAdapter(getActivity().getSupportFragmentManager(), mFragmentList));
                             viewPager.setOffscreenPageLimit(10);
+                            viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                                @Override
+                                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                                }
+
+                                @Override
+                                public void onPageSelected(int position) {
+                                    ((RecommandFragment)mFragmentList.get(position)).refresh();
+                                }
+
+                                @Override
+                                public void onPageScrollStateChanged(int state) {
+
+                                }
+                            });
 
                         }
                     }
@@ -553,13 +586,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     private LinearLayout mLLVideos ;
 
+    private boolean isCanScroll ;
+
     private void initView(View view) {
 
         mLLVideos = view.findViewById(R.id.ll_videos) ;
         mTvMoreVideo = view.findViewById(R.id.tv_more_video) ;
 
         mTvLocation = view.findViewById(R.id.tv_location) ;
-      //  refreshLayout = view.findViewById(R.id.refreshLayout) ;
+        //  refreshLayout = view.findViewById(R.id.refreshLayout) ;
         toolbar = view.findViewById(R.id.home_toolbar) ;
         viewPager = view.findViewById(R.id.view_pager) ;
         scrollView = view.findViewById(R.id.scrollView) ;
@@ -629,7 +664,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         mLLeft.setOnClickListener(this);
         mLLMore.setOnClickListener(this);
 
-
+        Message msg = new Message() ;
+        msg.what = 1 ;
+        mHandler.sendMessageDelayed(msg,2000) ;
 
         Map<String, String> map = new HashMap<>() ;
         map.put("s","App.Index.Banner") ;
@@ -665,11 +702,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-        getCategoryTitle1() ;
-        getCategoryTitle2();
 
         getCategoryTitle3();
-
+        getCategoryTitle1() ;
+        getCategoryTitle2();
 
         /*refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
@@ -685,12 +721,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             }
         });
 */
-        toolbar.post(new Runnable() {
+
+
+       /* toolbar.post(new Runnable() {
             @Override
             public void run() {
                 dealWithViewPager();
             }
-        });
+        });*/
         scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             int lastScrollY = 0;
             int maxh = DensityUtil.dp2px(80);
@@ -702,9 +740,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 int[] location = new int[2];
                 magicIndicator.getLocationOnScreen(location);
                 int yPosition = location[1];
+                Log.e("liujw","########################yPosition "+yPosition +" ################toolBarPositionY "+toolBarPositionY);
                 if (yPosition < toolBarPositionY) {
                     magicIndicatorTitle.setVisibility(View.VISIBLE);
-                    scrollView.setNeedScroll(false);
+                    if(isCanScroll){
+                        scrollView.setNeedScroll(true);
+                    }else {
+                        scrollView.setNeedScroll(false);
+                    }
                 } else {
                     magicIndicatorTitle.setVisibility(View.GONE);
                     scrollView.setNeedScroll(true);
@@ -713,7 +756,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 if (lastScrollY > maxh) {
                     scrollY = Math.min(maxh, scrollY);
                     mScrollY = scrollY > maxh ? maxh : scrollY;
-                    toolbar.setVisibility(View.VISIBLE);
+                    toolbar.setVisibility(View.GONE);
                     toolbar.setBackgroundColor(((255 * mScrollY / maxh) << 24) | color);
                 }
 
@@ -732,7 +775,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     }
 
     private void dealWithViewPager() {
-        toolBarPositionY = toolbar.getHeight();
+        toolBarPositionY = DensityUtil.dp2px(70);
         ViewGroup.LayoutParams params = viewPager.getLayoutParams();
         params.height = ScreenUtil.getScreenHeightPx(getActivity()) - toolBarPositionY - magicIndicator.getHeight() + 1;
         viewPager.setLayoutParams(params);

@@ -47,7 +47,7 @@ public class UserDAO {
 		}
 		String insertSQL = "insert into user values (\"%s\",\"%s\",\"%s\",\"%s\",%d,%d,%d,%d,\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",%d)" ;
 		
-		insertSQL = String.format(insertSQL, String.valueOf(user.getId()),user.getTname(),user.getTname(),user.getTname(),
+		insertSQL = String.format(insertSQL, String.valueOf(user.getId()),user.getTname(),user.getTname(),user.getLogo(),
 					1,1,1,
 					System.currentTimeMillis(),user.getMobile(),user.getEmail(),
 					String.valueOf(user.getId()),String.valueOf(user.getSign()),String.valueOf(user.getId()),isLogin);

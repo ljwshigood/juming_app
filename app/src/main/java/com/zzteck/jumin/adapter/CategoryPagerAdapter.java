@@ -12,19 +12,24 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.BannerBean;
+import com.zzteck.jumin.bean.CategoryDetailHeader;
 
 import java.util.List;
 
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
+
 
 public class CategoryPagerAdapter extends PagerAdapter {
-    private List<String> data;
+
+
+    private List<CategoryDetailHeader> data;
     private Context context;
 
     private int mType ;
 
     private LayoutInflater mLayoutInflater ;
 
-    public CategoryPagerAdapter(Context context, List<String> data, int type) {
+    public CategoryPagerAdapter(Context context, List<CategoryDetailHeader> data, int type) {
         this.data = data;
         this.mType = type ;
         this.context = context;
@@ -34,7 +39,7 @@ public class CategoryPagerAdapter extends PagerAdapter {
     @Override
     public int getCount() {
     	if(mType == 0){
-    		return data == null ? 3 : data.size() ;
+    		return data == null ? 0 : data.size() ;
     	}else{
     		return Integer.MAX_VALUE;	
     	}
@@ -49,32 +54,31 @@ public class CategoryPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
 
-        View rootView = mLayoutInflater.inflate(R.layout.layout_category_detail,null) ;
-        ImageView view = rootView.findViewById(R.id.iv_pic) ;
 
-        String img = data.get(position % data.size());
-        Glide.with(context)
-                .load(img)
-                .placeholder(R.mipmap.default_pic)
-                .error(R.mipmap.default_pic)
-                .crossFade(300)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .into(view);
+        if (data.get(position).getType()== 0) {//图片
+            final ImageView imageView = new ImageView(context);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            Glide.with(context).load(data.get(position).getFilePath())
+//                    .skipMemoryCache(true)
+                    .into(imageView);
+            container.addView(imageView);
 
-        /*ImageView view = new ImageView(context);
-        view.setScaleType(ImageView.ScaleType.FIT_XY);
-        String img = data.get(position % data.size());
-        Glide.with(context)
-                .load(img)
-                .placeholder(R.mipmap.default_pic)
-                .error(R.mipmap.default_pic)
-                .crossFade(300)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .into(view);*/
+            return imageView;
+        } else {
 
-        container.addView(rootView);
+            JCVideoPlayerStandard jcVideoPlayer = new JCVideoPlayerStandard(context);
+            jcVideoPlayer.setUp(data.get(position).getFilePath() , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "");
 
-        return view;
+            Glide.with(context)
+                    .load(data.get(position).getThumbPath())
+                    .into(jcVideoPlayer.thumbImageView);
+
+            jcVideoPlayer.prepareMediaPlayer();
+            container.addView(jcVideoPlayer);
+
+            return jcVideoPlayer;
+        }
+
     }
 
     @Override

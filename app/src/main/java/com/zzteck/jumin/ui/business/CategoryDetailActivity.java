@@ -23,21 +23,15 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.CategoryPagerAdapter;
-import com.zzteck.jumin.adapter.FeaturedPagerAdapter;
 import com.zzteck.jumin.bean.AttentionInfo;
-import com.zzteck.jumin.bean.BannerBean;
+import com.zzteck.jumin.bean.CategoryDetailHeader;
 import com.zzteck.jumin.bean.CatoryDetailInfo;
-import com.zzteck.jumin.bean.LoginBean;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
-import com.zzteck.jumin.utils.ActivityIntentUtils;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.UtilsTools;
-import com.zzteck.jumin.view.MyDialog;
 import com.zzteck.jumin.view.ShareDialog;
 import com.zzteck.jumin.view.WeiXinDialog;
 import com.zzteck.zzview.WindowsToast;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,16 +39,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/*import cn.sharesdk.onekeyshare.OnekeyShare;
-import cn.sharesdk.sina.weibo.SinaWeibo;
-import cn.sharesdk.tencent.qq.QQ;
-import cn.sharesdk.wechat.friends.Wechat;
-import cn.sharesdk.wechat.moments.WechatMoments;*/
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+/*import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.wechat.friends.Wechat;
+import cn.sharesdk.wechat.moments.WechatMoments;*/
 
 public class CategoryDetailActivity extends BaseActivity implements View.OnClickListener {
 
@@ -69,7 +64,7 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
 
     private LinearLayout mPoints;
 
-    private List<String> modelList = new ArrayList<>();
+    private List<CategoryDetailHeader> modelList = new ArrayList<>();
 
     private LinearLayout mLLCall;
 
@@ -389,7 +384,23 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
                         String message = new String(responseStr.getBytes());
                         Gson gson = new Gson();
                         mCategoryBean = gson.fromJson(message, CatoryDetailInfo.class);
-                        modelList.add(mCategoryBean.getData().getImg_path());
+
+                        String[] images = mCategoryBean.getData().getImg_path().split(",") ;
+
+                        if(!TextUtils.isEmpty(mCategoryBean.getData().getVideo())){
+                            CategoryDetailHeader bean = new CategoryDetailHeader() ;
+                            bean.setFilePath(mCategoryBean.getData().getVideo());
+                            bean.setType(1);
+                            modelList.add(bean) ;
+                        }
+
+                        for(int i = 0 ;i < images.length ;i++){
+                            CategoryDetailHeader bean = new CategoryDetailHeader() ;
+                            bean.setFilePath(images[i]);
+                            bean.setType(0);
+                            modelList.add(bean) ;
+                        }
+
                         initViewPager();
                         setDataView(mCategoryBean);
                     }
@@ -426,11 +437,11 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
         initData();
         getCatoryDetail(mId);
 
-        mShareDialog = new ShareDialog(mContext);
+        /*mShareDialog = new ShareDialog(mContext);
         mShareDialog.setOnClickListener(new ShareDialog.OnClickListener() {
             @Override
             public void OnClick(View v, int position) {
-               /* switch (position) {
+               *//* switch (position) {
                     case 0:
                         showShare(QQ.NAME);
                         break;
@@ -443,9 +454,9 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
                     case 3:
                         showShare(SinaWeibo.NAME);
                         break;
-                }*/
+                }*//*
             }
-        });
+        });*/
     }
 
     /**

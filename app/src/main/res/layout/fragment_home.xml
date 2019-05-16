@@ -6,22 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<!--
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/refreshLayout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
-        app:srlEnablePreviewInEditMode="false">
--->
+        android:orientation="vertical">
 
-        <!--<com.scwang.smartrefresh.layout.header.ClassicsHeader
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlAccentColor="@android:color/white" />-->
+        <include layout="@layout/item_home_location"></include>
 
-
-        <!--<android.support.v4.widget.NestedScrollView-->
         <com.zzteck.jumin.view.JudgeNestedScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
@@ -53,8 +44,6 @@
                             android:layout_gravity="bottom"
                             android:gravity="center_horizontal"
                             android:orientation="vertical">
-
-                            <include layout="@layout/item_home_location"></include>
 
                             <RelativeLayout
                                 android:id="@+id/rv_banner"
@@ -112,17 +101,20 @@
             </LinearLayout>
 
         </com.zzteck.jumin.view.JudgeNestedScrollView>
-    <!--</com.scwang.smartrefresh.layout.SmartRefreshLayout>-->
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="69dp"
         android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/home_toolbar"
             style="@style/AppTheme.Toolbar"
             android:layout_marginBottom="0dp"
+            android:visibility="gone"
             android:background="@android:color/transparent"
             app:layout_collapseMode="pin">
 
