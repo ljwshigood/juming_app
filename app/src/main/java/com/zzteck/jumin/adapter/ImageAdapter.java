@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.MediaInfo;
 
@@ -64,13 +65,24 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             holder.mIvPicture.setImageResource(R.mipmap.btn_tianjiatupian);
         }else {
 
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.mipmap.default_pic)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL);
+
             Glide.with(mContext)
+                    .load(mMediaInfoList.get(position).getFilePath())
+                    .apply(options)
+                    .into(holder.mIvPicture);
+
+
+           /* Glide.with(mContext)
                     .load(mMediaInfoList.get(position).getFilePath())
                     .placeholder(R.mipmap.ic_launcher)
                     .error(R.mipmap.ic_launcher)
                     .crossFade(300)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .into(holder.mIvPicture);
+                    .into(holder.mIvPicture);*/
         }
 
         holder.mIvPicture.setOnClickListener(new View.OnClickListener() {

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.BaseInfo;
 import com.zzteck.jumin.bean.MainCategoryBean;
@@ -70,14 +71,26 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
 
             itemHolder.mTvTitle.setText(chapterInfo.getCatname());
 
+
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.mipmap.default_pic)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL);
+
             Glide.with(mContext)
+                    .load(chapterInfo.getIcon())
+                    .apply(options)
+                    .into(itemHolder.mIvTitleIcon);
+
+
+            /*Glide.with(mContext)
                     .load(chapterInfo.getIcon())
                     .placeholder(R.mipmap.default_pic)
                     .error(R.mipmap.default_pic)
                     .crossFade(300)
                     .transform(new GlideCircleTransform(mContext))
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .into(itemHolder.mIvTitleIcon);
+                    .into(itemHolder.mIvTitleIcon);*/
 
             if(chapterInfo.getChildren().size() > 0){
                 itemHolder.ivArrow.setVisibility(View.VISIBLE);

@@ -15,11 +15,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.baijiahulian.common.crop.BJCommonImageCropHelper;
-import com.baijiahulian.common.crop.ThemeConfig;
-import com.baijiahulian.common.crop.model.PhotoInfo;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
@@ -112,14 +111,24 @@ public class ModifyUserInfoActivity extends BaseActivity implements OnClickListe
                                 @Override
                                 public void run() {
 
+                                    RequestOptions options = new RequestOptions()
+                                            .placeholder(com.yalantis.ucrop.R.color.ucrop_color_grey)
+                                            .centerCrop()
+                                            .diskCacheStrategy(DiskCacheStrategy.ALL);
+
                                     Glide.with(mContext)
                                             .load(bean.getData().getLogo())
-                                            .placeholder(R.mipmap.default_pic)
+                                            .transition(DrawableTransitionOptions.withCrossFade())
+                                            .apply(options)
+                                            .into(mIvHeader);
+
+                                   /* Glide.with(mContext)
+                                            .load(bean.getData().getLogo())
                                             .error(R.mipmap.default_pic)
                                             .crossFade(300)
                                             .transform(new GlideCircleTransform(mContext))
                                             .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                                            .into(mIvHeader);
+                                            .into(mIvHeader);*/
 
                                 }
                             });
@@ -181,14 +190,26 @@ public class ModifyUserInfoActivity extends BaseActivity implements OnClickListe
 		 users = UserDAO.getInstance(mContext).selectUserList() ;
 
  		if(users != null && users.size() > 0){
+
+            RequestOptions options = new RequestOptions()
+                    .placeholder(com.yalantis.ucrop.R.color.ucrop_color_grey)
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL);
+
             Glide.with(mContext)
+                    .load(users.get(0).getHeader())
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .apply(options)
+                    .into(mIvHeader);
+
+            /*Glide.with(mContext)
                     .load(users.get(0).getHeader())
                     .placeholder(R.mipmap.default_pic)
                     .error(R.mipmap.default_pic)
                     .crossFade(300)
                     .transform(new GlideCircleTransform(mContext))
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .into(mIvHeader);
+                    .into(mIvHeader);*/
         }
 
 	}
@@ -217,7 +238,7 @@ public class ModifyUserInfoActivity extends BaseActivity implements OnClickListe
 				break ;
 			case R.id.rl_upload_photo:
 
-				BJCommonImageCropHelper.openImageSingleAblum(ModifyUserInfoActivity.this, BJCommonImageCropHelper.PhotoCropType.None,
+				/*BJCommonImageCropHelper.openImageSingleAblum(ModifyUserInfoActivity.this, BJCommonImageCropHelper.PhotoCropType.None,
 						new ThemeConfig.Builder().setMainElementsColor(Color.parseColor("#00ccff")).setTitlebarRightButtonText(R.string.complete).build(), new BJCommonImageCropHelper.OnHandlerResultCallback(){
 
 							@Override
@@ -242,7 +263,7 @@ public class ModifyUserInfoActivity extends BaseActivity implements OnClickListe
 
 							}
 
-						});
+						});*/
 				break ;
 		}
 	}

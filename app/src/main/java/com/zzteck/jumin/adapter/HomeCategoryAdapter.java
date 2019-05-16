@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.Favorite;
 import com.zzteck.jumin.bean.MainCategoryBean;
@@ -67,14 +68,24 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
     public void onBindViewHolder(HomeCategoryAdapter.ViewHolder holder, int position) {
         holder.name.setText(mFavoriteList.get(position).getCatname());
 
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.mipmap.default_pic)
+                .diskCacheStrategy(DiskCacheStrategy.ALL);
+
         Glide.with(mContext)
+                .load(mFavoriteList.get(position).getIcon())
+                .apply(options)
+                .into(holder.mIv);
+
+       /* Glide.with(mContext)
                 .load(mFavoriteList.get(position).getIcon())
                 .placeholder(R.mipmap.default_pic)
                 .error(R.mipmap.default_pic)
                 .crossFade(300)
                 .transform(new GlideCircleTransform(mContext))
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .into(holder.mIv);
+                .into(holder.mIv);*/
     }
 
     @Override

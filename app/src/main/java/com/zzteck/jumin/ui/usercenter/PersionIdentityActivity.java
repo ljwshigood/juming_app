@@ -16,11 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.baijiahulian.common.crop.BJCommonImageCropHelper;
-import com.baijiahulian.common.crop.ThemeConfig;
-import com.baijiahulian.common.crop.model.PhotoInfo;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
@@ -125,26 +123,49 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 
 	private void initMediaDataOrg(MediaInfo info) {
 
+
+		RequestOptions options = new RequestOptions()
+				.centerCrop()
+				.placeholder(R.mipmap.default_pic)
+				.diskCacheStrategy(DiskCacheStrategy.ALL);
+
 		Glide.with(mContext)
+				.load(info.getFilePath())
+				.apply(options)
+				.into(mIvOrg);
+
+		/*Glide.with(mContext)
 				.load(info.getFilePath())
 				.placeholder(R.mipmap.default_pic)
 				.error(R.mipmap.default_pic)
 				.crossFade(300)
 				.diskCacheStrategy(DiskCacheStrategy.SOURCE)
 				.into(mIvOrg);
-
+*/
 
 	}
 
 	private void initMediaDataFront(MediaInfo info) {
 
+
+		RequestOptions options = new RequestOptions()
+				.centerCrop()
+				.placeholder(R.mipmap.default_pic)
+				.diskCacheStrategy(DiskCacheStrategy.ALL);
+
 		Glide.with(mContext)
+				.load(info.getFilePath())
+				.apply(options)
+				.into(mIvFront);
+
+
+		/*Glide.with(mContext)
 				.load(info.getFilePath())
 				.placeholder(R.mipmap.default_pic)
 				.error(R.mipmap.default_pic)
 				.crossFade(300)
 				.diskCacheStrategy(DiskCacheStrategy.SOURCE)
-				.into(mIvFront);
+				.into(mIvFront);*/
 
 	}
 
@@ -287,7 +308,7 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 				finish();
 				break ;
 			case R.id.ll_front:
-				BJCommonImageCropHelper.openImageSingleAblum(PersionIdentityActivity.this, BJCommonImageCropHelper.PhotoCropType.None,
+				/*BJCommonImageCropHelper.openImageSingleAblum(PersionIdentityActivity.this, BJCommonImageCropHelper.PhotoCropType.None,
 						new ThemeConfig.Builder().setMainElementsColor(Color.parseColor("#00ccff")).setTitlebarRightButtonText(R.string.complete).build(), new BJCommonImageCropHelper.OnHandlerResultCallback(){
 
 							@Override
@@ -306,10 +327,10 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 
 							}
 
-						});
+						});*/
 				break ;
 			case R.id.ll_org :
-				BJCommonImageCropHelper.openImageSingleAblum(PersionIdentityActivity.this, BJCommonImageCropHelper.PhotoCropType.None,
+				/*BJCommonImageCropHelper.openImageSingleAblum(PersionIdentityActivity.this, BJCommonImageCropHelper.PhotoCropType.None,
 						new ThemeConfig.Builder().setMainElementsColor(Color.parseColor("#00ccff")).setTitlebarRightButtonText(R.string.complete).build(), new BJCommonImageCropHelper.OnHandlerResultCallback(){
 
 							@Override
@@ -328,7 +349,7 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 
 							}
 
-						});
+						});*/
 				break ;
 			case R.id.ll_complete :
 				if(TextUtils.isEmpty(mEtName.getText().toString().trim())){

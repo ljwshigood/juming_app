@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.VideoBean;
 import com.zzteck.jumin.utils.Constants;
@@ -48,13 +49,23 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(VideoAdapter.ViewHolder holder, final int position) {
 
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.mipmap.default_pic)
+                .diskCacheStrategy(DiskCacheStrategy.ALL);
         Glide.with(mContext)
+                .load(mVideoList.get(position).getImg_path())
+                .apply(options)
+                .into(holder.mIvVideo);
+
+
+       /* Glide.with(mContext)
                 .load(mVideoList.get(position).getImg_path())
                 .placeholder(R.mipmap.default_pic)
                 .error(R.mipmap.default_pic)
                 .crossFade(300)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .into(holder.mIvVideo);
+                .into(holder.mIvVideo);*/
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

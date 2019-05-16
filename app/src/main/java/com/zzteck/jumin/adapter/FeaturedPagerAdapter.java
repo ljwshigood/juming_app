@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.BannerBean;
 
@@ -46,14 +47,25 @@ public class FeaturedPagerAdapter extends PagerAdapter {
         ImageView view = new ImageView(context);
         view.setScaleType(ImageView.ScaleType.FIT_XY);
         String img = data.get(position % data.size()).getImg_path();
+
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.mipmap.default_pic)
+                .diskCacheStrategy(DiskCacheStrategy.ALL);
+
         Glide.with(context)
+                .load(img)
+                .apply(options)
+                .into(view);
+
+       /* Glide.with(context)
                 .load(img)
                 .placeholder(R.mipmap.default_pic)
                 .error(R.mipmap.default_pic)
                 .crossFade(300)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(view);
-
+*/
         container.addView(view);
 
         return view;

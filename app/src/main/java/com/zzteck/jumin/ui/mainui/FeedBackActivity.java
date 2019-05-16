@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,16 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.baijiahulian.common.crop.BJCommonImageCropHelper;
-import com.baijiahulian.common.crop.ThemeConfig;
-import com.baijiahulian.common.crop.model.PhotoInfo;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.FeedAdapter;
 import com.zzteck.jumin.adapter.ImageAdapter;
 import com.zzteck.jumin.bean.FeedBack;
 import com.zzteck.jumin.bean.MediaInfo;
-import com.zzteck.jumin.ui.mainui.BaseActivity;
-import com.zzteck.jumin.ui.usercenter.PersionIdentityActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +47,7 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener{
 
 	private ImageAdapter mImageAdapter ;
 
-	private List<PhotoInfo> mPhotoList = new ArrayList<>();
+	//private List<PhotoInfo> mPhotoList = new ArrayList<>();
 
 	private void initData(){
 		mImageAdapter = new ImageAdapter(mContext,null) ;
@@ -82,7 +76,7 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener{
 			public void imageAddListener() {
 
 
-				BJCommonImageCropHelper.openImageMulti(FeedBackActivity.this, mPhotoList,4,
+				/*BJCommonImageCropHelper.openImageMulti(FeedBackActivity.this, mPhotoList,4,
 						new ThemeConfig.Builder().setMainElementsColor(Color.parseColor("#00ccff")).setTitlebarRightButtonText(R.string.complete).build(), new BJCommonImageCropHelper.OnHandlerResultCallback(){
 
 							@Override
@@ -97,7 +91,7 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener{
 
 							}
 
-						});
+						});*/
 			}
 		});
 	}
@@ -148,7 +142,7 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener{
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
-			if(mPhotoList != null && mPhotoList.size() > 0){
+			/*if(mPhotoList != null && mPhotoList.size() > 0){
 				mIvAddPicture.setVisibility(View.GONE);
 				mRvAddPicture.setVisibility(View.VISIBLE);
 			}else{
@@ -165,7 +159,7 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener{
 				mediaInfos.add(mMediaOrg) ;
 			}
 
-			initMeidaList(mediaInfos);
+			initMeidaList(mediaInfos);*/
 		}
 	} ;
 
@@ -178,7 +172,7 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener{
 			case R.id.ll_commit :
 				break ;
 			case R.id.iv_add_pic :
-				BJCommonImageCropHelper.openImageMulti(FeedBackActivity.this, mPhotoList,4,
+				/*BJCommonImageCropHelper.openImageMulti(FeedBackActivity.this, mPhotoList,4,
 						new ThemeConfig.Builder().setMainElementsColor(Color.parseColor("#00ccff")).setTitlebarRightButtonText(R.string.complete).build(), new BJCommonImageCropHelper.OnHandlerResultCallback(){
 
 							@Override
@@ -192,7 +186,7 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener{
 
 							}
 
-						});
+						});*/
 				break ;
 		}
 	}

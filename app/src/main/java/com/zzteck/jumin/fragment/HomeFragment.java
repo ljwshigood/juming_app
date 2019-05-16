@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 /*import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -518,14 +519,25 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                         CategoryBean bean = gson.fromJson(responseStr, CategoryBean.class);
                         if (bean.getData() != null && bean.getData().size() > 0) {
                             for (int i = 0; i < bean.getData().size(); i++) {
-                                Glide.with(getActivity())
+
+                                RequestOptions options = new RequestOptions()
+                                        .centerCrop()
+                                        .placeholder(R.mipmap.default_pic)
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL);
+                                Glide.with(mContext)
+                                        .load(bean.getData().get(i).getIcon())
+                                        .apply(options)
+                                        .into(mIvCategoryList.get(i));
+
+
+                                /*Glide.with(getActivity())
                                         .load(bean.getData().get(i).getIcon())
                                         .placeholder(R.mipmap.default_pic)
                                         .error(R.mipmap.default_pic)
                                         .crossFade(300)
                                         .transform(new GlideCircleTransform(getActivity()))
                                         .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                                        .into(mIvCategoryList.get(i));
+                                        .into(mIvCategoryList.get(i));*/
                                 mTvCategoryList.get(i).setText(bean.getData().get(i).getCatname());
                                 mTvCategoryList.get(i).setTag(bean.getData().get(i).getCatid());
                             }
@@ -565,13 +577,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                         CategoryBean bean = gson.fromJson(responseStr, CategoryBean.class);
                         if (bean.getData() != null && bean.getData().size() > 0) {
                             for (int i = 0; i < bean.getData().size(); i++) {
-                                Glide.with(getActivity())
+
+                                RequestOptions options = new RequestOptions()
+                                        .centerCrop()
+                                        .placeholder(R.mipmap.default_pic)
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL);
+                                Glide.with(mContext)
+                                        .load(bean.getData().get(i).getIcon())
+                                        .apply(options)
+                                        .into(mImagePicLogo.get(i));
+
+                               /* Glide.with(getActivity())
                                         .load(bean.getData().get(i).getIcon())
                                         .placeholder(R.mipmap.default_pic)
                                         .error(R.mipmap.default_pic)
                                         .crossFade(300)
                                         .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                                        .into(mImagePicLogo.get(i));
+                                        .into(mImagePicLogo.get(i));*/
                             }
                         }
 

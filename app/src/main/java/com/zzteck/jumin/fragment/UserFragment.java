@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.User;
 import com.zzteck.jumin.db.UserDAO;
@@ -112,13 +113,25 @@ public class UserFragment extends Fragment implements OnClickListener {
     public void initData() {
         List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
         if(userList != null && userList.size() > 0){
-            Glide.with(getActivity())
+
+
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.mipmap.default_pic)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL);
+            Glide.with(mContext)
+                    .load(userList.get(0).getHeader())
+                    .apply(options)
+                    .into(mCvPhoto);
+
+
+            /*Glide.with(getActivity())
                     .load(userList.get(0).getHeader())
                     .placeholder(R.mipmap.default_pic)
                     .error(R.mipmap.default_pic)
                     .crossFade(300)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .into(mCvPhoto);
+                    .into(mCvPhoto);*/
 
             if(TextUtils.isEmpty(userList.get(0).getUsername())){
                 mTvNickName.setVisibility(View.GONE);

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.jude.easyrecyclerview.adapter.*;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.zzteck.jumin.R;
@@ -73,13 +74,25 @@ public class RecommandAdapter extends RecyclerArrayAdapter<HomeInfo.DataBean> {
         public void setData(HomeInfo.DataBean data) {
             super.setData(data);
 
+
+
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.mipmap.default_pic)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL);
+
             Glide.with(mContext)
+                    .load(data.getImg_path())
+                    .apply(options)
+                    .into(mIvLogo);
+
+            /*Glide.with(mContext)
                     .load(data.getImg_path())
                     .placeholder(R.mipmap.default_pic)
                     .error(R.mipmap.default_pic)
                     .crossFade(300)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .into(mIvLogo);
+                    .into(mIvLogo);*/
 
             mTvTitle.setText(data.getTitle());
             mTvDetail.setText(data.getContent());

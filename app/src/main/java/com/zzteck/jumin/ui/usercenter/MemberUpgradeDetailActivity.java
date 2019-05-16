@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.zzteck.jumin.R;
@@ -62,13 +63,22 @@ public class MemberUpgradeDetailActivity extends BaseActivity implements OnClick
         mType = getIntent().getIntExtra("position", -1);
 
         if(mType != -1){
+
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.mipmap.default_pic)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL);
             Glide.with(mContext)
+                    .load(res[mType])
+                    .apply(options)
+                    .into(mIvMemeber);
+           /* Glide.with(mContext)
                     .load(res[mType])
                     .placeholder(R.mipmap.default_pic)
                     .error(R.mipmap.default_pic)
                     .crossFade(300)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .into(mIvMemeber);
+                    .into(mIvMemeber);*/
         }
     }
 
