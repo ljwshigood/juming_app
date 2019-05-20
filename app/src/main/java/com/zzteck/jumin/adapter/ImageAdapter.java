@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -75,14 +77,18 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
                     .apply(options)
                     .into(holder.mIvPicture);
 
+            int status = mMediaInfoList.get(position).getStatus() ;
+            if(status == 0){ // 正在上传
+                holder.mProgressBar.setVisibility(View.VISIBLE);
+                holder.mTv.setText("");
+            }else if(status == 1){ // 上传成功
+                holder.mProgressBar.setVisibility(View.GONE);
+                holder.mTv.setText("");
+            }else if(status == 2){ // 上传失败
+                holder.mProgressBar.setVisibility(View.GONE);
+                holder.mTv.setText("上传失败");
+            }
 
-           /* Glide.with(mContext)
-                    .load(mMediaInfoList.get(position).getFilePath())
-                    .placeholder(R.mipmap.ic_launcher)
-                    .error(R.mipmap.ic_launcher)
-                    .crossFade(300)
-                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .into(holder.mIvPicture);*/
         }
 
         holder.mIvPicture.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +105,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
+
         return mMediaInfoList == null ? 0 : mMediaInfoList.size() + 1;
 
     }
@@ -107,8 +114,14 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
         private ImageView mIvPicture;
 
+        private ProgressBar mProgressBar ;
+
+        private TextView mTv ;
+
         public ViewHolder(View itemView) {
             super(itemView);
+            mTv = itemView.findViewById(R.id.tv_info) ;
+            mProgressBar = itemView.findViewById(R.id.progressbar) ;
             mIvPicture = itemView.findViewById(R.id.iv_picture) ;
         }
     }

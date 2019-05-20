@@ -72,9 +72,9 @@ public class GridImageAdapter extends
 
         public ViewHolder(View view) {
             super(view);
-            mImg = (ImageView) view.findViewById(R.id.fiv);
-            ll_del = (LinearLayout) view.findViewById(R.id.ll_del);
-            tv_duration = (TextView) view.findViewById(R.id.tv_duration);
+            mImg =  view.findViewById(R.id.fiv);
+            ll_del =  view.findViewById(R.id.ll_del);
+            tv_duration =  view.findViewById(R.id.tv_duration);
         }
     }
 
@@ -101,8 +101,7 @@ public class GridImageAdapter extends
      */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = mInflater.inflate(R.layout.gv_filter_image,
-                viewGroup, false);
+        View view = mInflater.inflate(R.layout.gv_filter_image,viewGroup, false);
         final ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -119,7 +118,7 @@ public class GridImageAdapter extends
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
         //少于8张，显示继续添加的图标
         if (getItemViewType(position) == TYPE_CAMERA) {
-            viewHolder.mImg.setImageResource(R.mipmap.addimg_1x);
+            viewHolder.mImg.setImageResource(R.mipmap.btn_tianjiatupian);
             viewHolder.mImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

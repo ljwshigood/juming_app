@@ -154,7 +154,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 					.isZoomAnim(true)// 图片列表点击 缩放效果 默认true
 					//.imageFormat(PictureMimeType.PNG)// 拍照保存图片格式后缀,默认jpeg
 					//.setOutputCameraPath("/CustomPath")// 自定义拍照保存路径
-					.enableCrop(true)// 是否裁剪
+					.enableCrop(false)// 是否裁剪
 					.compress(true)// 是否压缩
 					.synOrAsy(true)//同步true或异步false 压缩 默认同步
 					//.compressSavePath(getPath())//压缩图片保存地址
@@ -222,10 +222,19 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 		mImageAdapter = new ImageAdapter(mContext,null) ;
 
+
+		FullyGridLayoutManager manager = new FullyGridLayoutManager(ReleaseActivity.this, 4, GridLayoutManager.VERTICAL, false);
+		mRvPic.setLayoutManager(manager);
+		adapter = new GridImageAdapter(ReleaseActivity.this, onAddPicClickListener);
+		adapter.setList(selectList);
+		adapter.setSelectMax(6);
+		mRvPic.setAdapter(adapter);
+
+
 		/*GridLayoutManager linearLayoutManager1 = new GridLayoutManager(this,4);
 		mRvPic.setLayoutManager(linearLayoutManager1);
 		mRvPic.setAdapter(mImageAdapter);*/
-	}
+}
 
 	private HashMap mHashExtra = new HashMap() ;
 
@@ -1018,13 +1027,34 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		if(data == null){
 			return ;
 		}
-		String filePath = data.getStringExtra("filepath") ;
-		mIvVideoThumb.setImageBitmap(FileUtils.getVideoThumb(filePath));
 
-		try {
-			uploadVideo(new File(filePath),Constants.HOST);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(requestCode == 1122){
+			String filePath = data.getStringExtra("filepath") ;
+			mIvVideoThumb.setImageBitmap(FileUtils.getVideoThumb(filePath));
+
+			try {
+				uploadVideo(new File(filePath),Constants.HOST);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if(requestCode == PictureConfig.CHOOSE_REQUEST && data != null){
+			// 图片选择结果回调
+			selectList = PictureSelector.obtainMultipleResult(data);
+			// 例如 LocalMedia 里面返回三种path
+			// 1.media.getPath(); 为原图path
+			// 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
+			// 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
+			// 如果裁剪并压缩了，已取压缩路径为准，因为是先裁剪后压缩的
+
+			mHandler.sendEmptyMessage(2) ;
+
+			/*for (LocalMedia media : selectList) {
+
+				//mPhotoList = resultList ;
+
+
+				//Log.i("图片-----》", media.getPath());
+			}*/
 		}
 
 	}
@@ -1036,7 +1066,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 
-			/*if (msg.what == 0) {
+			if (msg.what == 0) {
 				for(int i = 0 ;i < mPictureList.size() ;i++){
 					MediaInfo info = mPictureList.get(i) ;
 					try {
@@ -1047,7 +1077,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				}
 
 			} else {
-				if (mPhotoList != null && mPhotoList.size() > 0) {
+				if (selectList != null && selectList.size() > 0) {
 					mIvAddPicture.setVisibility(View.GONE);
 				} else {
 					mIvAddPicture.setVisibility(View.VISIBLE);
@@ -1055,20 +1085,29 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 				mPictureList = new ArrayList<>();
 
-				for (int i = 0; i < mPhotoList.size(); i++) {
+				for (int i = 0; i < selectList.size(); i++) {
 					MediaInfo mMediaOrg = new MediaInfo();
 					mMediaOrg.setType(0);
-					mMediaOrg.setFilePath(mPhotoList.get(0).getPhotoPath());
+					mMediaOrg.setFilePath(selectList.get(0).getCompressPath());
 					mPictureList.add(mMediaOrg);
 				}
 
 				initMeidaList(mPictureList);
-				compressFileList() ;
-			}*/
+
+				for(int i = 0 ;i < mPictureList.size() ;i++){
+					MediaInfo info = mPictureList.get(i) ;
+					try {
+						uploadImage(new File(info.getCompressFile()),Constants.HOST);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+
+			}
 		}
 	} ;
 
-	private void compressFileList(){
+	/*private void compressFileList(){
 		new Thread(){
 
 			public void run() {
@@ -1089,7 +1128,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			}
 
 		}.start();
-	}
+	}*/
 
 
 	private ImageAdapter mImageAdapter ;
@@ -1099,7 +1138,6 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 	}
 
 	private List<LocalMedia> selectList = new ArrayList<>();
-	//private List<PhotoInfo> mPhotoList = new ArrayList<>() ;
 
 	@Override
 	public void onClick(View view) {
@@ -1311,6 +1349,15 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 						Gson gson = new Gson() ;
 						ImageInfo bean = gson.fromJson(responseStr,ImageInfo.class) ;
 						mImageUrl += bean.getData().getImg() ;
+
+						for(int i = 0 ;i < mPictureList.size() ;i++){
+							if(mPictureList.get(i).getCompressFile().equals(file.getAbsolutePath())){
+								mPictureList.get(i).setStatus(1);
+							}
+						}
+
+						initMeidaList(mPictureList);
+
 					}
 				});
 				return "";

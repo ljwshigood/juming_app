@@ -12,7 +12,7 @@
             android:id="@+id/fiv"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:src="#f6f6f6" />
 
         <LinearLayout

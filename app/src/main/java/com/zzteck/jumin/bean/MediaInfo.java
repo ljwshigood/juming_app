@@ -19,9 +19,15 @@ import java.io.Serializable;
  */
 public class MediaInfo implements Serializable {
 
-	/**
-	 * 
-	 */
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	private int status ;
 	
 	private static final long serialVersionUID = 1L;
 	
