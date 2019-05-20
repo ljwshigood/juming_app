@@ -117,6 +117,7 @@ dependencies {
     implementation project(':LRecyclerview_library')
     implementation project(':FlycoTabLayout_Lib')
     implementation project(':lib-zxing')
+
 //    implementation project(':photoselectcompont')
     implementation project(':citylib')
     implementation project(':poptabview_lib')
