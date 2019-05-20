@@ -435,7 +435,7 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
         setContentView(R.layout.activity_category_detail);
         initView();
         initData();
-        mId = "8365" ;
+        mId = "20719" ;
         getCatoryDetail(mId);
 
         /*mShareDialog = new ShareDialog(mContext);
