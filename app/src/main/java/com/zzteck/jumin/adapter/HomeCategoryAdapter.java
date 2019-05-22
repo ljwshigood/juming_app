@@ -14,6 +14,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.Favorite;
 import com.zzteck.jumin.bean.MainCategoryBean;
+import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.GlideCircleTransform;
 
 import java.util.List;
@@ -75,7 +76,7 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
         Glide.with(mContext)
-                .load(mFavoriteList.get(position).getIcon())
+                .load(Constants.PIC_HOST+mFavoriteList.get(position).getIcon())
                 .apply(options)
                 .into(holder.mIv);
 

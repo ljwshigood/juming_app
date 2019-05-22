@@ -2,6 +2,7 @@ package com.zzteck.jumin.bean;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Administrator on 2018/6/30.
@@ -13,7 +14,7 @@ public class CatoryDetailInfo implements Serializable {
 
     /**
      * ret : 200
-     * data : {"id":"16889","title":"新华证券诚招代理：独立线上后台，专属开户链接，条件美丽、高返","catid":"107","cityid":"6","areaid":"100","streetid":"0","begintime":"1555331400","activetime":"0","endtime":"0","content":"什么是外盘期货？&nbsp;<br />\r\n<br />\r\n外盘期货是指交易所建立在中国大陆以外的期货交易。以美国、英国、伦敦等交易所内的产品为常见交易期货合约。期货合约，就是指由期货交易所统一制定的、规定在将来某一特定的时间和地点交割一定数量标的物的标准化合约。有些美国期货合约品种如大豆、铜对国内期货价格变动会有影响，国内投资者可以参考外盘行情。大型生产商与贸易商也可根据外盘行情做好套期保值，对冲现货交易损失。&nbsp;<br />\r\n外盘期货可以连续在24小时内交易，交易量大而且很活跃，但是出现下滑的概率很小，是一个公平的竞争环境，因此很多人都想参与进来，却不知道外盘开户是怎么操作的？&nbsp;<br />\r\n1.对于投资者来说首先要选择一个监管严格的交易平台；&nbsp;<br />\r\n2.交易平台需具备提供良好的服务，包括疑问解答，投资咨询；&nbsp;<br />\r\n3.选择一个适合自己的期货交易品种；&nbsp;<br />\r\n商品期货分为金属期货、能源期货和农产品期货；&nbsp;<br />\r\n金属期货：铜，铝，铅，锌，锡，镍，黄金，白银等贵金属期货；&nbsp;<br />\r\n能源期货：原油，天然气等；<br />\r\n新華證券(香港)有限公司（證監會中央編號&nbsp;:&nbsp;BHM536）致力為個人及企業客戶提供專業及優質的商品期貨經紀服務。新華於2016年10月取得香港證券及期貨事務監察委員會類别2（期貨合約交易）及類別5&nbsp;(就期貨合約提供意見)&nbsp;受規管活動之牌照。另外，新華亦是香港期交所及香港期貨結算公司的參與者，香港证监会期货牌照：BHM536&nbsp;<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;現時新華提供香港及國際期貨交易服務，產品包括外匯、能源、環球市場指數、債券、金屬、農產品等期貨合約。通過我們安全可靠的金融平台和充滿熱誠的客戶服務團隊，投資者能夠全天候24小時獲得全面的交易支援服務，創造更多價值。<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;本人从事国际期货渠道业务十年，专注于帮助机构、散户搭建华语区投资者交易香港恒生指数期货及期权、海外期货交易所金融品种（且不仅限于CME、LME、CME&nbsp;、ICE）的平台，提供最安全、最便捷的全球性资产配置方案和路径服务。<br />\r\n&nbsp;&nbsp;&nbsp;主要交易合约品种：恒指、德指、道指、A50、美黄金、美精铜、美原油、美白银、天然气、欧元、澳元、英镑等外汇品种。<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系电话：17346614174&nbsp;&nbsp;联系QQ：1741841390","userid":"17346614174","contact_who":"李杉","qq":"1741841390","weixin":null,"email":"","tel":"17346614174","updatetime":"0","hit":"0","ismember":"1","manage_pwd":"","ip":"59.53.18.114","ip2area":"江西省赣州市电信","info_level":"1","img_path":"http://www.jumin.cn/attachment/information/201904/pre_1555331400r9j8s.jpg","img_count":"2","upgrade_type":"1","upgrade_time":"0","upgrade_type_list":"1","upgrade_time_list":"0","ifred":"0","ifbold":"0","certify":"0","dir_typename":"licai","upgrade_type_index":"0","upgrade_time_index":"0","upgrade_type_allindex":null,"upgrade_time_allindex":null,"mappoint":"","latitude":"0.00000000000000000","longitude":"0.00000000000000000","web_address":"","catname":"投资理财","gid":"244","video":"","upgrade_type_index_video":"0","upgrade_time_index_video":"0","areaname":"深圳周边","streetname":null,"parentid":"244","template_info":"info","usecoin":"0","modid":"1","usertoid":"17346614174"}
+     * data : {"id":"20719","title":"高考生学车推荐","catid":"100","cityid":"4","areaid":"63","streetid":"1037","begintime":"1558246798","activetime":"0","endtime":"0","content":"南坪学车我推荐国企渝运驾校，学车有保障<br />\r\n自主预约学车，方便快捷<br />\r\n国有驾校，信誉保证<br />\r\n高标准培训服务<br />\r\n透明的收费<br />\r\n一对一教学<br />\r\n全程一对一专属学车助理服务","userid":"18166450422","contact_who":"渝运驾校","qq":"18166450422","weixin":null,"email":"","tel":"18166450422","updatetime":"0","hit":"0","ismember":"1","manage_pwd":"","ip":"14.111.51.147","ip2area":"重庆市电信","info_level":"1","img_path":"/attachment/information/201905/pre_1558246798ooxyp.jpg","img_count":"6","upgrade_type":"1","upgrade_time":"0","upgrade_type_list":"1","upgrade_time_list":"0","ifred":"0","ifbold":"0","certify":"0","dir_typename":"jiaxiao","upgrade_type_index":"0","upgrade_time_index":"0","upgrade_type_allindex":null,"upgrade_time_allindex":null,"mappoint":"","latitude":"0.00000000000000000","longitude":"0.00000000000000000","web_address":"南坪万达广场对面渝运驾校","catname":"驾校服务","gid":"9","video":"/attachment/videos/201905/1558246798764.mp4","upgrade_type_index_video":"0","upgrade_time_index_video":"0","areaname":"南岸","streetname":"南坪","parentid":"9","template_info":"info","usecoin":"0","modid":"1","usertoid":"18166450422","image":[{"prepath":"/attachment/information/201905/pre_1558246798ooxyp.jpg","path":"/attachment/information/201905/1558246798ooxyp.jpg"},{"prepath":"/attachment/information/201905/pre_1558246798kzpgl.jpg","path":"/attachment/information/201905/1558246798kzpgl.jpg"},{"prepath":"/attachment/information/201905/pre_1558246798mt32d.jpg","path":"/attachment/information/201905/1558246798mt32d.jpg"},{"prepath":"/attachment/information/201905/pre_1558246798c0kw5.jpg","path":"/attachment/information/201905/1558246798c0kw5.jpg"},{"prepath":"/attachment/information/201905/pre_1558246798npn8k.jpg","path":"/attachment/information/201905/1558246798npn8k.jpg"}]}
      * msg :
      */
 
@@ -47,45 +48,37 @@ public class CatoryDetailInfo implements Serializable {
 
     public static class DataBean {
         /**
-         * id : 16889
-         * title : 新华证券诚招代理：独立线上后台，专属开户链接，条件美丽、高返
-         * catid : 107
-         * cityid : 6
-         * areaid : 100
-         * streetid : 0
-         * begintime : 1555331400
+         * id : 20719
+         * title : 高考生学车推荐
+         * catid : 100
+         * cityid : 4
+         * areaid : 63
+         * streetid : 1037
+         * begintime : 1558246798
          * activetime : 0
          * endtime : 0
-         * content : 什么是外盘期货？&nbsp;<br />
-         <br />
-         外盘期货是指交易所建立在中国大陆以外的期货交易。以美国、英国、伦敦等交易所内的产品为常见交易期货合约。期货合约，就是指由期货交易所统一制定的、规定在将来某一特定的时间和地点交割一定数量标的物的标准化合约。有些美国期货合约品种如大豆、铜对国内期货价格变动会有影响，国内投资者可以参考外盘行情。大型生产商与贸易商也可根据外盘行情做好套期保值，对冲现货交易损失。&nbsp;<br />
-         外盘期货可以连续在24小时内交易，交易量大而且很活跃，但是出现下滑的概率很小，是一个公平的竞争环境，因此很多人都想参与进来，却不知道外盘开户是怎么操作的？&nbsp;<br />
-         1.对于投资者来说首先要选择一个监管严格的交易平台；&nbsp;<br />
-         2.交易平台需具备提供良好的服务，包括疑问解答，投资咨询；&nbsp;<br />
-         3.选择一个适合自己的期货交易品种；&nbsp;<br />
-         商品期货分为金属期货、能源期货和农产品期货；&nbsp;<br />
-         金属期货：铜，铝，铅，锌，锡，镍，黄金，白银等贵金属期货；&nbsp;<br />
-         能源期货：原油，天然气等；<br />
-         新華證券(香港)有限公司（證監會中央編號&nbsp;:&nbsp;BHM536）致力為個人及企業客戶提供專業及優質的商品期貨經紀服務。新華於2016年10月取得香港證券及期貨事務監察委員會類别2（期貨合約交易）及類別5&nbsp;(就期貨合約提供意見)&nbsp;受規管活動之牌照。另外，新華亦是香港期交所及香港期貨結算公司的參與者，香港证监会期货牌照：BHM536&nbsp;<br />
-         &nbsp;&nbsp;&nbsp;&nbsp;現時新華提供香港及國際期貨交易服務，產品包括外匯、能源、環球市場指數、債券、金屬、農產品等期貨合約。通過我們安全可靠的金融平台和充滿熱誠的客戶服務團隊，投資者能夠全天候24小時獲得全面的交易支援服務，創造更多價值。<br />
-         &nbsp;&nbsp;&nbsp;&nbsp;本人从事国际期货渠道业务十年，专注于帮助机构、散户搭建华语区投资者交易香港恒生指数期货及期权、海外期货交易所金融品种（且不仅限于CME、LME、CME&nbsp;、ICE）的平台，提供最安全、最便捷的全球性资产配置方案和路径服务。<br />
-         &nbsp;&nbsp;&nbsp;主要交易合约品种：恒指、德指、道指、A50、美黄金、美精铜、美原油、美白银、天然气、欧元、澳元、英镑等外汇品种。<br />
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系电话：17346614174&nbsp;&nbsp;联系QQ：1741841390
-         * userid : 17346614174
-         * contact_who : 李杉
-         * qq : 1741841390
+         * content : 南坪学车我推荐国企渝运驾校，学车有保障<br />
+         自主预约学车，方便快捷<br />
+         国有驾校，信誉保证<br />
+         高标准培训服务<br />
+         透明的收费<br />
+         一对一教学<br />
+         全程一对一专属学车助理服务
+         * userid : 18166450422
+         * contact_who : 渝运驾校
+         * qq : 18166450422
          * weixin : null
          * email :
-         * tel : 17346614174
+         * tel : 18166450422
          * updatetime : 0
          * hit : 0
          * ismember : 1
          * manage_pwd :
-         * ip : 59.53.18.114
-         * ip2area : 江西省赣州市电信
+         * ip : 14.111.51.147
+         * ip2area : 重庆市电信
          * info_level : 1
-         * img_path : http://www.jumin.cn/attachment/information/201904/pre_1555331400r9j8s.jpg
-         * img_count : 2
+         * img_path : /attachment/information/201905/pre_1558246798ooxyp.jpg
+         * img_count : 6
          * upgrade_type : 1
          * upgrade_time : 0
          * upgrade_type_list : 1
@@ -93,7 +86,7 @@ public class CatoryDetailInfo implements Serializable {
          * ifred : 0
          * ifbold : 0
          * certify : 0
-         * dir_typename : licai
+         * dir_typename : jiaxiao
          * upgrade_type_index : 0
          * upgrade_time_index : 0
          * upgrade_type_allindex : null
@@ -101,19 +94,20 @@ public class CatoryDetailInfo implements Serializable {
          * mappoint :
          * latitude : 0.00000000000000000
          * longitude : 0.00000000000000000
-         * web_address :
-         * catname : 投资理财
-         * gid : 244
-         * video :
+         * web_address : 南坪万达广场对面渝运驾校
+         * catname : 驾校服务
+         * gid : 9
+         * video : /attachment/videos/201905/1558246798764.mp4
          * upgrade_type_index_video : 0
          * upgrade_time_index_video : 0
-         * areaname : 深圳周边
-         * streetname : null
-         * parentid : 244
+         * areaname : 南岸
+         * streetname : 南坪
+         * parentid : 9
          * template_info : info
          * usecoin : 0
          * modid : 1
-         * usertoid : 17346614174
+         * usertoid : 18166450422
+         * image : [{"prepath":"/attachment/information/201905/pre_1558246798ooxyp.jpg","path":"/attachment/information/201905/1558246798ooxyp.jpg"},{"prepath":"/attachment/information/201905/pre_1558246798kzpgl.jpg","path":"/attachment/information/201905/1558246798kzpgl.jpg"},{"prepath":"/attachment/information/201905/pre_1558246798mt32d.jpg","path":"/attachment/information/201905/1558246798mt32d.jpg"},{"prepath":"/attachment/information/201905/pre_1558246798c0kw5.jpg","path":"/attachment/information/201905/1558246798c0kw5.jpg"},{"prepath":"/attachment/information/201905/pre_1558246798npn8k.jpg","path":"/attachment/information/201905/1558246798npn8k.jpg"}]
          */
 
         private String id;
@@ -163,12 +157,13 @@ public class CatoryDetailInfo implements Serializable {
         private String upgrade_type_index_video;
         private String upgrade_time_index_video;
         private String areaname;
-        private Object streetname;
+        private String streetname;
         private String parentid;
         private String template_info;
         private String usecoin;
         private String modid;
         private String usertoid;
+        private List<ImageBean> image;
 
         public String getId() {
             return id;
@@ -546,11 +541,11 @@ public class CatoryDetailInfo implements Serializable {
             this.areaname = areaname;
         }
 
-        public Object getStreetname() {
+        public String getStreetname() {
             return streetname;
         }
 
-        public void setStreetname(Object streetname) {
+        public void setStreetname(String streetname) {
             this.streetname = streetname;
         }
 
@@ -592,6 +587,40 @@ public class CatoryDetailInfo implements Serializable {
 
         public void setUsertoid(String usertoid) {
             this.usertoid = usertoid;
+        }
+
+        public List<ImageBean> getImage() {
+            return image;
+        }
+
+        public void setImage(List<ImageBean> image) {
+            this.image = image;
+        }
+
+        public static class ImageBean {
+            /**
+             * prepath : /attachment/information/201905/pre_1558246798ooxyp.jpg
+             * path : /attachment/information/201905/1558246798ooxyp.jpg
+             */
+
+            private String prepath;
+            private String path;
+
+            public String getPrepath() {
+                return prepath;
+            }
+
+            public void setPrepath(String prepath) {
+                this.prepath = prepath;
+            }
+
+            public String getPath() {
+                return path;
+            }
+
+            public void setPath(String path) {
+                this.path = path;
+            }
         }
     }
 }

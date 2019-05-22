@@ -15,8 +15,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.jude.easyrecyclerview.adapter.*;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
+import com.luck.picture.lib.tools.Constant;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.HomeInfo;
+import com.zzteck.jumin.utils.Constants;
 import com.zzteck.zzview.RoundImageView;
 
 import java.util.List;
@@ -82,17 +84,9 @@ public class RecommandAdapter extends RecyclerArrayAdapter<HomeInfo.DataBean> {
                     .diskCacheStrategy(DiskCacheStrategy.ALL);
 
             Glide.with(mContext)
-                    .load(data.getImg_path())
+                    .load(Constants.PIC_HOST+data.getImg_path())
                     .apply(options)
                     .into(mIvLogo);
-
-            /*Glide.with(mContext)
-                    .load(data.getImg_path())
-                    .placeholder(R.mipmap.default_pic)
-                    .error(R.mipmap.default_pic)
-                    .crossFade(300)
-                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .into(mIvLogo);*/
 
             mTvTitle.setText(data.getTitle());
             mTvDetail.setText(data.getContent());

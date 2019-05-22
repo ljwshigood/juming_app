@@ -13,6 +13,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.BannerBean;
 import com.zzteck.jumin.bean.CategoryDetailHeader;
+import com.zzteck.jumin.utils.Constants;
 
 import java.util.List;
 
@@ -58,8 +59,7 @@ public class CategoryPagerAdapter extends PagerAdapter {
         if (data.get(position).getType()== 0) {//图片
             final ImageView imageView = new ImageView(context);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            Glide.with(context).load(data.get(position).getFilePath())
-//                    .skipMemoryCache(true)
+            Glide.with(context).load(Constants.PIC_HOST+data.get(position).getFilePath())
                     .into(imageView);
             container.addView(imageView);
 
@@ -67,13 +67,13 @@ public class CategoryPagerAdapter extends PagerAdapter {
         } else {
 
             JCVideoPlayerStandard jcVideoPlayer = new JCVideoPlayerStandard(context);
-            jcVideoPlayer.setUp(data.get(position).getFilePath() , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "");
+            jcVideoPlayer.setUp(Constants.PIC_HOST+data.get(position).getFilePath() , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "");
 
             Glide.with(context)
-                    .load(data.get(position).getThumbPath())
+                    .load(Constants.PIC_HOST+data.get(position).getThumbPath())
                     .into(jcVideoPlayer.thumbImageView);
 
-            jcVideoPlayer.prepareMediaPlayer();
+
             container.addView(jcVideoPlayer);
 
             return jcVideoPlayer;

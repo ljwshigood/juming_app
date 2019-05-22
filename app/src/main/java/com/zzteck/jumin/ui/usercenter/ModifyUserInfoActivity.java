@@ -117,7 +117,7 @@ public class ModifyUserInfoActivity extends BaseActivity implements OnClickListe
                                             .diskCacheStrategy(DiskCacheStrategy.ALL);
 
                                     Glide.with(mContext)
-                                            .load(bean.getData().getLogo())
+                                            .load(Constants.PIC_HOST+bean.getData().getLogo())
                                             .transition(DrawableTransitionOptions.withCrossFade())
                                             .apply(options)
                                             .into(mIvHeader);
@@ -197,7 +197,7 @@ public class ModifyUserInfoActivity extends BaseActivity implements OnClickListe
                     .diskCacheStrategy(DiskCacheStrategy.ALL);
 
             Glide.with(mContext)
-                    .load(users.get(0).getHeader())
+                    .load(Constants.PIC_HOST+users.get(0).getHeader())
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .apply(options)
                     .into(mIvHeader);

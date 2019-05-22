@@ -121,7 +121,7 @@ public class UserFragment extends Fragment implements OnClickListener {
                     .diskCacheStrategy(DiskCacheStrategy.ALL);
 
             Glide.with(mContext)
-                    .load(userList.get(0).getHeader())
+                    .load(Constants.PIC_HOST+userList.get(0).getHeader())
                     .apply(options)
                     .into(mCvPhoto);
 

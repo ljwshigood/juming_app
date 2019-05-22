@@ -17,6 +17,7 @@ import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.MoreCategory;
 import com.zzteck.jumin.ui.business.CategoryListActivity;
 import com.zzteck.jumin.ui.business.MoreCategoryListActivity;
+import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.GlideCircleTransform;
 
 import java.util.List;
@@ -59,7 +60,7 @@ public class MoreCategoryAdapter extends RecyclerView.Adapter<MoreCategoryAdapte
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
         Glide.with(mContext)
-                .load(mMoreCategoryList.get(position).getIcon())
+                .load(Constants.PIC_HOST+mMoreCategoryList.get(position).getIcon())
                 .apply(options)
                 .into(holder.mIv);
 

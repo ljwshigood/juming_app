@@ -150,11 +150,11 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
      * 描述：开始自动轮播.
      */
     public void startPlay() {
-        if (mHandler != null) {
+       /* if (mHandler != null) {
             mIsPlay = true;
             mHandler.removeCallbacks(mRunnable);
             mHandler.postDelayed(mRunnable, mPlayTimeInterval);
-        }
+        }*/
     }
 
     /**
@@ -385,18 +385,19 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
                         Gson gson = new Gson();
                         mCategoryBean = gson.fromJson(message, CatoryDetailInfo.class);
 
-                        String[] images = mCategoryBean.getData().getImg_path().split(",") ;
+                        List<CatoryDetailInfo.DataBean.ImageBean> images = mCategoryBean.getData().getImage();
 
                         if(!TextUtils.isEmpty(mCategoryBean.getData().getVideo())){
                             CategoryDetailHeader bean = new CategoryDetailHeader() ;
                             bean.setFilePath(mCategoryBean.getData().getVideo());
                             bean.setType(1);
+                            bean.setThumbPath(mCategoryBean.getData().getImg_path());
                             modelList.add(bean) ;
                         }
 
-                        for(int i = 0 ;i < images.length ;i++){
+                        for(int i = 0 ;i < images.size() ;i++){
                             CategoryDetailHeader bean = new CategoryDetailHeader() ;
-                            bean.setFilePath(images[i]);
+                            bean.setFilePath(images.get(i).getPath());
                             bean.setType(0);
                             modelList.add(bean) ;
                         }

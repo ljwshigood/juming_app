@@ -130,7 +130,7 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 				.diskCacheStrategy(DiskCacheStrategy.ALL);
 
 		Glide.with(mContext)
-				.load(info.getFilePath())
+				.load(Constants.PIC_HOST+info.getFilePath())
 				.apply(options)
 				.into(mIvOrg);
 
@@ -154,7 +154,7 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 				.diskCacheStrategy(DiskCacheStrategy.ALL);
 
 		Glide.with(mContext)
-				.load(info.getFilePath())
+				.load(Constants.PIC_HOST+info.getFilePath())
 				.apply(options)
 				.into(mIvFront);
 

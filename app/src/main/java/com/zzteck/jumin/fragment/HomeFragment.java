@@ -36,6 +36,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.scwang.smartrefresh.layout.util.DensityUtil;*/
 
+import com.luck.picture.lib.tools.Constant;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.ComFragmentAdapter;
@@ -527,7 +528,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                                         .diskCacheStrategy(DiskCacheStrategy.ALL);
 
                                 Glide.with(mContext)
-                                        .load(bean.getData().get(i).getIcon())
+                                        .load(Constants.PIC_HOST+bean.getData().get(i).getIcon())
                                         .apply(options)
                                         .into(mIvCategoryList.get(i));
 
@@ -585,7 +586,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                                         .placeholder(R.mipmap.default_pic)
                                         .diskCacheStrategy(DiskCacheStrategy.ALL);
                                 Glide.with(mContext)
-                                        .load(bean.getData().get(i).getIcon())
+                                        .load(Constants.PIC_HOST+bean.getData().get(i).getIcon())
                                         .apply(options)
                                         .into(mImagePicLogo.get(i));
 

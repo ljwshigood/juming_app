@@ -55,7 +55,7 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.ViewHolder> {
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
         Glide.with(mContext)
-                .load(mVideoList.get(position).getImg_path())
+                .load(Constants.PIC_HOST+mVideoList.get(position).getImg_path())
                 .apply(options)
                 .into(holder.mIvVideo);
 

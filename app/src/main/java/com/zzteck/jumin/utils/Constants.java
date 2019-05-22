@@ -13,4 +13,6 @@ public class Constants {
 
     public static final String HOST = "http://api.jumin.cn/" ;
 
+    public static final String PIC_HOST = "http://www.jumin.cn" ;
+
 }

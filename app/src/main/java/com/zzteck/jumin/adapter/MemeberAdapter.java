@@ -76,7 +76,7 @@ public class MemeberAdapter extends RecyclerView.Adapter<MemeberAdapter.ViewHold
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
         Glide.with(mContext)
-                .load(mMemberList.get(position).getRes())
+                .load(Constants.PIC_HOST+mMemberList.get(position).getRes())
                 .apply(options)
                 .into(holder.mIvMemeber);
 

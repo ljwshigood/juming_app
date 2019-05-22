@@ -14,6 +14,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.BaseInfo;
 import com.zzteck.jumin.bean.MainCategoryBean;
+import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.GlideCircleTransform;
 
 import java.util.ArrayList;
@@ -78,7 +79,7 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
                     .diskCacheStrategy(DiskCacheStrategy.ALL);
 
             Glide.with(mContext)
-                    .load(chapterInfo.getIcon())
+                    .load(Constants.PIC_HOST+chapterInfo.getIcon())
                     .apply(options)
                     .into(itemHolder.mIvTitleIcon);
 

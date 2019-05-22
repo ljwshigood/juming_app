@@ -71,7 +71,7 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 				.diskCacheStrategy(DiskCacheStrategy.ALL);
 
 		Glide.with(mContext)
-				.load(info.getFilePath())
+				.load(Constants.PIC_HOST+info.getFilePath())
 				.apply(options)
 				.into(mIvOrg);
 
@@ -94,7 +94,7 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 				.diskCacheStrategy(DiskCacheStrategy.ALL);
 
 		Glide.with(mContext)
-				.load(info.getFilePath())
+				.load(Constants.PIC_HOST+info.getFilePath())
 				.apply(options)
 				.into(mIvFront);
 		/*Glide.with(mContext)
