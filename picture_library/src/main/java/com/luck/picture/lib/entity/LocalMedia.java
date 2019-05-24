@@ -14,6 +14,18 @@ import android.text.TextUtils;
  */
 
 public class LocalMedia implements Parcelable {
+
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    private int status ;
+
     private String path;
     private String compressPath;
     private String cutPath;

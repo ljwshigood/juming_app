@@ -202,14 +202,6 @@ public class ModifyUserInfoActivity extends BaseActivity implements OnClickListe
                     .apply(options)
                     .into(mIvHeader);
 
-            /*Glide.with(mContext)
-                    .load(users.get(0).getHeader())
-                    .placeholder(R.mipmap.default_pic)
-                    .error(R.mipmap.default_pic)
-                    .crossFade(300)
-                    .transform(new GlideCircleTransform(mContext))
-                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .into(mIvHeader);*/
         }
 
 	}

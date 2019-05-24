@@ -3,7 +3,6 @@ package com.zzteck.jumin.ui.business;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,7 +19,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,9 +28,6 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.fingerth.supdialogutils.SYSDiaLogUtils;
 import com.google.gson.Gson;
 import com.icechn.videorecorder.ui.RecordingActivity2;
 import com.jaredrummler.materialspinner.MaterialSpinner;
@@ -47,30 +42,20 @@ import com.zzteck.jumin.adapter.GridImageAdapter;
 import com.zzteck.jumin.adapter.ImageAdapter;
 import com.zzteck.jumin.adapter.QoneAdapter;
 import com.zzteck.jumin.adapter.StreamAdapter;
-import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.bean.AreaInfo;
 import com.zzteck.jumin.bean.CheckInfo;
 import com.zzteck.jumin.bean.ExternalInfo;
 import com.zzteck.jumin.bean.ImageInfo;
 import com.zzteck.jumin.bean.LinkCat;
-import com.zzteck.jumin.bean.LoginBean;
 import com.zzteck.jumin.bean.MediaInfo;
-import com.zzteck.jumin.bean.ModifyBean;
 import com.zzteck.jumin.bean.QoneInfo;
 import com.zzteck.jumin.bean.ReleaseRet;
 import com.zzteck.jumin.bean.VideoInfo;
-import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.pop.LinkCatAdapter;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
-import com.zzteck.jumin.ui.mainui.FeedBackActivity;
-import com.zzteck.jumin.ui.mainui.MainActivity;
-import com.zzteck.jumin.ui.usercenter.ModifyUserInfoActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.DeviceUtil;
 import com.zzteck.jumin.utils.FileUtils;
-import com.zzteck.jumin.utils.GlideCircleTransform;
-import com.zzteck.jumin.utils.PictureUtil;
-import com.zzteck.jumin.utils.ScreenUtil;
 import com.zzteck.jumin.utils.SharePerfenceUtil;
 import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.webmanager.CountingRequestBody;
@@ -133,7 +118,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 	private RecyclerView mRvPic ;
 
-	private GridImageAdapter adapter ;
+	private GridImageAdapter mGridAdapter;
 
 
 	private GridImageAdapter.onAddPicClickListener onAddPicClickListener = new GridImageAdapter.onAddPicClickListener() {
@@ -187,15 +172,6 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 	};
 
-	private void initReleasePic(){
-		FullyGridLayoutManager manager = new FullyGridLayoutManager(ReleaseActivity.this, 4, GridLayoutManager.VERTICAL, false);
-		mRvPic.setLayoutManager(manager);
-		adapter = new GridImageAdapter(ReleaseActivity.this, onAddPicClickListener);
-		adapter.setList(selectList);
-		adapter.setSelectMax(6);
-		mRvPic.setAdapter(adapter);
-	}
-
 	private void initView(){
 		mRvPic = findViewById(R.id.rv_pic) ;
 		mIvAddPicture = findViewById(R.id.iv_add_pic) ;
@@ -225,16 +201,12 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 		FullyGridLayoutManager manager = new FullyGridLayoutManager(ReleaseActivity.this, 4, GridLayoutManager.VERTICAL, false);
 		mRvPic.setLayoutManager(manager);
-		adapter = new GridImageAdapter(ReleaseActivity.this, onAddPicClickListener);
-		adapter.setList(selectList);
-		adapter.setSelectMax(6);
-		mRvPic.setAdapter(adapter);
+		mGridAdapter = new GridImageAdapter(ReleaseActivity.this, onAddPicClickListener);
+		mGridAdapter.setList(selectList);
+		mGridAdapter.setSelectMax(6);
+		mRvPic.setAdapter(mGridAdapter);
 
-
-		/*GridLayoutManager linearLayoutManager1 = new GridLayoutManager(this,4);
-		mRvPic.setLayoutManager(linearLayoutManager1);
-		mRvPic.setAdapter(mImageAdapter);*/
-}
+	}
 
 	private HashMap mHashExtra = new HashMap() ;
 
@@ -1040,11 +1012,20 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		}else if(requestCode == PictureConfig.CHOOSE_REQUEST && data != null){
 			// 图片选择结果回调
 			selectList = PictureSelector.obtainMultipleResult(data);
+
 			// 例如 LocalMedia 里面返回三种path
 			// 1.media.getPath(); 为原图path
 			// 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
 			// 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
 			// 如果裁剪并压缩了，已取压缩路径为准，因为是先裁剪后压缩的
+
+
+			/*if (selectList != null && selectList.size() > 0) {
+				mIvAddPicture.setVisibility(View.GONE);
+			} else {
+				mIvAddPicture.setVisibility(View.VISIBLE);
+			}*/
+
 
 			mHandler.sendEmptyMessage(2) ;
 
@@ -1077,11 +1058,9 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				}
 
 			} else {
-				if (selectList != null && selectList.size() > 0) {
-					mIvAddPicture.setVisibility(View.GONE);
-				} else {
-					mIvAddPicture.setVisibility(View.VISIBLE);
-				}
+
+				mGridAdapter.setList(selectList);
+				mGridAdapter.notifyDataSetChanged();
 
 				mPictureList = new ArrayList<>();
 
@@ -1091,8 +1070,6 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 					mMediaOrg.setFilePath(selectList.get(0).getCompressPath());
 					mPictureList.add(mMediaOrg);
 				}
-
-				initMeidaList(mPictureList);
 
 				for(int i = 0 ;i < mPictureList.size() ;i++){
 					MediaInfo info = mPictureList.get(i) ;
@@ -1350,14 +1327,14 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 						ImageInfo bean = gson.fromJson(responseStr,ImageInfo.class) ;
 						mImageUrl += bean.getData().getImg() ;
 
-						for(int i = 0 ;i < mPictureList.size() ;i++){
-							if(mPictureList.get(i).getCompressFile().equals(file.getAbsolutePath())){
-								mPictureList.get(i).setStatus(1);
+						for(int i = 0 ;i < selectList.size() ;i++){
+							if(selectList.get(i).getCompressPath().equals(file.getAbsolutePath())){
+                                selectList.get(i).setStatus(1);
 							}
 						}
 
-						initMeidaList(mPictureList);
-
+						mGridAdapter.setList(selectList);
+						mGridAdapter.notifyDataSetChanged() ;
 					}
 				});
 				return "";

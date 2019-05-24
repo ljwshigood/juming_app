@@ -35,14 +35,13 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/iv_video_thumb"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
+                        android:src="@mipmap/btn_shipin"
                         app:civ_border_color="@color/white"
-                        app:civ_border_width="2dp"
-                        android:src="@mipmap/btn_shipin" />
+                        app:civ_border_width="2dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -117,11 +116,11 @@
                     android:layout_height="80dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:textSize="14sp"
-                    android:padding="5dp"
-                    android:gravity="left|top"
                     android:background="@drawable/bg_btn_rec_press"
-                    android:hint="输入描述文字，为了防止对您造成骚扰，请勿在信息中留下联系方式（手机号，微信，QQ等）" />
+                    android:gravity="left|top"
+                    android:hint="输入描述文字，为了防止对您造成骚扰，请勿在信息中留下联系方式（手机号，微信，QQ等）"
+                    android:padding="5dp"
+                    android:textSize="14sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -140,9 +139,7 @@
                             android:id="@+id/rv_pic"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="25dp"
-                            android:background="@android:color/black"
-                          ></android.support.v7.widget.RecyclerView>
+                            android:layout_marginLeft="25dp"></android.support.v7.widget.RecyclerView>
                     </LinearLayout>
 
                     <LinearLayout
@@ -156,8 +153,8 @@
                             android:id="@+id/iv_add_pic"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:src="@mipmap/btn_tianjiatupian" />
+                            android:src="@mipmap/btn_tianjiatupian"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -170,8 +167,8 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:gravity="center"
                 android:background="@android:color/white"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -217,8 +214,8 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:gravity="center"
                 android:background="@android:color/white"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -280,8 +277,8 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:gravity="center"
                 android:background="@android:color/white"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -329,8 +326,8 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:gravity="center"
                 android:background="@android:color/white"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -377,8 +374,8 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:gravity="center"
                 android:background="@android:color/white"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -425,8 +422,8 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:gravity="center"
                 android:background="@android:color/white"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <LinearLayout

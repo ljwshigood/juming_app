@@ -63,9 +63,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(final ImageAdapter.ViewHolder holder, final int position) {
 
-        if(position == mMediaInfoList.size()){
+      /*  if(position == mMediaInfoList.size()){
             holder.mIvPicture.setImageResource(R.mipmap.btn_tianjiatupian);
-        }else {
+        }else {*/
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()
@@ -77,7 +77,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
                     .apply(options)
                     .into(holder.mIvPicture);
 
-            int status = mMediaInfoList.get(position).getStatus() ;
+            /*int status = mMediaInfoList.get(position).getStatus() ;
             if(status == 0){ // 正在上传
                 holder.mProgressBar.setVisibility(View.VISIBLE);
                 holder.mTv.setText("");
@@ -87,9 +87,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             }else if(status == 2){ // 上传失败
                 holder.mProgressBar.setVisibility(View.GONE);
                 holder.mTv.setText("上传失败");
-            }
+            }*/
 
-        }
+        /*}*/
 
         holder.mIvPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +106,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     @Override
     public int getItemCount() {
 
-        return mMediaInfoList == null ? 0 : mMediaInfoList.size() + 1;
+        return mMediaInfoList == null ? 0 : mMediaInfoList.size();
 
     }
 

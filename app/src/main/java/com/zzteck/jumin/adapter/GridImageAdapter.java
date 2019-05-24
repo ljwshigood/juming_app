@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -70,11 +71,18 @@ public class GridImageAdapter extends
         LinearLayout ll_del;
         TextView tv_duration;
 
+        ProgressBar mProgressBar ;
+        TextView mTv ;
+
+
         public ViewHolder(View view) {
             super(view);
             mImg =  view.findViewById(R.id.fiv);
             ll_del =  view.findViewById(R.id.ll_del);
             tv_duration =  view.findViewById(R.id.tv_duration);
+            mTv = view.findViewById(R.id.tv_info) ;
+            mProgressBar = view.findViewById(R.id.progressbar) ;
+
         }
     }
 
@@ -199,6 +207,19 @@ public class GridImageAdapter extends
                     }
                 });
             }
+
+            int status = list.get(position).getStatus() ;
+            if(status == 0){ // 正在上传
+                viewHolder.mProgressBar.setVisibility(View.VISIBLE);
+                viewHolder.mTv.setText("");
+            }else if(status == 1){ // 上传成功
+                viewHolder.mProgressBar.setVisibility(View.GONE);
+                viewHolder.mTv.setText("");
+            }else if(status == 2){ // 上传失败
+                viewHolder.mProgressBar.setVisibility(View.GONE);
+                viewHolder.mTv.setText("上传失败");
+            }
+
         }
     }
 
