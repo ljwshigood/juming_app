@@ -92,8 +92,7 @@ public class MoreCategoryActivity extends BaseActivity implements OnClickListene
 	private void initData(){
 
 		mRvCategory.setLayoutManager(new GridLayoutManager(this,3));
-		mRvCategory.addItemDecoration(new TimeItemDecoration(this));
-		//mRvCategory.addItemDecoration(new NormalDecoration(ContextCompat.getColor(this, R.color.mainGrayF8), (int) getResources().getDimension(R.dimen.one)));
+		mRvCategory.addItemDecoration(new NormalDecoration(ContextCompat.getColor(this, R.color.mainGrayF8), (int) getResources().getDimension(R.dimen.one)));
 		mMoreCategoryAdapter = new MoreCategoryAdapter(mContext,null) ;
 		mRvCategory.setAdapter(mMoreCategoryAdapter);
 	}
