@@ -68,6 +68,48 @@ public class ReleaseCompleteFragment extends Fragment implements OnClickListener
 		return mMainView;
 	}
 
+	private void AppInfoInfoact(int page){
+
+		Map<String, String> map = new HashMap<>() ;
+		map.put("s","App.Info.Infoact") ;
+		map.put("pages",page+"") ;
+
+		map.put("sign", UtilsTools.getSign(mContext,"App.Info.Myinfos")) ;
+
+		OkHttpClient client = new OkHttpClient();
+		Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
+		Call call = client.newCall(request);
+		call.enqueue(new Callback() {
+
+			@Override
+			public void onFailure(Call call, IOException e) {
+				Log.e("liujw","##########################IOException : "+e.toString());
+			}
+
+			@Override
+			public void onResponse(Call call, final Response response) throws IOException {
+				final String responseStr = response.body().string();
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							String message = new String(responseStr.getBytes()) ;
+							Gson gson = new Gson() ;
+							MyReleaseBean bean = gson.fromJson(message,MyReleaseBean.class) ;
+							mMyReleaseAdapter.notifyMyReleaseAdapter(bean.getData());
+						}catch (Exception e){
+							e.printStackTrace();
+						}
+
+					}
+				});
+			}
+		});
+
+
+	}
+
+
 	private void AppInfoMyinfos(int page){
 
 		Map<String, String> map = new HashMap<>() ;

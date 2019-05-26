@@ -11,9 +11,9 @@ public class Constants {
 
     public static final int CATEGORY = 1002 ;
 
-   // public static final String HOST = "http://api.jumin.cn/" ;
+    public static final String HOST = "http://api.jumin.cn/" ;
 
-    public static final String HOST = "http://api2.jumin.cn/" ;
+  //  public static final String HOST = "http://api2.jumin.cn/" ;
 
     public static final String PIC_HOST = "http://www.jumin.cn" ;
 
