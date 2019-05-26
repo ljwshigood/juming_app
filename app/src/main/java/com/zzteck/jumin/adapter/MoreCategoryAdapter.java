@@ -57,22 +57,13 @@ public class MoreCategoryAdapter extends RecyclerView.Adapter<MoreCategoryAdapte
         RequestOptions options = new RequestOptions()
                 .centerCrop()
                 .placeholder(R.mipmap.default_pic)
+                .transform(new GlideCircleTransform(mContext))
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
         Glide.with(mContext)
                 .load(Constants.PIC_HOST+mMoreCategoryList.get(position).getIcon())
                 .apply(options)
                 .into(holder.mIv);
-
-
-       /* Glide.with(mContext)
-                .load(mMoreCategoryList.get(position).getIcon())
-                .placeholder(R.mipmap.default_pic)
-                .error(R.mipmap.default_pic)
-                .crossFade(300)
-                .transform(new GlideCircleTransform(mContext))
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .into(holder.mIv);*/
 
         holder.name.setText(mMoreCategoryList.get(position).getCatname());
 

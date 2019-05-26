@@ -1084,35 +1084,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		}
 	} ;
 
-	/*private void compressFileList(){
-		new Thread(){
-
-			public void run() {
-
-				for(int i = 0 ;i < mPictureList.size() ;i++){
-					MediaInfo info = mPictureList.get(i) ;
-					if(info.getIsCompressFile() == 0){
-						String compressString = PictureUtil.compressPicture(mContext,info.getFilePath());
-						if(compressString != null){
-							info.setCompressFile(compressString);
-							info.setIsCompressFile(1);
-						}else{
-							info.setLoadFlag(2);
-						}
-					}
-				}
-				mHandler.sendEmptyMessage(0);
-			}
-
-		}.start();
-	}*/
-
-
 	private ImageAdapter mImageAdapter ;
-
-	private void initMeidaList(List<MediaInfo> infoList){
-		mImageAdapter.notifyImageListChange(infoList);
-	}
 
 	private List<LocalMedia> selectList = new ArrayList<>();
 
@@ -1121,7 +1093,6 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		Intent intent = null ;
 		switch (view.getId()){
 			case R.id.iv_add_pic :
-
 
 				PictureSelector.create(ReleaseActivity.this)
 						.openGallery(PictureMimeType.ofAll())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()

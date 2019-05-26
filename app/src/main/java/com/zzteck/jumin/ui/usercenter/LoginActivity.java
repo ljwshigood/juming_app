@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.fingerth.supdialogutils.SYSDiaLogUtils;
@@ -53,9 +54,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 
 	private ImageView mIvBack ;
 
+	private RelativeLayout mLLBack ;
 
 	private void initView() {
 
+		mLLBack = findViewById(R.id.ll_back) ;
+		mLLBack.setOnClickListener(this);
 		mLLLogin = findViewById(R.id.ll_login) ;
 		mIvBack = findViewById(R.id.iv_back) ;
 		mEtPwd = findViewById(R.id.et_user_pwd) ;
@@ -69,6 +73,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		mTvForgetPwd.setOnClickListener(this);
 		mLLLogin.setOnClickListener(this);
 		mIvBack.setOnClickListener(this);
+		mLLBack.setVisibility(View.VISIBLE);
 	}
 
 	@Override

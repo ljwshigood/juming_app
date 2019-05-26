@@ -134,7 +134,23 @@ public class GridImageAdapter extends
                 }
             });
             viewHolder.ll_del.setVisibility(View.INVISIBLE);
+
+            viewHolder.mProgressBar.setVisibility(View.GONE);
+            viewHolder.mTv.setText("");
         } else {
+
+            int status = list.get(position).getStatus() ;
+            if(status == 0){ // 正在上传
+                viewHolder.mProgressBar.setVisibility(View.VISIBLE);
+                viewHolder.mTv.setText("");
+            }else if(status == 1){ // 上传成功
+                viewHolder.mProgressBar.setVisibility(View.GONE);
+                viewHolder.mTv.setText("");
+            }else if(status == 2){ // 上传失败
+                viewHolder.mProgressBar.setVisibility(View.GONE);
+                viewHolder.mTv.setText("上传失败");
+            }
+
             viewHolder.ll_del.setVisibility(View.VISIBLE);
             viewHolder.ll_del.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -206,18 +222,6 @@ public class GridImageAdapter extends
                         mItemClickListener.onItemClick(adapterPosition, v);
                     }
                 });
-            }
-
-            int status = list.get(position).getStatus() ;
-            if(status == 0){ // 正在上传
-                viewHolder.mProgressBar.setVisibility(View.VISIBLE);
-                viewHolder.mTv.setText("");
-            }else if(status == 1){ // 上传成功
-                viewHolder.mProgressBar.setVisibility(View.GONE);
-                viewHolder.mTv.setText("");
-            }else if(status == 2){ // 上传失败
-                viewHolder.mProgressBar.setVisibility(View.GONE);
-                viewHolder.mTv.setText("上传失败");
             }
 
         }

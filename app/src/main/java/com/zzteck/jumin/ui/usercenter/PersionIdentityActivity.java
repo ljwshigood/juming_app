@@ -20,6 +20,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.bean.MediaInfo;
@@ -106,11 +110,6 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	private MediaInfo mMediaFront ;
@@ -300,6 +299,7 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 		}.execute();
 	}
 
+	private List<LocalMedia> selectList = new java.util.ArrayList<>() ;
 
 	@Override
 	public void onClick(View v) {
@@ -308,7 +308,7 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 				finish();
 				break ;
 			case R.id.ll_front:
-				PictureSelector.create(ReleaseActivity.this)
+				PictureSelector.create(PersionIdentityActivity.this)
 						.openGallery(PictureMimeType.ofAll())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
 						.theme(R.style.picture_default_style)// 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
 						.maxSelectNum(4)// 最大图片选择数量
@@ -353,7 +353,7 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 
 				break ;
 			case R.id.ll_org :
-				PictureSelector.create(ReleaseActivity.this)
+				PictureSelector.create(PersionIdentityActivity.this)
 						.openGallery(PictureMimeType.ofAll())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
 						.theme(R.style.picture_default_style)// 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
 						.maxSelectNum(4)// 最大图片选择数量
@@ -418,6 +418,46 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 					}
 				}
 				break ;
+		}
+
+	}
+
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if(data == null){
+			return ;
+		}
+
+		if(requestCode == PictureConfig.CHOOSE_REQUEST && data != null){
+			// 图片选择结果回调
+			selectList = PictureSelector.obtainMultipleResult(data);
+
+			// 例如 LocalMedia 里面返回三种path
+			// 1.media.getPath(); 为原图path
+			// 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
+			// 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
+			// 如果裁剪并压缩了，已取压缩路径为准，因为是先裁剪后压缩的
+
+
+			/*if (selectList != null && selectList.size() > 0) {
+				mIvAddPicture.setVisibility(View.GONE);
+			} else {
+				mIvAddPicture.setVisibility(View.VISIBLE);
+			}*/
+
+
+			//	mHandler.sendEmptyMessage(2) ;
+
+			/*for (LocalMedia media : selectList) {
+
+				//mPhotoList = resultList ;
+
+
+				//Log.i("图片-----》", media.getPath());
+			}*/
 		}
 
 	}

@@ -20,6 +20,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.bean.MediaInfo;
@@ -62,6 +64,8 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 
 	private ImageView mIvOrg ;
 
+	private ImageView mIvAdd ;
+
 	private void initMediaDataOrg(MediaInfo info) {
 
 
@@ -74,14 +78,6 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 				.load(Constants.PIC_HOST+info.getFilePath())
 				.apply(options)
 				.into(mIvOrg);
-
-		/*Glide.with(mContext)
-				.load(info.getFilePath())
-				.placeholder(R.mipmap.default_pic)
-				.error(R.mipmap.default_pic)
-				.crossFade(300)
-				.diskCacheStrategy(DiskCacheStrategy.SOURCE)
-				.into(mIvOrg);*/
 
 
 	}
@@ -97,13 +93,6 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 				.load(Constants.PIC_HOST+info.getFilePath())
 				.apply(options)
 				.into(mIvFront);
-		/*Glide.with(mContext)
-				.load(info.getFilePath())
-				.placeholder(R.mipmap.default_pic)
-				.error(R.mipmap.default_pic)
-				.crossFade(300)
-				.diskCacheStrategy(DiskCacheStrategy.SOURCE)
-				.into(mIvFront);*/
 
 	}
 
@@ -153,11 +142,12 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 	private EditText mEtNumber ;
 
 	private void initView() {
-
+		mIvAdd = findViewById(R.id.iv_add) ;
 		mEtName = findViewById(R.id.et_name) ;
 		mEtNumber = findViewById(R.id.et_number) ;
 
 		mLLComplete = findViewById(R.id.ll_complete) ;
+		mIvAdd.setOnClickListener(this);
 		mIvFront = findViewById(R.id.iv_front) ;
 		mIvOrg = findViewById(R.id.iv_org) ;
 
@@ -202,10 +192,7 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 		return super.onOptionsItemSelected(item);
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-	}
+	private List<com.luck.picture.lib.entity.LocalMedia> selectList = new java.util.ArrayList<>() ;
 
 	@Override
 	public void onClick(View v) {
@@ -213,14 +200,14 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 			case R.id.ll_back :
 				finish();
 				break ;
-			case R.id.ll_front:
-				PictureSelector.create(ReleaseActivity.this)
-						.openGallery(PictureMimeType.ofAll())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
+			case R.id.iv_add:
+				com.luck.picture.lib.PictureSelector.create(OrgIdentityActivity.this)
+						.openGallery(com.luck.picture.lib.config.PictureMimeType.ofAll())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
 						.theme(R.style.picture_default_style)// 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
 						.maxSelectNum(4)// 最大图片选择数量
 						.minSelectNum(1)// 最小选择数量
 						.imageSpanCount(4)// 每行显示个数
-						.selectionMode(PictureConfig.MULTIPLE)// 多选 or 单选
+						.selectionMode(PictureConfig.SINGLE)// 多选 or 单选
 						.previewImage(true)// 是否可预览图片
 						.previewVideo(true)// 是否可预览视频
 						.enablePreviewAudio(true) // 是否可播放音频
@@ -255,17 +242,17 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 						//.videoQuality()// 视频录制质量 0 or 1
 						//.videoSecond()//显示多少秒以内的视频or音频也可适用
 						//.recordVideoSecond()//录制视频秒数 默认60s
-						.forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
+						.forResult(com.luck.picture.lib.config.PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
 
 				break ;
 			case R.id.ll_org :
-				PictureSelector.create(ReleaseActivity.this)
-						.openGallery(PictureMimeType.ofAll())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
+				com.luck.picture.lib.PictureSelector.create(OrgIdentityActivity.this)
+						.openGallery(com.luck.picture.lib.config.PictureMimeType.ofAll())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
 						.theme(R.style.picture_default_style)// 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
 						.maxSelectNum(4)// 最大图片选择数量
 						.minSelectNum(1)// 最小选择数量
 						.imageSpanCount(4)// 每行显示个数
-						.selectionMode(PictureConfig.MULTIPLE)// 多选 or 单选
+						.selectionMode(com.luck.picture.lib.config.PictureConfig.SINGLE)// 多选 or 单选
 						.previewImage(true)// 是否可预览图片
 						.previewVideo(true)// 是否可预览视频
 						.enablePreviewAudio(true) // 是否可播放音频
@@ -300,7 +287,7 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 						//.videoQuality()// 视频录制质量 0 or 1
 						//.videoSecond()//显示多少秒以内的视频or音频也可适用
 						//.recordVideoSecond()//录制视频秒数 默认60s
-						.forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
+						.forResult(com.luck.picture.lib.config.PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
 
 				break ;
 			case R.id.ll_complete :
@@ -401,6 +388,47 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 
 
 		}.execute();
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if(data == null){
+			return ;
+		}
+
+		if(requestCode == PictureConfig.CHOOSE_REQUEST && data != null){
+			// 图片选择结果回调
+			selectList = PictureSelector.obtainMultipleResult(data);
+
+
+
+			// 例如 LocalMedia 里面返回三种path
+			// 1.media.getPath(); 为原图path
+			// 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
+			// 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
+			// 如果裁剪并压缩了，已取压缩路径为准，因为是先裁剪后压缩的
+
+
+			/*if (selectList != null && selectList.size() > 0) {
+				mIvAddPicture.setVisibility(View.GONE);
+			} else {
+				mIvAddPicture.setVisibility(View.VISIBLE);
+			}*/
+
+
+		//	mHandler.sendEmptyMessage(2) ;
+
+			/*for (LocalMedia media : selectList) {
+
+				//mPhotoList = resultList ;
+
+
+				//Log.i("图片-----》", media.getPath());
+			}*/
+		}
+
 	}
 
 

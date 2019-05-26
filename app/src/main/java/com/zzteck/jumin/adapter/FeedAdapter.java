@@ -54,7 +54,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
         boolean isSelect = mFeedBackList.get(position).isSelect();
         if(isSelect){
-            holder.mLLFeedBack.setBackgroundResource(R.drawable.bg_red_rec_press);
+            holder.mLLFeedBack.setBackgroundResource(R.drawable.bg_red_rec_fd_press);
         }else{
             holder.mLLFeedBack.setBackgroundResource(R.drawable.bg_btn_rec_press);
         }

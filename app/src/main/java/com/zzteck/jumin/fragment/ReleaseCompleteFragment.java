@@ -92,10 +92,15 @@ public class ReleaseCompleteFragment extends Fragment implements OnClickListener
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						String message = new String(responseStr.getBytes()) ;
-						Gson gson = new Gson() ;
-						MyReleaseBean bean = gson.fromJson(message,MyReleaseBean.class) ;
-						mMyReleaseAdapter.notifyMyReleaseAdapter(bean.getData());
+						try {
+							String message = new String(responseStr.getBytes()) ;
+							Gson gson = new Gson() ;
+							MyReleaseBean bean = gson.fromJson(message,MyReleaseBean.class) ;
+							mMyReleaseAdapter.notifyMyReleaseAdapter(bean.getData());
+						}catch (Exception e){
+							e.printStackTrace();
+						}
+
 					}
 				});
 			}

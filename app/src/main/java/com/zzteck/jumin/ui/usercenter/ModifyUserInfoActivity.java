@@ -127,14 +127,6 @@ public class ModifyUserInfoActivity extends BaseActivity implements OnClickListe
                                             .apply(options)
                                             .into(mIvHeader);
 
-                                   /* Glide.with(mContext)
-                                            .load(bean.getData().getLogo())
-                                            .error(R.mipmap.default_pic)
-                                            .crossFade(300)
-                                            .transform(new GlideCircleTransform(mContext))
-                                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                                            .into(mIvHeader);*/
-
                                 }
                             });
 
@@ -225,6 +217,15 @@ public class ModifyUserInfoActivity extends BaseActivity implements OnClickListe
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) {
+            return;
+        }
+
+        if (requestCode == com.luck.picture.lib.config.PictureConfig.CHOOSE_REQUEST && data != null) {
+            selectList = PictureSelector.obtainMultipleResult(data);
+            mUploadHandler.sendEmptyMessage(0);
+
+        }
 	}
 
     private List<LocalMedia> selectList = new ArrayList<>();
@@ -243,7 +244,7 @@ public class ModifyUserInfoActivity extends BaseActivity implements OnClickListe
                         .maxSelectNum(4)// 最大图片选择数量
                         .minSelectNum(1)// 最小选择数量
                         .imageSpanCount(4)// 每行显示个数
-                        .selectionMode(PictureConfig.MULTIPLE)// 多选 or 单选
+                        .selectionMode(PictureConfig.SINGLE)// 多选 or 单选
                         .previewImage(true)// 是否可预览图片
                         .previewVideo(true)// 是否可预览视频
                         .enablePreviewAudio(true) // 是否可播放音频
@@ -289,11 +290,11 @@ public class ModifyUserInfoActivity extends BaseActivity implements OnClickListe
 
         public void handleMessage(Message msg) {
 
-            for(int i = 0 ;i < mPictureList.size() ;i++){
-                MediaInfo info = mPictureList.get(i) ;
-                if(info.getCompressFile() != null){
+            for(int i = 0 ;i < selectList.size() ;i++){
+                LocalMedia info = selectList.get(i) ;
+                if(info.getCompressPath() != null){
                     try {
-                        upload(new File(info.getCompressFile()), Constants.HOST) ;
+                        upload(new File(info.getCompressPath()), Constants.HOST) ;
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -321,7 +322,7 @@ public class ModifyUserInfoActivity extends BaseActivity implements OnClickListe
                         }
                     }
                 }
-                mUploadHandler.sendEmptyMessage(0);
+
             }
 
         }.start();
