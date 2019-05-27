@@ -10,24 +10,34 @@ import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.CategoryPagerAdapter;
 import com.zzteck.jumin.bean.AttentionInfo;
 import com.zzteck.jumin.bean.CategoryDetailHeader;
 import com.zzteck.jumin.bean.CatoryDetailInfo;
+import com.zzteck.jumin.bean.CheckInfo;
+import com.zzteck.jumin.bean.ExternalInfo;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.utils.Constants;
+import com.zzteck.jumin.utils.DeviceUtil;
 import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.ShareDialog;
 import com.zzteck.jumin.view.WeiXinDialog;
@@ -270,7 +280,259 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
 
     private TextView mTvTipInfo ;
 
+    private LinearLayout mLLPro ;
+
+
+
+    private void daymicLayout(final CatoryDetailInfo info){
+
+       /* if(info == null || info.getData() == null){
+            return ;
+        }
+
+        mLLPro.removeAllViews();
+        mLLPro.setOrientation(LinearLayout.VERTICAL);
+
+        for(int i = 0 ; i< info.getData().getExtra().size() ;i++){
+
+
+            LinearLayout linearLayoutLeft  = new LinearLayout(mContext) ;
+            linearLayoutLeft.setLayoutParams(new ViewGroup.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT,LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
+            linearLayoutLeft.setOrientation(LinearLayout.HORIZONTAL);
+            linearLayoutLeft.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.7f));
+
+            TextView tvTitle = new TextView(this);
+            tvTitle.setGravity(Gravity.CENTER);
+            tvTitle.setTextSize(16f);
+            tvTitle.setText(info.getData().get(i).getTitle());
+            linearLayoutLeft.addView(tvTitle);
+
+            LinearLayout linearLayoutRight  = new LinearLayout(mContext) ;
+            linearLayoutRight.setLayoutParams(new ViewGroup.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT,LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
+            linearLayoutRight.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.3f));
+
+            if(info.getData().get(i).getType().equals("radio")){
+
+                linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
+                RadioGroup radioGroup = new RadioGroup(this);
+                radioGroup.setLayoutParams(new RadioGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                radioGroup.setOrientation(LinearLayout.HORIZONTAL);
+
+                final int positon  = i ;
+
+                String choices = info.getData().get(i).getExtra().getChoices();
+                final String[] arrayChoices = choices.split("\\r\\n") ;
+
+                for(int j = 0 ; j< arrayChoices.length ; j++){
+                    final RadioButton radioButton = new RadioButton(this) ;
+                    radioButton.setId(mRadioButtinId++) ;
+                    int index = arrayChoices[j].indexOf("=") ;
+                    radioButton.setText(arrayChoices[j].substring(index+1,arrayChoices[j].length())) ;
+                    radioButton.setLayoutParams(new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT,RadioGroup.LayoutParams.WRAP_CONTENT)) ;
+                    radioGroup.addView(radioButton) ;
+                    final String[] selectText = arrayChoices[j].split("=") ;
+                    radioButton.setTag(selectText[0]);
+                }
+
+                radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        int id = group.getCheckedRadioButtonId();
+                        RadioButton choise = findViewById(id);
+                        String selectText = (String) choise.getTag();
+                        mHashExtra.put(info.getData().get(positon).getIdentifier(),selectText) ;
+                    }
+                });
+
+                linearLayoutRight.addView(radioGroup);
+
+
+            }else if(info.getData().get(i).getType().equals("number")){
+
+                linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
+                EditText etPrice = new EditText(this);
+                etPrice.setHint("请输入"+info.getData().get(i).getTitle());
+                etPrice.setBackground(null);
+                etPrice.setLayoutParams(new LinearLayout.LayoutParams(200,ViewGroup.LayoutParams.WRAP_CONTENT,0.8f));
+
+
+                mHashMapViews.put(info.getData().get(i).getIdentifier(),etPrice) ;
+
+                TextView tvUnit = new TextView(this);
+                tvUnit.setText(info.getData().get(i).getExtra().getUnits());
+                tvUnit.setGravity(Gravity.CENTER_VERTICAL|Gravity.RIGHT);
+                tvUnit.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
+
+                linearLayoutRight.addView(etPrice);
+                linearLayoutRight.addView(tvUnit);
+
+
+            }else if(info.getData().get(i).getType().equals("select")){
+
+                linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
+                final MaterialSpinner spinner = new MaterialSpinner(mContext) ;
+                spinner.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                final String[] attray = info.getData().get(i).getExtra().getChoices().split("\\r\\n") ;
+
+                List<String> spinnerList = new ArrayList<>() ;
+
+                for(int j = 0 ;j < attray.length ;j++){
+                    int index = attray[j].indexOf("=") ;
+                    String temp = attray[j].substring(index+1,attray[j].length());
+                    spinnerList.add(temp);
+                }
+
+                spinner.setItems(spinnerList);
+                spinner.setTag(info.getData().get(i).getIdentifier());
+                spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+                    @Override
+                    public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                        String temp = attray[position] ;
+                        String[] splites = temp.split("=") ;
+                        String identifier = (String) spinner.getTag();
+                        mHashExtra.put(identifier,splites[0]) ;
+
+                        Log.e("liujw","########setOnItemSelectedListener mHashExtra : "+mHashExtra.toString()) ;
+                    }
+                });
+
+                linearLayoutRight.addView(spinner);
+            }else if(info.getData().get(i).getType().equals("text")){
+                linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
+                EditText tvText = new EditText(this);
+                tvText.setHint("请输入"+info.getData().get(i).getTitle());
+                tvText.setSingleLine();
+                tvText.setBackground(null);
+                tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
+
+                mHashMapViews.put(info.getData().get(i).getIdentifier(),tvText) ;
+
+                linearLayoutRight.addView(tvText) ;
+
+
+            }else if(info.getData().get(i).getType().equals("textarea")){
+                linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
+                EditText tvText = new EditText(this);
+                tvText.setHint("请输入"+info.getData().get(i).getTitle());
+                tvText.setBackground(null);
+                tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
+
+                mHashMapViews.put(info.getData().get(i).getIdentifier(),tvText) ;
+
+                linearLayoutRight.addView(tvText) ;
+
+
+
+            }else if(info.getData().get(i).getType().equals("checkbox")){
+
+
+                linearLayoutRight.setOrientation(LinearLayout.VERTICAL);
+
+                String choices = info.getData().get(i).getExtra().getChoices();
+                final String[] arrayChoices = choices.split("\\r\\n") ;
+
+                TextView tvText = new TextView(this);
+                tvText.setHint("请选择"+info.getData().get(i).getTitle());
+                tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
+
+                linearLayoutRight.addView(tvText) ;
+                final String title = info.getData().get(i).getTitle() ;
+                tvText.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        List<CheckInfo> list = new ArrayList<>() ;
+
+                        for(int k = 0 ;k < arrayChoices.length ;k++){
+                            CheckInfo bean = new CheckInfo() ;
+                            String[] text = arrayChoices[k].split("=") ;
+                            bean.setInfo(text[1]);
+                            bean.setId(text[0]) ;
+                            list.add(bean) ;
+                        }
+
+                        initCheckPopupWindow(list,title,false) ;
+                    }
+                });
+
+                *//*linearLayoutRight.setOrientation(LinearLayout.VERTICAL);
+
+                 *//**//*	LinearLayout llContainer = new LinearLayout(this);
+				llContainer.setLayoutParams(new RadioGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+				llContainer.setOrientation(LinearLayout.VERTICAL);
+
+				String choices = info.getData().get(i).getExtra().getChoices();
+				String[] arrayChoices = choices.split("\\r\\n") ;
+
+				LinearLayout groupLl = null ;
+
+				for(int j = 0 ; j< arrayChoices.length ; j++){
+
+					final CheckBox checkButton = new CheckBox(this) ;
+					int index = arrayChoices[j].indexOf("=") ;
+					checkButton.setText(arrayChoices[j].substring(index+1,arrayChoices[j].length()));
+					checkButton.setLayoutParams(new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT,RadioGroup.LayoutParams.WRAP_CONTENT)) ;
+
+					checkButton.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+
+						}
+					});
+
+					if(j % 3 == 0){
+						groupLl = new LinearLayout(this);
+						groupLl.setLayoutParams(new RadioGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+						groupLl.setOrientation(LinearLayout.HORIZONTAL);
+						llContainer.addView(groupLl);
+					}
+					groupLl.addView(checkButton);
+				}*//**//*
+
+				linearLayoutRight.addView(llContainer);*//*
+
+            }else if(info.getData().get(i).getType().equals("link")){
+
+                linearLayoutRight.setOrientation(LinearLayout.VERTICAL);
+
+                TextView tvText = new TextView(this);
+                tvText.setHint("请选择"+info.getData().get(i).getTitle());
+                tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
+
+                linearLayoutRight.addView(tvText) ;
+
+                final String link = info.getData().get(i).getExtra().getParentid()  ;
+                final String title = info.getData().get(i).getTitle() ;
+                tvText.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        initPopupWindow(title,link,false) ;
+                    }
+                });
+
+            }
+
+            LinearLayout ll = new LinearLayout(this);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, DeviceUtil.dip2px(mContext,50)) ;
+
+            ll.setLayoutParams(params);
+            ll.setOrientation(LinearLayout.HORIZONTAL);
+
+            ll.addView(linearLayoutLeft);
+            ll.addView(linearLayoutRight);
+
+            ll.setGravity(Gravity.CENTER_VERTICAL);
+
+            mLLDaymic.addView(ll);
+        }*/
+    }
+
+
     private void initView() {
+
+        mLLPro = findViewById(R.id.ll_add_pro) ;
         mTvTipInfo = findViewById(R.id.tv_tip_contnet) ;
         mTvBaseInfo = findViewById(R.id.tv_base_info) ;
         mTvPrice = findViewById(R.id.tv_price) ;
@@ -412,6 +674,13 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
 
     }
 
+
+    /*
+    *
+        /m/template/images/qq.png  这是QQ的图标
+        /m/template/images/01.png  这是电话的图标
+
+    * */
     private String mId;
 
     private void initData() {
@@ -419,12 +688,21 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
     }
 
     private void setDataView(CatoryDetailInfo bean) {
+
         mTvContentTitle.setText(bean.getData().getTitle());
         mTvPlace.setText(bean.getData().getAreaname());
         mTvDes.setText(Html.fromHtml(bean.getData().getContent()));
+
+        String extra = "" ;
+
+        for(int i = 0 ;i < bean.getData().getExtra().size() ;i++){
+            extra += bean.getData().getExtra().get(i).getTitle()+" : "+bean.getData().getExtra().get(i).getValue()+"\n\n";
+        }
+
         mTvBaseInfo.setText("联系人 ："+bean.getData().getContact_who()+"\n\n"
                             +"QQ ："+bean.getData().getQq()+"\n\n"
-                            +"微信 ："+bean.getData().getWeixin()+"\n\n");
+                            +"微信 ："+bean.getData().getWeixin()+"\n\n"
+                            +extra);
         mTvTipInfo.setText("1: 聚民网不承担任何交易损\n\n2 :本页信息由用户和第三方平台提供\n\n3: 联系我时，说是在聚民网看到的");
     }
 
@@ -436,7 +714,8 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
         setContentView(R.layout.activity_category_detail);
         initView();
         initData();
-        mId = "20719" ;
+        //mId = "20719" ;
+        mId = "21349" ;
         getCatoryDetail(mId);
 
         /*mShareDialog = new ShareDialog(mContext);

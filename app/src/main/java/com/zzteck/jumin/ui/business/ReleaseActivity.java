@@ -1074,7 +1074,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				for(int i = 0 ;i < mPictureList.size() ;i++){
 					MediaInfo info = mPictureList.get(i) ;
 					try {
-						uploadImage(new File(info.getCompressFile()),Constants.HOST);
+						uploadImage(new File(info.getFilePath()),Constants.HOST);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -1293,19 +1293,25 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 					@Override
 					public void onResponse(Call call, Response response) throws IOException {
 						final String responseStr = response.body().string();
-						Log.e("liujw","####################responseStr upload File : "+responseStr);
-						Gson gson = new Gson() ;
-						ImageInfo bean = gson.fromJson(responseStr,ImageInfo.class) ;
-						mImageUrl += bean.getData().getImg() ;
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								Log.e("liujw","####################responseStr upload File : "+responseStr);
+								Gson gson = new Gson() ;
+								ImageInfo bean = gson.fromJson(responseStr,ImageInfo.class) ;
+								mImageUrl += bean.getData().getImg() ;
 
-						for(int i = 0 ;i < selectList.size() ;i++){
-							if(selectList.get(i).getCompressPath().equals(file.getAbsolutePath())){
-                                selectList.get(i).setStatus(1);
+								for(int i = 0 ;i < selectList.size() ;i++){
+									if(selectList.get(i).getCompressPath().equals(file.getAbsolutePath())){
+										selectList.get(i).setStatus(1);
+									}
+								}
+
+								mGridAdapter.setList(selectList);
+								mGridAdapter.notifyDataSetChanged() ;
 							}
-						}
+						});
 
-						mGridAdapter.setList(selectList);
-						mGridAdapter.notifyDataSetChanged() ;
 					}
 				});
 				return "";

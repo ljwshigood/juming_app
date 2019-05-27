@@ -14,7 +14,7 @@ public class CatoryDetailInfo implements Serializable {
 
     /**
      * ret : 200
-     * data : {"id":"20719","title":"高考生学车推荐","catid":"100","cityid":"4","areaid":"63","streetid":"1037","begintime":"1558246798","activetime":"0","endtime":"0","content":"南坪学车我推荐国企渝运驾校，学车有保障<br />\r\n自主预约学车，方便快捷<br />\r\n国有驾校，信誉保证<br />\r\n高标准培训服务<br />\r\n透明的收费<br />\r\n一对一教学<br />\r\n全程一对一专属学车助理服务","userid":"18166450422","contact_who":"渝运驾校","qq":"18166450422","weixin":null,"email":"","tel":"18166450422","updatetime":"0","hit":"0","ismember":"1","manage_pwd":"","ip":"14.111.51.147","ip2area":"重庆市电信","info_level":"1","img_path":"/attachment/information/201905/pre_1558246798ooxyp.jpg","img_count":"6","upgrade_type":"1","upgrade_time":"0","upgrade_type_list":"1","upgrade_time_list":"0","ifred":"0","ifbold":"0","certify":"0","dir_typename":"jiaxiao","upgrade_type_index":"0","upgrade_time_index":"0","upgrade_type_allindex":null,"upgrade_time_allindex":null,"mappoint":"","latitude":"0.00000000000000000","longitude":"0.00000000000000000","web_address":"南坪万达广场对面渝运驾校","catname":"驾校服务","gid":"9","video":"/attachment/videos/201905/1558246798764.mp4","upgrade_type_index_video":"0","upgrade_time_index_video":"0","areaname":"南岸","streetname":"南坪","parentid":"9","template_info":"info","usecoin":"0","modid":"1","usertoid":"18166450422","image":[{"prepath":"/attachment/information/201905/pre_1558246798ooxyp.jpg","path":"/attachment/information/201905/1558246798ooxyp.jpg"},{"prepath":"/attachment/information/201905/pre_1558246798kzpgl.jpg","path":"/attachment/information/201905/1558246798kzpgl.jpg"},{"prepath":"/attachment/information/201905/pre_1558246798mt32d.jpg","path":"/attachment/information/201905/1558246798mt32d.jpg"},{"prepath":"/attachment/information/201905/pre_1558246798c0kw5.jpg","path":"/attachment/information/201905/1558246798c0kw5.jpg"},{"prepath":"/attachment/information/201905/pre_1558246798npn8k.jpg","path":"/attachment/information/201905/1558246798npn8k.jpg"}]}
+     * data : {"id":"21349","title":"哈多利球体博美出售 博美价格 北京京博犬舍","catid":"95","cityid":"1","areaid":"4","streetid":"166","begintime":"1558836275","activetime":"0","endtime":"0","content":"1．可以与您签订活体销售协议来保证购买宝宝的健康和纯种。&nbsp;<br />\r\n2．出售的每只狗宝宝都有自己的健康证书。&nbsp;<br />\r\n3．我们会随狗宝宝赠送爱心卡片内容包括：宝宝生日、疫苗注射情况、幼犬喂养注意事项。&nbsp;<br />\r\n4．24小时开通售后服务热线以解答您饲养中的不懂的小难题。&nbsp;<br />\r\n5．幼犬售出十日内发生任何疫苗范围内的传染性疾病为您保更换，一月内有任何疾病免费治疗，终生享受我们的医疗服务，保证宝宝在您身边健康快乐的成长。&nbsp;<br />\r\n6．可以提供看狗和送狗班车以解决您的交通不便，只需您一个电话，宝宝就会送到您家。&nbsp;<br />\r\n7．会随您所购买的狗宝宝赠送一册切实可行，简单易懂的饲养训练手册，帮您解决养幼犬期间的问题及麻烦。&nbsp;<br />\r\n8．凡是在我们这里购买的宝宝，都会赠送一袋宝宝平时用的狗粮，以保证换新的环境的也可以吃习惯。&nbsp;<br />\r\n9．凭购买协议，在我们的店里购买狗粮和狗的一切用品包括美容，终生享受8折优惠\u201c我们对售后的宝宝做终生的售后服务\u201c包括宝宝的身份证\u2018赛级证书\u2019血统证书\u201d。&nbsp;<br />\r\n相信我们，我们不会让您失望，专业的养殖和优良的品种及完善的售后服务，会让您毫无后顾之忧，务必做到让您买得放心，养得开心。","userid":"13910749461","contact_who":"陈先生","qq":"1919231932","weixin":null,"email":"","tel":"13910749461","updatetime":"0","hit":"2","ismember":"1","manage_pwd":"","ip":"106.118.221.121","ip2area":"河北省唐山市电信","info_level":"1","img_path":"/attachment/information/201905/pre_1558836275goaga.jpg","img_count":"7","upgrade_type":"1","upgrade_time":"0","upgrade_type_list":"1","upgrade_time_list":"0","ifred":"0","ifbold":"0","certify":"0","dir_typename":"dog","upgrade_type_index":"0","upgrade_time_index":"0","upgrade_type_allindex":null,"upgrade_time_allindex":null,"mappoint":"","latitude":"0.00000000000000000","longitude":"0.00000000000000000","web_address":"北京","catname":"狗狗","gid":"8","video":"","upgrade_type_index_video":"0","upgrade_time_index_video":"0","areaname":"西城","streetname":"西单","parentid":"8","template_info":"info_dog","usecoin":"0","modid":"20","usertoid":"13910749461","image":[{"prepath":"/attachment/information/201905/pre_1558836275goaga.jpg","path":"/attachment/information/201905/1558836275goaga.jpg"},{"prepath":"/attachment/information/201905/pre_1558836275hnsvt.jpg","path":"/attachment/information/201905/1558836275hnsvt.jpg"},{"prepath":"/attachment/information/201905/pre_1558836275nguym.jpg","path":"/attachment/information/201905/1558836275nguym.jpg"},{"prepath":"/attachment/information/201905/pre_1558836275e7a93.jpg","path":"/attachment/information/201905/1558836275e7a93.jpg"},{"prepath":"/attachment/information/201905/pre_1558836275388et.jpg","path":"/attachment/information/201905/1558836275388et.jpg"},{"prepath":"/attachment/information/201905/pre_1558836275rguwh.jpg","path":"/attachment/information/201905/1558836275rguwh.jpg"}],"extra":[{"title":"狗狗品种","value":"37785"},{"title":"体形","value":"小型犬"},{"title":"价格","value":"1600元/只"},{"title":"发布人身份","value":"个人"},{"title":"疫苗情况","value":"3针"},{"title":"年龄","value":"3个月"},{"title":"犬只血统","value":"纯种"},{"title":"驱虫情况","value":"已驱虫"},{"title":"待售只数","value":"23只"},{"title":"供求","value":"狗狗出售"},{"title":"狗狗品种名称","value":"博美"},{"title":"功能","value":"玩具犬"},{"title":"特性","value":"友善"},{"title":"公母","value":"公母都有"}]}
      * msg :
      */
 
@@ -48,37 +48,40 @@ public class CatoryDetailInfo implements Serializable {
 
     public static class DataBean {
         /**
-         * id : 20719
-         * title : 高考生学车推荐
-         * catid : 100
-         * cityid : 4
-         * areaid : 63
-         * streetid : 1037
-         * begintime : 1558246798
+         * id : 21349
+         * title : 哈多利球体博美出售 博美价格 北京京博犬舍
+         * catid : 95
+         * cityid : 1
+         * areaid : 4
+         * streetid : 166
+         * begintime : 1558836275
          * activetime : 0
          * endtime : 0
-         * content : 南坪学车我推荐国企渝运驾校，学车有保障<br />
-         自主预约学车，方便快捷<br />
-         国有驾校，信誉保证<br />
-         高标准培训服务<br />
-         透明的收费<br />
-         一对一教学<br />
-         全程一对一专属学车助理服务
-         * userid : 18166450422
-         * contact_who : 渝运驾校
-         * qq : 18166450422
+         * content : 1．可以与您签订活体销售协议来保证购买宝宝的健康和纯种。&nbsp;<br />
+         2．出售的每只狗宝宝都有自己的健康证书。&nbsp;<br />
+         3．我们会随狗宝宝赠送爱心卡片内容包括：宝宝生日、疫苗注射情况、幼犬喂养注意事项。&nbsp;<br />
+         4．24小时开通售后服务热线以解答您饲养中的不懂的小难题。&nbsp;<br />
+         5．幼犬售出十日内发生任何疫苗范围内的传染性疾病为您保更换，一月内有任何疾病免费治疗，终生享受我们的医疗服务，保证宝宝在您身边健康快乐的成长。&nbsp;<br />
+         6．可以提供看狗和送狗班车以解决您的交通不便，只需您一个电话，宝宝就会送到您家。&nbsp;<br />
+         7．会随您所购买的狗宝宝赠送一册切实可行，简单易懂的饲养训练手册，帮您解决养幼犬期间的问题及麻烦。&nbsp;<br />
+         8．凡是在我们这里购买的宝宝，都会赠送一袋宝宝平时用的狗粮，以保证换新的环境的也可以吃习惯。&nbsp;<br />
+         9．凭购买协议，在我们的店里购买狗粮和狗的一切用品包括美容，终生享受8折优惠“我们对售后的宝宝做终生的售后服务“包括宝宝的身份证‘赛级证书’血统证书”。&nbsp;<br />
+         相信我们，我们不会让您失望，专业的养殖和优良的品种及完善的售后服务，会让您毫无后顾之忧，务必做到让您买得放心，养得开心。
+         * userid : 13910749461
+         * contact_who : 陈先生
+         * qq : 1919231932
          * weixin : null
          * email :
-         * tel : 18166450422
+         * tel : 13910749461
          * updatetime : 0
-         * hit : 0
+         * hit : 2
          * ismember : 1
          * manage_pwd :
-         * ip : 14.111.51.147
-         * ip2area : 重庆市电信
+         * ip : 106.118.221.121
+         * ip2area : 河北省唐山市电信
          * info_level : 1
-         * img_path : /attachment/information/201905/pre_1558246798ooxyp.jpg
-         * img_count : 6
+         * img_path : /attachment/information/201905/pre_1558836275goaga.jpg
+         * img_count : 7
          * upgrade_type : 1
          * upgrade_time : 0
          * upgrade_type_list : 1
@@ -86,7 +89,7 @@ public class CatoryDetailInfo implements Serializable {
          * ifred : 0
          * ifbold : 0
          * certify : 0
-         * dir_typename : jiaxiao
+         * dir_typename : dog
          * upgrade_type_index : 0
          * upgrade_time_index : 0
          * upgrade_type_allindex : null
@@ -94,20 +97,21 @@ public class CatoryDetailInfo implements Serializable {
          * mappoint :
          * latitude : 0.00000000000000000
          * longitude : 0.00000000000000000
-         * web_address : 南坪万达广场对面渝运驾校
-         * catname : 驾校服务
-         * gid : 9
-         * video : /attachment/videos/201905/1558246798764.mp4
+         * web_address : 北京
+         * catname : 狗狗
+         * gid : 8
+         * video :
          * upgrade_type_index_video : 0
          * upgrade_time_index_video : 0
-         * areaname : 南岸
-         * streetname : 南坪
-         * parentid : 9
-         * template_info : info
+         * areaname : 西城
+         * streetname : 西单
+         * parentid : 8
+         * template_info : info_dog
          * usecoin : 0
-         * modid : 1
-         * usertoid : 18166450422
-         * image : [{"prepath":"/attachment/information/201905/pre_1558246798ooxyp.jpg","path":"/attachment/information/201905/1558246798ooxyp.jpg"},{"prepath":"/attachment/information/201905/pre_1558246798kzpgl.jpg","path":"/attachment/information/201905/1558246798kzpgl.jpg"},{"prepath":"/attachment/information/201905/pre_1558246798mt32d.jpg","path":"/attachment/information/201905/1558246798mt32d.jpg"},{"prepath":"/attachment/information/201905/pre_1558246798c0kw5.jpg","path":"/attachment/information/201905/1558246798c0kw5.jpg"},{"prepath":"/attachment/information/201905/pre_1558246798npn8k.jpg","path":"/attachment/information/201905/1558246798npn8k.jpg"}]
+         * modid : 20
+         * usertoid : 13910749461
+         * image : [{"prepath":"/attachment/information/201905/pre_1558836275goaga.jpg","path":"/attachment/information/201905/1558836275goaga.jpg"},{"prepath":"/attachment/information/201905/pre_1558836275hnsvt.jpg","path":"/attachment/information/201905/1558836275hnsvt.jpg"},{"prepath":"/attachment/information/201905/pre_1558836275nguym.jpg","path":"/attachment/information/201905/1558836275nguym.jpg"},{"prepath":"/attachment/information/201905/pre_1558836275e7a93.jpg","path":"/attachment/information/201905/1558836275e7a93.jpg"},{"prepath":"/attachment/information/201905/pre_1558836275388et.jpg","path":"/attachment/information/201905/1558836275388et.jpg"},{"prepath":"/attachment/information/201905/pre_1558836275rguwh.jpg","path":"/attachment/information/201905/1558836275rguwh.jpg"}]
+         * extra : [{"title":"狗狗品种","value":"37785"},{"title":"体形","value":"小型犬"},{"title":"价格","value":"1600元/只"},{"title":"发布人身份","value":"个人"},{"title":"疫苗情况","value":"3针"},{"title":"年龄","value":"3个月"},{"title":"犬只血统","value":"纯种"},{"title":"驱虫情况","value":"已驱虫"},{"title":"待售只数","value":"23只"},{"title":"供求","value":"狗狗出售"},{"title":"狗狗品种名称","value":"博美"},{"title":"功能","value":"玩具犬"},{"title":"特性","value":"友善"},{"title":"公母","value":"公母都有"}]
          */
 
         private String id;
@@ -164,6 +168,7 @@ public class CatoryDetailInfo implements Serializable {
         private String modid;
         private String usertoid;
         private List<ImageBean> image;
+        private List<ExtraBean> extra;
 
         public String getId() {
             return id;
@@ -597,10 +602,18 @@ public class CatoryDetailInfo implements Serializable {
             this.image = image;
         }
 
+        public List<ExtraBean> getExtra() {
+            return extra;
+        }
+
+        public void setExtra(List<ExtraBean> extra) {
+            this.extra = extra;
+        }
+
         public static class ImageBean {
             /**
-             * prepath : /attachment/information/201905/pre_1558246798ooxyp.jpg
-             * path : /attachment/information/201905/1558246798ooxyp.jpg
+             * prepath : /attachment/information/201905/pre_1558836275goaga.jpg
+             * path : /attachment/information/201905/1558836275goaga.jpg
              */
 
             private String prepath;
@@ -620,6 +633,32 @@ public class CatoryDetailInfo implements Serializable {
 
             public void setPath(String path) {
                 this.path = path;
+            }
+        }
+
+        public static class ExtraBean {
+            /**
+             * title : 狗狗品种
+             * value : 37785
+             */
+
+            private String title;
+            private String value;
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public String getValue() {
+                return value;
+            }
+
+            public void setValue(String value) {
+                this.value = value;
             }
         }
     }
