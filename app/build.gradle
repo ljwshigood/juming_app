@@ -49,7 +49,7 @@ android {
         applicationId "com.zzteck.jumin"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 10001
+        versionCode 1000
         versionName "1.0"
 
 

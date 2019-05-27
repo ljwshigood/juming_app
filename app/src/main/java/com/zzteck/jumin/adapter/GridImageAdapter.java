@@ -205,7 +205,6 @@ public class GridImageAdapter extends
                 viewHolder.mImg.setImageResource(R.drawable.audio_placeholder);
             } else {
                 RequestOptions options = new RequestOptions()
-                        .centerCrop()
                         .placeholder(R.color.dark)
                         .diskCacheStrategy(DiskCacheStrategy.ALL);
                 Glide.with(viewHolder.itemView.getContext())
