@@ -142,7 +142,6 @@ public class MainCategoryFragment extends Fragment implements View.OnClickListen
         fragment.setArguments(bundle);
 
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.framelayout,fragment).commit();
-
         mHomeCategory = new HomeCategoryAdapter(getActivity(),mTitlesList) ;
         mHomeCategory.setHasStableIds(true);
         mRecyleView.setAdapter(mHomeCategory);

@@ -47,6 +47,10 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
     public HomeCategoryAdapter(Context context, List<MainCategoryBean.DataBean> list) {
         this.mContext = context;
         this.mFavoriteList = list;
+
+        if(mFavoriteList != null && mFavoriteList.size() > 0){
+            mFavoriteList.get(0).setSelect(true);
+        }
     }
 
     @Override
@@ -77,8 +81,10 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
 
         if(mFavoriteList.get(position).isSelect()){
             holder.mLLCate.setBackgroundResource(R.mipmap.bg_cate);
+            holder.name.setTextColor(mContext.getResources().getColor(R.color.mainRed));
         }else{
             holder.mLLCate.setBackgroundResource(R.mipmap.bg_cate_nomal);
+            holder.name.setTextColor(mContext.getResources().getColor(R.color.dark_gray));
         }
 
         RequestOptions options = new RequestOptions()

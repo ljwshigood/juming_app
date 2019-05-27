@@ -1047,17 +1047,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 
-			if (msg.what == 0) {
-				for(int i = 0 ;i < mPictureList.size() ;i++){
-					MediaInfo info = mPictureList.get(i) ;
-					try {
-						uploadImage(new File(info.getCompressFile()),Constants.HOST);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-
-			} else {
+			if(msg.what == 2) {
 
 				mGridAdapter.setList(selectList);
 				mGridAdapter.notifyDataSetChanged();
@@ -1067,7 +1057,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				for (int i = 0; i < selectList.size(); i++) {
 					MediaInfo mMediaOrg = new MediaInfo();
 					mMediaOrg.setType(0);
-					mMediaOrg.setFilePath(selectList.get(0).getCompressPath());
+					mMediaOrg.setFilePath(selectList.get(i).getCompressPath());
 					mPictureList.add(mMediaOrg);
 				}
 
@@ -1245,9 +1235,11 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 					extra =  gson.toJson(mHashExtra);
 				}
 
+				String imgs = mImageUrl.substring(0,mImageUrl.lastIndexOf(","));
+
 				AppInfoAdd(mSubId,mEtTitle.getText().toString().trim(),mAreaId,mStreetId,
 						mEtDes.getText().toString().trim(),"","","",mTvSelectQone.getText().toString().trim(),
-						extra,mVideUrl,mImageUrl,mEtContact.getText().toString().trim(),mEtMobile.getText().toString().trim(),
+						extra,mVideUrl,imgs,mEtContact.getText().toString().trim(),mEtMobile.getText().toString().trim(),
 						mEtQQ.getText().toString().trim(),mEtWeiXin.getText().toString().trim()) ;
 
 				break ;
@@ -1299,7 +1291,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 								Log.e("liujw","####################responseStr upload File : "+responseStr);
 								Gson gson = new Gson() ;
 								ImageInfo bean = gson.fromJson(responseStr,ImageInfo.class) ;
-								mImageUrl += bean.getData().getImg() ;
+								mImageUrl += bean.getData().getImg() +",";
 
 								for(int i = 0 ;i < selectList.size() ;i++){
 									if(selectList.get(i).getCompressPath().equals(file.getAbsolutePath())){

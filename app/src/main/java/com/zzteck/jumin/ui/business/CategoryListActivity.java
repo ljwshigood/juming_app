@@ -2,6 +2,7 @@ package com.zzteck.jumin.ui.business;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.util.Util;
 import com.ccj.poptabview.FilterConfig;
 import com.ccj.poptabview.PopTabView;
 import com.ccj.poptabview.base.BaseFilterTabBean;
@@ -22,6 +24,7 @@ import com.ccj.poptabview.bean.FilterGroup;
 import com.ccj.poptabview.listener.OnPopTabSetListener;
 import com.google.gson.Gson;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
+import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.RecommandAdapter;
 import com.zzteck.jumin.app.App;
@@ -188,10 +191,26 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 
     }
 
+
+    public static int dip2px(Context context, float dipValue) {
+
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f); //+0.5是为了向上取整
+    }
+
+    public static int px2dip(Context context, float pxValue){
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int)(pxValue / scale + 0.5f);//+0.5是为了向上取整
+    }
+
     private void initData(HomeInfo info) {
 
-        mGvCommand.setLayoutManager(new LinearLayoutManager(this));
-        mGvCommand.addItemDecoration(new NormalDecoration(ContextCompat.getColor(this, R.color.mainGrayF8), (int) this.getResources().getDimension(R.dimen.one)));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        mGvCommand.setLayoutManager(layoutManager);
+        DividerDecoration itemDecoration = new DividerDecoration(Color.GRAY, dip2px(this,0.5f), 0,0);
+        itemDecoration.setDrawLastItem(false);
+        mGvCommand.addItemDecoration(itemDecoration);
+
         mCommandAdapter = new RecommandAdapter(this, info.getData());
         mGvCommand.setAdapter(mCommandAdapter);
 

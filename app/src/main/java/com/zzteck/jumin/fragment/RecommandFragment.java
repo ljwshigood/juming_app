@@ -2,6 +2,7 @@ package com.zzteck.jumin.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -16,11 +17,13 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
+import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.RecommandAdapter;
 import com.zzteck.jumin.bean.HomeInfo;
 import com.zzteck.jumin.ui.business.CategoryDetailActivity;
 import com.zzteck.jumin.utils.Constants;
+import com.zzteck.jumin.utils.DeviceUtil;
 import com.zzteck.jumin.utils.SharePerfenceUtil;
 import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.NormalDecoration;
@@ -67,10 +70,25 @@ public class RecommandFragment extends Fragment {
         public void transferScrollListener(boolean flag) ;
     }
 
+
+    public static int dip2px(Context context, float dipValue) {
+
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f); //+0.5是为了向上取整
+    }
+
+    public static int px2dip(Context context, float pxValue){        
+        final float scale = context.getResources().getDisplayMetrics().density;        
+        return (int)(pxValue / scale + 0.5f);//+0.5是为了向上取整   
+    }
+
     private void initData(HomeInfo info) {
 
-        mRVCategory.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRVCategory.addItemDecoration(new NormalDecoration(ContextCompat.getColor(getActivity(), R.color.mainGrayF8), (int) getActivity().getResources().getDimension(R.dimen.one)));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        mRVCategory.setLayoutManager(layoutManager);
+        DividerDecoration itemDecoration = new DividerDecoration(Color.GRAY,dip2px(getActivity(),0.5f), 0,0);
+        itemDecoration.setDrawLastItem(false);
+        mRVCategory.addItemDecoration(itemDecoration);
 
         if(mITransferScrollListener != null){
             if(info == null || info.getData() == null || info.getData().size() == 0){

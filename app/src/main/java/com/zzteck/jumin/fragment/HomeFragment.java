@@ -521,7 +521,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                             for (int i = 0; i < bean.getData().size(); i++) {
 
                                 RequestOptions options = new RequestOptions()
-                                        .centerCrop()
                                         .placeholder(R.mipmap.default_pic)
                                         .transform(new GlideCircleTransform(getActivity()))
                                         .diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -572,21 +571,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                             for (int i = 0; i < bean.getData().size(); i++) {
 
                                 RequestOptions options = new RequestOptions()
-                                        .centerCrop()
                                         .placeholder(R.mipmap.default_pic)
                                         .diskCacheStrategy(DiskCacheStrategy.ALL);
                                 Glide.with(mContext)
                                         .load(Constants.PIC_HOST+bean.getData().get(i).getIcon())
                                         .apply(options)
                                         .into(mImagePicLogo.get(i));
-
-                               /* Glide.with(getActivity())
-                                        .load(bean.getData().get(i).getIcon())
-                                        .placeholder(R.mipmap.default_pic)
-                                        .error(R.mipmap.default_pic)
-                                        .crossFade(300)
-                                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                                        .into(mImagePicLogo.get(i));*/
                             }
                         }
 
