@@ -47,6 +47,14 @@ public class HomeInfo implements Serializable{
     }
 
     public static class DataBean {
+        public int getTop() {
+            return top;
+        }
+
+        public void setTop(int top) {
+            this.top = top;
+        }
+
         /**
          * price :
          * levelid : 1
@@ -66,6 +74,7 @@ public class HomeInfo implements Serializable{
          * contact_who : 小柒
          * extr : [{"iid":"421","id":"5099","prices":"10.00","new_old":"1","from":"2","content":null}]
          */
+        private int top ;
 
         private String price;
         private String levelid;

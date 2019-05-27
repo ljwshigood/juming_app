@@ -100,10 +100,35 @@ public class RecommandAdapter extends RecyclerArrayAdapter<HomeInfo.DataBean> {
             mTvTitle.setText(data.getTitle());
             mTvDetail.setText(data.getContent());
 
-            Glide.with(mContext)
-                    .load(res[0])
-                    .apply(options)
-                    .into(mIvTop);
+
+            if(data.getTop() == 1){
+                mLLTop.setVisibility(View.VISIBLE);
+
+                if(data.getLevelid().equals("1")){
+                    Glide.with(mContext)
+                            .load(res[0])
+                            .apply(options)
+                            .into(mIvTop);
+                }else if(data.getLevelid().equals("2")){
+                    Glide.with(mContext)
+                            .load(res[1])
+                            .apply(options)
+                            .into(mIvTop);
+                }else if(data.getLevelid().equals("3")){
+                    Glide.with(mContext)
+                            .load(res[2])
+                            .apply(options)
+                            .into(mIvTop);
+                }else if(data.getLevelid().equals("4")){
+                    Glide.with(mContext)
+                            .load(res[3])
+                            .apply(options)
+                            .into(mIvTop);
+                }
+
+            }else{
+                mLLTop.setVisibility(View.GONE);
+            }
 
         }
     }
