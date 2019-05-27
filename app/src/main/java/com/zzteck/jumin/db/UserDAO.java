@@ -138,6 +138,7 @@ public class UserDAO {
 			user.setUserid(cursor.getString(cursor.getColumnIndex("id")));
 			user.setWanjiaToken(cursor.getString(cursor.getColumnIndex("wanjiaToken")));
 			user.setHeader(cursor.getString(cursor.getColumnIndex("head")));
+			user.setMobile(cursor.getString(cursor.getColumnIndex("phone")));
 			userList.add(user);
 		}
 		mDatabaseManager.recyleCursor(cursor) ;

@@ -72,9 +72,8 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
 
             itemHolder.mTvTitle.setText(chapterInfo.getCatname());
 
-
             RequestOptions options = new RequestOptions()
-                    .centerCrop()
+                    .transform(new GlideCircleTransform(mContext))
                     .placeholder(R.mipmap.default_pic)
                     .diskCacheStrategy(DiskCacheStrategy.ALL);
 

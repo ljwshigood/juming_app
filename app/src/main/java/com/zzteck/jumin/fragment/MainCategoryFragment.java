@@ -144,7 +144,7 @@ public class MainCategoryFragment extends Fragment implements View.OnClickListen
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.framelayout,fragment).commit();
 
         mHomeCategory = new HomeCategoryAdapter(getActivity(),mTitlesList) ;
-
+        mHomeCategory.setHasStableIds(true);
         mRecyleView.setAdapter(mHomeCategory);
 
         mHomeCategory.setOnItemClickListener(new MessageAdapter.OnItemClickListener() {
@@ -153,6 +153,17 @@ public class MainCategoryFragment extends Fragment implements View.OnClickListen
 
 
                 int position = mRecyleView.getChildAdapterPosition(view);
+
+                for(int i = 0 ;i < mTitlesList.size() ;i++){
+                    if(i == position){
+                        mTitlesList.get(i).setSelect(true);
+                        mHomeCategory.notifyItemChanged(i);
+                    }else{
+                        mTitlesList.get(i).setSelect(false);
+                        mHomeCategory.notifyItemChanged(i);
+                    }
+                }
+
 
 
                 Fragment fragment = new CategoryFragment();

@@ -61,22 +61,12 @@ public class MemeberAdapter extends RecyclerView.Adapter<MemeberAdapter.ViewHold
     @Override
     public void onBindViewHolder(MemeberAdapter.ViewHolder holder, final int position) {
 
-       /* Glide.with(mContext)
-                .load(mMemberList.get(position).getRes())
-                .placeholder(R.mipmap.default_pic)
-                .error(R.mipmap.default_pic)
-                .crossFade(300)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .into(holder.mIvMemeber);*/
-
-
         RequestOptions options = new RequestOptions()
-                .centerCrop()
                 .placeholder(R.mipmap.default_pic)
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
         Glide.with(mContext)
-                .load(Constants.PIC_HOST+mMemberList.get(position).getRes())
+                .load(mMemberList.get(position).getRes())
                 .apply(options)
                 .into(holder.mIvMemeber);
 

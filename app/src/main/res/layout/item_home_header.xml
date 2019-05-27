@@ -39,6 +39,8 @@
                     android:id="@+id/tv_one"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textSize="12sp"
                     android:text="美丽约" />
 
             </LinearLayout>
@@ -68,6 +70,8 @@
                     android:id="@+id/tv_two"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textSize="12sp"
                     android:text="丽人时尚" />
 
             </LinearLayout>
@@ -98,6 +102,8 @@
                     android:id="@+id/tv_three"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textSize="12sp"
                     android:text="休闲娱乐" />
 
             </LinearLayout>
@@ -127,6 +133,8 @@
                     android:id="@+id/tv_four"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textSize="12sp"
                     android:text="居家生活" />
 
             </LinearLayout>
@@ -156,6 +164,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textSize="12sp"
                     android:text="更多" />
 
             </LinearLayout>

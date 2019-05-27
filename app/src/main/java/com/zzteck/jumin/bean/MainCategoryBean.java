@@ -43,6 +43,16 @@ public class MainCategoryBean extends BaseInfo implements Serializable {
         private String dir_typename;
         private String usecoin;
         private String icon;
+
+        public boolean isSelect() {
+            return isSelect;
+        }
+
+        public void setSelect(boolean select) {
+            isSelect = select;
+        }
+
+        private boolean isSelect ;
         private List<ChildrenBean> children;
 
         public int getIndex() {

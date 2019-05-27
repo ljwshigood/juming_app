@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -49,6 +50,11 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
     }
 
     @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
     public HomeCategoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_category, parent, false);
         ViewHolder holder = new HomeCategoryAdapter.ViewHolder(view) ;
@@ -69,8 +75,13 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
     public void onBindViewHolder(HomeCategoryAdapter.ViewHolder holder, int position) {
         holder.name.setText(mFavoriteList.get(position).getCatname());
 
+        if(mFavoriteList.get(position).isSelect()){
+            holder.mLLCate.setBackgroundResource(R.mipmap.bg_cate);
+        }else{
+            holder.mLLCate.setBackgroundResource(R.mipmap.bg_cate_nomal);
+        }
+
         RequestOptions options = new RequestOptions()
-                .centerCrop()
                 .placeholder(R.mipmap.default_pic)
                 .transform(new GlideCircleTransform(mContext))
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -79,15 +90,6 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
                 .load(Constants.PIC_HOST+mFavoriteList.get(position).getIcon())
                 .apply(options)
                 .into(holder.mIv);
-
-       /* Glide.with(mContext)
-                .load(mFavoriteList.get(position).getIcon())
-                .placeholder(R.mipmap.default_pic)
-                .error(R.mipmap.default_pic)
-                .crossFade(300)
-                .transform(new GlideCircleTransform(mContext))
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .into(holder.mIv);*/
     }
 
     @Override
@@ -100,8 +102,10 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
 
         private TextView name;
         private ImageView mIv ;
+        private LinearLayout mLLCate ;
         public ViewHolder(View itemView) {
             super(itemView);
+            mLLCate = itemView.findViewById(R.id.ll_cate) ;
             mIv = itemView.findViewById(R.id.iv) ;
             name = itemView.findViewById(R.id.tv_title);
         }

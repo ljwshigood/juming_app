@@ -19,6 +19,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="15dp"
+            android:scaleType="fitXY"
             android:layout_gravity="center_vertical"
             android:src="@mipmap/icon_chushou_dalei" />
 

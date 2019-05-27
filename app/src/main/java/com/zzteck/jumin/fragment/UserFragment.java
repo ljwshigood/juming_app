@@ -116,7 +116,6 @@ public class UserFragment extends Fragment implements OnClickListener {
 
 
             RequestOptions options = new RequestOptions()
-                    .centerCrop()
                     .placeholder(R.mipmap.default_pic)
                     .diskCacheStrategy(DiskCacheStrategy.ALL);
 
@@ -125,22 +124,13 @@ public class UserFragment extends Fragment implements OnClickListener {
                     .apply(options)
                     .into(mCvPhoto);
 
-
-            /*Glide.with(getActivity())
-                    .load(userList.get(0).getHeader())
-                    .placeholder(R.mipmap.default_pic)
-                    .error(R.mipmap.default_pic)
-                    .crossFade(300)
-                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .into(mCvPhoto);*/
-
-            if(TextUtils.isEmpty(userList.get(0).getUsername())){
+            if(TextUtils.isEmpty(userList.get(0).getMobile())){
                 mTvNickName.setVisibility(View.GONE);
             }else {
                 mTvNickName.setVisibility(View.VISIBLE);
-                mTvNickName.setText(userList.get(0).getUsername() + "");
+                mTvNickName.setText(userList.get(0).getMobile() + "");
             }
-            mLLEditor.setVisibility(View.VISIBLE);
+            mLLEditor.setVisibility(View.GONE);
 
         }else{
 

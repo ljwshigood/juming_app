@@ -531,15 +531,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                                         .apply(options)
                                         .into(mIvCategoryList.get(i));
 
-
-                                /*Glide.with(getActivity())
-                                        .load(bean.getData().get(i).getIcon())
-                                        .placeholder(R.mipmap.default_pic)
-                                        .error(R.mipmap.default_pic)
-                                        .crossFade(300)
-                                        .transform(new GlideCircleTransform(getActivity()))
-                                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                                        .into(mIvCategoryList.get(i));*/
                                 mTvCategoryList.get(i).setText(bean.getData().get(i).getCatname());
                                 mTvCategoryList.get(i).setTag(bean.getData().get(i).getCatid());
                             }
@@ -820,7 +811,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 simplePagerTitleView.setText(mDataList.get(index));
                 simplePagerTitleView.setNormalColor(ContextCompat.getColor(getActivity(), R.color.mainBlack));
                 simplePagerTitleView.setSelectedColor(ContextCompat.getColor(getActivity(), R.color.mainBlack));
-                simplePagerTitleView.setTextSize(16);
+                simplePagerTitleView.setTextSize(14);
                 simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -860,7 +851,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 simplePagerTitleView.setText(mDataList.get(index));
                 simplePagerTitleView.setNormalColor(ContextCompat.getColor(getActivity(), R.color.mainBlack));
                 simplePagerTitleView.setSelectedColor(ContextCompat.getColor(getActivity(), R.color.mainBlack));
-                simplePagerTitleView.setTextSize(16);
+                simplePagerTitleView.setTextSize(14);
                 simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
