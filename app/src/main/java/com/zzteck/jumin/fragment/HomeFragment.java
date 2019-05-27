@@ -199,7 +199,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             map.put("cityid", cityId);
         }
 
-
         map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Info.Getinfos"));
 
         OkHttpClient client = new OkHttpClient();

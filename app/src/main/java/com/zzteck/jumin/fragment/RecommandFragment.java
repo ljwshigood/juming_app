@@ -172,7 +172,8 @@ public class RecommandFragment extends Fragment {
         Map<String, String> map = new HashMap<>() ;
         map.put("s","App.Info.Getinfos") ;
         map.put("catid",catId) ;
-        map.put("cityid",cityId) ;
+       // map.put("cityid",cityId) ;
+        map.put("cityid",95+"") ;
         map.put("pages",pages) ;
 
         map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Info.Getinfos"));

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -42,6 +43,8 @@ public class RecommandAdapter extends RecyclerArrayAdapter<HomeInfo.DataBean> {
 
     private List<HomeInfo.DataBean> mHomeList ;
 
+    private int[] res = new int[]{R.mipmap.v0,R.mipmap.v1,R.mipmap.v2,R.mipmap.v3} ;
+
     public RecommandAdapter(Context context, List<HomeInfo.DataBean> objects) {
         super(context, objects);
         this.mContext = context ;
@@ -63,6 +66,10 @@ public class RecommandAdapter extends RecyclerArrayAdapter<HomeInfo.DataBean> {
 
         private TextView mTvValue ;
 
+        private LinearLayout mLLTop ;
+
+        private ImageView mIvTop ;
+
         public RecommandViewHolder(ViewGroup parent) {
             super(parent, R.layout.item_recommand);
 
@@ -70,6 +77,8 @@ public class RecommandAdapter extends RecyclerArrayAdapter<HomeInfo.DataBean> {
             mTvTitle = $(R.id.tv_title) ;
             mTvDetail = $(R.id.tv_detail) ;
             mTvValue = $(R.id.tv_value) ;
+            mLLTop = $(R.id.ll_top) ;
+            mIvTop= $(R.id.iv_top) ;
         }
 
         @Override
@@ -90,6 +99,12 @@ public class RecommandAdapter extends RecyclerArrayAdapter<HomeInfo.DataBean> {
 
             mTvTitle.setText(data.getTitle());
             mTvDetail.setText(data.getContent());
+
+            Glide.with(mContext)
+                    .load(res[0])
+                    .apply(options)
+                    .into(mIvTop);
+
         }
     }
 
