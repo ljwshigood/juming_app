@@ -415,6 +415,8 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 		SharePerfenceUtil.clearSharePrefrences(this);
 	}
 
+	private ImageView mIv ;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -534,7 +536,6 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ll_realease:
-
 			mTvHome.setTextColor(mContext.getResources().getColor(R.color.dark));
 			mTvHistory.setTextColor(mContext.getResources().getColor(R.color.dark));
 			mTvRelease.setTextColor(mContext.getResources().getColor(R.color.dark_red));

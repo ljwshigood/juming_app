@@ -695,8 +695,10 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
 
         String extra = "" ;
 
-        for(int i = 0 ;i < bean.getData().getExtra().size() ;i++){
-            extra += bean.getData().getExtra().get(i).getTitle()+" : "+bean.getData().getExtra().get(i).getValue()+"\n\n";
+        if(bean.getData().getExtra() != null){
+            for(int i = 0 ;i < bean.getData().getExtra().size() ;i++){
+                extra += bean.getData().getExtra().get(i).getTitle()+" : "+bean.getData().getExtra().get(i).getValue()+"\n\n";
+            }
         }
 
         mTvBaseInfo.setText("联系人 ："+bean.getData().getContact_who()+"\n\n"
@@ -715,7 +717,7 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
         initView();
         initData();
         //mId = "20719" ;
-        mId = "21349" ;
+       // mId = "21349" ;
         getCatoryDetail(mId);
 
         /*mShareDialog = new ShareDialog(mContext);

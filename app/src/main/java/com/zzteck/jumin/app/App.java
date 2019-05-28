@@ -10,7 +10,11 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
+import android.util.Log;
 
+import com.baidu.crabsdk.CrabSDK;
+import com.baidu.crabsdk.OnAnrCrashListener;
+import com.baidu.crabsdk.OnCrashExceedListener;
 import com.mob.MobSDK;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -19,8 +23,10 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -98,7 +104,7 @@ public class App extends MultiDexApplication {
     }
 
     public void initBaiduCrab(){
-      /*  // 在打开app初始化时回调，故此方法要再init之前调用
+        // 在打开app初始化时回调，故此方法要再init之前调用
         // 不设置的情况下默认值是-1，即为关闭，故实现接口前必须设置CrabSDK.setConstantSameCrashExceedLimit(3);且>0时回调才有效
         CrabSDK.setConstantSameCrashExceedLimit(3);
         CrabSDK.setOnCrashExceedListener(new OnCrashExceedListener() {
@@ -110,7 +116,7 @@ public class App extends MultiDexApplication {
 
         // ------------------------------------------------------------------------------------------
         // 初始化sdk，传入appkey；appkey需要去品台申请，详情参见：https://crab.baidu.com/
-        CrabSDK.init(this, "fb150e2cf3fbc02f");
+        CrabSDK.init(this, "27f31ed47d2f3cd7");
 
         // 开启卡顿捕获功能, 传入每天上传卡顿信息个数，-1代表不限制, 已自动打开
         CrabSDK.enableBlockCatch(-1);
@@ -158,45 +164,26 @@ public class App extends MultiDexApplication {
 
         HashMap<String, String> customMap = new HashMap<String, String>();
         customMap.put("key1", "value1");
-        customMap.put("key2", "value2");
-        customMap.put("key3", "value3");
         CrabSDK.setUsersCustomKV(customMap);
 
         // 设置对crash anr发生时回调接口
         CrabSDK.setOnAnrCrashListener(new OnAnrCrashListener() {
 
-            *//**
-             * anr发生时回调接口
-             * anrTraceMap包含字段如下
-             * {apiType=ANR,
-             *  time=2016-05-18 10:29:50,
-             *  errorOriLine=com.baidu.crabsdk.TestActivity$6.onClick(TestActivity.java:~139),
-             *  errorType=ANR,
-             *  threadList=main..
-             * }
-             *//*
+
             @Override
             public void onAnrStarted(Map map) {
-                // TODO Auto-generated method stub
             }
 
-            *//**
-             * Java crash发生时回调接口
-             *//*
             @Override
             public void onCrashStarted(Thread arg0, Throwable arg1) {
 
             }
 
-            *//**
-             * Native crash发生时回调此接口
-             *
-             *//*
             @Override
             public void onNativeCrashStarted(Error arg0, String arg1, int arg2) {
 
             }
-        });*/
+        });
     }
 
     public void initImageLoader(Context context) {
