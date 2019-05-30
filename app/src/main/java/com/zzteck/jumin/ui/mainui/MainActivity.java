@@ -37,7 +37,9 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.app.App;
+import com.zzteck.jumin.bean.AuthBean;
 import com.zzteck.jumin.bean.LoginBean;
+import com.zzteck.jumin.bean.User;
 import com.zzteck.jumin.bean.VersionInfo;
 import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.fragment.HomeFragment;
@@ -493,10 +495,11 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 
 	private void memberScan(String code){
 
+		List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
 		Map<String, String> map = new HashMap<>() ;
 		map.put("s","App.Member.Scan") ;
 		map.put("code",code) ;
-
+		map.put("userid",userList.get(0).getMobile()) ;
 		map.put("sign", UtilsTools.getSign(mContext,"App.Member.Scan")) ;
 
 		OkHttpClient client = new OkHttpClient();
@@ -518,11 +521,10 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 
 						String message = new String(responseStr.getBytes()) ;
 						Gson gson = new Gson() ;
-						LoginBean bean = gson.fromJson(message,LoginBean.class) ;
+						AuthBean bean = gson.fromJson(message,AuthBean.class) ;
 
-						if(bean != null && bean.getData() != null && bean.getData().isIs_login()){
-							UserDAO.getInstance(mContext).editorUserTable(bean.getData());
-							WindowsToast.makeText(mContext,"登录成功").show();
+						if(bean != null && bean.getData() != null && bean.getData().isIs_success()){
+							WindowsToast.makeText(mContext,"授权成功").show();
 						}
 
 					}

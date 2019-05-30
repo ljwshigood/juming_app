@@ -44,13 +44,17 @@ import com.zzteck.jumin.adapter.FeaturedPagerAdapter;
 import com.zzteck.jumin.adapter.VideoAdapter;
 import com.zzteck.jumin.bean.BannerBean;
 import com.zzteck.jumin.bean.CategoryBean;
+import com.zzteck.jumin.bean.User;
 import com.zzteck.jumin.bean.VideoBean;
+import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.ui.business.CategoryListActivity;
 import com.zzteck.jumin.ui.business.MoreCategoryActivity;
 import com.zzteck.jumin.ui.location.LocationActivity;
 import com.zzteck.jumin.ui.mainui.MainCategoryActivity;
 import com.zzteck.jumin.ui.mainui.SearchActivity;
 import com.zzteck.jumin.ui.mainui.ZxingActivity;
+import com.zzteck.jumin.ui.usercenter.FavitorActivity;
+import com.zzteck.jumin.ui.usercenter.LoginActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.GlideCircleTransform;
 import com.zzteck.jumin.utils.ScreenUtil;
@@ -242,6 +246,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     }
 
+    private List<User> userList ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -250,8 +255,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         mContext = getActivity();
         initView(mMainView);
         EventBus.getDefault().register(this);
-        //initData();
-
+        userList = UserDAO.getInstance(mContext).selectUserList() ;
         return mMainView ;
     }
 
@@ -949,8 +953,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break ;
             case R.id.iv_zxing:
-                intent = new Intent(getActivity(),ZxingActivity.class) ;
-                getActivity().startActivityForResult(intent,1122) ;
+
+                if(userList != null && userList.size() > 0){
+                    intent = new Intent(getActivity(),ZxingActivity.class) ;
+                    getActivity().startActivityForResult(intent,1122) ;
+                }else{
+                    intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                }
                 break ;
         }
     }
