@@ -487,8 +487,6 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 
 			String code = bundle.getString(CodeUtils.RESULT_STRING) ;
 			memberScan(code);
-
-			WindowsToast.makeText(mContext,"@@@@@@@@@@code :"+code).show();
 		}
 
 	}
