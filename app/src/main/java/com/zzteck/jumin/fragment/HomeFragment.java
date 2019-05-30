@@ -492,6 +492,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     }
 
+    private CategoryBean mCategoryBean ;
+
     private void getCategoryTitle1() {
 
         Map<String, String> map = new HashMap<>();
@@ -516,9 +518,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                     @Override
                     public void run() {
                         Gson gson = new Gson();
-                        CategoryBean bean = gson.fromJson(responseStr, CategoryBean.class);
-                        if (bean.getData() != null && bean.getData().size() > 0) {
-                            for (int i = 0; i < bean.getData().size(); i++) {
+                        mCategoryBean = gson.fromJson(responseStr, CategoryBean.class);
+                        if (mCategoryBean.getData() != null && mCategoryBean.getData().size() > 0) {
+                            for (int i = 0; i < mCategoryBean.getData().size(); i++) {
 
                                 RequestOptions options = new RequestOptions()
                                         .placeholder(R.mipmap.default_pic)
@@ -526,12 +528,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                                         .diskCacheStrategy(DiskCacheStrategy.ALL);
 
                                 Glide.with(mContext)
-                                        .load(Constants.PIC_HOST+bean.getData().get(i).getIcon())
+                                        .load(Constants.PIC_HOST+mCategoryBean.getData().get(i).getIcon())
                                         .apply(options)
                                         .into(mIvCategoryList.get(i));
 
-                                mTvCategoryList.get(i).setText(bean.getData().get(i).getCatname());
-                                mTvCategoryList.get(i).setTag(bean.getData().get(i).getCatid());
+                                mTvCategoryList.get(i).setText(mCategoryBean.getData().get(i).getCatname());
+                                mTvCategoryList.get(i).setTag(mCategoryBean.getData().get(i).getCatid());
                             }
                         }
                     }
@@ -566,15 +568,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                     public void run() {
                         Gson gson = new Gson() ;
 
-                        CategoryBean bean = gson.fromJson(responseStr, CategoryBean.class);
-                        if (bean.getData() != null && bean.getData().size() > 0) {
-                            for (int i = 0; i < bean.getData().size(); i++) {
+                        CategoryBean  categoryBean = gson.fromJson(responseStr, CategoryBean.class);
+                        if (categoryBean.getData() != null && categoryBean.getData().size() > 0) {
+                            for (int i = 0; i < categoryBean.getData().size(); i++) {
 
                                 RequestOptions options = new RequestOptions()
                                         .placeholder(R.mipmap.default_pic)
                                         .diskCacheStrategy(DiskCacheStrategy.ALL);
                                 Glide.with(mContext)
-                                        .load(Constants.PIC_HOST+bean.getData().get(i).getIcon())
+                                        .load(Constants.PIC_HOST+categoryBean.getData().get(i).getIcon())
                                         .apply(options)
                                         .into(mImagePicLogo.get(i));
                             }
@@ -877,52 +879,57 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break ;
             case R.id.iv_one :
-                intent = new Intent(getActivity(), CategoryListActivity.class) ;
-                intent.putExtra("title","二手车转让") ;
-                intent.putExtra("id",(String)mTvCategoryList.get(0).getTag()) ;
+                intent = new Intent(getActivity(), MainCategoryActivity.class) ;
+                intent.putExtra("title",mCategoryBean.getData().get(0).getCatname()) ;
+                intent.putExtra("catid",mCategoryBean.getData().get(0).getCatid()) ;
                 startActivity(intent);
                 break ;
             case R.id.iv_two :
-                intent = new Intent(getActivity(), CategoryListActivity.class) ;
-                intent.putExtra("title","车辆买卖") ;
-                intent.putExtra("id",(String)mTvCategoryList.get(1).getTag()) ;
+                intent = new Intent(getActivity(), MainCategoryActivity.class) ;
+                intent.putExtra("title",mCategoryBean.getData().get(1).getCatname()) ;
+                intent.putExtra("catid",mCategoryBean.getData().get(1).getCatid()) ;
                 startActivity(intent);
                 break ;
             case R.id.iv_three :
-                intent = new Intent(getActivity(), CategoryListActivity.class) ;
-                intent.putExtra("title","房屋租赁") ;
-                intent.putExtra("id",(String)mTvCategoryList.get(2).getTag()) ;
+                intent = new Intent(getActivity(), MainCategoryActivity.class) ;
+                intent.putExtra("catid",mCategoryBean.getData().get(2).getCatid()) ;
+                intent.putExtra("title",mCategoryBean.getData().get(2).getCatname()) ;
                 startActivity(intent);
                 break ;
             case R.id.iv_four :
-                intent = new Intent(getActivity(), CategoryListActivity.class) ;
-                intent.putExtra("title","全职招聘") ;
-                intent.putExtra("id",(String)mTvCategoryList.get(3).getTag()) ;
+                intent = new Intent(getActivity(), MainCategoryActivity.class) ;
+                intent.putExtra("catid",mCategoryBean.getData().get(3).getCatid()) ;
+                intent.putExtra("title",mCategoryBean.getData().get(3).getCatname()) ;
                 startActivity(intent);
                 break ;
             case R.id.iv_xinfang :
-                intent = new Intent(getActivity(), MainCategoryActivity.class) ;
+                intent = new Intent(getActivity(), CategoryListActivity.class) ;
                 intent.putExtra("title","新房") ;
+                intent.putExtra("id",(String)mTvCategoryList.get(0).getTag()) ;
                 startActivity(intent);
                 break ;
             case R.id.iv_chuzu :
-                intent = new Intent(getActivity(), MainCategoryActivity.class) ;
-                intent.putExtra("title","新房出租") ;
+                intent = new Intent(getActivity(), CategoryListActivity.class) ;
+                intent.putExtra("title","新房出售") ;
+                intent.putExtra("id",(String)mTvCategoryList.get(1).getTag()) ;
                 startActivity(intent);
                 break ;
             case R.id.iv_shangpuchuzu :
-                intent = new Intent(getActivity(), MainCategoryActivity.class) ;
+                intent = new Intent(getActivity(), CategoryListActivity.class) ;
                 intent.putExtra("title","商铺出租") ;
+                intent.putExtra("id",(String)mTvCategoryList.get(2).getTag()) ;
                 startActivity(intent);
                 break ;
             case R.id.iv_ershoufang :
-                intent = new Intent(getActivity(), MainCategoryActivity.class) ;
-                intent.putExtra("title","房屋出售") ;
+                intent = new Intent(getActivity(), CategoryListActivity.class) ;
+                intent.putExtra("title","二手房出售") ;
+                intent.putExtra("id",(String)mTvCategoryList.get(3).getTag()) ;
                 startActivity(intent);
                 break ;
             case R.id.iv_shangpuzhuanrang :
-                intent = new Intent(getActivity(), MainCategoryActivity.class) ;
+                intent = new Intent(getActivity(), CategoryListActivity.class) ;
                 intent.putExtra("title","商铺转让") ;
+                intent.putExtra("id",(String)mTvCategoryList.get(4).getTag()) ;
                 startActivity(intent);
                 break ;
             case R.id.ll_more:

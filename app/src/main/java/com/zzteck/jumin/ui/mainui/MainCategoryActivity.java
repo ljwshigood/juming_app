@@ -1,6 +1,7 @@
 package com.zzteck.jumin.ui.mainui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,16 +12,30 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.fingerth.supdialogutils.SYSDiaLogUtils;
+import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.ComFragmentAdapter;
+import com.zzteck.jumin.adapter.MainCategoryAdapter;
+import com.zzteck.jumin.bean.Category2Bean;
+import com.zzteck.jumin.bean.LoginBean;
+import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.fragment.RecommandFragment;
+import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.ScreenUtil;
+import com.zzteck.jumin.utils.SharePerfenceUtil;
+import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.ColorFlipPagerTitleView;
 import com.zzteck.jumin.view.JudgeNestedScrollView;
 
@@ -33,8 +48,17 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class MainCategoryActivity extends BaseActivity implements View.OnClickListener{
@@ -103,10 +127,17 @@ public class MainCategoryActivity extends BaseActivity implements View.OnClickLi
 		initData();
 		initView();
 		initMagicIndicator() ;
+		mCityId = (String) SharePerfenceUtil.getParam(mContext,"city_id","");
+		getMainCategory(mCatId,mCityId) ;
 	}
 
-	private void initData(){
+	private String mCatId ;
 
+	private String mCityId ;
+
+	private void initData(){
+		Intent intent = getIntent();
+		mCatId = intent.getStringExtra("catid") ;
 	}
 
 	private RecommandFragment mRecomandFragment ;
@@ -125,7 +156,7 @@ public class MainCategoryActivity extends BaseActivity implements View.OnClickLi
 
 	private JudgeNestedScrollView scrollView;
 
-	//private MainCategoryAdapter mMainCategoryAdapter;
+	private Category2Bean mCategory2Bean ;
 
 	private int mScrollY = 0;
 
@@ -133,7 +164,80 @@ public class MainCategoryActivity extends BaseActivity implements View.OnClickLi
 
 	private RelativeLayout mLLBack;
 
+	private void getMainCategory(String catid ,String cityid){
+		Map<String, String> map = new HashMap<>() ;
+		map.put("s","App.Category.Pcat") ;
+		map.put("catid",3+"") ;
+		map.put("cityid",0+"") ;
+
+		map.put("sign", UtilsTools.getSign(mContext,"App.Category.Pcat")) ;
+
+		OkHttpClient client = new OkHttpClient();
+		Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
+		Call call = client.newCall(request);
+		call.enqueue(new Callback() {
+			 @Override
+			 public void onFailure(Call call, IOException e) {
+
+			 }
+
+			 @Override
+			 public void onResponse(Call call, Response response) throws IOException {
+				 final String responseStr = response.body().string();
+				 runOnUiThread(new Runnable() {
+					 @Override
+					 public void run() {
+
+						 String message = new String(responseStr.getBytes());
+						 Gson gson = new Gson();
+						 Category2Bean bean = gson.fromJson(message, Category2Bean.class);
+
+						 mMainCategoryAdapter.notifyCategoryAdapter(bean);
+
+						 RequestOptions options = new RequestOptions()
+								 .placeholder(R.mipmap.default_pic)
+								 .diskCacheStrategy(DiskCacheStrategy.ALL);
+
+						 for(int i = 0 ;i< bean.getData().getImg().size() ;i++){
+							 Glide.with(mContext)
+									 .load(Constants.PIC_HOST+bean.getData().getImg().get(i).getIcon())
+									 .apply(options)
+									 .into(mImageViews.get(i));
+						 }
+					 }
+				 });
+			 }
+		 });
+	}
+
+	private MainCategoryAdapter mMainCategoryAdapter ;
+
+	private ImageView mIvErshoufang ;
+
+	private ImageView mIvXinfang ;
+
+	private ImageView mIvChuZu ;
+
+	private ImageView mIvShangpuchuzu ;
+
+	private ImageView mIvShangpuzhuanran ;
+
+	private List<ImageView> mImageViews = new ArrayList<>() ;
+
+
 	private void initView(){
+
+		mIvErshoufang = findViewById(R.id.iv_ershoufang) ;
+		mIvXinfang = findViewById(R.id.iv_xinfang) ;
+		mIvChuZu = findViewById(R.id.iv_chuzu) ;
+		mIvShangpuchuzu = findViewById(R.id.iv_shangpuchuzu);
+		mIvShangpuzhuanran = findViewById(R.id.iv_shangpuzhuanrang) ;
+
+		mImageViews.add(mIvErshoufang) ;
+		mImageViews.add(mIvXinfang) ;
+		mImageViews.add(mIvChuZu) ;
+		mImageViews.add(mIvShangpuchuzu) ;
+		mImageViews.add(mIvShangpuzhuanran) ;
 
 		mTvTitle = findViewById(R.id.tv_main_info) ;
 		mLLBack = findViewById(R.id.ll_back) ;
@@ -148,31 +252,36 @@ public class MainCategoryActivity extends BaseActivity implements View.OnClickLi
 		toolbar = findViewById(R.id.home_toolbar) ;
 		mRecyclerView = findViewById(R.id.rv_expand);
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-	/*	mMainCategoryAdapter = new MainCategoryAdapter(this,mCourseInfo);
+		mMainCategoryAdapter = new MainCategoryAdapter(this,mCategory2Bean);
 		mRecyclerView.setAdapter(mMainCategoryAdapter);
 		mMainCategoryAdapter.setOnItemClickListener(new MainCategoryAdapter.OnRecyclerViewItemClickListener() {
 			@Override
+			public void onClick(View view, MainCategoryAdapter.ViewName viewName, int chapterIndex, int sectionIndex, String catId, String subCatId, String name) {
+
+			}
+
+			/*@Override
 			public void onClick(View view, MainCategoryAdapter.ViewName viewName, int chapterIndex, int sectionIndex) {
 
 				switch (viewName){
 					case CHAPTER_ITEM:
-						if(mCourseInfo.chapterInfos.get(chapterIndex).sectionInfos.size() > 0){
+						*//*if(mCourseInfo.chapterInfos.get(chapterIndex).sectionInfos.size() > 0){
 							if(chapterIndex + 1 == mCourseInfo.chapterInfos.size()){
 								//如果是最后一个，则滚动到展开的最后一个item
 								mRecyclerView.smoothScrollToPosition(mMainCategoryAdapter.getItemCount());
 							}
 						}else{
 							onClickChapter(chapterIndex);
-						}
+						}*//*
 						break;
 					case CHAPTER_ITEM_PRACTISE:
-						onClickPractise(chapterIndex);
+						//onClickPractise(chapterIndex);
 						break;
 					case SECTION_ITEM:
-						onClickSection(chapterIndex, sectionIndex);
+						//onClickSection(chapterIndex, sectionIndex);
 						break;
 				}
-			}
+			}*/
 		});
 
 		//以下是对布局进行控制，让课时占据一行，小节每四个占据一行，结果就是相当于一个ListView嵌套GridView的效果
@@ -186,7 +295,7 @@ public class MainCategoryActivity extends BaseActivity implements View.OnClickLi
 			}
 		});
 
-		mRecyclerView.setLayoutManager(manager);*/
+		mRecyclerView.setLayoutManager(manager);
 
 		toolbar.post(new Runnable() {
 			@Override

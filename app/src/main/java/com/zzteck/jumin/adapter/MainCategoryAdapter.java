@@ -13,6 +13,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.BaseInfo;
+import com.zzteck.jumin.bean.Category2Bean;
 import com.zzteck.jumin.bean.MainCategoryBean;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.GlideCircleTransform;
@@ -26,12 +27,12 @@ import java.util.List;
  *
  */
 
-public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View.OnClickListener {
+public class MainCategoryAdapter extends RecyclerView.Adapter implements View.OnClickListener {
 
     public static final int VIEW_TYPE_CHAPTER = 1;
     public static final int VIEW_TYPE_SECTION = 2;
 
-    private MainCategoryBean mainCategoryBean;
+    private Category2Bean mainCategoryBean;
 
     private List<BaseInfo> dataInfos = new ArrayList<>();
 
@@ -39,11 +40,28 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
 
     private Context mContext ;
 
-    public ReleaseCategoryAdapter(Context context, MainCategoryBean mainCategoryBean) {
-        this.mainCategoryBean = mainCategoryBean;
+    public MainCategoryAdapter(Context context, Category2Bean category2Bean) {
+        this.mainCategoryBean = category2Bean;
         this.mContext = context ;
-        for(int i = 0 ; i < mainCategoryBean.getData().size() ;i++){
-            MainCategoryBean.DataBean bean = mainCategoryBean.getData().get(i) ;
+        if(mainCategoryBean != null){
+            gernationDataInfos() ;
+        }
+    }
+
+    public void notifyCategoryAdapter(Category2Bean category2Bean){
+        this.mainCategoryBean = category2Bean;
+        if(mainCategoryBean != null){
+            gernationDataInfos() ;
+        }
+        notifyDataSetChanged();
+    }
+
+    private void gernationDataInfos(){
+
+        for(int i = 0 ; i < mainCategoryBean.getData().getExtra().size();i++){
+            Category2Bean.DataBean.ExtraBean bean = mainCategoryBean.getData().getExtra().get(i) ;
+            bean.setMainList(bean.getList().subList(0,3));
+            bean.setChildList(bean.getList().subList(4,bean.getList().size()));
             bean.setIndex(i);
             dataInfos.add(bean);
         }
@@ -53,7 +71,7 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
         if(viewType == VIEW_TYPE_CHAPTER){
-            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chapter, parent, false);
+            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_main_chapter, parent, false);
             return new ItemHolder(itemView);
         }else{
             itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_section, parent, false);
@@ -68,12 +86,11 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
             itemHolder.itemView.setTag(position);
             itemHolder.ivArrow.setTag(position);
 
-            MainCategoryBean.DataBean chapterInfo = (MainCategoryBean.DataBean) dataInfos.get(position);
+            Category2Bean.DataBean.ExtraBean chapterInfo = (Category2Bean.DataBean.ExtraBean) dataInfos.get(position);
 
             itemHolder.mTvTitle.setText(chapterInfo.getCatname());
 
             RequestOptions options = new RequestOptions()
-                    .transform(new GlideCircleTransform(mContext))
                     .placeholder(R.mipmap.default_pic)
                     .diskCacheStrategy(DiskCacheStrategy.ALL);
 
@@ -82,7 +99,11 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
                     .apply(options)
                     .into(itemHolder.mIvTitleIcon);
 
-            if(chapterInfo.getChildren().size() > 0){
+            for(int i = 0 ;i < chapterInfo.getMainList().size() ;i++){
+                itemHolder.mTextViews.get(i).setText(chapterInfo.getMainList().get(i).getCatname());
+            }
+
+            if(chapterInfo.getChildList().size() > 0){
                 itemHolder.ivArrow.setVisibility(View.VISIBLE);
                 if(curExpandChapterIndex == position){
                     itemHolder.ivArrow.setImageResource(R.mipmap.icon_xiala_nor);
@@ -97,12 +118,11 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
             ItemSectionHolder itemSectionHolder = (ItemSectionHolder) holder;
             itemSectionHolder.tvName.setTag(position);
 
-            MainCategoryBean.DataBean.ChildrenBean sectionInfo = (MainCategoryBean.DataBean.ChildrenBean) dataInfos.get(position);
+            Category2Bean.DataBean.ExtraBean.ListBean sectionInfo = (Category2Bean.DataBean.ExtraBean.ListBean) dataInfos.get(position);
             itemSectionHolder.tvName.setText(sectionInfo.getCatname());
         }
     }
 
-    //该方法只更改itemView的部分信息，不全部刷新
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List payloads) {
         if(payloads.isEmpty()){
@@ -145,12 +165,14 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
 
     @Override
     public int getItemViewType(int position) {
-        if(dataInfos.get(position) instanceof MainCategoryBean.DataBean){
+
+        if(dataInfos.get(position) instanceof Category2Bean.DataBean.ExtraBean){
             return VIEW_TYPE_CHAPTER;
-        }else if(dataInfos.get(position) instanceof MainCategoryBean.DataBean.ChildrenBean){
+        }else if(dataInfos.get(position) instanceof Category2Bean.DataBean.ExtraBean.ListBean){
             return VIEW_TYPE_SECTION;
         }
         return super.getItemViewType(position);
+
     }
 
     public class ItemHolder extends RecyclerView.ViewHolder {
@@ -159,13 +181,30 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
 
         public ImageView mIvTitleIcon ;
 
+        public TextView mTvFilterOne ;
+
+        private TextView mTvFilterTwo ;
+
+        private TextView mTvFilterThree ;
+
+        private List<TextView> mTextViews  = new ArrayList<>();
+
         public ItemHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(ReleaseCategoryAdapter.this);
+            itemView.setOnClickListener(MainCategoryAdapter.this);
+
+            mTvFilterOne = itemView.findViewById(R.id.tv_filter_one) ;
+            mTvFilterTwo = itemView.findViewById(R.id.tv_filter_two) ;
+            mTvFilterThree = itemView.findViewById(R.id.tv_filter_three) ;
+
+            mTextViews.add(mTvFilterOne) ;
+            mTextViews.add(mTvFilterTwo) ;
+            mTextViews.add(mTvFilterThree) ;
+
             mTvTitle = itemView.findViewById(R.id.tv_title_info) ;
             mIvTitleIcon = itemView.findViewById(R.id.iv_title_info) ;
             ivArrow = itemView.findViewById(R.id.iv_arrow);
-            ivArrow.setOnClickListener(ReleaseCategoryAdapter.this);
+            ivArrow.setOnClickListener(MainCategoryAdapter.this);
         }
     }
 
@@ -175,8 +214,7 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
         public ItemSectionHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_item_section_name);
-            //将创建的View注册点击事件
-            tvName.setOnClickListener(ReleaseCategoryAdapter.this);
+            tvName.setOnClickListener(MainCategoryAdapter.this);
         }
     }
 
@@ -187,7 +225,6 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
         this.mOnItemClickListener = listener;
     }
 
-    /** item里面有多个控件可以点击 */
     public enum ViewName {
         CHAPTER_ITEM,
         CHAPTER_ITEM_PRACTISE,
@@ -195,7 +232,7 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
     }
 
     public interface OnRecyclerViewItemClickListener {
-        void onClick(View view, ViewName viewName, int chapterIndex, int sectionIndex,String catId,String subCatId,String name);
+        void onClick(View view, ViewName viewName, int chapterIndex, int sectionIndex, String catId, String subCatId, String name);
     }
 
     private String catId = "" ;
@@ -214,16 +251,16 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
             int chapterIndex = -1;
             int sectionIndex = -1;
             if(getItemViewType(position) == VIEW_TYPE_CHAPTER){
-                MainCategoryBean.DataBean mainInfo = (MainCategoryBean.DataBean) dataInfos.get(position);
+                Category2Bean.DataBean.ExtraBean mainInfo = (Category2Bean.DataBean.ExtraBean) dataInfos.get(position);
 
-                catId = mainInfo.getCatid() ;
+                //catId = mainInfo.getCatid() ;
                 chapterIndex = mainInfo.getIndex() ;
                 sectionIndex = -1;
                 if(v.getId() == R.id.iv_arrow){
                     viewName = ViewName.CHAPTER_ITEM_PRACTISE;
                 }else{
                     viewName = ViewName.CHAPTER_ITEM;
-                    if(mainInfo.getChildren().size() > 0){
+                    if(mainInfo.getChildList().size() > 0){
                         if(chapterIndex == curExpandChapterIndex){
                             narrow(curExpandChapterIndex);
                         }else{
@@ -233,10 +270,10 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
                     }
                 }
             }else if(getItemViewType(position) == VIEW_TYPE_SECTION){
-                MainCategoryBean.DataBean.ChildrenBean sectionInfo = (MainCategoryBean.DataBean.ChildrenBean) dataInfos.get(position) ;
+                /*MainCategoryBean.DataBean.ChildrenBean sectionInfo = (MainCategoryBean.DataBean.ChildrenBean) dataInfos.get(position) ;
                 viewName = ViewName.SECTION_ITEM ;
                 subCatId = sectionInfo.getCatid() ;
-                mCategoryName = sectionInfo.getCatname() ;
+                mCategoryName = sectionInfo.getCatname() ;*/
             }
 
             mOnItemClickListener.onClick(v, viewName, chapterIndex, sectionIndex,catId,subCatId,mCategoryName);
@@ -249,10 +286,9 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
      * @param chapterIndex
      */
     private void expand(int chapterIndex){
-        dataInfos.addAll(chapterIndex+1, mainCategoryBean.getData().get(chapterIndex).getChildren());
+        dataInfos.addAll(chapterIndex+1, mainCategoryBean.getData().getExtra().get(chapterIndex).getChildList());
         curExpandChapterIndex = chapterIndex;
-       // notifyDataSetChanged();
-        notifyItemRangeInserted(chapterIndex+1, mainCategoryBean.getData().get(chapterIndex).getChildren().size());
+        notifyItemRangeInserted(chapterIndex+1, mainCategoryBean.getData().getExtra().get(chapterIndex).getChildList().size());
         notifyItemRangeChanged(0, getItemCount(), "change_position");
     }
 
@@ -267,7 +303,7 @@ public class ReleaseCategoryAdapter extends RecyclerView.Adapter implements View
             for(int i=removeStart; i< dataInfos.size() && getItemViewType(i) == VIEW_TYPE_SECTION; i++){
                 removeCount++;
             }
-            dataInfos.removeAll(mainCategoryBean.getData().get(chapterIndex).getChildren());
+            dataInfos.removeAll(mainCategoryBean.getData().getExtra().get(chapterIndex).getChildList());
             curExpandChapterIndex = -1;
             notifyItemRangeRemoved(removeStart, removeCount);
             notifyItemRangeChanged(0, getItemCount(), "change_position");
