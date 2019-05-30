@@ -498,7 +498,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 		map.put("s","App.Member.Scan") ;
 		map.put("code",code) ;
 		map.put("userid",userList.get(0).getMobile()) ;
-		map.put("sign", UtilsTools.getSign(mContext,"App.Member.Scan")) ;
+		map.put("sign", userList.get(0).getWanjiaToken()) ;
 
 		OkHttpClient client = new OkHttpClient();
 		Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
