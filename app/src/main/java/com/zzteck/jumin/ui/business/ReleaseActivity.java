@@ -2,6 +2,7 @@ package com.zzteck.jumin.ui.business;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -28,6 +29,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.fingerth.supdialogutils.SYSDiaLogUtils;
 import com.google.gson.Gson;
 import com.icechn.videorecorder.ui.RecordingActivity2;
 import com.jaredrummler.materialspinner.MaterialSpinner;
@@ -373,6 +375,8 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 	}
 
 
+	private String selectLink = "" ;
+
 	protected void initPopupWindow(final String info , final String link, boolean isShowBack){
 
 		if(popupWindow != null){
@@ -438,6 +442,10 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				if (originalPosition >= 0) {
 					piv.setVisibility(View.VISIBLE);
 					ptv.setText(entity.getCatname());
+
+					mSelectLinkList.add(entity) ;
+					//mHashExtra.put()
+
 					linkcat(entity.getCatid());
 
 					//WindowsToast.makeText(ReleaseActivity.this, "选中:" + entity.getCatname() + "  当前位置:" + currentPosition + "  原始所在数组位置:" + originalPosition).show();
@@ -681,6 +689,11 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 	private int mRadioButtinId = 0 ;
 
 
+	private String mLinkName = "" ;
+
+	private TextView mTvLink ;
+
+
 	private void daymicLayout(final ExternalInfo info){
 
 		if(info == null || info.getData() == null){
@@ -892,16 +905,18 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			}else if(info.getData().get(i).getType().equals("link")){
 
 				linearLayoutRight.setOrientation(LinearLayout.VERTICAL);
+                mLinkName = info.getData().get(i).getIdentifier() ;
+				mTvLink = new TextView(this);
+				mTvLink.setHint("请选择"+info.getData().get(i).getTitle());
+				mTvLink.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
 
-				TextView tvText = new TextView(this);
-				tvText.setHint("请选择"+info.getData().get(i).getTitle());
-				tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
+				mTvLink.setSingleLine(true);
 
-				linearLayoutRight.addView(tvText) ;
+				linearLayoutRight.addView(mTvLink) ;
 
                 final String link = info.getData().get(i).getExtra().getParentid()  ;
 				final String title = info.getData().get(i).getTitle() ;
-				tvText.setOnClickListener(new View.OnClickListener() {
+				mTvLink.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
 						initPopupWindow(title,link,false) ;
@@ -925,6 +940,8 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			mLLDaymic.addView(ll);
 		}
 	}
+
+	private List<LinkCat.DataBean> mSelectLinkList = new ArrayList<>() ;
 
 	private void linkcat(String catid){
 
@@ -956,16 +973,36 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
                     @Override
                     public void run() {
 
-                        String message = new String(responseStr.getBytes()) ;
-                        Gson gson = new Gson() ;
-                        LinkCat bean = gson.fromJson(message,LinkCat.class) ;
-						mLinkCatadapter.setDatas(bean.getData(), new IndexableAdapter.IndexCallback<LinkCat.DataBean>() {
-							@Override
-							public void onFinished(List<EntityWrapper<LinkCat.DataBean>> datas) {
-								// 数据处理完成后回调
+                        try{
+                            String message = new String(responseStr.getBytes()) ;
+                            Gson gson = new Gson() ;
+                            LinkCat bean = gson.fromJson(message,LinkCat.class) ;
+                            mLinkCatadapter.setDatas(bean.getData(), new IndexableAdapter.IndexCallback<LinkCat.DataBean>() {
+                                @Override
+                                public void onFinished(List<EntityWrapper<LinkCat.DataBean>> datas) {
+                                    // 数据处理完成后回调
+                                }
+                            });
+                        }catch (Exception e){
 
+                        	if(mTvLink != null && mSelectLinkList != null){
+								String links = "" ;
+                        		for(int i = 0 ;i < mSelectLinkList.size() ;i++){
+									links += mSelectLinkList.get(i).getCatname()+" / " ;
+								}
+
+								links = links.substring(0,links.lastIndexOf("/")) ;
+
+								mTvLink.setText(links);
 							}
-						});
+
+							if(popupWindow != null){
+								popupWindow.dismiss();
+								popupWindow = null ;
+							}
+                            e.printStackTrace();
+                        }
+
                     }
                 });
             }
@@ -1127,23 +1164,6 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 						//.recordVideoSecond()//录制视频秒数 默认60s
 						.forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
 
-				/*BJCommonImageCropHelper.openImageMulti(ReleaseActivity.this, mPhotoList,4,
-						new ThemeConfig.Builder().setMainElementsColor(Color.parseColor("#00ccff")).setTitlebarRightButtonText(R.string.complete).build(), new BJCommonImageCropHelper.OnHandlerResultCallback(){
-
-							@Override
-							public void onHandlerSuccess(List<PhotoInfo> resultList) {
-
-								mPhotoList = resultList ;
-								mHandler.sendEmptyMessage(2) ;
-							}
-
-							@Override
-							public void onHandlerFailure(String errorMsg) {
-
-							}
-
-						});*/
-
 				break ;
 			case R.id.tv_select_qone :
 
@@ -1228,6 +1248,12 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 					WindowsToast.makeText(mContext,"QQ号不能为空").show();
 					return ;
 				}
+                if(!TextUtils.isEmpty(mLinkName)){
+                	for(int i = 0 ;i< mSelectLinkList.size() ;i++){
+						mSelectLinkList.get(i).setType("link");
+					}
+                    mHashExtra.put(mLinkName,mSelectLinkList) ;
+                }
 
 				String extra = "";
 				if(mHashExtra.size() > 0){
@@ -1235,7 +1261,25 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 					extra =  gson.toJson(mHashExtra);
 				}
 
+				if(TextUtils.isEmpty(mImageUrl)){
+					WindowsToast.makeText(mContext,"请上传图片").show();
+					return ;
+				}
+
+				if(TextUtils.isEmpty(mVideUrl)){
+					WindowsToast.makeText(mContext,"请上传视频").show();
+					return ;
+				}
+
 				String imgs = mImageUrl.substring(0,mImageUrl.lastIndexOf(","));
+
+				SYSDiaLogUtils.showProgressDialog(this, SYSDiaLogUtils.SYSDiaLogType.IosType, "加载中...", false, new DialogInterface.OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface dialog) {
+
+					}
+				});
+
 
 				AppInfoAdd(mSubId,mEtTitle.getText().toString().trim(),mAreaId,mStreetId,
 						mEtDes.getText().toString().trim(),"","","",mTvSelectQone.getText().toString().trim(),
@@ -1434,6 +1478,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 						ReleaseRet bean = gson.fromJson(message,ReleaseRet.class) ;
 						if(Integer.valueOf(bean.getData().getId()) > 0 ){
 							WindowsToast.makeText(mContext,bean.getData().getMsg()).show();
+							SYSDiaLogUtils.dismissProgress();
 							finish();
 						}
 					}

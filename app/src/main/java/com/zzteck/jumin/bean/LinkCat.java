@@ -70,6 +70,16 @@ public class LinkCat implements Serializable {
         private String catshort;
         private String catpy;
 
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        private String type ;
+
         public String getCatid() {
             return catid;
         }
