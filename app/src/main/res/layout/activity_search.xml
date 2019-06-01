@@ -60,7 +60,7 @@
                     android:layout_marginLeft="15dp"
                     android:background="@null"
                     android:gravity="center_vertical"
-                    android:hint="请输入要搜索的内容"
+                    android:hint="找工作，找房子"
                     android:textColor="@color/dark"
                     android:textColorHint="@color/dark"
                     android:textSize="16sp"></EditText>
@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
-            android:text="历史记录"
+            android:text="热门搜索"
             android:textSize="16sp" />
 
         <com.zzteck.zzview.WJSpandGridView

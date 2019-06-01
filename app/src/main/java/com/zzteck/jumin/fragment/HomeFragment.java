@@ -203,7 +203,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             map.put("cityid", cityId);
         }
 
-        map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Info.Getinfos"));
+        map.put("sign", UtilsTools.getSign(getActivity(),"App.Info.Getinfos"));
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
@@ -439,7 +439,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         map.put("s", "App.Category.Pushcat");
         map.put("type", 3 + "");
 
-        map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Category.Pushcat"));
+        map.put("sign", UtilsTools.getSign(getActivity(),"App.Category.Pushcat"));
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
@@ -504,7 +504,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         map.put("s", "App.Category.Pushcat");
         map.put("type", 1 + "");
 
-        map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Category.Pushcat"));
+        map.put("sign", UtilsTools.getSign(getActivity(),"App.Category.Pushcat"));
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
@@ -553,7 +553,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         Map<String, String> map = new HashMap<>();
         map.put("s", "App.Category.Pushcat");
         map.put("type", 2 + "");
-        map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Category.Pushcat"));
+        map.put("sign", UtilsTools.getSign(getActivity(),"App.Category.Pushcat"));
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
@@ -682,7 +682,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         Map<String, String> map = new HashMap<>() ;
         map.put("s","App.Index.Banner") ;
 
-        map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Index.Banner"));
+        map.put("sign", UtilsTools.getSign(getActivity(),"App.Index.Banner"));
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();

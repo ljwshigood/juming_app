@@ -53,7 +53,7 @@ public class ReleaseCategoryActivity extends BaseActivity implements View.OnClic
 
 		Map<String, String> map = new HashMap<>();
 		map.put("s", "App.Category.Lists");
-		map.put("sign", UtilsTools.getSign(mContext,"jumin_"+"App.Category.Lists"));
+		map.put("sign", UtilsTools.getSign(mContext,"App.Category.Lists"));
 
 		OkHttpClient client = new OkHttpClient();
 		Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();

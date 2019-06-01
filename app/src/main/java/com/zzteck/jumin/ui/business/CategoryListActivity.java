@@ -35,6 +35,7 @@ import com.zzteck.jumin.bean.MyFilterParamsBean;
 import com.zzteck.jumin.bean.MyFilterTabBean;
 import com.zzteck.jumin.bean.MyPopEntityLoaderImp;
 import com.zzteck.jumin.bean.MyResultLoaderImp;
+import com.zzteck.jumin.bean.SearchListBean;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.SharePerfenceUtil;
@@ -346,9 +347,12 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 
     private String mId;
 
+    private List<SearchListBean.DataBean> mSearchList ;
+
     private void initData() {
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
+        mSearchList = (List<SearchListBean.DataBean>) intent.getSerializableExtra("list");
         mId = intent.getStringExtra("id");
         mTvTitle.setText(title + "");
     }

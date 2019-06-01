@@ -55,7 +55,7 @@ public class MainCategoryFragment extends Fragment implements View.OnClickListen
         Map<String, String> map = new HashMap<>();
         map.put("s", "App.Category.Lists");
 
-        map.put("sign", UtilsTools.getSign(getActivity(),"jumin_"+"App.Category.Lists"));
+        map.put("sign", UtilsTools.getSign(getActivity(),"App.Category.Lists"));
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();

@@ -20,14 +20,27 @@ public class SearchAdapter extends BaseAdapter {
 
     private Context mContext ;
 
-    private List<SearchBean> mSearchBeanList;
+    public List<SearchBean.DataBean> getmSearchBeanList() {
+        return mSearchBeanList;
+    }
+
+    public void setmSearchBeanList(List<SearchBean.DataBean> mSearchBeanList) {
+        this.mSearchBeanList = mSearchBeanList;
+    }
+
+    private List<SearchBean.DataBean> mSearchBeanList;
 
     private LayoutInflater mLayoutInflater;
 
-    public SearchAdapter(Context context,List<SearchBean> chartBeanList){
+    public SearchAdapter(Context context,List<SearchBean.DataBean> chartBeanList){
         this.mContext = context ;
         this.mSearchBeanList = chartBeanList ;
         mLayoutInflater = LayoutInflater.from(context);
+    }
+
+    public void notifySearchDataSet(List<SearchBean.DataBean> chartBeanList){
+        this.mSearchBeanList = chartBeanList ;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -56,8 +69,8 @@ public class SearchAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        SearchBean bean = mSearchBeanList.get(position) ;
-        viewHolder.mTvSearch.setText(bean.getSearch());
+        SearchBean.DataBean bean = mSearchBeanList.get(position) ;
+        viewHolder.mTvSearch.setText(bean.getKeywords());
         return convertView;
 
     }
