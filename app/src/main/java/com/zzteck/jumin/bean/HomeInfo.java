@@ -3,6 +3,7 @@ package com.zzteck.jumin.bean;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2018/6/30.
@@ -92,8 +93,17 @@ public class HomeInfo implements Serializable{
         private String info_level;
         private String userid;
         private String contact_who;
-        private List<ExtrBean> extr;
 
+        public Map getExtr() {
+            return extr;
+        }
+
+        public void setExtr(Map extr) {
+            this.extr = extr;
+        }
+
+        //private List<ExtrBean> extr;
+        private Map extr ;
         public String getPrice() {
             return price;
         }
@@ -222,23 +232,23 @@ public class HomeInfo implements Serializable{
             this.contact_who = contact_who;
         }
 
-        public List<ExtrBean> getExtr() {
+    /*    public List<ExtrBean> getExtr() {
             return extr;
         }
 
         public void setExtr(List<ExtrBean> extr) {
             this.extr = extr;
-        }
+        }*/
 
-        public static class ExtrBean {
-            /**
+      /*  public static class ExtrBean {
+            *//**
              * iid : 421
              * id : 5099
              * prices : 10.00
              * new_old : 1
              * from : 2
              * content : null
-             */
+             *//*
 
             private String iid;
             private String id;
@@ -294,6 +304,6 @@ public class HomeInfo implements Serializable{
             public void setContent(Object content) {
                 this.content = content;
             }
-        }
+        }*/
     }
 }

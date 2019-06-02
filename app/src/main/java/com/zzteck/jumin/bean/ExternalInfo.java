@@ -47,15 +47,6 @@ public class ExternalInfo implements Serializable {
     }
 
     public static class DataBean {
-        /**
-         * required : 1
-         * title : 来源
-         * type : radio
-         * placeholder :
-         * identifier : from
-         * extra : {"choices":"1=个人\r\n2=商家"}
-         * value :
-         */
 
         private String required;
         private String title;
@@ -131,10 +122,7 @@ public class ExternalInfo implements Serializable {
                 this.units = units;
             }
 
-            /**
-             * choices : 1=个人
-             2=商家
-             */
+
 
             private String units ;
 
@@ -159,4 +147,10 @@ public class ExternalInfo implements Serializable {
             }
         }
     }
+
+
+
+
+
+
 }
