@@ -88,6 +88,7 @@
         <activity android:name=".ui.business.MoreCategoryActivity"></activity>
         <activity android:name=".ui.business.MoreCategoryListActivity"></activity>
         <activity android:name=".ui.business.ChargeActivity"></activity>
+        <activity android:name=".ui.business.SearchResultListActivity"></activity>
 
 
         <activity android:name=".test.RefreshAndMoreActivity">
