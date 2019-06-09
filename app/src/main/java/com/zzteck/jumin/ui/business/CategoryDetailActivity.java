@@ -10,7 +10,9 @@ import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
@@ -35,6 +37,7 @@ import com.zzteck.jumin.bean.CategoryDetailHeader;
 import com.zzteck.jumin.bean.CatoryDetailInfo;
 import com.zzteck.jumin.bean.CheckInfo;
 import com.zzteck.jumin.bean.ExternalInfo;
+import com.zzteck.jumin.bean.ExtraInfo2Bean;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.DeviceUtil;
@@ -44,8 +47,10 @@ import com.zzteck.jumin.view.WeiXinDialog;
 import com.zzteck.zzview.WindowsToast;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -282,256 +287,92 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
 
     private LinearLayout mLLPro ;
 
+    private List<InfoBean> infoBeans = new ArrayList<>() ;
 
+    private class InfoBean implements Serializable{
 
-    private void daymicLayout(final CatoryDetailInfo info){
+        private String title ;
 
-       /* if(info == null || info.getData() == null){
+        private String value ;
+
+        private String type ;
+
+        public InfoBean(String title, String value,String type) {
+            this.title = title;
+            this.value = value;
+            this.type = type ;
+        }
+    }
+
+    private void daymicLayout(final List<InfoBean> infoBeans){
+
+        if(infoBeans == null){
             return ;
         }
 
         mLLPro.removeAllViews();
         mLLPro.setOrientation(LinearLayout.VERTICAL);
 
-        for(int i = 0 ; i< info.getData().getExtra().size() ;i++){
+        for(int i = 0 ; i< infoBeans.size() ;i++){
+
+            if(infoBeans.get(i).type.equals("checkbox")){
+                mLLDaymicConfig.setVisibility(View.VISIBLE);
+                mTvDaymicTitle.setText(infoBeans.get(i).title);
+
+                //mRvDaymic.setLayoutManager(new GridLayoutManager(mContext,5));
+
+            }else {
+                LinearLayout linearLayoutLeft = new LinearLayout(mContext);
+                linearLayoutLeft.setLayoutParams(new ViewGroup.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
+                linearLayoutLeft.setOrientation(LinearLayout.HORIZONTAL);
+                linearLayoutLeft.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0.8f));
+
+                TextView tvTitle = new TextView(this);
+                tvTitle.setGravity(Gravity.CENTER);
+                tvTitle.setTextSize(14f);
+                tvTitle.setText(infoBeans.get(i).title);
+                linearLayoutLeft.addView(tvTitle);
+
+                LinearLayout linearLayoutRight = new LinearLayout(mContext);
+                linearLayoutRight.setLayoutParams(new ViewGroup.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
+                linearLayoutRight.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0.2f));
 
 
-            LinearLayout linearLayoutLeft  = new LinearLayout(mContext) ;
-            linearLayoutLeft.setLayoutParams(new ViewGroup.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT,LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
-            linearLayoutLeft.setOrientation(LinearLayout.HORIZONTAL);
-            linearLayoutLeft.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.7f));
-
-            TextView tvTitle = new TextView(this);
-            tvTitle.setGravity(Gravity.CENTER);
-            tvTitle.setTextSize(16f);
-            tvTitle.setText(info.getData().get(i).getTitle());
-            linearLayoutLeft.addView(tvTitle);
-
-            LinearLayout linearLayoutRight  = new LinearLayout(mContext) ;
-            linearLayoutRight.setLayoutParams(new ViewGroup.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT,LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
-            linearLayoutRight.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.3f));
-
-            if(info.getData().get(i).getType().equals("radio")){
-
-                linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
-                RadioGroup radioGroup = new RadioGroup(this);
-                radioGroup.setLayoutParams(new RadioGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                radioGroup.setOrientation(LinearLayout.HORIZONTAL);
-
-                final int positon  = i ;
-
-                String choices = info.getData().get(i).getExtra().getChoices();
-                final String[] arrayChoices = choices.split("\\r\\n") ;
-
-                for(int j = 0 ; j< arrayChoices.length ; j++){
-                    final RadioButton radioButton = new RadioButton(this) ;
-                    radioButton.setId(mRadioButtinId++) ;
-                    int index = arrayChoices[j].indexOf("=") ;
-                    radioButton.setText(arrayChoices[j].substring(index+1,arrayChoices[j].length())) ;
-                    radioButton.setLayoutParams(new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT,RadioGroup.LayoutParams.WRAP_CONTENT)) ;
-                    radioGroup.addView(radioButton) ;
-                    final String[] selectText = arrayChoices[j].split("=") ;
-                    radioButton.setTag(selectText[0]);
-                }
-
-                radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        int id = group.getCheckedRadioButtonId();
-                        RadioButton choise = findViewById(id);
-                        String selectText = (String) choise.getTag();
-                        mHashExtra.put(info.getData().get(positon).getIdentifier(),selectText) ;
-                    }
-                });
-
-                linearLayoutRight.addView(radioGroup);
+                TextView tvTitle1 = new TextView(this);
+                tvTitle1.setGravity(Gravity.CENTER);
+                tvTitle1.setTextSize(14f);
+                tvTitle1.setText(infoBeans.get(i).value);
+                linearLayoutRight.addView(tvTitle1);
 
 
-            }else if(info.getData().get(i).getType().equals("number")){
+                LinearLayout ll = new LinearLayout(this);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, DeviceUtil.dip2px(mContext, 35));
 
-                linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
-                EditText etPrice = new EditText(this);
-                etPrice.setHint("请输入"+info.getData().get(i).getTitle());
-                etPrice.setBackground(null);
-                etPrice.setLayoutParams(new LinearLayout.LayoutParams(200,ViewGroup.LayoutParams.WRAP_CONTENT,0.8f));
+                ll.setLayoutParams(params);
+                ll.setOrientation(LinearLayout.HORIZONTAL);
 
+                ll.addView(linearLayoutLeft);
+                ll.addView(linearLayoutRight);
 
-                mHashMapViews.put(info.getData().get(i).getIdentifier(),etPrice) ;
-
-                TextView tvUnit = new TextView(this);
-                tvUnit.setText(info.getData().get(i).getExtra().getUnits());
-                tvUnit.setGravity(Gravity.CENTER_VERTICAL|Gravity.RIGHT);
-                tvUnit.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
-
-                linearLayoutRight.addView(etPrice);
-                linearLayoutRight.addView(tvUnit);
-
-
-            }else if(info.getData().get(i).getType().equals("select")){
-
-                linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
-                final MaterialSpinner spinner = new MaterialSpinner(mContext) ;
-                spinner.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
-
-                final String[] attray = info.getData().get(i).getExtra().getChoices().split("\\r\\n") ;
-
-                List<String> spinnerList = new ArrayList<>() ;
-
-                for(int j = 0 ;j < attray.length ;j++){
-                    int index = attray[j].indexOf("=") ;
-                    String temp = attray[j].substring(index+1,attray[j].length());
-                    spinnerList.add(temp);
-                }
-
-                spinner.setItems(spinnerList);
-                spinner.setTag(info.getData().get(i).getIdentifier());
-                spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
-                    @Override
-                    public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                        String temp = attray[position] ;
-                        String[] splites = temp.split("=") ;
-                        String identifier = (String) spinner.getTag();
-                        mHashExtra.put(identifier,splites[0]) ;
-
-                        Log.e("liujw","########setOnItemSelectedListener mHashExtra : "+mHashExtra.toString()) ;
-                    }
-                });
-
-                linearLayoutRight.addView(spinner);
-            }else if(info.getData().get(i).getType().equals("text")){
-                linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
-                EditText tvText = new EditText(this);
-                tvText.setHint("请输入"+info.getData().get(i).getTitle());
-                tvText.setSingleLine();
-                tvText.setBackground(null);
-                tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
-
-                mHashMapViews.put(info.getData().get(i).getIdentifier(),tvText) ;
-
-                linearLayoutRight.addView(tvText) ;
-
-
-            }else if(info.getData().get(i).getType().equals("textarea")){
-                linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
-                EditText tvText = new EditText(this);
-                tvText.setHint("请输入"+info.getData().get(i).getTitle());
-                tvText.setBackground(null);
-                tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
-
-                mHashMapViews.put(info.getData().get(i).getIdentifier(),tvText) ;
-
-                linearLayoutRight.addView(tvText) ;
-
-
-
-            }else if(info.getData().get(i).getType().equals("checkbox")){
-
-
-                linearLayoutRight.setOrientation(LinearLayout.VERTICAL);
-
-                String choices = info.getData().get(i).getExtra().getChoices();
-                final String[] arrayChoices = choices.split("\\r\\n") ;
-
-                TextView tvText = new TextView(this);
-                tvText.setHint("请选择"+info.getData().get(i).getTitle());
-                tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
-
-                linearLayoutRight.addView(tvText) ;
-                final String title = info.getData().get(i).getTitle() ;
-                tvText.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        List<CheckInfo> list = new ArrayList<>() ;
-
-                        for(int k = 0 ;k < arrayChoices.length ;k++){
-                            CheckInfo bean = new CheckInfo() ;
-                            String[] text = arrayChoices[k].split("=") ;
-                            bean.setInfo(text[1]);
-                            bean.setId(text[0]) ;
-                            list.add(bean) ;
-                        }
-
-                        initCheckPopupWindow(list,title,false) ;
-                    }
-                });
-
-                *//*linearLayoutRight.setOrientation(LinearLayout.VERTICAL);
-
-                 *//**//*	LinearLayout llContainer = new LinearLayout(this);
-				llContainer.setLayoutParams(new RadioGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-				llContainer.setOrientation(LinearLayout.VERTICAL);
-
-				String choices = info.getData().get(i).getExtra().getChoices();
-				String[] arrayChoices = choices.split("\\r\\n") ;
-
-				LinearLayout groupLl = null ;
-
-				for(int j = 0 ; j< arrayChoices.length ; j++){
-
-					final CheckBox checkButton = new CheckBox(this) ;
-					int index = arrayChoices[j].indexOf("=") ;
-					checkButton.setText(arrayChoices[j].substring(index+1,arrayChoices[j].length()));
-					checkButton.setLayoutParams(new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT,RadioGroup.LayoutParams.WRAP_CONTENT)) ;
-
-					checkButton.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-
-						}
-					});
-
-					if(j % 3 == 0){
-						groupLl = new LinearLayout(this);
-						groupLl.setLayoutParams(new RadioGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-						groupLl.setOrientation(LinearLayout.HORIZONTAL);
-						llContainer.addView(groupLl);
-					}
-					groupLl.addView(checkButton);
-				}*//**//*
-
-				linearLayoutRight.addView(llContainer);*//*
-
-            }else if(info.getData().get(i).getType().equals("link")){
-
-                linearLayoutRight.setOrientation(LinearLayout.VERTICAL);
-
-                TextView tvText = new TextView(this);
-                tvText.setHint("请选择"+info.getData().get(i).getTitle());
-                tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
-
-                linearLayoutRight.addView(tvText) ;
-
-                final String link = info.getData().get(i).getExtra().getParentid()  ;
-                final String title = info.getData().get(i).getTitle() ;
-                tvText.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        initPopupWindow(title,link,false) ;
-                    }
-                });
-
+                ll.setGravity(Gravity.CENTER_VERTICAL);
+                mLLPro.addView(ll);
             }
 
-            LinearLayout ll = new LinearLayout(this);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, DeviceUtil.dip2px(mContext,50)) ;
-
-            ll.setLayoutParams(params);
-            ll.setOrientation(LinearLayout.HORIZONTAL);
-
-            ll.addView(linearLayoutLeft);
-            ll.addView(linearLayoutRight);
-
-            ll.setGravity(Gravity.CENTER_VERTICAL);
-
-            mLLDaymic.addView(ll);
-        }*/
+        }
     }
 
 
-    private void initView() {
+    private LinearLayout mLLDaymicConfig ;
 
+    private TextView mTvDaymicTitle ;
+
+    private RecyclerView mRvDaymic ;
+
+    private void initView() {
+        mRvDaymic = findViewById(R.id.rv_daymic) ;
+        mTvDaymicTitle = findViewById(R.id.tv_title_info);
+        mLLDaymicConfig = findViewById(R.id.ll_daymic_config) ;
         mLLPro = findViewById(R.id.ll_add_pro) ;
         mTvTipInfo = findViewById(R.id.tv_tip_contnet) ;
         mTvBaseInfo = findViewById(R.id.tv_base_info) ;
@@ -675,6 +516,40 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
     }
 
 
+    private class ExtraInfoBean implements Serializable{
+
+        private  String title ;
+
+        private String value ;
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        private String type ;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+    }
+
     /*
     *
         /m/template/images/qq.png  这是QQ的图标
@@ -687,6 +562,32 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
         mId = getIntent().getStringExtra("id");
     }
 
+    private void iteratorMap(Map map){
+        if(map == null){
+            return ;
+        }
+        Iterator<Map.Entry<String, Object>> entries = map.entrySet().iterator();
+
+        while (entries.hasNext()) {
+
+            Map.Entry<String, Object> entry = entries.next();
+
+            if(entry.getValue() instanceof Map ){
+             //   Log.e("liujw","Key = " + entry.getKey() + ", Value = " + entry.getValue());
+                try {
+                    Map tempMap = (Map) entry.getValue();
+                    infoBeans.add(new InfoBean(tempMap.get("title").toString(),tempMap.get("value").toString(),tempMap.get("type").toString())) ;
+                }catch (Exception e){
+                    Log.e("liujw","#############Exception "+entry.getValue().toString());
+                    e.printStackTrace();
+                }
+                //iteratorMap((Map)entry.getValue()) ;
+            }else if(entry.getValue() instanceof String){
+                //Log.e("liujw","Key = " + entry.getKey() + ", Value = " + entry.getValue());
+            }
+        }
+    }
+
     private void setDataView(CatoryDetailInfo bean) {
 
         mTvContentTitle.setText(bean.getData().getTitle());
@@ -695,11 +596,19 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
 
         String extra = "" ;
 
-        if(bean.getData().getExtra() != null){
-            for(int i = 0 ;i < bean.getData().getExtra().size() ;i++){
-                extra += bean.getData().getExtra().get(i).getTitle()+" : "+bean.getData().getExtra().get(i).getValue()+"\n\n";
-            }
-        }
+        /*if(bean.getData().getExtra() != null){
+           *//* for(int i = 0 ;i < bean.getData().getExtra().size() ;i++){
+              //  extra += bean.getData().getExtra().get(i).getTitle()+" : "+bean.getData().getExtra().get(i).getValue()+"\n\n";
+            }*//*
+        }*/
+
+        infoBeans.add(new InfoBean("联系人 ：",bean.getData().getContact_who(),"")) ;
+        infoBeans.add(new InfoBean("QQ ：",bean.getData().getQq(),"")) ;
+        infoBeans.add(new InfoBean("微信 ：",bean.getData().getWeixin()+"","")) ;
+
+        iteratorMap(bean.getData().getExtra()) ;
+
+        daymicLayout(infoBeans);
 
         mTvBaseInfo.setText("联系人 ："+bean.getData().getContact_who()+"\n\n"
                             +"QQ ："+bean.getData().getQq()+"\n\n"

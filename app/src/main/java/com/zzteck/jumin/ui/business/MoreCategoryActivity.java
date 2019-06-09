@@ -25,6 +25,7 @@ import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.ui.mainui.MainActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.UtilsTools;
+import com.zzteck.jumin.view.DividerGridViewItemDecoration;
 import com.zzteck.jumin.view.NormalDecoration;
 import com.zzteck.jumin.view.TimeItemDecoration;
 
@@ -92,7 +93,9 @@ public class MoreCategoryActivity extends BaseActivity implements OnClickListene
 	private void initData(){
 
 		mRvCategory.setLayoutManager(new GridLayoutManager(this,3));
-		mRvCategory.addItemDecoration(new NormalDecoration(ContextCompat.getColor(this, R.color.mainGrayF8), (int) getResources().getDimension(R.dimen.one)));
+		DividerGridViewItemDecoration dividerGridViewItemDecoration = new DividerGridViewItemDecoration(this);
+		mRvCategory.addItemDecoration(dividerGridViewItemDecoration);
+	//	mRvCategory.addItemDecoration(new NormalDecoration(ContextCompat.getColor(this, R.color.mainGrayF8), (int) getResources().getDimension(R.dimen.one)));
 		mMoreCategoryAdapter = new MoreCategoryAdapter(mContext,null) ;
 		mRvCategory.setAdapter(mMoreCategoryAdapter);
 	}

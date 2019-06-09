@@ -3,6 +3,7 @@ package com.zzteck.jumin.bean;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2018/6/30.
@@ -168,7 +169,7 @@ public class CatoryDetailInfo implements Serializable {
         private String modid;
         private String usertoid;
         private List<ImageBean> image;
-        private List<ExtraBean> extra;
+        private Map extra;
 
         public String getId() {
             return id;
@@ -602,11 +603,11 @@ public class CatoryDetailInfo implements Serializable {
             this.image = image;
         }
 
-        public List<ExtraBean> getExtra() {
+        public Map getExtra() {
             return extra;
         }
 
-        public void setExtra(List<ExtraBean> extra) {
+        public void setExtra(Map extra) {
             this.extra = extra;
         }
 

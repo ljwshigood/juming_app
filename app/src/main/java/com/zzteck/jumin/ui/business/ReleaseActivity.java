@@ -20,6 +20,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -51,6 +52,7 @@ import com.zzteck.jumin.bean.ImageInfo;
 import com.zzteck.jumin.bean.LinkCat;
 import com.zzteck.jumin.bean.MediaInfo;
 import com.zzteck.jumin.bean.QoneInfo;
+import com.zzteck.jumin.bean.ReleaseDataBean;
 import com.zzteck.jumin.bean.ReleaseRet;
 import com.zzteck.jumin.bean.VideoInfo;
 import com.zzteck.jumin.pop.LinkCatAdapter;
@@ -246,7 +248,8 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 							String message = new String(responseStr.getBytes()) ;
 							Gson gson = new Gson() ;
 							mExternalInfo = gson.fromJson(message,ExternalInfo.class) ;
-							daymicLayout(mExternalInfo);
+							iteratorMap(mExternalInfo.getData());
+							daymicLayout(mReleaseDataList);
 						}catch (Exception e){
 							e.printStackTrace();
 						}
@@ -694,16 +697,30 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 	private TextView mTvLink ;
 
 
-	private void daymicLayout(final ExternalInfo info){
+    private void iteratorMap(Map map){
+        if(map == null){
+            return ;
+        }
+        Iterator<Map.Entry<String, Object>> entries = map.entrySet().iterator();
+        while (entries.hasNext()) {
+            Map.Entry<String, Object> entry = entries.next();
+			mReleaseDataList.add((ReleaseDataBean) entry.getValue()) ;
+        }
+    }
 
-		if(info == null || info.getData() == null){
+
+    private List<ReleaseDataBean> mReleaseDataList = new ArrayList<>() ;
+
+	private void daymicLayout(final List<ReleaseDataBean> info){
+
+		if(info == null || info == null){
 			return ;
 		}
 
 		mLLDaymic.removeAllViews();
 		mLLDaymic.setOrientation(LinearLayout.VERTICAL);
 
-		for(int i = 0 ; i< info.getData().size() ;i++){
+		for(int i = 0 ; i< info.size() ;i++){
 
 
 			LinearLayout linearLayoutLeft  = new LinearLayout(mContext) ;
@@ -714,14 +731,14 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			TextView tvTitle = new TextView(this);
 			tvTitle.setGravity(Gravity.CENTER);
 			tvTitle.setTextSize(16f);
-			tvTitle.setText(info.getData().get(i).getTitle());
+			tvTitle.setText(info.get(i).getTitle());
 			linearLayoutLeft.addView(tvTitle);
 
 			LinearLayout linearLayoutRight  = new LinearLayout(mContext) ;
 			linearLayoutRight.setLayoutParams(new ViewGroup.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT,LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
 			linearLayoutRight.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.3f));
 
-			if(info.getData().get(i).getType().equals("radio")){
+			if(info.get(i).getType().equals("radio")){
 
 				linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
 				RadioGroup radioGroup = new RadioGroup(this);
@@ -730,7 +747,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 				final int positon  = i ;
 
-				String choices = info.getData().get(i).getExtra().getChoices();
+				String choices = info.get(i).getExtra().getChoices();
 				final String[] arrayChoices = choices.split("\\r\\n") ;
 
 				for(int j = 0 ; j< arrayChoices.length ; j++){
@@ -750,26 +767,26 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 						int id = group.getCheckedRadioButtonId();
 						RadioButton choise = findViewById(id);
 						String selectText = (String) choise.getTag();
-						mHashExtra.put(info.getData().get(positon).getIdentifier(),selectText) ;
+						mHashExtra.put(info.get(positon).getIdentifier(),selectText) ;
 					}
 				});
 
 				linearLayoutRight.addView(radioGroup);
 
 
-			}else if(info.getData().get(i).getType().equals("number")){
+			}else if(info.get(i).getType().equals("number")){
 
 				linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
 				EditText etPrice = new EditText(this);
-				etPrice.setHint("请输入"+info.getData().get(i).getTitle());
+				etPrice.setHint("请输入"+info.get(i).getTitle());
 				etPrice.setBackground(null);
 				etPrice.setLayoutParams(new LinearLayout.LayoutParams(200,ViewGroup.LayoutParams.WRAP_CONTENT,0.8f));
 
 
-				mHashMapViews.put(info.getData().get(i).getIdentifier(),etPrice) ;
+				mHashMapViews.put(info.get(i).getIdentifier(),etPrice) ;
 
 				TextView tvUnit = new TextView(this);
-				tvUnit.setText(info.getData().get(i).getExtra().getUnits());
+				tvUnit.setText(info.get(i).getExtra().getUnits());
 				tvUnit.setGravity(Gravity.CENTER_VERTICAL|Gravity.RIGHT);
 				tvUnit.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
 
@@ -777,13 +794,13 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				linearLayoutRight.addView(tvUnit);
 
 
-			}else if(info.getData().get(i).getType().equals("select")){
+			}else if(info.get(i).getType().equals("select")){
 
 				linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
 				final MaterialSpinner spinner = new MaterialSpinner(mContext) ;
 				spinner.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
 
-				final String[] attray = info.getData().get(i).getExtra().getChoices().split("\\r\\n") ;
+				final String[] attray = info.get(i).getExtra().getChoices().split("\\r\\n") ;
 
 				List<String> spinnerList = new ArrayList<>() ;
 
@@ -794,7 +811,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				}
 
 				spinner.setItems(spinnerList);
-				spinner.setTag(info.getData().get(i).getIdentifier());
+				spinner.setTag(info.get(i).getIdentifier());
 				spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 					@Override
 					public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
@@ -808,46 +825,46 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				});
 
 				linearLayoutRight.addView(spinner);
-			}else if(info.getData().get(i).getType().equals("text")){
+			}else if(info.get(i).getType().equals("text")){
 				linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
 				EditText tvText = new EditText(this);
-				tvText.setHint("请输入"+info.getData().get(i).getTitle());
+				tvText.setHint("请输入"+info.get(i).getTitle());
 				tvText.setSingleLine();
 				tvText.setBackground(null);
 				tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
 
-				mHashMapViews.put(info.getData().get(i).getIdentifier(),tvText) ;
+				mHashMapViews.put(info.get(i).getIdentifier(),tvText) ;
 
 				linearLayoutRight.addView(tvText) ;
 
 
-			}else if(info.getData().get(i).getType().equals("textarea")){
+			}else if(info.get(i).getType().equals("textarea")){
 				linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
 				EditText tvText = new EditText(this);
-				tvText.setHint("请输入"+info.getData().get(i).getTitle());
+				tvText.setHint("请输入"+info.get(i).getTitle());
 				tvText.setBackground(null);
 				tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
 
-				mHashMapViews.put(info.getData().get(i).getIdentifier(),tvText) ;
+				mHashMapViews.put(info.get(i).getIdentifier(),tvText) ;
 
 				linearLayoutRight.addView(tvText) ;
 
 
 
-			}else if(info.getData().get(i).getType().equals("checkbox")){
+			}else if(info.get(i).getType().equals("checkbox")){
 
 
 				linearLayoutRight.setOrientation(LinearLayout.VERTICAL);
 
-				String choices = info.getData().get(i).getExtra().getChoices();
+				String choices = info.get(i).getExtra().getChoices();
 				final String[] arrayChoices = choices.split("\\r\\n") ;
 
 				TextView tvText = new TextView(this);
-				tvText.setHint("请选择"+info.getData().get(i).getTitle());
+				tvText.setHint("请选择"+info.get(i).getTitle());
 				tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
 
 				linearLayoutRight.addView(tvText) ;
-				final String title = info.getData().get(i).getTitle() ;
+				final String title = info.get(i).getTitle() ;
 				tvText.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
@@ -868,7 +885,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 				/*linearLayoutRight.setOrientation(LinearLayout.VERTICAL);
 
-			*//*	LinearLayout llContainer = new LinearLayout(this);
+				 *//*	LinearLayout llContainer = new LinearLayout(this);
 				llContainer.setLayoutParams(new RadioGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 				llContainer.setOrientation(LinearLayout.VERTICAL);
 
@@ -902,20 +919,20 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 				linearLayoutRight.addView(llContainer);*/
 
-			}else if(info.getData().get(i).getType().equals("link")){
+			}else if(info.get(i).getType().equals("link")){
 
 				linearLayoutRight.setOrientation(LinearLayout.VERTICAL);
-                mLinkName = info.getData().get(i).getIdentifier() ;
+				mLinkName = info.get(i).getIdentifier() ;
 				mTvLink = new TextView(this);
-				mTvLink.setHint("请选择"+info.getData().get(i).getTitle());
+				mTvLink.setHint("请选择"+info.get(i).getTitle());
 				mTvLink.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
 
 				mTvLink.setSingleLine(true);
 
 				linearLayoutRight.addView(mTvLink) ;
 
-                final String link = info.getData().get(i).getExtra().getParentid()  ;
-				final String title = info.getData().get(i).getTitle() ;
+				final String link = info.get(i).getExtra().getParentid()  ;
+				final String title = info.get(i).getTitle() ;
 				mTvLink.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
@@ -1186,35 +1203,35 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 						while (iterator.hasNext()) {
 							Map.Entry<String, Object> entry = iterator.next();
 
-							for(int i = 0 ;i < mExternalInfo.getData().size();i++){
-								if(entry.getKey().equals(mExternalInfo.getData().get(i).getIdentifier())){
-									if(mExternalInfo.getData().get(i).getType().equals("number")){
+							for(int i = 0 ;i < mReleaseDataList.size();i++){
+								if(entry.getKey().equals(mReleaseDataList.get(i).getIdentifier())){
+									if(mReleaseDataList.get(i).getType().equals("number")){
 										EditText et = (EditText) entry.getValue();
 										if(TextUtils.isEmpty(et.getText().toString().trim())){
-											WindowsToast.makeText(mContext,mExternalInfo.getData().get(i).getTitle()+"不能为空").show();
+											WindowsToast.makeText(mContext,mReleaseDataList.get(i).getTitle()+"不能为空").show();
 											isPass = false ;
 											break  ;
 										}else{
-											mHashExtra.put(mExternalInfo.getData().get(i).getIdentifier(),et.getText().toString().trim()) ;
+											mHashExtra.put(mReleaseDataList.get(i).getIdentifier(),et.getText().toString().trim()) ;
 										}
 
-									}else if(mExternalInfo.getData().get(i).getType().equals("text")){
+									}else if(mReleaseDataList.get(i).getType().equals("text")){
 										EditText et = (EditText) entry.getValue();
 										if(TextUtils.isEmpty(et.getText().toString().trim())){
-											WindowsToast.makeText(mContext,mExternalInfo.getData().get(i).getTitle()+"不能为空").show();
+											WindowsToast.makeText(mContext,mReleaseDataList.get(i).getTitle()+"不能为空").show();
 											isPass = false ;
 											break  ;
 										}else{
-											mHashExtra.put(mExternalInfo.getData().get(i).getIdentifier(),et.getText().toString().trim()) ;
+											mHashExtra.put(mReleaseDataList.get(i).getIdentifier(),et.getText().toString().trim()) ;
 										}
-									}else if(mExternalInfo.getData().get(i).getType().equals("texterea")){
+									}else if(mReleaseDataList.get(i).getType().equals("texterea")){
 										EditText et = (EditText) entry.getValue();
 										if(TextUtils.isEmpty(et.getText().toString().trim())){
-											WindowsToast.makeText(mContext,mExternalInfo.getData().get(i).getTitle()+"不能为空").show();
+											WindowsToast.makeText(mContext,mReleaseDataList.get(i).getTitle()+"不能为空").show();
 											isPass = false ;
 											break  ;
 										}else{
-											mHashExtra.put(mExternalInfo.getData().get(i).getIdentifier(),et.getText().toString().trim()) ;
+											mHashExtra.put(mReleaseDataList.get(i).getIdentifier(),et.getText().toString().trim()) ;
 										}
 									}
 								}
