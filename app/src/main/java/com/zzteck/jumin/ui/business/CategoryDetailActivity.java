@@ -32,10 +32,12 @@ import com.google.gson.Gson;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.CategoryPagerAdapter;
+import com.zzteck.jumin.adapter.ConfigAdapter;
 import com.zzteck.jumin.bean.AttentionInfo;
 import com.zzteck.jumin.bean.CategoryDetailHeader;
 import com.zzteck.jumin.bean.CatoryDetailInfo;
 import com.zzteck.jumin.bean.CheckInfo;
+import com.zzteck.jumin.bean.ConfigBean;
 import com.zzteck.jumin.bean.ExternalInfo;
 import com.zzteck.jumin.bean.ExtraInfo2Bean;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
@@ -304,6 +306,38 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
         }
     }
 
+    private int[] inres = new int[]{R.mipmap.bx,R.mipmap.chuang,R.mipmap.diancilu,R.mipmap.duwei,R.mipmap.kongtiao,R.mipmap.kuandai,R.mipmap.nuanqi,R.mipmap.ranqizao,R.mipmap.reshuiqi,R.mipmap.shafa,
+            R.mipmap.weibolu,R.mipmap.xiyiji,R.mipmap.yangtai,R.mipmap.yigui,R.mipmap.youyanji,R.mipmap.zhuoyi,R.mipmap.zyifab} ;
+
+    private String[] stringRes = new String[]{"冰箱","床","电磁炉","独卫","空调","宽带","暖气","燃气灶","热水器","沙发","微波炉","洗衣机","阳台","衣柜","油烟机","桌椅","做饭"} ;
+
+    private void initConfigAdapter(String value){
+
+        String[] values = value.split(",");
+
+
+
+
+        List<ConfigBean> list = new ArrayList<>() ;
+        for(int i = 0 ;i < inres.length ;i++){
+            ConfigBean bean = new ConfigBean() ;
+            for(int j = 0 ;j < values.length ;j++){
+                if(values[j].equals(stringRes[i])){
+                    bean.setIsSelect(1);
+                    break;
+                }
+            }
+            bean.setInfo(stringRes[i]);
+            bean.setRes(inres[i]);
+            list.add(bean) ;
+        }
+
+        mRvDaymic.setLayoutManager(new GridLayoutManager(mContext,5));
+        ConfigAdapter adapter = new ConfigAdapter(mContext,list) ;
+        mRvDaymic.setAdapter(adapter);
+
+    }
+
     private void daymicLayout(final List<InfoBean> infoBeans){
 
         if(infoBeans == null){
@@ -318,9 +352,7 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
             if(infoBeans.get(i).type.equals("checkbox")){
                 mLLDaymicConfig.setVisibility(View.VISIBLE);
                 mTvDaymicTitle.setText(infoBeans.get(i).title);
-
-                //mRvDaymic.setLayoutManager(new GridLayoutManager(mContext,5));
-
+                initConfigAdapter(infoBeans.get(i).value) ;
             }else {
                 LinearLayout linearLayoutLeft = new LinearLayout(mContext);
                 linearLayoutLeft.setLayoutParams(new ViewGroup.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
@@ -595,12 +627,6 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
         mTvDes.setText(Html.fromHtml(bean.getData().getContent()));
 
         String extra = "" ;
-
-        /*if(bean.getData().getExtra() != null){
-           *//* for(int i = 0 ;i < bean.getData().getExtra().size() ;i++){
-              //  extra += bean.getData().getExtra().get(i).getTitle()+" : "+bean.getData().getExtra().get(i).getValue()+"\n\n";
-            }*//*
-        }*/
 
         infoBeans.add(new InfoBean("联系人 ：",bean.getData().getContact_who(),"")) ;
         infoBeans.add(new InfoBean("QQ ：",bean.getData().getQq(),"")) ;

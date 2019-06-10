@@ -202,7 +202,7 @@ public class GridImageAdapter extends
             }
             viewHolder.tv_duration.setText(DateUtils.timeParse(duration));
             if (mimeType == PictureMimeType.ofAudio()) {
-                viewHolder.mImg.setImageResource(R.drawable.audio_placeholder);
+                viewHolder.mImg.setBackgroundResource(R.drawable.audio_placeholder);
             } else {
                 RequestOptions options = new RequestOptions()
                         .placeholder(R.color.dark)

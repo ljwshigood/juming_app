@@ -302,7 +302,6 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
                 .getSystemService(Context.WINDOW_SERVICE);
         windowManager.addView(letterOverlay, lp);
     }
-
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         if (scrollState == SCROLL_STATE_TOUCH_SCROLL || scrollState == SCROLL_STATE_FLING) {
@@ -331,7 +330,7 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
                 letterOverlay.setTextSize(20);
             }
             letterOverlay.setText(text);
-            letterOverlay.setVisibility(View.VISIBLE);
+            letterOverlay.setVisibility(View.INVISIBLE);
             handler.removeCallbacks(overlayThread);
             // 延迟一秒后执行，让overlay为不可见
             handler.postDelayed(overlayThread, 1000);
@@ -351,7 +350,7 @@ public class LocationActivity extends BaseActivity implements LetterListView.OnT
                 letterOverlay.setTextSize(20);
             }
             letterOverlay.setText(s);
-            letterOverlay.setVisibility(View.VISIBLE);
+            letterOverlay.setVisibility(View.INVISIBLE);
             handler.removeCallbacks(overlayThread);
             handler.postDelayed(overlayThread, 1000);
         }
