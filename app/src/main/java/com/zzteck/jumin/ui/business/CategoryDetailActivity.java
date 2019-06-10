@@ -1,6 +1,7 @@
 package com.zzteck.jumin.ui.business;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -8,6 +9,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
@@ -32,6 +35,7 @@ import com.google.gson.Gson;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.CategoryPagerAdapter;
+import com.zzteck.jumin.adapter.ComFragmentAdapter;
 import com.zzteck.jumin.adapter.ConfigAdapter;
 import com.zzteck.jumin.bean.AttentionInfo;
 import com.zzteck.jumin.bean.CategoryDetailHeader;
@@ -40,13 +44,26 @@ import com.zzteck.jumin.bean.CheckInfo;
 import com.zzteck.jumin.bean.ConfigBean;
 import com.zzteck.jumin.bean.ExternalInfo;
 import com.zzteck.jumin.bean.ExtraInfo2Bean;
+import com.zzteck.jumin.bean.HomeInfo;
+import com.zzteck.jumin.fragment.RecommandFragment;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.DeviceUtil;
+import com.zzteck.jumin.utils.SharePerfenceUtil;
 import com.zzteck.jumin.utils.UtilsTools;
+import com.zzteck.jumin.view.ColorFlipPagerTitleView;
 import com.zzteck.jumin.view.ShareDialog;
 import com.zzteck.jumin.view.WeiXinDialog;
 import com.zzteck.zzview.WindowsToast;
+
+import net.lucode.hackware.magicindicator.MagicIndicator;
+import net.lucode.hackware.magicindicator.ViewPagerHelper;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -402,6 +419,10 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
     private RecyclerView mRvDaymic ;
 
     private void initView() {
+
+        magicIndicatorTitle = findViewById(R.id.magic_indicator) ;
+        viewPager = findViewById(R.id.view_pager) ;
+
         mRvDaymic = findViewById(R.id.rv_daymic) ;
         mTvDaymicTitle = findViewById(R.id.tv_title_info);
         mLLDaymicConfig = findViewById(R.id.ll_daymic_config) ;
@@ -589,8 +610,9 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
 
     * */
     private String mId;
-
+    private String mLevelId ;
     private void initData() {
+        mLevelId = getIntent().getStringExtra("catid");
         mId = getIntent().getStringExtra("id");
     }
 
@@ -645,6 +667,68 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
 
     private ShareDialog mShareDialog;
 
+    private MagicIndicator magicIndicatorTitle ;
+
+    private ViewPager viewPager;
+
+    private List<String> mDataList = new ArrayList<>() ;
+
+    public void getLove(){
+
+        List<Fragment> fragments = new ArrayList<>();
+
+        RecommandFragment mRecomandFragment = new RecommandFragment() ;
+        Bundle bundle = new Bundle();
+        bundle.putString("item", mLevelId);
+        mRecomandFragment.setArguments(bundle);
+        fragments.add(mRecomandFragment);
+        viewPager.setAdapter(new ComFragmentAdapter(getSupportFragmentManager(), fragments));
+        viewPager.setOffscreenPageLimit(10);
+
+        initMagicIndicator() ;
+    }
+
+    private void initMagicIndicator() {
+
+        CommonNavigator commonNavigator = new CommonNavigator(this);
+        commonNavigator.setScrollPivotX(0.65f);
+        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+            @Override
+            public int getCount() {
+                return mDataList == null ? 1 : mDataList.size();
+            }
+
+            @Override
+            public IPagerTitleView getTitleView(Context context, final int index) {
+                SimplePagerTitleView simplePagerTitleView = new ColorFlipPagerTitleView(context);
+               /* simplePagerTitleView.setText(mDataList.get(index));
+                simplePagerTitleView.setNormalColor(ContextCompat.getColor(mContext, R.color.mainBlack));
+                simplePagerTitleView.setSelectedColor(ContextCompat.getColor(mContext, R.color.mainBlack));
+                simplePagerTitleView.setTextSize(14);
+                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        viewPager.setCurrentItem(index, false);
+                    }
+                });*/
+                return simplePagerTitleView;
+            }
+
+            @Override
+            public IPagerIndicator getIndicator(Context context) {
+
+                LinePagerIndicator linePagerIndicator = new LinePagerIndicator(context);
+                linePagerIndicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
+                linePagerIndicator.setColors(ContextCompat.getColor(mContext, R.color.mainRed));
+
+                return linePagerIndicator;
+            }
+        });
+        magicIndicatorTitle.setNavigator(commonNavigator);
+        ViewPagerHelper.bind(magicIndicatorTitle, viewPager);
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -654,7 +738,7 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
         //mId = "20719" ;
        // mId = "21349" ;
         getCatoryDetail(mId);
-
+        getLove() ;
         /*mShareDialog = new ShareDialog(mContext);
         mShareDialog.setOnClickListener(new ShareDialog.OnClickListener() {
             @Override

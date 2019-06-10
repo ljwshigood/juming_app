@@ -191,11 +191,11 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_centerVertical="true"
+                                            android:layout_marginBottom="15dp"
                                             android:layout_marginLeft="15dp"
                                             android:textColor="@color/dark_red"
                                             android:textSize="20sp"
                                             android:visibility="gone"
-                                            android:layout_marginBottom="15dp"
                                             tools:text="128元" />
 
 
@@ -277,8 +277,8 @@
                                                 android:id="@+id/tv_base_info"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:visibility="gone"
-                                                android:textSize="14sp" />
+                                                android:textSize="14sp"
+                                                android:visibility="gone" />
 
                                         </LinearLayout>
 
@@ -291,9 +291,9 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="10dp"
-                                        android:visibility="gone"
                                         android:background="@android:color/white"
-                                        android:orientation="vertical">
+                                        android:orientation="vertical"
+                                        android:visibility="gone">
 
                                         <LinearLayout
                                             android:layout_width="match_parent"
@@ -322,8 +322,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="25dp"
-                                            android:layout_marginRight="25dp"
-                                            />
+                                            android:layout_marginRight="25dp" />
 
                                     </LinearLayout>
 
@@ -411,12 +410,22 @@
 
                         </LinearLayout>
 
-                        <net.lucode.hackware.magicindicator.MagicIndicator
-                            android:id="@+id/magic_indicator"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/thirty_eight"
-                            android:layout_gravity="bottom"
-                            android:background="@color/mainWhite" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <net.lucode.hackware.magicindicator.MagicIndicator
+                                android:id="@+id/magic_indicator"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/thirty_eight"
+                                android:layout_gravity="bottom"
+                                android:visibility="gone"
+                                android:background="@color/mainWhite" />
+
+
+
+                        </LinearLayout>
 
                         <android.support.v4.view.ViewPager
                             android:id="@+id/view_pager"

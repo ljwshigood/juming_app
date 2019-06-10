@@ -14,11 +14,11 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IMeasurab
 /**
  *
  */
-public class SimplePagerTitleView extends TextView implements IMeasurablePagerTitleView {
+public class RecommandTitleView extends TextView implements IMeasurablePagerTitleView {
     protected int mSelectedColor;
     protected int mNormalColor;
 
-    public SimplePagerTitleView(Context context) {
+    public RecommandTitleView(Context context) {
         super(context, null);
         init(context);
     }

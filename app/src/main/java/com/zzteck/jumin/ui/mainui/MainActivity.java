@@ -611,6 +611,9 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 
 
 			mWJViewPaper.setCurrentItem(2,false);
+
+			((WJConversationListFragment)mMessageFragment).requestMessageList(1);
+
 			break ;
 
 		default:

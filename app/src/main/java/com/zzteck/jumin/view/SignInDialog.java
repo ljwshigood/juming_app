@@ -3,6 +3,7 @@ package com.zzteck.jumin.view;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -19,6 +20,8 @@ import com.zzteck.jumin.bean.CategoryBean;
 import com.zzteck.jumin.bean.QiandaoBean;
 import com.zzteck.jumin.bean.User;
 import com.zzteck.jumin.db.UserDAO;
+import com.zzteck.jumin.ui.usercenter.LoginActivity;
+import com.zzteck.jumin.ui.usercenter.ModifyUserInfoActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.GlideCircleTransform;
 import com.zzteck.jumin.utils.UtilsTools;
@@ -104,7 +107,17 @@ public class SignInDialog extends Dialog{
 			@Override
 			public void onClick(View view) {
 				User user = UserDAO.getInstance(mContext).selectUserByIsLogin(1) ;
-				getQiandao(user.getUserid()) ;
+
+				if(user != null){
+					getQiandao(user.getUserid()) ;
+				}else{
+					Intent intent = new Intent(mContext, LoginActivity.class);
+					mContext.startActivity(intent);
+					dismiss();
+				}
+
+
+
 			}
 		});
 	}

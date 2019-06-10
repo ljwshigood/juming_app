@@ -26,7 +26,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     private Context mContext ;
 
-    private List<PushBean> mMessageList;
+    private List<PushBean.DataBean> mMessageList;
 
     public OnItemClickListener getOnItemClickListener() {
         return onItemClickListener;
@@ -45,14 +45,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     }
 
-    public MessageAdapter(Context context, List<PushBean> list) {
-        this.mContext = context ;
-        this.mMessageList = list ;
-    }
-
-    public void setMessageList(List<PushBean> list){
+    public void notifyMessageList(List<PushBean.DataBean> list){
         this.mMessageList = list ;
         notifyDataSetChanged();
+    }
+
+
+    public MessageAdapter(Context context, List<PushBean.DataBean> list) {
+        this.mContext = context ;
+        this.mMessageList = list ;
     }
 
     @Override
@@ -89,8 +90,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(MessageAdapter.ViewHolder holder, int position) {
-        holder.name.setText(mMessageList.get(position).getTitle());
-        holder.mTvContent.setText(mMessageList.get(position).getContent());
+        holder.name.setText(mMessageList.get(position).getTitle()+"");
+        holder.mTvContent.setText(mMessageList.get(position).getContent()+"");
+        holder.mTvDate.setText(mMessageList.get(position).getBegintime());
     }
 
     @Override
@@ -104,11 +106,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         private TextView mTvContent ;
 
+        private TextView mTvDate ;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.tv_title);
+            mTvDate = itemView.findViewById(R.id.tv_date) ;
+            name = itemView.findViewById(R.id.tv_name);
             mTvContent = itemView.findViewById(R.id.tv_content) ;
-
         }
     }
 

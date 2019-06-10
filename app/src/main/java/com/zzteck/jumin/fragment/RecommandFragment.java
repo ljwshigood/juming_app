@@ -133,6 +133,7 @@ public class RecommandFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), CategoryDetailActivity.class) ;
                 HomeInfo.DataBean bean = recommandAdapter.getItem(position) ;
                 intent.putExtra("id",bean.getId()) ;
+                intent.putExtra("catid",bean.getCatid()) ;
                 startActivity(intent);
             }
         });

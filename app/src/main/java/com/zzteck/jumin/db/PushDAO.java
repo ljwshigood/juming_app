@@ -31,14 +31,14 @@ public class PushDAO {
 	public void insertPush(PushBean bean){
 		if(!isExistPush(bean)){
 			String insertSQL = "insert into push(title,content,url) values (%s,%s,%s)" ;
-			insertSQL = String.format(insertSQL,bean.getTitle(),bean.getContent(),bean.getUrl());
+			//insertSQL = String.format(insertSQL,bean.getTitle(),bean.getContent(),bean.getUrl());
 			mDatabaseManager.getmSQLiteDatabase().execSQL(insertSQL);
 		}
 	}
 
 	public boolean isExistPush(PushBean bean){
 		String sql = "select * from push where id = %d" ;
-		sql = String.format(sql, bean.getId());
+		//sql = String.format(sql, bean.getId());
 		Cursor cursor  = mDatabaseManager.getmSQLiteDatabase().rawQuery(sql,null);
 		while(cursor != null && cursor.moveToNext()){
 			return true ;
@@ -54,10 +54,10 @@ public class PushDAO {
 		Cursor cursor = mDatabaseManager.getmSQLiteDatabase().rawQuery(selectSQL,null);
 		while(cursor != null && cursor.moveToNext()){
 			PushBean pushBean = new PushBean();
-			pushBean.setId(cursor.getInt(cursor.getColumnIndex("id")));
+		/*	pushBean.setId(cursor.getInt(cursor.getColumnIndex("id")));
 			pushBean.setTitle(cursor.getString(cursor.getColumnIndex("title")));
 			pushBean.setContent(cursor.getString(cursor.getColumnIndex("content")));
-			pushBean.setUrl(cursor.getString(cursor.getColumnIndex("url")));
+			pushBean.setUrl(cursor.getString(cursor.getColumnIndex("url")));*/
 			list.add(pushBean) ;
 		}
 		mDatabaseManager.recyleCursor(cursor) ;

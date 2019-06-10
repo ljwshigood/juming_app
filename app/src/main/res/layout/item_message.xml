@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:background="@android:color/white"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -14,8 +16,8 @@
 
         <com.zzteck.zzview.RoundImageView xmlns:wj="http://schemas.android.com/apk/res/com.zzteck.jumin"
             android:id="@+id/iv_pic"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:background="@mipmap/pic_xitong"
             android:scaleType="fitXY"
@@ -26,7 +28,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="15dp"
         android:layout_weight="45"
         android:gravity="center_vertical"
@@ -37,15 +39,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="刘大爷"
-            android:textSize="16sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:text="咨询房地产"
-            android:textSize="15sp" />
+            android:textSize="13sp" />
 
     </LinearLayout>
 
