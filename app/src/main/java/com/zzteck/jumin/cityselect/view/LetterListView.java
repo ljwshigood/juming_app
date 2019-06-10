@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -45,7 +46,7 @@ public class LetterListView extends View {
 
     public void setup(Context context) {
         this.context = context;
-        textSize = DensityUtil.dp2px(context, 10);
+        textSize = DensityUtil.dp2px(context, 12);
     }
 
     @Override
@@ -60,6 +61,7 @@ public class LetterListView extends View {
         for (int i = 0; i < b.length; i++) {
             paint.setColor(textDefaultColor);
             paint.setTextSize(textSize);
+            paint.setTypeface(Typeface.DEFAULT_BOLD);
 //            paint.setTypeface(Typeface.DEFAULT_BOLD);
             paint.setAntiAlias(true);
             if (i == choose) {

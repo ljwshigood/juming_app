@@ -22,6 +22,7 @@ import com.zzteck.jumin.bean.CategoryBean;
 import com.zzteck.jumin.bean.SearchBean;
 import com.zzteck.jumin.bean.SearchListBean;
 import com.zzteck.jumin.ui.business.CategoryListActivity;
+import com.zzteck.jumin.ui.business.SearchResultListActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.GlideCircleTransform;
 import com.zzteck.jumin.utils.UtilsTools;
@@ -164,11 +165,11 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                getSearch("",mSearchAdapter.getmSearchBeanList().get(i).getKeywords(),"",1+"");
-               /* Intent intent = new Intent(mContext, CategoryListActivity.class) ;
+                Intent intent = new Intent(mContext, SearchResultListActivity.class) ;
                 intent.putExtra("title","搜索") ;
+                intent.putExtra("keyword",mSearchAdapter.getmSearchBeanList().get(i).getKeywords()) ;
                 intent.putExtra("id",1+"") ;
-                startActivity(intent);*/
+                startActivity(intent);
             }
         });
     }
@@ -195,7 +196,12 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 }else{
                     keywords = mEtSearch.getText().toString().trim() ;
                 }
-                getSearch("",keywords,"",1+"");
+
+                Intent intent = new Intent(mContext, SearchResultListActivity.class) ;
+                intent.putExtra("title","搜索") ;
+                intent.putExtra("keyword",keywords) ;
+                intent.putExtra("id",1+"") ;
+                startActivity(intent);
                 break ;
         }
     }

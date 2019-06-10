@@ -24,6 +24,7 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.RecommandAdapter;
+import com.zzteck.jumin.adapter.SearchListAdapter;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.bean.FilterInfo;
 import com.zzteck.jumin.bean.HomeInfo;
@@ -61,7 +62,7 @@ public class SearchResultListActivity extends BaseActivity implements OnClickLis
 
     private RecyclerView mGvCommand;
 
-    private RecommandAdapter mCommandAdapter;
+    private SearchListAdapter mCommandAdapter;
 
     private TextView mTvTitle;
 
@@ -115,12 +116,11 @@ public class SearchResultListActivity extends BaseActivity implements OnClickLis
                         try{
                             Gson gson = new Gson();
                             SearchListBean  searchListBean = gson.fromJson(responseStr, SearchListBean.class);
-                            if (searchListBean.getData() != null && searchListBean.getData().size() > 0) {
-                                Intent intent = new Intent(mContext, CategoryListActivity.class) ;
-                                intent.putExtra("title","搜索") ;
-                                intent.putExtra("id",1+"") ;
-                                startActivity(intent);
+
+                            if (mCommandAdapter != null) {
+                                mCommandAdapter.addAll(searchListBean.getData());
                             }
+
                         }catch (Exception e){
                             e.printStackTrace();
                         }
@@ -143,15 +143,15 @@ public class SearchResultListActivity extends BaseActivity implements OnClickLis
         return (int)(pxValue / scale + 0.5f);//+0.5是为了向上取整
     }
 
-    private void initData(HomeInfo info) {
+    private void initRv() {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mGvCommand.setLayoutManager(layoutManager);
         DividerDecoration itemDecoration = new DividerDecoration(Color.GRAY, dip2px(this,0.5f), 0,0);
         itemDecoration.setDrawLastItem(false);
         mGvCommand.addItemDecoration(itemDecoration);
-
-        mCommandAdapter = new RecommandAdapter(this, info.getData());
+        List<SearchListBean.DataBean> list = new ArrayList<>() ;
+        mCommandAdapter = new SearchListAdapter(this, list);
         mGvCommand.setAdapter(mCommandAdapter);
 
         mCommandAdapter.setNoMore(R.layout.view_no_more);
@@ -275,21 +275,20 @@ public class SearchResultListActivity extends BaseActivity implements OnClickLis
 
         initView();
         initData();
-       // getInfoExtra(mId);
-      //  getInfosList(mId, mCityId + "", mCurrentPage + "", mJson);
-
+        initRv() ;
+        getSearch("",mKeyWordSearch,"",1+"");
 
     }
 
     private String mId;
 
-    private List<SearchListBean.DataBean> mSearchList ;
+    private String mKeyWordSearch ;
 
     private void initData() {
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
-        mSearchList = (List<SearchListBean.DataBean>) intent.getSerializableExtra("list");
         mId = intent.getStringExtra("id");
+        mKeyWordSearch = intent.getStringExtra("keyword") ;
         mTvTitle.setText(title + "");
     }
 
