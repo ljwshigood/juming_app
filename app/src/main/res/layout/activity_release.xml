@@ -35,13 +35,40 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/iv_video_thumb"
+                    <RelativeLayout
                         android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@mipmap/btn_shipin"
-                        app:civ_border_color="@color/white"
-                        app:civ_border_width="2dp" />
+                        android:layout_height="60dp">
+
+                        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/iv_video_thumb"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@mipmap/btn_shipin"
+                            app:civ_border_color="@color/white"
+                            app:civ_border_width="2dp" />
+
+                        <ProgressBar
+                            android:id="@+id/progressbar"
+                            style="@android:style/Widget.ProgressBar"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerInParent="true"
+                            android:indeterminate="false"
+                            android:visibility="gone"
+                            android:indeterminateDrawable="@drawable/progress_bar"
+                            android:padding="5dp" />
+
+
+                        <TextView
+                            android:id="@+id/tv_video_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="" />
+
+                    </RelativeLayout>
+
+
 
                     <TextView
                         android:layout_width="wrap_content"

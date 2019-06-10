@@ -25,10 +25,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fingerth.supdialogutils.SYSDiaLogUtils;
 import com.google.gson.Gson;
@@ -66,6 +68,7 @@ import com.zzteck.jumin.webmanager.CountingRequestBody;
 import com.zzteck.jumin.webmanager.RequestBuilder;
 import com.zzteck.zzview.WindowsToast;
 
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -176,7 +179,13 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 	};
 
+	private ProgressBar mPbVideo ;
+
+	private TextView mTvVideoStatus ;
+
 	private void initView(){
+		mTvVideoStatus = findViewById(R.id.tv_video_status) ;
+		mPbVideo = findViewById(R.id.progressbar) ;
 		mRvPic = findViewById(R.id.rv_pic) ;
 		mIvAddPicture = findViewById(R.id.iv_add_pic) ;
 		mEtWeiXin = findViewById(R.id.et_weixin) ;
@@ -435,50 +444,20 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 		linkcat(link+"");
 
-		// set Center OverlayView
 		indexableLayout.setOverlayStyle_Center();
 
-		// set Listener
 		mLinkCatadapter.setOnItemContentClickListener(new IndexableAdapter.OnItemContentClickListener<LinkCat.DataBean>() {
 			@Override
 			public void onItemClick(View v, int originalPosition, int currentPosition, LinkCat.DataBean entity) {
 				if (originalPosition >= 0) {
 					piv.setVisibility(View.VISIBLE);
 					ptv.setText(entity.getCatname());
-
 					mSelectLinkList.add(entity) ;
-					//mHashExtra.put()
-
 					linkcat(entity.getCatid());
-
-					//WindowsToast.makeText(ReleaseActivity.this, "选中:" + entity.getCatname() + "  当前位置:" + currentPosition + "  原始所在数组位置:" + originalPosition).show();
-				} else {
-					//WindowsToast.makeText(ReleaseActivity.this, "选中Header:" + entity.getCatname() + "  当前位置:" + currentPosition);
 				}
 			}
 		});
 
-		mLinkCatadapter.setOnItemTitleClickListener(new IndexableAdapter.OnItemTitleClickListener() {
-			@Override
-			public void onItemClick(View v, int currentPosition, String indexTitle) {
-				//WindowsToast.makeText(ReleaseActivity.this, "选中:" + indexTitle + "  当前位置:" + currentPosition);
-			}
-		});
-
-
-		popupWindowView.setOnTouchListener(new View.OnTouchListener() {
-
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-
-				/*if( popupWindow!=null && popupWindow.isShowing()){
-					popupWindow.dismiss();
-					popupWindow=null;
-				}*/
-
-				return false;
-			}
-		});
 	}
 
 	private RecyclerView mRlArea ;
@@ -672,6 +651,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		@Override
 		public void onDismiss() {
 			backgroundAlpha(1f);
+			mSelectLinkList.clear();
 		}
 
 	}
@@ -771,6 +751,8 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 					}
 				});
 
+				mHashMapViews.put(info.get(i).getIdentifier(),radioGroup) ;
+
 				linearLayoutRight.addView(radioGroup);
 
 
@@ -810,6 +792,14 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 					spinnerList.add(temp);
 				}
 
+				if(spinnerList != null && spinnerList.size() > 0){
+					String temp = attray[0] ;
+					String[] splites = temp.split("=") ;
+					String identifier = (String) spinner.getTag();
+					mHashExtra.put(info.get(i).getIdentifier(),splites[0]) ;
+
+				}
+
 				spinner.setItems(spinnerList);
 				spinner.setTag(info.get(i).getIdentifier());
 				spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
@@ -823,6 +813,8 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 						Log.e("liujw","########setOnItemSelectedListener mHashExtra : "+mHashExtra.toString()) ;
 					}
 				});
+
+				mHashMapViews.put(info.get(i).getIdentifier(),spinner) ;
 
 				linearLayoutRight.addView(spinner);
 			}else if(info.get(i).getType().equals("text")){
@@ -1196,7 +1188,11 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				break ;
 			case R.id.ll_complete :
 
+
 				if(mHashMapViews.size() > 0){
+
+
+
 					Iterator<Map.Entry<String, Object>> iterator = mHashMapViews.entrySet().iterator();
 					boolean isPass = true ;
 					if(mExternalInfo != null){
@@ -1208,7 +1204,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 									if(mReleaseDataList.get(i).getType().equals("number")){
 										EditText et = (EditText) entry.getValue();
 										if(TextUtils.isEmpty(et.getText().toString().trim())){
-											WindowsToast.makeText(mContext,mReleaseDataList.get(i).getTitle()+"不能为空").show();
+											Toast.makeText(mContext,mReleaseDataList.get(i).getTitle()+"不能为空",Toast.LENGTH_SHORT).show();
 											isPass = false ;
 											break  ;
 										}else{
@@ -1218,7 +1214,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 									}else if(mReleaseDataList.get(i).getType().equals("text")){
 										EditText et = (EditText) entry.getValue();
 										if(TextUtils.isEmpty(et.getText().toString().trim())){
-											WindowsToast.makeText(mContext,mReleaseDataList.get(i).getTitle()+"不能为空").show();
+											Toast.makeText(mContext,mReleaseDataList.get(i).getTitle()+"不能为空",Toast.LENGTH_SHORT).show();
 											isPass = false ;
 											break  ;
 										}else{
@@ -1227,11 +1223,31 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 									}else if(mReleaseDataList.get(i).getType().equals("texterea")){
 										EditText et = (EditText) entry.getValue();
 										if(TextUtils.isEmpty(et.getText().toString().trim())){
-											WindowsToast.makeText(mContext,mReleaseDataList.get(i).getTitle()+"不能为空").show();
+											Toast.makeText(mContext,mReleaseDataList.get(i).getTitle()+"不能为空",Toast.LENGTH_SHORT).show();
 											isPass = false ;
 											break  ;
 										}else{
 											mHashExtra.put(mReleaseDataList.get(i).getIdentifier(),et.getText().toString().trim()) ;
+										}
+									}else if(mReleaseDataList.get(i).getType().equals("radio")){
+										RadioGroup rg = (RadioGroup) entry.getValue();
+
+										int id = rg.getCheckedRadioButtonId();
+										if(id == -1){
+											Toast.makeText(mContext,mReleaseDataList.get(i).getTitle()+"不能为空",Toast.LENGTH_SHORT).show();
+											isPass = false ;
+											break  ;
+										}else {
+											RadioButton choise = findViewById(id);
+											String selectText = (String) choise.getTag();
+											if (TextUtils.isEmpty(selectText)) {
+												Toast.makeText(mContext,mReleaseDataList.get(i).getTitle()+"不能为空",Toast.LENGTH_SHORT).show();
+												//WindowsToast.makeText(mContext, mReleaseDataList.get(i).getTitle() + "不能为空").show();
+												isPass = false;
+												break;
+											} else {
+												mHashExtra.put(mReleaseDataList.get(i).getIdentifier(), selectText);
+											}
 										}
 									}
 								}
@@ -1247,22 +1263,22 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				}
 
 				if(TextUtils.isEmpty(mEtTitle.getText().toString().trim())){
-					WindowsToast.makeText(mContext,"标题不能为空").show();
+					Toast.makeText(mContext,"标题不能为空",Toast.LENGTH_SHORT).show();
 					return ;
 				}else if(TextUtils.isEmpty(mEtDes.getText().toString().trim())){
-					WindowsToast.makeText(mContext,"描述不能为空").show();
+					Toast.makeText(mContext,"描述不能为空",Toast.LENGTH_SHORT).show();
 					return ;
 				}else if(TextUtils.isEmpty(mEtContact.getText().toString().trim())){
-					WindowsToast.makeText(mContext,"联系人不能为空").show();
+					Toast.makeText(mContext,"联系人不能为空",Toast.LENGTH_SHORT).show();
 					return ;
 				}else if(TextUtils.isEmpty(mEtMobile.getText().toString().trim())){
-					WindowsToast.makeText(mContext,"手机号不能为空").show();
+					Toast.makeText(mContext,"手机号不能为空",Toast.LENGTH_SHORT).show();
 					return ;
 				}else if(TextUtils.isEmpty(mEtWeiXin.getText().toString().trim())){
-					WindowsToast.makeText(mContext,"微信号不能为空").show();
+					Toast.makeText(mContext,"微信号不能为空",Toast.LENGTH_SHORT).show();
 					return ;
 				}else if(TextUtils.isEmpty(mEtQQ.getText().toString().trim())){
-					WindowsToast.makeText(mContext,"QQ号不能为空").show();
+					Toast.makeText(mContext,"QQ号不能为空",Toast.LENGTH_SHORT).show();
 					return ;
 				}
                 if(!TextUtils.isEmpty(mLinkName)){
@@ -1279,12 +1295,12 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				}
 
 				if(TextUtils.isEmpty(mImageUrl)){
-					WindowsToast.makeText(mContext,"请上传图片").show();
+					Toast.makeText(mContext,"请上传图片",Toast.LENGTH_SHORT).show();
 					return ;
 				}
 
 				if(TextUtils.isEmpty(mVideUrl)){
-					WindowsToast.makeText(mContext,"请上传视频").show();
+					Toast.makeText(mContext,"请上传视频",Toast.LENGTH_SHORT).show();
 					return ;
 				}
 
@@ -1354,6 +1370,8 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 								ImageInfo bean = gson.fromJson(responseStr,ImageInfo.class) ;
 								mImageUrl += bean.getData().getImg() +",";
 
+								String imgs = mImageUrl.substring(0,mImageUrl.lastIndexOf(","));
+
 								for(int i = 0 ;i < selectList.size() ;i++){
 									if(selectList.get(i).getCompressPath().equals(file.getAbsolutePath())){
 										selectList.get(i).setStatus(1);
@@ -1390,6 +1408,8 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 	private void uploadVideo(final File file,final String url) throws Exception {
 
+	    mPbVideo.setVisibility(View.VISIBLE);
+
 		new AsyncTask<Integer, Integer, String>() {
 
 			@Override
@@ -1415,18 +1435,33 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				Call response = client.newCall(request) ;
 
 				response.enqueue(new Callback() {
+
 					@Override
 					public void onFailure(Call call, IOException e) {
 						Log.e("liujw","####################onFailure");
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								mTvVideoStatus.setText("上传失败");
+								mPbVideo.setVisibility(View.GONE);
+							}
+						});
 					}
 
 					@Override
 					public void onResponse(Call call, Response response) throws IOException {
 						final String responseStr = response.body().string();
-						Log.e("liujw","####################uploadVideo responseStr ; "+responseStr);
-						Gson gson = new Gson() ;
-						VideoInfo bean = gson.fromJson(responseStr,VideoInfo.class) ;
-						mVideUrl = bean.getData().getVideo() ;
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								Log.e("liujw","####################uploadVideo responseStr ; "+responseStr);
+								Gson gson = new Gson() ;
+								VideoInfo bean = gson.fromJson(responseStr,VideoInfo.class) ;
+								mVideUrl = bean.getData().getVideo() ;
+								mPbVideo.setVisibility(View.GONE);
+							}
+						});
+
 					}
 				});
 				return "";
