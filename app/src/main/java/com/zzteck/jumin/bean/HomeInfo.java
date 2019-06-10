@@ -94,6 +94,16 @@ public class HomeInfo implements Serializable{
         private String userid;
         private String contact_who;
 
+        public String getWeb_address() {
+            return web_address;
+        }
+
+        public void setWeb_address(String web_address) {
+            this.web_address = web_address;
+        }
+
+        private String web_address ;
+
         public Map getExtr() {
             return extr;
         }

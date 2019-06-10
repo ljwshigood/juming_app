@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,12 @@ public class RecommandAdapter extends RecyclerArrayAdapter<HomeInfo.DataBean> {
 
         private ImageView mIvTop ;
 
+        private TextView mTvAddress ;
+
+        private TextView mTvBeginTime ;
+
+        private LinearLayout mllocation ;
+
         public RecommandViewHolder(ViewGroup parent) {
             super(parent, R.layout.item_recommand);
 
@@ -79,6 +86,9 @@ public class RecommandAdapter extends RecyclerArrayAdapter<HomeInfo.DataBean> {
             mTvValue = $(R.id.tv_value) ;
             mLLTop = $(R.id.ll_top) ;
             mIvTop= $(R.id.iv_top) ;
+            mTvAddress = $(R.id.tv_address) ;
+            mTvBeginTime = $(R.id.tv_begin_time);
+            mllocation= $(R.id.ll_location) ;
         }
 
         @Override
@@ -99,7 +109,23 @@ public class RecommandAdapter extends RecyclerArrayAdapter<HomeInfo.DataBean> {
 
             mTvTitle.setText(data.getTitle());
             mTvDetail.setText(data.getContent());
+            if(!TextUtils.isEmpty(data.getWeb_address())){
+                mTvAddress.setText(data.getWeb_address());
+                mllocation.setVisibility(View.VISIBLE);
+            }else{
+                mllocation.setVisibility(View.GONE);
+            }
 
+            if(!TextUtils.isEmpty(data.getBegintime())){
+                mTvBeginTime.setText(data.getBegintime());
+            }
+
+            if(TextUtils.isEmpty(data.getPrice())){
+                mTvValue.setVisibility(View.GONE);
+            }else{
+                mTvValue.setVisibility(View.VISIBLE);
+                mTvValue.setText(data.getPrice());
+            }
 
             if(data.getTop() == 1){
                 mLLTop.setVisibility(View.VISIBLE);
@@ -144,8 +170,11 @@ public class RecommandAdapter extends RecyclerArrayAdapter<HomeInfo.DataBean> {
 
         private TextView mTvValue ;
 
+        private TextView mTvAddress ;
+
         public ViewHolder(View itemView) {
             super(itemView);
+            mTvAddress = itemView.findViewById(R.id.tv_address) ;
             mIvLogo = itemView.findViewById(R.id.iv_pic) ;
             mTvTitle = itemView.findViewById(R.id.tv_title) ;
             mTvDetail = itemView.findViewById(R.id.tv_detail) ;

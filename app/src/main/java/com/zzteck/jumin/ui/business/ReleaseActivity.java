@@ -710,7 +710,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 			TextView tvTitle = new TextView(this);
 			tvTitle.setGravity(Gravity.CENTER);
-			tvTitle.setTextSize(16f);
+			tvTitle.setTextSize(14f);
 			tvTitle.setText(info.get(i).getTitle());
 			linearLayoutLeft.addView(tvTitle);
 
@@ -762,6 +762,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				EditText etPrice = new EditText(this);
 				etPrice.setHint("请输入"+info.get(i).getTitle());
 				etPrice.setBackground(null);
+				etPrice.setTextSize(14f);
 				etPrice.setLayoutParams(new LinearLayout.LayoutParams(200,ViewGroup.LayoutParams.WRAP_CONTENT,0.8f));
 
 
@@ -770,6 +771,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				TextView tvUnit = new TextView(this);
 				tvUnit.setText(info.get(i).getExtra().getUnits());
 				tvUnit.setGravity(Gravity.CENTER_VERTICAL|Gravity.RIGHT);
+				tvUnit.setTextSize(14f);
 				tvUnit.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
 
 				linearLayoutRight.addView(etPrice);
@@ -823,6 +825,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				tvText.setHint("请输入"+info.get(i).getTitle());
 				tvText.setSingleLine();
 				tvText.setBackground(null);
+				tvText.setTextSize(14f);
 				tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
 
 				mHashMapViews.put(info.get(i).getIdentifier(),tvText) ;
@@ -835,6 +838,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				EditText tvText = new EditText(this);
 				tvText.setHint("请输入"+info.get(i).getTitle());
 				tvText.setBackground(null);
+				tvText.setTextSize(14f);
 				tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
 
 				mHashMapViews.put(info.get(i).getIdentifier(),tvText) ;
@@ -853,6 +857,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 				TextView tvText = new TextView(this);
 				tvText.setHint("请选择"+info.get(i).getTitle());
+				tvText.setTextSize(14f);
 				tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
 
 				linearLayoutRight.addView(tvText) ;
@@ -917,6 +922,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				mLinkName = info.get(i).getIdentifier() ;
 				mTvLink = new TextView(this);
 				mTvLink.setHint("请选择"+info.get(i).getTitle());
+				mTvLink.setTextSize(14f);
 				mTvLink.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
 
 				mTvLink.setSingleLine(true);
