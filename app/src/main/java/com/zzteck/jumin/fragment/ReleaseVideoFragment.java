@@ -29,7 +29,7 @@ public class ReleaseVideoFragment extends Fragment implements OnClickListener {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		mMainView = inflater.inflate(R.layout.fragment_release_video, container, false);
+		mMainView = inflater.inflate(R.layout.fragment_release_complete, container, false);
 		mContext = getActivity();
 		initView(mMainView);
 		initData();

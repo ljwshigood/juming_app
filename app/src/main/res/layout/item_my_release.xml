@@ -61,14 +61,48 @@
                 android:text="附近环境优雅"
                 android:textSize="14sp" />
 
-
-            <TextView
-                android:id="@+id/tv_value"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="显示中|置顶|已加粗"
-                android:textSize="14sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="显示中"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="|"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="置顶"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="|"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="已加粗"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
@@ -82,14 +116,14 @@
 
             <ImageView
                 android:id="@+id/iv_refesh"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:background="@mipmap/pic_shuaxin" />
 
             <ImageView
                 android:id="@+id/iv_modify"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginLeft="15dp"
                 android:background="@mipmap/btn_xiugai" />
 

@@ -2,6 +2,7 @@ package com.zzteck.jumin.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,16 +56,25 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         boolean isSelect = mFeedBackList.get(position).isSelect();
         if(isSelect){
             holder.mLLFeedBack.setBackgroundResource(R.drawable.bg_red_rec_fd_press);
+            holder.mTvVideo.setTextColor(Color.WHITE);
         }else{
             holder.mLLFeedBack.setBackgroundResource(R.drawable.bg_btn_rec_press);
+            holder.mTvVideo.setTextColor(Color.BLACK);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 boolean isSelect = mFeedBackList.get(position).isSelect();
-                mFeedBackList.get(position).setSelect(!isSelect);
-                notifyItemChanged(position);
+
+                for(int i = 0 ;i< mFeedBackList.size() ;i++){
+                    if(i == position){
+                        mFeedBackList.get(i).setSelect(true);
+                    }else{
+                        mFeedBackList.get(i).setSelect(false);
+                    }
+                }
+                notifyDataSetChanged();
             }
         });
     }

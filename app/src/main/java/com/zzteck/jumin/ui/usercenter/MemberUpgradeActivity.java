@@ -50,7 +50,7 @@ public class MemberUpgradeActivity extends BaseActivity implements OnClickListen
 
 	private RelativeLayout mRlBack;
 
-	private String[] resInfo = new String[]{"普通","黄金","白金","砖石"} ;
+	private String[] resInfo = new String[]{"普通","黄金","白金","钻石"} ;
 
 	private void initData(){
         for(int i = 0 ;i< 4;i++){
