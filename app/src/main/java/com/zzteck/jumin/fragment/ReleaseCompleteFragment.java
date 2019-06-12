@@ -56,6 +56,31 @@ public class ReleaseCompleteFragment extends Fragment implements OnClickListener
 		mRv.addItemDecoration(new NormalDecoration(ContextCompat.getColor(getActivity(), R.color.mainGrayF0), (int) this.getResources().getDimension(R.dimen.fifteen)));
 		mMyReleaseAdapter = new MyReleaseAdapter(mContext,null) ;
 		mRv.setAdapter(mMyReleaseAdapter);
+
+        mMyReleaseAdapter.setiActionReleaseListener(new MyReleaseAdapter.IActionReleaseListener() {
+            @Override
+            public void releaseListener(String id,int action) {
+                switch (action){
+                    case 0 : // jiacu
+                        AppInfoInfoact(id,"bold") ;
+                        break ;
+                    case 1 : // taohong
+                        AppInfoInfoact(id,"red") ;
+                        break ;
+                    case 2 : // shuaxin
+                        AppInfoInfoact(id,"refresh") ;
+                        break ;
+                    case 3 : // zhiding
+                        AppInfoInfoact(id,"upgradeindex") ;
+                        break ;
+                    case 4:
+                        AppInfoInfoact(id,"delete") ;
+                        break ;
+
+                }
+            }
+        });
+
 	}
 
 	@Override
@@ -68,11 +93,13 @@ public class ReleaseCompleteFragment extends Fragment implements OnClickListener
 		return mMainView;
 	}
 
-	private void AppInfoInfoact(int page){
+	private void AppInfoInfoact(String id,String act){
 
 		Map<String, String> map = new HashMap<>() ;
 		map.put("s","App.Info.Infoact") ;
-		map.put("pages",page+"") ;
+		map.put("id",id+"") ;
+		map.put("act",act+"") ;
+		//map.put("upgrade_time",time+"") ;
 
 		map.put("sign", UtilsTools.getSign(mContext,"App.Info.Myinfos")) ;
 
@@ -95,8 +122,8 @@ public class ReleaseCompleteFragment extends Fragment implements OnClickListener
 						try {
 							String message = new String(responseStr.getBytes()) ;
 							Gson gson = new Gson() ;
-							MyReleaseBean bean = gson.fromJson(message,MyReleaseBean.class) ;
-							mMyReleaseAdapter.notifyMyReleaseAdapter(bean.getData());
+							//MyReleaseBean bean = gson.fromJson(message,MyReleaseBean.class) ;
+							//mMyReleaseAdapter.notifyMyReleaseAdapter(bean.getData());
 						}catch (Exception e){
 							e.printStackTrace();
 						}
@@ -159,8 +186,8 @@ public class ReleaseCompleteFragment extends Fragment implements OnClickListener
 			break;
 
 		case R.id.rl_my_release:
-			intent = new Intent(getActivity(), MyReleaseActivity.class) ;
-			startActivity(intent);
+			/*intent = new Intent(getActivity(), MyReleaseActivity.class) ;
+			startActivity(intent);*/
 
 			break;
 
