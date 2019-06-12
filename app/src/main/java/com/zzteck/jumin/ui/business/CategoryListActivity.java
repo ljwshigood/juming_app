@@ -35,6 +35,7 @@ import com.zzteck.jumin.bean.MyFilterParamsBean;
 import com.zzteck.jumin.bean.MyFilterTabBean;
 import com.zzteck.jumin.bean.MyPopEntityLoaderImp;
 import com.zzteck.jumin.bean.MyResultLoaderImp;
+import com.zzteck.jumin.bean.ReleaseDataBean;
 import com.zzteck.jumin.bean.SearchListBean;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.utils.Constants;
@@ -45,6 +46,7 @@ import com.zzteck.jumin.view.NormalDecoration;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -239,6 +241,7 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 
                 Intent intent = new Intent(mContext, CategoryDetailActivity.class);
                 intent.putExtra("id",mCommandAdapter.getmHomeList().get(position).getId());
+                intent.putExtra("catid",mCommandAdapter.getmHomeList().get(position).getCatid()) ;
                 startActivity(intent);
 
             }
@@ -302,6 +305,20 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 
     }
 
+    private void iteratorMap(Map map){
+        if(map == null){
+            return ;
+        }
+        Iterator<Map.Entry<String, Object>> entries = map.entrySet().iterator();
+        while (entries.hasNext()) {
+            Map.Entry<String, Object> entry = entries.next();
+            list.add((FilterInfo.DataBean) entry.getValue()) ;
+        }
+    }
+
+
+    private List<FilterInfo.DataBean> list = new ArrayList<>() ;
+
     private void addMyMethod(FilterInfo info) {
 
 
@@ -309,10 +326,13 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
             return;
         }
 
+        iteratorMap(info.getData()) ;
+
+
         PopTabView ptv = popTabView.setOnPopTabSetListener(this).setPopEntityLoader(new MyPopEntityLoaderImp()).setResultLoader(new MyResultLoaderImp());
 
-        for (int i = 0; i < info.getData().size(); i++) {
-            FilterGroup filterGroup = getMyData(info.getData().get(i), MyFilterConfig.TYPE_POPWINDOW_SINGLE, MyFilterConfig.FILTER_TYPE_SINGLE);
+        for (int i = 0; i < list.size(); i++) {
+            FilterGroup filterGroup = getMyData(list.get(i), MyFilterConfig.TYPE_POPWINDOW_SINGLE, MyFilterConfig.FILTER_TYPE_SINGLE);
             ptv.addFilterItem(filterGroup.getTab_group_name(), filterGroup.getFilter_tab(), filterGroup.getTab_group_type(), filterGroup.getSingle_or_mutiply());
         }
 
@@ -384,7 +404,6 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 
     @Override
     public void onPopTabSet(int index, String lable, MyFilterParamsBean params, String value) {
-        //TODO 数据更新在这里
         if (!TextUtils.isEmpty(value)) {
             mFilterMap.put(params.getBeanList().get(0).getTag_ids(),params.getBeanList().get(0).getCategory_ids()) ;
         }

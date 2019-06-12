@@ -33,6 +33,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.CategoryPagerAdapter;
 import com.zzteck.jumin.adapter.ComFragmentAdapter;
@@ -49,6 +50,7 @@ import com.zzteck.jumin.fragment.RecommandFragment;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.DeviceUtil;
+import com.zzteck.jumin.utils.ScreenUtil;
 import com.zzteck.jumin.utils.SharePerfenceUtil;
 import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.ColorFlipPagerTitleView;
@@ -221,6 +223,8 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
                 int currentItem = mBannerViewPaper.getCurrentItem();
                 mBannerViewPaper.setCurrentItem(currentItem + 1);
                 mHandler.postDelayed(mRunnable, 3000);
+            }else if(msg.what == 1){
+                dealWithViewPager();
             }
         }
 
@@ -689,7 +693,7 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
     }
 
     private void initMagicIndicator() {
-
+        mDataList.add("猜你喜欢的") ;
         CommonNavigator commonNavigator = new CommonNavigator(this);
         commonNavigator.setScrollPivotX(0.65f);
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
@@ -701,6 +705,10 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
             @Override
             public IPagerTitleView getTitleView(Context context, final int index) {
                 SimplePagerTitleView simplePagerTitleView = new ColorFlipPagerTitleView(context);
+                simplePagerTitleView.setText(mDataList.get(index));
+                simplePagerTitleView.setNormalColor(ContextCompat.getColor(mContext, R.color.mainBlack));
+                simplePagerTitleView.setTextSize(14);
+
                /* simplePagerTitleView.setText(mDataList.get(index));
                 simplePagerTitleView.setNormalColor(ContextCompat.getColor(mContext, R.color.mainBlack));
                 simplePagerTitleView.setSelectedColor(ContextCompat.getColor(mContext, R.color.mainBlack));
@@ -736,7 +744,7 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
         initView();
         initData();
         //mId = "20719" ;
-       // mId = "21349" ;
+        //mId = "22054" ;
         getCatoryDetail(mId);
         getLove() ;
         /*mShareDialog = new ShareDialog(mContext);
@@ -759,7 +767,22 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
                 }*//*
             }
         });*/
+
+        Message msg = new Message() ;
+        msg.what = 1 ;
+        mHandler.sendMessageDelayed(msg,1000) ;
     }
+
+
+    private int toolBarPositionY = 0;
+
+    private void dealWithViewPager() {
+        toolBarPositionY = DensityUtil.dp2px(70);
+        ViewGroup.LayoutParams params = viewPager.getLayoutParams();
+        params.height = ScreenUtil.getScreenHeightPx(this) - toolBarPositionY - magicIndicatorTitle.getHeight() + 1;
+        viewPager.setLayoutParams(params);
+    }
+
 
     /**
      * 拨打电话（直接拨打电话）

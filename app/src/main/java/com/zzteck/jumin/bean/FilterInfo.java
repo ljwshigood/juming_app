@@ -3,6 +3,7 @@ package com.zzteck.jumin.bean;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2018/6/30.
@@ -20,7 +21,16 @@ public class FilterInfo implements Serializable {
 
     private int ret;
     private String msg;
-    private List<DataBean> data;
+
+    public Map<String, DataBean> getData() {
+        return data;
+    }
+
+    public void setData(Map<String, DataBean> data) {
+        this.data = data;
+    }
+
+    private Map<String,DataBean> data;
 
     public int getRet() {
         return ret;
@@ -36,14 +46,6 @@ public class FilterInfo implements Serializable {
 
     public void setMsg(String msg) {
         this.msg = msg;
-    }
-
-    public List<DataBean> getData() {
-        return data;
-    }
-
-    public void setData(List<DataBean> data) {
-        this.data = data;
     }
 
     public static class DataBean {
