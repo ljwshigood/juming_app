@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:id="@+id/ll_main_item"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="50dp"
@@ -8,9 +10,8 @@
 
     <LinearLayout
         android:id="@+id/ll_title_info"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="75"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -37,9 +38,11 @@
 
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="271dp"
         android:layout_height="wrap_content"
-        android:layout_weight="45"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
 
@@ -47,67 +50,73 @@
             android:id="@+id/ll_filter_one"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_filter_one"
-                android:layout_width="60dp"
-                android:layout_height="25dp"
-                android:text="13sp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bg_shape_stoke_two"
                 android:gravity="center"
                 android:singleLine="true"
-                android:background="@drawable/bg_shape_stoke"
-                tools:text="商铺出租"/>
+                android:text="13sp"
+                tools:text="商铺出租" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_filter_two"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_filter_two"
-                android:layout_width="60dp"
-                android:layout_height="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bg_shape_stoke_two"
                 android:gravity="center"
-                android:text="13sp"
                 android:singleLine="true"
-                android:background="@drawable/bg_shape_stoke"
-                tools:text="商铺出租"/>
+                android:text="13sp"
+                tools:text="商铺出租" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_filter_three"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_filter_three"
-                android:layout_width="60dp"
-                android:layout_height="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/bg_shape_stoke_two"
                 android:gravity="center"
-                android:text="13sp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:singleLine="true"
-                android:background="@drawable/bg_shape_stoke"
-                tools:text="商铺出租"/>
+                android:text="13sp"
+                tools:text="商铺出租" />
         </LinearLayout>
 
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="80"
         android:gravity="center"
+        android:layout_marginRight="10dp"
         android:orientation="vertical">
 
         <ImageView

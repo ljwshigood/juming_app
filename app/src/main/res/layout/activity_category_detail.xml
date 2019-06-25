@@ -180,23 +180,39 @@
 
                                     </LinearLayout>
 
-                                    <LinearLayout
+                                    <RelativeLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="60dp"
                                         android:background="@android:color/white"
-                                        android:orientation="vertical">
+                                        android:orientation="horizontal">
 
-                                        <TextView
-                                            android:id="@+id/tv_price"
+                                        <LinearLayout
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_centerVertical="true"
-                                            android:layout_marginBottom="15dp"
+                                            android:layout_alignParentLeft="true"
                                             android:layout_marginLeft="15dp"
-                                            android:textColor="@color/dark_red"
-                                            android:textSize="20sp"
-                                            android:visibility="gone"
-                                            tools:text="128元" />
+                                            android:orientation="horizontal">
+
+                                            <TextView
+                                                android:id="@+id/tv_price_info"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:textSize="15sp"
+                                                tools:text="128元" />
+
+                                            <TextView
+                                                android:id="@+id/tv_price"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:textColor="@color/dark_red"
+                                                android:layout_marginLeft="10dp"
+                                                android:textSize="20sp"
+                                                tools:text="128元" />
+
+                                        </LinearLayout>
+
+
 
 
                                         <TextView
@@ -204,10 +220,11 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_centerVertical="true"
-                                            android:layout_marginLeft="15dp"
+                                            android:layout_alignParentRight="true"
+                                            android:layout_marginRight="15dp"
                                             android:text="6分钟钱发布/15人浏览" />
 
-                                    </LinearLayout>
+                                    </RelativeLayout>
 
 
                                     <LinearLayout

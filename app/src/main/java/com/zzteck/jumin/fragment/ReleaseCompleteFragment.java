@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.fingerth.supdialogutils.SYSDiaLogUtils;
 import com.google.gson.Gson;
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.adapter.MyReleaseAdapter;
+import com.zzteck.jumin.bean.InfoAct;
 import com.zzteck.jumin.bean.LoginBean;
 import com.zzteck.jumin.bean.MyReleaseBean;
 import com.zzteck.jumin.db.UserDAO;
@@ -25,6 +27,9 @@ import com.zzteck.jumin.ui.usercenter.MyReleaseActivity;
 import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.NormalDecoration;
+import com.zzteck.zzview.WindowsToast;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -62,19 +67,19 @@ public class ReleaseCompleteFragment extends Fragment implements OnClickListener
             public void releaseListener(String id,int action) {
                 switch (action){
                     case 0 : // jiacu
-                        AppInfoInfoact(id,"bold") ;
+                        AppInfoInfoact(id,"bold","") ;
                         break ;
                     case 1 : // taohong
-                        AppInfoInfoact(id,"red") ;
+                        AppInfoInfoact(id,"red","") ;
                         break ;
                     case 2 : // shuaxin
-                        AppInfoInfoact(id,"refresh") ;
+                        AppInfoInfoact(id,"refresh","") ;
                         break ;
                     case 3 : // zhiding
-                        AppInfoInfoact(id,"upgradeindex") ;
+                        AppInfoInfoact(id,"upgradeindex","10") ;
                         break ;
                     case 4:
-                        AppInfoInfoact(id,"delete") ;
+                        AppInfoInfoact(id,"delete","") ;
                         break ;
 
                 }
@@ -93,15 +98,18 @@ public class ReleaseCompleteFragment extends Fragment implements OnClickListener
 		return mMainView;
 	}
 
-	private void AppInfoInfoact(String id,String act){
+	private void AppInfoInfoact(String id,String act,String days){
 
 		Map<String, String> map = new HashMap<>() ;
 		map.put("s","App.Info.Infoact") ;
 		map.put("id",id+"") ;
 		map.put("act",act+"") ;
+		if(!TextUtils.isEmpty(days)){
+            map.put("upgrade_time",days+"") ;
+        }
 		//map.put("upgrade_time",time+"") ;
 
-		map.put("sign", UtilsTools.getSign(mContext,"App.Info.Myinfos")) ;
+		map.put("sign", UtilsTools.getSign(mContext,"App.Info.Infoact")) ;
 
 		OkHttpClient client = new OkHttpClient();
 		Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
@@ -122,8 +130,8 @@ public class ReleaseCompleteFragment extends Fragment implements OnClickListener
 						try {
 							String message = new String(responseStr.getBytes()) ;
 							Gson gson = new Gson() ;
-							//MyReleaseBean bean = gson.fromJson(message,MyReleaseBean.class) ;
-							//mMyReleaseAdapter.notifyMyReleaseAdapter(bean.getData());
+							InfoAct bean = gson.fromJson(message,InfoAct.class) ;
+							WindowsToast.makeText(mContext,bean.getData().getInfo()).show();
 						}catch (Exception e){
 							e.printStackTrace();
 						}

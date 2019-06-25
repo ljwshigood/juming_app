@@ -422,8 +422,11 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
 
     private RecyclerView mRvDaymic ;
 
+    private TextView mTvPriceInfo ;
+
     private void initView() {
 
+        mTvPriceInfo = findViewById(R.id.tv_price_info) ;
         magicIndicatorTitle = findViewById(R.id.magic_indicator) ;
         viewPager = findViewById(R.id.view_pager) ;
 
@@ -652,6 +655,7 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
         mTvPlace.setText(bean.getData().getAreaname());
         mTvDes.setText(Html.fromHtml(bean.getData().getContent()));
 
+
         String extra = "" ;
 
         infoBeans.add(new InfoBean("联系人 ：",bean.getData().getContact_who(),"")) ;
@@ -744,7 +748,7 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
         initView();
         initData();
         //mId = "20719" ;
-        //mId = "22054" ;
+        //mId = "23182" ;
         getCatoryDetail(mId);
         getLove() ;
         /*mShareDialog = new ShareDialog(mContext);

@@ -2,6 +2,7 @@ package com.zzteck.jumin.bean;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -139,6 +140,72 @@ public class Category2Bean implements Serializable{
             }
         }
 
+        public static class ColumData extends BaseInfo implements Serializable{
+
+            public ColumData(List<ListBean> mainList) {
+                this.mainList = mainList;
+            }
+
+            public List<ListBean> getMainList() {
+                return mainList;
+            }
+
+            public void setMainList(List<ListBean> mainList) {
+                this.mainList = mainList;
+            }
+
+            private List<ListBean> mainList ;
+
+
+        }
+
+        public static class ListBean extends BaseInfo{
+            /**
+             * catname : 租房/出租
+             * catid : 41
+             * extr : factorytype=1
+             */
+
+            private String catname;
+            private String catid;
+            private String extr;
+
+            public int getType() {
+                return type;
+            }
+
+            public void setType(int type) {
+                this.type = type;
+            }
+
+            private int type ;
+
+            public String getCatname() {
+                return catname;
+            }
+
+            public void setCatname(String catname) {
+                this.catname = catname;
+            }
+
+            public String getCatid() {
+                return catid;
+            }
+
+            public void setCatid(String catid) {
+                this.catid = catid;
+            }
+
+            public String getExtr() {
+                return extr;
+            }
+
+            public void setExtr(String extr) {
+                this.extr = extr;
+            }
+        }
+
+
         public static class ExtraBean extends BaseInfo{
             /**
              * catname : 出租
@@ -167,15 +234,15 @@ public class Category2Bean implements Serializable{
                 this.mainList = mainList;
             }
 
-            public List<ListBean> getChildList() {
+            public List<ColumData> getChildList() {
                 return childList;
             }
 
-            public void setChildList(List<ListBean> childList) {
+            public void setChildList(List<ColumData> childList) {
                 this.childList = childList;
             }
 
-            private List<ListBean> childList ;
+            private  List<ColumData> childList = new ArrayList<>();
 
             private List<ListBean> mainList ;
 
@@ -203,52 +270,6 @@ public class Category2Bean implements Serializable{
 
             public void setIcon(String icon) {
                 this.icon = icon;
-            }
-
-            public static class ListBean extends BaseInfo{
-                /**
-                 * catname : 租房/出租
-                 * catid : 41
-                 * extr : factorytype=1
-                 */
-
-                private String catname;
-                private String catid;
-                private String extr;
-
-                public int getType() {
-                    return type;
-                }
-
-                public void setType(int type) {
-                    this.type = type;
-                }
-
-                private int type ;
-
-                public String getCatname() {
-                    return catname;
-                }
-
-                public void setCatname(String catname) {
-                    this.catname = catname;
-                }
-
-                public String getCatid() {
-                    return catid;
-                }
-
-                public void setCatid(String catid) {
-                    this.catid = catid;
-                }
-
-                public String getExtr() {
-                    return extr;
-                }
-
-                public void setExtr(String extr) {
-                    this.extr = extr;
-                }
             }
         }
     }

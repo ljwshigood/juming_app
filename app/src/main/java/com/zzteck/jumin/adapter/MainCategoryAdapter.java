@@ -2,10 +2,12 @@ package com.zzteck.jumin.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -19,6 +21,7 @@ import com.zzteck.jumin.utils.Constants;
 import com.zzteck.jumin.utils.GlideCircleTransform;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -56,14 +59,48 @@ public class MainCategoryAdapter extends RecyclerView.Adapter implements View.On
         notifyDataSetChanged();
     }
 
+    public List<List<Category2Bean.DataBean.ListBean>> splitList(List<Category2Bean.DataBean.ListBean> list, int len) {
+
+        if (list == null || list.isEmpty() || len < 1) {
+            return Collections.emptyList();
+        }
+
+        List<List<Category2Bean.DataBean.ListBean>> result = new ArrayList<>();
+
+        int size = list.size();
+        int count = (size + len - 1) / len;
+
+        for (int i = 0; i < count; i++) {
+            List<Category2Bean.DataBean.ListBean> subList = list.subList(i * len, ((i + 1) * len > size ? size : len * (i + 1)));
+            result.add(subList);
+        }
+
+        return result;
+    }
+
+
     private void gernationDataInfos(){
 
         for(int i = 0 ; i < mainCategoryBean.getData().getExtra().size();i++){
             Category2Bean.DataBean.ExtraBean bean = mainCategoryBean.getData().getExtra().get(i) ;
-            bean.setMainList(bean.getList().subList(0,3));
-            bean.setChildList(bean.getList().subList(4,bean.getList().size()));
+            List<List<Category2Bean.DataBean.ListBean>> lists = splitList(bean.getList(),3) ;
+
+            for(int j = 0 ;j < lists.size() ;j++){
+                if(j == 0){
+                    bean.setMainList(lists.get(j));
+                }else {
+                    Category2Bean.DataBean.ColumData data1 = new Category2Bean.DataBean.ColumData(lists.get(j));
+                    bean.getChildList().add(data1) ;
+
+                }
+            }
+
             bean.setIndex(i);
             dataInfos.add(bean);
+
+           // bean.setChildList(splitList(bean.getList().subList(4,bean.getList().size()),3));
+           // bean.setChildList(bean.getList().subList(4,bean.getList().size()));
+
         }
     }
 
@@ -74,7 +111,7 @@ public class MainCategoryAdapter extends RecyclerView.Adapter implements View.On
             itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_main_chapter, parent, false);
             return new ItemHolder(itemView);
         }else{
-            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_section, parent, false);
+            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_section_bak, parent, false);
             return new ItemSectionHolder(itemView);
         }
     }
@@ -85,6 +122,11 @@ public class MainCategoryAdapter extends RecyclerView.Adapter implements View.On
             ItemHolder itemHolder = (ItemHolder) holder;
             itemHolder.itemView.setTag(position);
             itemHolder.ivArrow.setTag(position);
+
+            itemHolder.mTvFilterOne.setTag(position);
+            itemHolder.mTvFilterTwo.setTag(position);
+            itemHolder.mTvFilterThree.setTag(position);
+            itemHolder.mLLMainItem.setTag(position);
 
             Category2Bean.DataBean.ExtraBean chapterInfo = (Category2Bean.DataBean.ExtraBean) dataInfos.get(position);
 
@@ -115,11 +157,29 @@ public class MainCategoryAdapter extends RecyclerView.Adapter implements View.On
             }
 
         }else{
-            ItemSectionHolder itemSectionHolder = (ItemSectionHolder) holder;
-            itemSectionHolder.tvName.setTag(position);
 
-            Category2Bean.DataBean.ExtraBean.ListBean sectionInfo = (Category2Bean.DataBean.ExtraBean.ListBean) dataInfos.get(position);
-            itemSectionHolder.tvName.setText(sectionInfo.getCatname());
+
+
+            ItemSectionHolder itemSectionHolder = (ItemSectionHolder) holder;
+            itemSectionHolder.mLLSection.setTag(position);
+
+            Category2Bean.DataBean.ColumData columData = (Category2Bean.DataBean.ColumData) dataInfos.get(position);
+
+            if(columData.getMainList() != null && columData.getMainList().size() == 1){
+                itemSectionHolder.tvOne.setText(columData.getMainList().get(0).getCatname());
+            }else if(columData.getMainList() != null && columData.getMainList().size() == 2){
+                itemSectionHolder.tvOne.setText(columData.getMainList().get(0).getCatname());
+                itemSectionHolder.tvTwo.setText(columData.getMainList().get(1).getCatname());
+            }else if(columData.getMainList() != null && columData.getMainList().size() == 3){
+                itemSectionHolder.tvOne.setText(columData.getMainList().get(0).getCatname());
+                itemSectionHolder.tvTwo.setText(columData.getMainList().get(1).getCatname());
+                itemSectionHolder.tvThree.setText(columData.getMainList().get(2).getCatname());
+            }
+
+            /*Category2Bean.DataBean.ExtraBean.ListBean sectionInfo = (Category2Bean.DataBean.ExtraBean.ListBean) dataInfos.get(position);
+            if(!TextUtils.isEmpty(sectionInfo.getCatname())){
+                itemSectionHolder.tvName.setText(sectionInfo.getCatname());
+            }*/
         }
     }
 
@@ -143,7 +203,7 @@ public class MainCategoryAdapter extends RecyclerView.Adapter implements View.On
                     }
                 }else{
                     ItemSectionHolder itemSectionHolder = (ItemSectionHolder) holder;
-                    itemSectionHolder.tvName.setTag(position);
+                    itemSectionHolder.mLLSection.setTag(position);
                 }
             }
         }
@@ -168,7 +228,7 @@ public class MainCategoryAdapter extends RecyclerView.Adapter implements View.On
 
         if(dataInfos.get(position) instanceof Category2Bean.DataBean.ExtraBean){
             return VIEW_TYPE_CHAPTER;
-        }else if(dataInfos.get(position) instanceof Category2Bean.DataBean.ExtraBean.ListBean){
+        }else if(dataInfos.get(position) instanceof Category2Bean.DataBean.ColumData){
             return VIEW_TYPE_SECTION;
         }
         return super.getItemViewType(position);
@@ -176,7 +236,9 @@ public class MainCategoryAdapter extends RecyclerView.Adapter implements View.On
     }
 
     public class ItemHolder extends RecyclerView.ViewHolder {
+
         public ImageView ivArrow;
+
         public TextView mTvTitle ;
 
         public ImageView mIvTitleIcon ;
@@ -189,9 +251,14 @@ public class MainCategoryAdapter extends RecyclerView.Adapter implements View.On
 
         private List<TextView> mTextViews  = new ArrayList<>();
 
+        private LinearLayout mLLMainItem ;
+
         public ItemHolder(View itemView) {
+
             super(itemView);
-            itemView.setOnClickListener(MainCategoryAdapter.this);
+          // itemView.setOnClickListener(MainCategoryAdapter.this);
+
+            mLLMainItem = itemView.findViewById(R.id.ll_main_item) ;
 
             mTvFilterOne = itemView.findViewById(R.id.tv_filter_one) ;
             mTvFilterTwo = itemView.findViewById(R.id.tv_filter_two) ;
@@ -205,16 +272,32 @@ public class MainCategoryAdapter extends RecyclerView.Adapter implements View.On
             mIvTitleIcon = itemView.findViewById(R.id.iv_title_info) ;
             ivArrow = itemView.findViewById(R.id.iv_arrow);
             ivArrow.setOnClickListener(MainCategoryAdapter.this);
+
+
+            mTvFilterOne.setOnClickListener(MainCategoryAdapter.this);
+            mTvFilterTwo.setOnClickListener(MainCategoryAdapter.this);
+            mTvFilterThree.setOnClickListener(MainCategoryAdapter.this);
+            mLLMainItem.setOnClickListener(MainCategoryAdapter.this);
+
         }
     }
 
     public class ItemSectionHolder extends RecyclerView.ViewHolder {
-        public TextView tvName;
+        public TextView tvOne;
+        public TextView tvTwo;
+        public TextView tvThree;
+
+        public LinearLayout mLLSection ;
 
         public ItemSectionHolder(View itemView) {
             super(itemView);
-            tvName = itemView.findViewById(R.id.tv_item_section_name);
-            tvName.setOnClickListener(MainCategoryAdapter.this);
+            mLLSection = itemView.findViewById(R.id.ll_section) ;
+            tvOne = itemView.findViewById(R.id.tv_sub_one);
+            tvTwo = itemView.findViewById(R.id.tv_sub_two);
+            tvThree = itemView.findViewById(R.id.tv_sub_three);
+            tvOne.setOnClickListener(MainCategoryAdapter.this);
+            tvTwo.setOnClickListener(MainCategoryAdapter.this);
+            tvThree.setOnClickListener(MainCategoryAdapter.this);
         }
     }
 
@@ -253,27 +336,63 @@ public class MainCategoryAdapter extends RecyclerView.Adapter implements View.On
             if(getItemViewType(position) == VIEW_TYPE_CHAPTER){
                 Category2Bean.DataBean.ExtraBean mainInfo = (Category2Bean.DataBean.ExtraBean) dataInfos.get(position);
 
-                //catId = mainInfo.getCatid() ;
-                chapterIndex = mainInfo.getIndex() ;
-                sectionIndex = -1;
-                if(v.getId() == R.id.iv_arrow){
-                    viewName = ViewName.CHAPTER_ITEM_PRACTISE;
-                }else{
-                    viewName = ViewName.CHAPTER_ITEM;
-                    if(mainInfo.getChildList().size() > 0){
-                        if(chapterIndex == curExpandChapterIndex){
-                            narrow(curExpandChapterIndex);
+                switch (v.getId()){
+                    case R.id.tv_filter_one :
+                        viewName = ViewName.CHAPTER_ITEM ;
+                        subCatId = mainInfo.getMainList().get(0).getCatid() ;
+                        mCategoryName = mainInfo.getMainList().get(0).getCatname() ;
+                        break ;
+                    case R.id.tv_filter_two :
+                        viewName = ViewName.CHAPTER_ITEM ;
+                        subCatId = mainInfo.getMainList().get(1).getCatid() ;
+                        mCategoryName = mainInfo.getMainList().get(1).getCatname() ;
+                        break ;
+                    case R.id.tv_filter_three :
+                        viewName = ViewName.CHAPTER_ITEM ;
+                        subCatId = mainInfo.getMainList().get(2).getCatid() ;
+                        mCategoryName = mainInfo.getMainList().get(2).getCatname() ;
+                        break ;
+                    case R.id.ll_main_item :
+                        //catId = mainInfo.getCatid() ;
+                        chapterIndex = mainInfo.getIndex() ;
+                        sectionIndex = -1;
+                        if(v.getId() == R.id.iv_arrow){
+                            viewName = ViewName.CHAPTER_ITEM_PRACTISE;
                         }else{
-                            narrow(curExpandChapterIndex);
-                            expand(chapterIndex);
+                            viewName = ViewName.CHAPTER_ITEM;
+                            if(mainInfo.getChildList().size() > 0){
+                                if(chapterIndex == curExpandChapterIndex){
+                                    narrow(curExpandChapterIndex);
+                                }else{
+                                    narrow(curExpandChapterIndex);
+                                    expand(chapterIndex);
+                                }
+                            }
                         }
-                    }
+                        break ;
                 }
+
             }else if(getItemViewType(position) == VIEW_TYPE_SECTION){
-                /*MainCategoryBean.DataBean.ChildrenBean sectionInfo = (MainCategoryBean.DataBean.ChildrenBean) dataInfos.get(position) ;
-                viewName = ViewName.SECTION_ITEM ;
-                subCatId = sectionInfo.getCatid() ;
-                mCategoryName = sectionInfo.getCatname() ;*/
+
+                Category2Bean.DataBean.ColumData columData = (Category2Bean.DataBean.ColumData) dataInfos.get(position);
+
+                switch (v.getId()){
+                    case R.id.tv_sub_one :
+                        viewName = ViewName.SECTION_ITEM ;
+                        subCatId = columData.getMainList().get(0).getCatid() ;
+                        mCategoryName = columData.getMainList().get(0).getCatname() ;
+                        break ;
+                    case R.id.tv_sub_two :
+                        viewName = ViewName.SECTION_ITEM ;
+                        subCatId = columData.getMainList().get(0).getCatid() ;
+                        mCategoryName = columData.getMainList().get(0).getCatname() ;
+                        break ;
+                    case R.id.tv_sub_three :
+                        viewName = ViewName.SECTION_ITEM ;
+                        subCatId = columData.getMainList().get(0).getCatid() ;
+                        mCategoryName = columData.getMainList().get(0).getCatname() ;
+                        break ;
+                }
             }
 
             mOnItemClickListener.onClick(v, viewName, chapterIndex, sectionIndex,catId,subCatId,mCategoryName);

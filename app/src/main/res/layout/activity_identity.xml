@@ -39,6 +39,7 @@
             android:gravity="center"
             android:orientation="vertical">
 
+
             <LinearLayout
                 android:id="@+id/ll_persion_identity"
                 android:layout_width="wrap_content"

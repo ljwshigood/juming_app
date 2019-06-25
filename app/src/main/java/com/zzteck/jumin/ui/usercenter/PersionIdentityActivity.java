@@ -231,8 +231,12 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 
 			@Override
 			protected String doInBackground(Integer... params) {
+
+                String front = (String) mIvFront.getTag();
+                String org = (String) mIvOrg.getTag();
+
 				MultipartBody body = RequestBuilder.uploadRequestBody2(PersionIdentityActivity.this,mEtName.getText().toString().trim(),mEtNumber.getText().toString().trim(),
-																		new File(mMediaFront.getCompressFile()),new File(mMediaOrg.getCompressFile()));
+																		new File(front),new File(org));
 
 
 				CountingRequestBody monitoredRequest = new CountingRequestBody(body, new CountingRequestBody.Listener() {
@@ -301,6 +305,8 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 
 	private List<LocalMedia> selectList = new java.util.ArrayList<>() ;
 
+	private int type ;
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()){
@@ -308,6 +314,7 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 				finish();
 				break ;
 			case R.id.ll_front:
+				type = 0 ;
 				PictureSelector.create(PersionIdentityActivity.this)
 						.openGallery(PictureMimeType.ofAll())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
 						.theme(R.style.picture_default_style)// 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
@@ -353,6 +360,7 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 
 				break ;
 			case R.id.ll_org :
+				type = 1 ;
 				PictureSelector.create(PersionIdentityActivity.this)
 						.openGallery(PictureMimeType.ofAll())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
 						.theme(R.style.picture_default_style)// 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
@@ -398,16 +406,18 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 
 				break ;
 			case R.id.ll_complete :
+				String front = (String) mIvFront.getTag();
+				String org = (String) mIvOrg.getTag();
 				if(TextUtils.isEmpty(mEtName.getText().toString().trim())){
 					WindowsToast.makeText(mContext,"名称不能为空").show();
 					return ;
 				}else if(TextUtils.isEmpty(mEtNumber.getText().toString().trim())){
 					WindowsToast.makeText(mContext,"身份证不能为空").show();
 					return ;
-				}else if(mMediaFront == null || TextUtils.isEmpty(mMediaFront.getCompressFile())){
+				}else if(TextUtils.isEmpty(front)){
 					WindowsToast.makeText(mContext,"请上传身份正面照片").show();
 					return ;
-				}else if(mMediaOrg == null || TextUtils.isEmpty(mMediaOrg.getCompressFile())){
+				}else if(TextUtils.isEmpty(org)){
 					WindowsToast.makeText(mContext,"请上传身份证反面照片").show();
 					return ;
 				}else{
@@ -441,23 +451,35 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 			// 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
 			// 如果裁剪并压缩了，已取压缩路径为准，因为是先裁剪后压缩的
 
+			if(type == 0){
 
-			/*if (selectList != null && selectList.size() > 0) {
-				mIvAddPicture.setVisibility(View.GONE);
-			} else {
-				mIvAddPicture.setVisibility(View.VISIBLE);
-			}*/
+				RequestOptions options = new RequestOptions()
+						.centerCrop()
+						.placeholder(R.mipmap.default_pic)
+						.diskCacheStrategy(DiskCacheStrategy.ALL);
 
+				Glide.with(mContext)
+						.load(selectList.get(0).getCompressPath())
+						.apply(options)
+						.into(mIvFront);
 
-			//	mHandler.sendEmptyMessage(2) ;
+				mIvFront.setTag(selectList.get(0).getCompressPath());
 
-			/*for (LocalMedia media : selectList) {
+			}else{
 
-				//mPhotoList = resultList ;
+				RequestOptions options = new RequestOptions()
+						.centerCrop()
+						.placeholder(R.mipmap.default_pic)
+						.diskCacheStrategy(DiskCacheStrategy.ALL);
 
+				Glide.with(mContext)
+						.load(selectList.get(0).getCompressPath())
+						.apply(options)
+						.into(mIvOrg);
+				mIvOrg.setTag(selectList.get(0).getCompressPath());
 
-				//Log.i("图片-----》", media.getPath());
-			}*/
+			}
+
 		}
 
 	}

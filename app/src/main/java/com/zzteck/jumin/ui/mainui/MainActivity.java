@@ -31,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.icechn.videorecorder.ui.RecordingActivity2;
 import com.maning.updatelibrary.InstallUtils;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -536,6 +537,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ll_realease:
+
 			mTvHome.setTextColor(mContext.getResources().getColor(R.color.dark));
 			mTvHistory.setTextColor(mContext.getResources().getColor(R.color.dark));
 			mTvRelease.setTextColor(mContext.getResources().getColor(R.color.dark_red));
@@ -549,7 +551,6 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 				Intent intent = new Intent(mContext, LoginActivity.class) ;
 				startActivity(intent);
 			}
-
 			break;
 		case R.id.rl_home:
 			mTvHome.setTextColor(mContext.getResources().getColor(R.color.dark_red));

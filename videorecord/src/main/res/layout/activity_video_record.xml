@@ -1,18 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="60dp">
+        android:orientation="vertical">
 
-        <com.icechn.videorecorder.ui.AspectTextureView
-            android:id="@+id/preview_textureview"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
+            android:layout_height="match_parent"
+            android:layout_weight="20">
+
+            <com.icechn.videorecorder.ui.AspectTextureView
+                android:id="@+id/preview_textureview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </FrameLayout>
+        
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@android:color/white"
+            android:layout_weight="80">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:visibility="visible">
+
+                <ProgressBar
+                    android:id="@+id/pb_timeline"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp" />
+
+                <View
+                    android:id="@+id/divide_view"
+                    android:layout_width="2dp"
+                    android:layout_height="4dp"
+                    android:background="#ffffff" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/btn_del"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/btn_shanchu_nor"
+                    android:gravity="center" />
+
+
+                <CheckBox
+                    android:id="@+id/cb_record"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/cb_record"
+                    android:button="@null"/>
+
+                <Button
+                    android:id="@+id/btn_ok"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/btn_queding"
+                    android:gravity="center" />
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
 
     <RelativeLayout
         android:id="@+id/layout_btns"
@@ -20,6 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:paddingBottom="15dp">
 
         <Button
@@ -27,14 +107,25 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerHorizontal="true"
+            android:visibility="gone"
             android:background="@drawable/ic_touch_record"
             android:gravity="center" />
 
-        <Button
+
+        <!--<CheckBox
+            android:id="@+id/cb_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@drawable/cb_record"
+            android:button="@null"/>-->
+
+        <!--<Button
             android:id="@+id/btn_del"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="12dp"
+            android:visibility="gone"
             android:background="@drawable/ic_delete"
             android:gravity="center" />
 
@@ -45,7 +136,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="12dp"
             android:background="@drawable/ic_save"
-            android:gravity="center" />
+            android:gravity="center" />-->
     </RelativeLayout>
 
     <TextView
@@ -56,12 +147,14 @@
         android:layout_marginBottom="5dp"
         android:gravity="center"
         android:text="长按录制 松手停止录制"
+        android:visibility="gone"
         android:textColor="#000000"
         android:textSize="14sp" />
 
-    <RelativeLayout
+   <!-- <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="4dp">
+        android:layout_height="4dp"
+        android:visibility="gone">
 
         <ProgressBar
             android:id="@+id/pb_timeline"
@@ -74,7 +167,7 @@
             android:layout_width="2dp"
             android:layout_height="4dp"
             android:background="#ffffff" />
-    </RelativeLayout>
+    </RelativeLayout>-->
 
     <TextView
         android:id="@+id/timeview"
@@ -83,28 +176,47 @@
         android:layout_alignParentRight="true"
         android:layout_margin="12dp"
         android:gravity="right"
+        android:visibility="gone"
         android:text="0s" />
 
 
     <Button
-        android:id="@+id/btn_swap"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:id="@+id/btn_delete"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/ic_switch_cam"
+        android:background="@drawable/btn_quxiao"
         android:gravity="center" />
 
-    <Button
-        android:id="@+id/btn_flash"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="20dp"
-        android:layout_toRightOf="@+id/btn_swap"
-        android:background="@drawable/ic_flash"
-        android:gravity="center"
-        android:visibility="gone" />
+     <LinearLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="30dp"
+         android:layout_marginRight="15dp"
+         android:layout_alignParentTop="true"
+         android:layout_alignParentRight="true"
+         android:orientation="vertical">
+
+         <Button
+             android:id="@+id/btn_swap"
+             android:layout_width="25dp"
+             android:layout_height="25dp"
+             android:background="@drawable/btn_fanzhuan"
+             />
+
+         <Button
+             android:id="@+id/btn_flash"
+             android:layout_width="25dp"
+             android:layout_height="25dp"
+             android:layout_marginTop="30dp"
+             android:background="@drawable/btn_deng_nor"
+           />
+
+     </LinearLayout>
+
+
+
 
 
 

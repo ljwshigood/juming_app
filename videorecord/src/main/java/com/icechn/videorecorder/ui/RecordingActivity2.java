@@ -21,6 +21,8 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout.LayoutParams;
@@ -68,6 +70,10 @@ public class RecordingActivity2 extends AppCompatActivity implements
         return rect;
     }
 
+    private CheckBox mCbRecord ;
+
+    private Button mIvDelete ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent i = getIntent();
@@ -75,9 +81,11 @@ public class RecordingActivity2 extends AppCompatActivity implements
         mSaveVideoPath = Environment.getExternalStorageDirectory().getPath() + "/live_save_video" + System.currentTimeMillis() + ".mp4";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_record);
+        mCbRecord = findViewById(R.id.cb_record) ;
         mTextureView = (AspectTextureView) findViewById(R.id.preview_textureview);
         mTextureView.setKeepScreenOn(true);
         mTextureView.setSurfaceTextureListener(this);
+        mIvDelete = findViewById(R.id.btn_delete) ;
 
         mTimeProgressBar = (ProgressBar) findViewById(R.id.pb_timeline);
         mTimeProgressBar.setMax(MAX_RECORD_DURATION);
@@ -85,16 +93,36 @@ public class RecordingActivity2 extends AppCompatActivity implements
         mTipTextView = (TextView) findViewById(R.id.tv_tips);
         mTimeView = (TextView) findViewById(R.id.timeview);
 
-        Rect rect = getScreenBounds(getApplicationContext());
+      /*  Rect rect = getScreenBounds(getApplicationContext());
         int sWidth = rect.width();
         ((LayoutParams)(findViewById(R.id.divide_view)).getLayoutParams()).leftMargin =
-                sWidth * MIN_RECORD_DURATION / MAX_RECORD_DURATION;
+                sWidth * MIN_RECORD_DURATION / MAX_RECORD_DURATION;*/
 
         findViewById(R.id.btn_swap).setOnClickListener(this);
         findViewById(R.id.btn_flash).setOnClickListener(this);
         findViewById(R.id.btn_del).setOnClickListener(this);
         findViewById(R.id.btn_ok).setOnClickListener(this);
-        findViewById(R.id.btn_cap).setOnTouchListener(new OnTouchListener() {
+        mCbRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(mCbRecord.isChecked()){
+                    resumeRecording();
+                }else {
+                    pauseRecording();
+                }
+
+            }
+        });
+
+        mIvDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        /*findViewById(R.id.btn_cap).setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction()==MotionEvent.ACTION_DOWN){//按下
@@ -104,7 +132,7 @@ public class RecordingActivity2 extends AppCompatActivity implements
                 }
                 return false;
             }
-        });
+        });*/
         findViewById(R.id.btn_del).setEnabled(mFileIdx > 0);
 
         prepareStreamingClient();
@@ -183,7 +211,7 @@ public class RecordingActivity2 extends AppCompatActivity implements
 
         //resize textureview
         Size s = mRecorderClient.getVideoSize();
-        mTextureView.setAspectRatio(AspectTextureView.MODE_INSIDE, ((double) s.getWidth()) / s.getHeight());
+        mTextureView.setAspectRatio(AspectTextureView.MODE_OUTSIDE, ((double) s.getWidth()) / s.getHeight());
 
         mRecorderClient.setVideoChangeListener(this);
 
@@ -201,7 +229,7 @@ public class RecordingActivity2 extends AppCompatActivity implements
 
     @Override
     public void onVideoSizeChanged(int width, int height) {
-        mTextureView.setAspectRatio(AspectTextureView.MODE_INSIDE, ((double) width) / height);
+        mTextureView.setAspectRatio(AspectTextureView.MODE_OUTSIDE, ((double) width) / height);
     }
 
     @Override

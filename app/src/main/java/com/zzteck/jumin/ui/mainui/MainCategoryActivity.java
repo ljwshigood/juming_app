@@ -258,6 +258,10 @@ public class MainCategoryActivity extends BaseActivity implements View.OnClickLi
 			@Override
 			public void onClick(View view, MainCategoryAdapter.ViewName viewName, int chapterIndex, int sectionIndex, String catId, String subCatId, String name) {
 
+				Log.e("liujw","########################subCatId : "+subCatId +"######################name : "+name);
+				Log.e("liujw","########################subCatId : "+subCatId +"######################name : "+name);
+				Log.e("liujw","########################subCatId : "+subCatId +"######################name : "+name);
+
 			}
 
 			/*@Override
@@ -286,16 +290,16 @@ public class MainCategoryActivity extends BaseActivity implements View.OnClickLi
 
 		//以下是对布局进行控制，让课时占据一行，小节每四个占据一行，结果就是相当于一个ListView嵌套GridView的效果
 
-		final GridLayoutManager manager = new GridLayoutManager(this, 4);
+		/*final GridLayoutManager manager = new GridLayoutManager(this, 4);
 
 		manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
 			@Override
 			public int getSpanSize(int position) {
 				return mMainCategoryAdapter.getItemViewType(position) == MainCategoryAdapter.VIEW_TYPE_CHAPTER ? 4 : 1;
 			}
-		});
+		});*/
 
-		mRecyclerView.setLayoutManager(manager);
+	//	mRecyclerView.setLayoutManager(manager);
 
 		toolbar.post(new Runnable() {
 			@Override

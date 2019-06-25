@@ -82,43 +82,27 @@
             </LinearLayout>
 
 
-            <LinearLayout
+            <RelativeLayout
+                android:id="@+id/ll_pic"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/bg_btn_rec_nomal"
-                android:gravity="center"
-                android:orientation="vertical">
+                >
+
+                <ImageView
+                    android:id="@+id/iv_org"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"/>
+
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:id="@+id/ll_org"
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <ImageView
-                            android:id="@+id/iv_org"
-                            android:layout_width="200dp"
-                            android:layout_height="80dp"
-                            android:scaleType="fitXY"
-                            android:src="@mipmap/pic_shenfenzheng" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="请上传营业执照的反面"
-                            android:textSize="15sp" />
-
-                    </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true">
 
 
                     <LinearLayout
@@ -128,7 +112,7 @@
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:layout_width="90dp"
                             android:layout_height="90dp"
                             android:background="#f6f6f6"
@@ -139,9 +123,10 @@
                                 android:id="@+id/iv_add"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
+                                android:layout_centerInParent="true"
                                 android:src="@mipmap/btn_shangchuan" />
 
-                        </LinearLayout>
+                        </RelativeLayout>
 
 
                         <TextView
@@ -156,45 +141,7 @@
 
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:id="@+id/ll_front"
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <ImageView
-                            android:id="@+id/iv_front"
-                            android:layout_width="200dp"
-                            android:layout_height="80dp"
-                            android:scaleType="fitXY"
-                            android:src="@mipmap/pic_rentou" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="请上传营业执照的正面"
-                            android:textSize="15sp" />
-
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:src="@mipmap/btn_shangchuan"
-                        android:visibility="gone" />
-
-                </RelativeLayout>
-            </LinearLayout>
+            </RelativeLayout>
 
 
             <LinearLayout

@@ -86,7 +86,8 @@ public class RecommandFragment extends Fragment {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRVCategory.setLayoutManager(layoutManager);
-        DividerDecoration itemDecoration = new DividerDecoration(Color.GRAY,dip2px(getActivity(),0.5f), 0,0);
+       // DividerDecoration itemDecoration = new DividerDecoration(mContext.getResources().getColor(R.color.color_line),dip2px(getActivity(),0.5f), 0,0);
+        DividerDecoration itemDecoration = new DividerDecoration(mContext.getResources().getColor(R.color.pickerview_wheelview_textcolor_divider),dip2px(getActivity(),0.5f), 0,0);
         itemDecoration.setDrawLastItem(false);
         mRVCategory.addItemDecoration(itemDecoration);
 

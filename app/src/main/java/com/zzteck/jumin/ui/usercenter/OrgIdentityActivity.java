@@ -52,10 +52,6 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 
 	private RelativeLayout mRlBack;
 
-	private LinearLayout mLLFront ;
-
-	private LinearLayout mLLOrg ;
-
 	private MediaInfo mMediaFront ;
 
 	private MediaInfo mMediaOrg ;
@@ -66,73 +62,6 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 
 	private ImageView mIvAdd ;
 
-	private void initMediaDataOrg(MediaInfo info) {
-
-
-		RequestOptions options = new RequestOptions()
-				.centerCrop()
-				.placeholder(R.mipmap.default_pic)
-				.diskCacheStrategy(DiskCacheStrategy.ALL);
-
-		Glide.with(mContext)
-				.load(Constants.PIC_HOST+info.getFilePath())
-				.apply(options)
-				.into(mIvOrg);
-
-
-	}
-
-	private void initMediaDataFront(MediaInfo info) {
-
-		RequestOptions options = new RequestOptions()
-				.centerCrop()
-				.placeholder(R.mipmap.default_pic)
-				.diskCacheStrategy(DiskCacheStrategy.ALL);
-
-		Glide.with(mContext)
-				.load(Constants.PIC_HOST+info.getFilePath())
-				.apply(options)
-				.into(mIvFront);
-
-	}
-
-	private void compressFileListOrg(){
-		new Thread(){
-
-			public void run() {
-
-				if(mMediaOrg.getIsCompressFile() == 0){
-					String compressString = PictureUtil.compressPicture(mContext,mMediaOrg.getFilePath());
-					if(compressString != null){
-						mMediaOrg.setCompressFile(compressString);
-						mMediaOrg.setIsCompressFile(1);
-					}else{
-						mMediaOrg.setLoadFlag(2);
-					}
-				}
-			}
-
-		}.start();
-	}
-
-	private void compressFileListFront(){
-		new Thread(){
-
-			public void run() {
-
-				if(mMediaFront.getIsCompressFile() == 0){
-					String compressString = PictureUtil.compressPicture(mContext,mMediaFront.getFilePath());
-					if(compressString != null){
-						mMediaFront.setCompressFile(compressString);
-						mMediaFront.setIsCompressFile(1);
-					}else{
-						mMediaFront.setLoadFlag(2);
-					}
-				}
-			}
-
-		}.start();
-	}
 
 
 	private LinearLayout mLLComplete ;
@@ -141,7 +70,11 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 
 	private EditText mEtNumber ;
 
+	private RelativeLayout mLLPic ;
+
 	private void initView() {
+
+		mLLPic = findViewById(R.id.ll_pic) ;
 		mIvAdd = findViewById(R.id.iv_add) ;
 		mEtName = findViewById(R.id.et_name) ;
 		mEtNumber = findViewById(R.id.et_number) ;
@@ -151,17 +84,12 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 		mIvFront = findViewById(R.id.iv_front) ;
 		mIvOrg = findViewById(R.id.iv_org) ;
 
-		mLLFront = findViewById(R.id.ll_front) ;
-		mLLOrg = findViewById(R.id.ll_org) ;
-
 		mTvTitle = findViewById(R.id.tv_main_info) ;
 		mRlBack = findViewById(R.id.ll_back) ;
 		mRlBack.setOnClickListener(this);
 		mTvTitle.setText("企业认证");
 		mRlBack.setVisibility(View.VISIBLE);
 
-		mLLFront.setOnClickListener(this);
-		mLLOrg.setOnClickListener(this);
 		mLLComplete.setOnClickListener(this);
 	}
 
@@ -245,7 +173,7 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 						.forResult(com.luck.picture.lib.config.PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
 
 				break ;
-			case R.id.ll_org :
+			/*case R.id.ll_org :
 				com.luck.picture.lib.PictureSelector.create(OrgIdentityActivity.this)
 						.openGallery(com.luck.picture.lib.config.PictureMimeType.ofAll())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
 						.theme(R.style.picture_default_style)// 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
@@ -289,19 +217,19 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 						//.recordVideoSecond()//录制视频秒数 默认60s
 						.forResult(com.luck.picture.lib.config.PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
 
-				break ;
+				break ;*/
 			case R.id.ll_complete :
+
+				String org = (String) mLLPic.getTag();
+
 				if(TextUtils.isEmpty(mEtName.getText().toString().trim())){
 					WindowsToast.makeText(mContext,"公司名称不能为空").show();
 					return ;
 				}else if(TextUtils.isEmpty(mEtNumber.getText().toString().trim())){
 					WindowsToast.makeText(mContext,"营业执照不能为空").show();
 					return ;
-				}else if(mMediaFront == null || TextUtils.isEmpty(mMediaFront.getCompressFile())){
-					WindowsToast.makeText(mContext,"请上传营业执照正面照片").show();
-					return ;
-				}else if(mMediaOrg == null || TextUtils.isEmpty(mMediaOrg.getCompressFile())){
-					WindowsToast.makeText(mContext,"请上传营业执照反面照片").show();
+				}else if(TextUtils.isEmpty(org)){
+					WindowsToast.makeText(mContext,"请上传营业执照").show();
 					return ;
 				}else{
 					try {
@@ -322,8 +250,11 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 
 			@Override
 			protected String doInBackground(Integer... params) {
-				MultipartBody body = RequestBuilder.uploadRequestBody3(OrgIdentityActivity.this,mEtName.getText().toString().trim(),mEtNumber.getText().toString().trim(),
-						new File(mMediaFront.getCompressFile()),new File(mMediaOrg.getCompressFile()));
+
+				String org = (String) mLLPic.getTag();
+
+				MultipartBody body = RequestBuilder.uploadRequestBody5(OrgIdentityActivity.this,mEtName.getText().toString().trim(),mEtNumber.getText().toString().trim(),
+						new File(org));
 
 
 				CountingRequestBody monitoredRequest = new CountingRequestBody(body, new CountingRequestBody.Listener() {
@@ -402,31 +333,18 @@ public class OrgIdentityActivity extends BaseActivity implements OnClickListener
 			// 图片选择结果回调
 			selectList = PictureSelector.obtainMultipleResult(data);
 
+			RequestOptions options = new RequestOptions()
+					.centerCrop()
+					.placeholder(R.mipmap.default_pic)
+					.diskCacheStrategy(DiskCacheStrategy.ALL);
 
+			Glide.with(mContext)
+					.load(selectList.get(0).getCompressPath())
+					.apply(options)
+					.into(mIvOrg);
 
-			// 例如 LocalMedia 里面返回三种path
-			// 1.media.getPath(); 为原图path
-			// 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
-			// 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
-			// 如果裁剪并压缩了，已取压缩路径为准，因为是先裁剪后压缩的
+			mLLPic.setTag(selectList.get(0).getCompressPath());
 
-
-			/*if (selectList != null && selectList.size() > 0) {
-				mIvAddPicture.setVisibility(View.GONE);
-			} else {
-				mIvAddPicture.setVisibility(View.VISIBLE);
-			}*/
-
-
-		//	mHandler.sendEmptyMessage(2) ;
-
-			/*for (LocalMedia media : selectList) {
-
-				//mPhotoList = resultList ;
-
-
-				//Log.i("图片-----》", media.getPath());
-			}*/
 		}
 
 	}

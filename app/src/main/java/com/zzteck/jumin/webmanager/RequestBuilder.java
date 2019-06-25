@@ -66,6 +66,24 @@ public class RequestBuilder {
 
     }
 
+    public static MultipartBody uploadRequestBody5(Context context,String cname,String idc, File file) {
+
+        String content_type = getMimeType(file.getPath());
+        String file_path = file.getAbsolutePath();
+        RequestBody file_body = RequestBody.create(MediaType.parse(content_type), file);
+
+        return new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("type", content_type)
+                .addFormDataPart("s", "App.Member.Comcer")
+                .addFormDataPart("cname", cname)
+                .addFormDataPart("idc", idc)
+                .addFormDataPart("sign", UtilsTools.getSign(context,"App.Member.Comcer"))
+                .addFormDataPart("fimage", file_path.substring(file_path.lastIndexOf("/") + 1), file_body).build();
+
+    }
+
+
     public static MultipartBody uploadRequestBody(Context context, File file) {
 
         String content_type = getMimeType(file.getPath());
