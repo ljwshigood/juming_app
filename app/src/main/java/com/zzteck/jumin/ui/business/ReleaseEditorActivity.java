@@ -1176,6 +1176,8 @@ public class ReleaseEditorActivity extends BaseActivity implements View.OnClickL
 							Gson gson = new Gson() ;
 							mReleaseEditBean = gson.fromJson(message,ReleaseEditBean.class) ;
 
+							mSubId = mReleaseEditBean.getData().getCatid() ;
+
 							mVideUrl = mReleaseEditBean.getData().getVideo() ;
 
 							mHashExtra = mReleaseEditBean.getData().getExtra() ;
@@ -1465,7 +1467,15 @@ public class ReleaseEditorActivity extends BaseActivity implements View.OnClickL
 
 					}
 				});
+				if(TextUtils.isEmpty(mAreaId)){
+					WindowsToast.makeText(mContext,"区域为选择").show();
+					return ;
+				}
 
+				if(TextUtils.isEmpty(mStreetId)){
+					WindowsToast.makeText(mContext,"区域为选择").show();
+					return ;
+				}
 
 				AppInfoAdd(mSubId,mEtTitle.getText().toString().trim(),mAreaId,mStreetId,
 						mEtDes.getText().toString().trim(),"","","",mTvSelectQone.getText().toString().trim(),
@@ -1640,6 +1650,8 @@ public class ReleaseEditorActivity extends BaseActivity implements View.OnClickL
 	public void AppInfoAdd(String catid,String title,String areaid,String streetid,String content,String lat,String lng,
 						   String mappoint,String webAddress,String extra,String video,String img,String conatctWho,String tel,
 						   String qq,String wexin){
+
+
 		Map<String, String> map = new HashMap<>() ;
 		map.put("cityid",mCityId) ;
 		map.put("s","App.Info.Add") ;
@@ -1683,7 +1695,7 @@ public class ReleaseEditorActivity extends BaseActivity implements View.OnClickL
 						Gson gson = new Gson() ;
 						ReleaseRet bean = gson.fromJson(message,ReleaseRet.class) ;
 
-						if(bean != null && bean.getData() != null && Integer.valueOf(bean.getData().getId()) > 0 ){
+						if(bean != null && bean.getData() != null && bean.getData().getId() != null && Integer.valueOf(bean.getData().getId()) >  0){
 							WindowsToast.makeText(mContext,bean.getData().getMsg()).show();
 							SYSDiaLogUtils.dismissProgress();
 							finish();
