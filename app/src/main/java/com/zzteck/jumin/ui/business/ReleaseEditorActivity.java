@@ -1461,12 +1461,7 @@ public class ReleaseEditorActivity extends BaseActivity implements View.OnClickL
 
 				String imgs = mImageUrl.substring(0,mImageUrl.lastIndexOf(","));
 
-				SYSDiaLogUtils.showProgressDialog(this, SYSDiaLogUtils.SYSDiaLogType.IosType, "加载中...", false, new DialogInterface.OnCancelListener() {
-					@Override
-					public void onCancel(DialogInterface dialog) {
 
-					}
-				});
 				if(TextUtils.isEmpty(mAreaId)){
 					WindowsToast.makeText(mContext,"区域为选择").show();
 					return ;
@@ -1476,6 +1471,13 @@ public class ReleaseEditorActivity extends BaseActivity implements View.OnClickL
 					WindowsToast.makeText(mContext,"区域为选择").show();
 					return ;
 				}
+
+				SYSDiaLogUtils.showProgressDialog(this, SYSDiaLogUtils.SYSDiaLogType.IosType, "加载中...", false, new DialogInterface.OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface dialog) {
+
+					}
+				});
 
 				AppInfoAdd(mSubId,mEtTitle.getText().toString().trim(),mAreaId,mStreetId,
 						mEtDes.getText().toString().trim(),"","","",mTvSelectQone.getText().toString().trim(),
