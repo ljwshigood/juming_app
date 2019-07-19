@@ -1,6 +1,7 @@
 package com.zzteck.jumin.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextPaint;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.zzteck.jumin.R;
 import com.zzteck.jumin.bean.MyReleaseBean;
+import com.zzteck.jumin.ui.business.ReleaseEditorActivity;
 import com.zzteck.jumin.utils.DateUtils;
 
 import java.util.List;
@@ -138,11 +140,18 @@ public class MyReleaseAdapter extends RecyclerView.Adapter<MyReleaseAdapter.View
                 }
             }
         });
+
+        holder.mIvEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ReleaseEditorActivity.class);
+                intent.putExtra("id",mMyReleaseList.get(position).getId()+"") ;
+                mContext.startActivity(intent);
+            }
+        });
+
+
     }
-
-
-
-
 
     @Override
     public int getItemCount() {
@@ -172,8 +181,11 @@ public class MyReleaseAdapter extends RecyclerView.Adapter<MyReleaseAdapter.View
         private TextView mTvRed ;
         private TextView mTvTop ;
 
+        private ImageView mIvEdit ;
+
         public ViewHolder(View itemView) {
             super(itemView);
+            mIvEdit = itemView.findViewById(R.id.iv_modify) ;
             mIvDelete = itemView.findViewById(R.id.iv_delete) ;
             mTvShow = itemView.findViewById(R.id.tv_isshow) ;
             mTvBold = itemView.findViewById(R.id.tv_isbold) ;

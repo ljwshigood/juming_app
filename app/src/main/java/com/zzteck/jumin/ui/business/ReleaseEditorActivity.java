@@ -4,7 +4,6 @@ package com.zzteck.jumin.ui.business;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,13 +16,11 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -59,6 +56,7 @@ import com.zzteck.jumin.bean.LinkCat;
 import com.zzteck.jumin.bean.MediaInfo;
 import com.zzteck.jumin.bean.QoneInfo;
 import com.zzteck.jumin.bean.ReleaseDataBean;
+import com.zzteck.jumin.bean.ReleaseEditBean;
 import com.zzteck.jumin.bean.ReleaseRet;
 import com.zzteck.jumin.bean.VideoInfo;
 import com.zzteck.jumin.pop.LinkCatAdapter;
@@ -72,7 +70,6 @@ import com.zzteck.jumin.webmanager.CountingRequestBody;
 import com.zzteck.jumin.webmanager.RequestBuilder;
 import com.zzteck.zzview.WindowsToast;
 
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -91,7 +88,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ReleaseActivity extends BaseActivity implements View.OnClickListener {
+public class ReleaseEditorActivity extends BaseActivity implements View.OnClickListener {
 	
 	private Context mContext ;
 
@@ -136,7 +133,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		@Override
 		public void onAddPicClick() {
 
-			PictureSelector.create(ReleaseActivity.this)
+			PictureSelector.create(ReleaseEditorActivity.this)
 					.openGallery(PictureMimeType.ofAll())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
 					.theme(R.style.picture_default_style)// 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
 					.maxSelectNum(4)// 最大图片选择数量
@@ -216,26 +213,27 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		mImageAdapter = new ImageAdapter(mContext,null) ;
 
 
-		FullyGridLayoutManager manager = new FullyGridLayoutManager(ReleaseActivity.this, 4, GridLayoutManager.VERTICAL, false);
+		FullyGridLayoutManager manager = new FullyGridLayoutManager(ReleaseEditorActivity.this, 4, GridLayoutManager.VERTICAL, false);
 		mRvPic.setLayoutManager(manager);
-		mGridAdapter = new GridImageAdapter(ReleaseActivity.this, onAddPicClickListener);
+		mGridAdapter = new GridImageAdapter(ReleaseEditorActivity.this, onAddPicClickListener);
 		mGridAdapter.setList(selectList);
 		mGridAdapter.setSelectMax(6);
 		mRvPic.setAdapter(mGridAdapter);
 
 	}
 
-	private HashMap mHashExtra = new HashMap() ;
+	private Map mHashExtra = new HashMap() ;
 
 	private void getExternelInfo(String catId,String id){
 
-		if(TextUtils.isEmpty(mCatId) || TextUtils.isEmpty(mSubId)){
+		if(TextUtils.isEmpty(catId)){
 			return ;
 		}
 
 		Map<String, String> map = new HashMap<>() ;
 		map.put("s","App.Info.Typeoptions") ;
-		map.put("catid",mSubId) ;
+		map.put("catid",catId) ;
+
 		map.put("sign", UtilsTools.getSign(mContext,"App.Info.Typeoptions")) ;
 
 		OkHttpClient client = new OkHttpClient();
@@ -283,6 +281,29 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		mCatId = getIntent().getStringExtra("catId") ;
 		mSubId = getIntent().getStringExtra("subCatId") ;
         mCategoryName = getIntent().getStringExtra("category") ;
+        mId = getIntent().getStringExtra("id") ;
+	}
+
+	private void initVideo(){
+	/*	String filePath = mReleaseEditBean.getData().getVideo() ;
+		mIvVideoThumb.setImageBitmap(FileUtils.getVideoThumb(Constants.PIC_HOST+filePath));*/
+	}
+
+	private void initPicture(){
+
+		List<ReleaseEditBean.DataBean.ImageBean> images =  mReleaseEditBean.getData().getImage() ;
+		List<LocalMedia> localMediaList = new ArrayList<>() ;
+		for(int i = 0 ;i< images.size() ;i++){
+			LocalMedia localMedia = new LocalMedia() ;
+			localMedia.setStatus(1);
+			localMedia.setPath(Constants.PIC_HOST+images.get(i).getPath());
+			localMediaList.add(localMedia);
+
+			mImageUrl += images.get(i).getPath() +",";
+		}
+
+		mGridAdapter.setList(localMediaList);
+		mGridAdapter.notifyDataSetChanged();
 	}
 
 
@@ -325,8 +346,6 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			popupWindow = null ;
 		}
 
-
-
 		View popupWindowView = getLayoutInflater().inflate(R.layout.right_qone_pop_memu, null);
 		popupWindow = new PopupWindow(popupWindowView, ViewGroup.LayoutParams.FILL_PARENT, popHeight*2, true);
 		popupWindow.setAnimationStyle(R.style.AnimationBottomFade);
@@ -336,6 +355,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		popupWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_release, null), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
 
 		backgroundAlpha(0.5f);
+
 
 		/*View popupWindowView = getLayoutInflater().inflate(R.layout.right_qone_pop_memu, null);
 		popupWindow = new PopupWindow(popupWindowView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
@@ -409,7 +429,6 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			popupWindow.dismiss();
 			popupWindow = null ;
 		}
-
 
 		View popupWindowView = getLayoutInflater().inflate(R.layout.right_pop_memu, null);
 		popupWindow = new PopupWindow(popupWindowView, ViewGroup.LayoutParams.FILL_PARENT, popHeight*2, true);
@@ -510,12 +529,9 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 		backgroundAlpha(0.5f);
 
-		//popupWindow.setOnDismissListener(new popupDismissListener());
-	/*	popupWindowView.setOnTouchListener(new View.OnTouchListener() {
-										   };*/
 		/*View popupWindowView = getLayoutInflater().inflate(R.layout.right_qone_pop_memu, null);
-		popupWindow = new PopupWindow(popupWindowView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-		popupWindow.setAnimationStyle(R.style.AnimationBottomFade);
+		popupWindow = new PopupWindow(popupWindowView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
+		popupWindow.setAnimationStyle(R.style.AnimationRightFade);
 
 		ColorDrawable dw = new ColorDrawable(0xffffffff);
 		popupWindow.setBackgroundDrawable(dw);
@@ -543,13 +559,10 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			}
 		});
 
-        backgroundAlpha(0.5f);
-        popupWindow.setOnDismissListener(new popupDismissListener());
-
-		/*popupWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_release, null), Gravity.BOTTOM, 0, 500);
+		popupWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_release, null), Gravity.RIGHT, 0, 500);
 
 		backgroundAlpha(0.5f);
-		popupWindow.setOnDismissListener(new popupDismissListener());*/
+		popupWindow.setOnDismissListener(new popupDismissListener());
 
 
 		mRlArea = popupWindowView.findViewById(R.id.rv_area);
@@ -719,6 +732,23 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 	private TextView mTvLink ;
 
+    private Object iteratorMap1(Map map,String key){
+        Object obj = null ;
+        if(map == null){
+            return null ;
+        }
+        Iterator<Map.Entry<String, Object>> entries = map.entrySet().iterator();
+        while (entries.hasNext()) {
+            Map.Entry<String, Object> entry = entries.next();
+            String tempKey =  entry.getKey();
+            if(key.equals(tempKey)){
+                obj =  entry.getValue() ;
+            }
+
+        }
+        return obj ;
+    }
+
     private void iteratorMap(Map map){
         if(map == null){
             return ;
@@ -772,6 +802,8 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				String choices = info.get(i).getExtra().getChoices();
 				final String[] arrayChoices = choices.split("\\r\\n") ;
 
+				Object object = iteratorMap1(mReleaseEditBean.getData().getExtra(),info.get(positon).getIdentifier());
+
 				for(int j = 0 ; j< arrayChoices.length ; j++){
 					final RadioButton radioButton = new RadioButton(this) ;
 					radioButton.setId(mRadioButtinId++) ;
@@ -780,6 +812,15 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 					radioButton.setLayoutParams(new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT,RadioGroup.LayoutParams.WRAP_CONTENT)) ;
 					radioGroup.addView(radioButton) ;
 					final String[] selectText = arrayChoices[j].split("=") ;
+
+					if(object != null){
+						if(selectText[0].equals(String.valueOf(object))){
+							radioButton.setChecked(true);
+						}else{
+							radioButton.setChecked(false);
+						}
+					}
+
 					radioButton.setTag(selectText[0]);
 				}
 
@@ -802,11 +843,18 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 				linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
 				EditText etPrice = new EditText(this);
-				etPrice.setHint("请输入"+info.get(i).getTitle());
 				etPrice.setBackground(null);
 				etPrice.setTextSize(14f);
 				etPrice.setLayoutParams(new LinearLayout.LayoutParams(200,ViewGroup.LayoutParams.WRAP_CONTENT,0.8f));
 
+
+				Object object = iteratorMap1(mReleaseEditBean.getData().getExtra(),info.get(i).getIdentifier());
+
+				if(object != null){
+					etPrice.setText(String.valueOf(object));
+				}else {
+					etPrice.setHint("请输入"+info.get(i).getTitle());
+				}
 
 				mHashMapViews.put(info.get(i).getIdentifier(),etPrice) ;
 
@@ -836,13 +884,26 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 					spinnerList.add(temp);
 				}
 
+				Object object = iteratorMap1(mReleaseEditBean.getData().getExtra(),info.get(i).getIdentifier());
+
 				if(spinnerList != null && spinnerList.size() > 0){
 					String temp = attray[0] ;
 					String[] splites = temp.split("=") ;
 					String identifier = (String) spinner.getTag();
-					mHashExtra.put(info.get(i).getIdentifier(),splites[0]) ;
 
+					if(object != null){
+						for(int j = 0 ;j < attray.length ;j++){
+							String temp1 = attray[j] ;
+							String[] splites1 = temp1.split("=") ;
+							if(String.valueOf(object).equals(splites1[0])){
+								mHashExtra.put(info.get(i).getIdentifier(),splites[0]) ;
+							}
+						}
+					}else{
+						mHashExtra.put(info.get(i).getIdentifier(),splites[0]) ;
+					}
 				}
+
 
 				spinner.setItems(spinnerList);
 				spinner.setTag(info.get(i).getIdentifier());
@@ -862,9 +923,9 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 				linearLayoutRight.addView(spinner);
 			}else if(info.get(i).getType().equals("text")){
+
 				linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
 				EditText tvText = new EditText(this);
-				tvText.setHint("请输入"+info.get(i).getTitle());
 				tvText.setSingleLine();
 				tvText.setBackground(null);
 				tvText.setTextSize(14f);
@@ -872,16 +933,33 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 				mHashMapViews.put(info.get(i).getIdentifier(),tvText) ;
 
+
+				Object object = iteratorMap1(mReleaseEditBean.getData().getExtra(),info.get(i).getIdentifier());
+
+				if(object != null){
+					tvText.setText(String.valueOf(object));
+				}else{
+					tvText.setHint("请输入"+info.get(i).getTitle());
+				}
+
+
 				linearLayoutRight.addView(tvText) ;
 
 
 			}else if(info.get(i).getType().equals("textarea")){
 				linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
 				EditText tvText = new EditText(this);
-				tvText.setHint("请输入"+info.get(i).getTitle());
 				tvText.setBackground(null);
 				tvText.setTextSize(14f);
 				tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
+
+				Object object = iteratorMap1(mReleaseEditBean.getData().getExtra(),info.get(i).getIdentifier());
+
+				if(object != null){
+					tvText.setText(String.valueOf(object));
+				}else{
+					tvText.setHint("请输入"+info.get(i).getTitle());
+				}
 
 				mHashMapViews.put(info.get(i).getIdentifier(),tvText) ;
 
@@ -896,13 +974,13 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 				String choices = info.get(i).getExtra().getChoices();
 				final String[] arrayChoices = choices.split("\\r\\n") ;
-
 				TextView tvText = new TextView(this);
 				tvText.setHint("请选择"+info.get(i).getTitle());
 				tvText.setTextSize(14f);
 				tvText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0.2f));
 
 				linearLayoutRight.addView(tvText) ;
+
 				final String title = info.get(i).getTitle() ;
 				tvText.setOnClickListener(new View.OnClickListener() {
 					@Override
@@ -921,42 +999,6 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 						initCheckPopupWindow(list,title,false) ;
 					}
 				});
-
-				/*linearLayoutRight.setOrientation(LinearLayout.VERTICAL);
-
-				 *//*	LinearLayout llContainer = new LinearLayout(this);
-				llContainer.setLayoutParams(new RadioGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-				llContainer.setOrientation(LinearLayout.VERTICAL);
-
-				String choices = info.getData().get(i).getExtra().getChoices();
-				String[] arrayChoices = choices.split("\\r\\n") ;
-
-				LinearLayout groupLl = null ;
-
-				for(int j = 0 ; j< arrayChoices.length ; j++){
-
-					final CheckBox checkButton = new CheckBox(this) ;
-					int index = arrayChoices[j].indexOf("=") ;
-					checkButton.setText(arrayChoices[j].substring(index+1,arrayChoices[j].length()));
-					checkButton.setLayoutParams(new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT,RadioGroup.LayoutParams.WRAP_CONTENT)) ;
-
-					checkButton.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-
-						}
-					});
-
-					if(j % 3 == 0){
-						groupLl = new LinearLayout(this);
-						groupLl.setLayoutParams(new RadioGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-						groupLl.setOrientation(LinearLayout.HORIZONTAL);
-						llContainer.addView(groupLl);
-					}
-					groupLl.addView(checkButton);
-				}*//*
-
-				linearLayoutRight.addView(llContainer);*/
 
 			}else if(info.get(i).getType().equals("link")){
 
@@ -1072,7 +1114,12 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 	private ImageView mIvAddPicture ;
 
+	private String mId ;
+
+	private ReleaseEditBean mReleaseEditBean ;
+
 	private int popHeight ;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -1083,12 +1130,66 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		mCityId = (String) SharePerfenceUtil.getParam(mContext,"city_id","");
 		initView() ;
 		initData();
-		getExternelInfo(mCatId, mSubId);
 		mTvCat.setText(mCategoryName);
-
+		preedit(mId);
 		DisplayMetrics dm = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(dm);
 		popHeight = SupDialogStaticUtils.px2dip(mContext,dm.heightPixels / 2) ;
+	}
+
+	private void initWebData(){
+		mEtTitle.setText(mReleaseEditBean.getData().getTitle());
+        mEtQQ.setText(mReleaseEditBean.getData().getQq());
+        mEtContact.setText(mReleaseEditBean.getData().getContact_who());
+        mEtDes.setText(mReleaseEditBean.getData().getContent());
+        mEtMobile.setText(mReleaseEditBean.getData().getTel());
+        mEtWeiXin.setText(mReleaseEditBean.getData().getWeixin());
+    }
+
+	private void preedit(String id){
+
+		Map<String, String> map = new HashMap<>() ;
+		map.put("s","App.Info.Preedit") ;
+		map.put("id",id) ;
+
+		map.put("sign", UtilsTools.getSign(mContext,"App.Info.Preedit")) ;
+
+		OkHttpClient client = new OkHttpClient();
+		Request request = new Request.Builder().get().url(Constants.HOST+"?"+ UtilsTools.getMapToString(map)).build();
+		Call call = client.newCall(request);
+		call.enqueue(new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+				Log.e("liujw","##########################IOException : "+e.toString());
+			}
+
+			@Override
+			public void onResponse(Call call, final Response response) throws IOException {
+				final String responseStr = response.body().string();
+
+				Log.e("liujw","##########################getExternelInfo responseStr : "+responseStr);
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						/*try{*/
+							String message = new String(responseStr.getBytes()) ;
+							Gson gson = new Gson() ;
+							mReleaseEditBean = gson.fromJson(message,ReleaseEditBean.class) ;
+
+							mVideUrl = mReleaseEditBean.getData().getVideo() ;
+
+							mHashExtra = mReleaseEditBean.getData().getExtra() ;
+							//initVideo() ;
+							initPicture() ;
+							initWebData();
+							getExternelInfo(mReleaseEditBean.getData().getCatid(), "");
+						/*}catch (Exception e){
+							e.printStackTrace();
+						}*/
+					}
+				});
+			}
+		});
 	}
 
 
@@ -1184,7 +1285,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		switch (view.getId()){
 			case R.id.iv_add_pic :
 
-				PictureSelector.create(ReleaseActivity.this)
+				PictureSelector.create(ReleaseEditorActivity.this)
 						.openGallery(PictureMimeType.ofAll())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
 						.theme(R.style.picture_default_style)// 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
 						.maxSelectNum(4)// 最大图片选择数量
@@ -1244,7 +1345,6 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 
 				if(mHashMapViews.size() > 0){
-
 
 					Iterator<Map.Entry<String, Object>> iterator = mHashMapViews.entrySet().iterator();
 					boolean isPass = true ;
@@ -1387,7 +1487,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			@Override
 			protected String doInBackground(Integer... params) {
 
-				MultipartBody body = RequestBuilder.uploadRequestBody3(ReleaseActivity.this, file);
+				MultipartBody body = RequestBuilder.uploadRequestBody3(ReleaseEditorActivity.this, file);
 
 				CountingRequestBody monitoredRequest = new CountingRequestBody(body, new CountingRequestBody.Listener() {
 					@Override
@@ -1468,7 +1568,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			@Override
 			protected String doInBackground(Integer... params) {
 
-				MultipartBody body = RequestBuilder.uploadRequestBody4(ReleaseActivity.this, file);
+				MultipartBody body = RequestBuilder.uploadRequestBody4(ReleaseEditorActivity.this, file);
 
 				CountingRequestBody monitoredRequest = new CountingRequestBody(body, new CountingRequestBody.Listener() {
 					@Override

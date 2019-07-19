@@ -90,6 +90,8 @@
         <activity android:name=".ui.business.ChargeActivity"></activity>
         <activity android:name=".ui.business.SearchResultListActivity"></activity>
 
+        <activity android:name=".ui.business.ReleaseEditorActivity"></activity>
+
 
         <activity android:name=".test.RefreshAndMoreActivity">
             <!--<intent-filter>

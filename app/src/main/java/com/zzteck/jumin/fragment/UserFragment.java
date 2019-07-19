@@ -112,6 +112,9 @@ public class UserFragment extends Fragment implements OnClickListener {
 
     public void initData() {
         List<User> userList = UserDAO.getInstance(mContext).selectUserList() ;
+        if(mContext == null){
+            mContext = getActivity();
+        }
         if(userList != null && userList.size() > 0){
 
 

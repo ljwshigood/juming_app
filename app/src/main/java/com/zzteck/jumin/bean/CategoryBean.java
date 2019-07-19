@@ -47,15 +47,18 @@ public class CategoryBean implements Serializable{
     }
 
     public static class DataBean {
+
         /**
-         * catid : 1
-         * catname : 二手转让
-         * icon : http://www.jumin.cn/template/default/images/index/icon_ershou.gif
+         * catid : 4
+         * catname : 全职招聘
+         * icon : /template/default/jmw_files/mume_1.png
+         * isyes : 0
          */
 
         private String catid;
         private String catname;
         private String icon;
+        private int isyes;
 
         public String getCatid() {
             return catid;
@@ -79,6 +82,14 @@ public class CategoryBean implements Serializable{
 
         public void setIcon(String icon) {
             this.icon = icon;
+        }
+
+        public int getIsyes() {
+            return isyes;
+        }
+
+        public void setIsyes(int isyes) {
+            this.isyes = isyes;
         }
     }
 }

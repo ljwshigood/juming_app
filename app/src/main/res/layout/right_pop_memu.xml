@@ -30,7 +30,7 @@
 
     <me.yokeyword.indexablerv.IndexableLayout
         android:id="@+id/indexableLayout"
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:indexBar_background="#08000000"
         app:indexBar_layout_width="24dp"

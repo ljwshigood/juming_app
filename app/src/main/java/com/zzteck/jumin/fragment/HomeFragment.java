@@ -518,6 +518,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
                 final String responseStr = response.body().string();
+                if(getActivity() == null){
+                    return ;
+                }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -883,28 +886,60 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break ;
             case R.id.iv_one :
-                intent = new Intent(getActivity(), MainCategoryActivity.class) ;
-                intent.putExtra("title",mCategoryBean.getData().get(0).getCatname()) ;
-                intent.putExtra("catid",mCategoryBean.getData().get(0).getCatid()) ;
-                startActivity(intent);
+                if(mCategoryBean.getData().get(0).getIsyes() == 1 ){
+                    intent = new Intent(getActivity(), MainCategoryActivity.class) ;
+                    intent.putExtra("title",mCategoryBean.getData().get(0).getCatname()) ;
+                    intent.putExtra("catid",mCategoryBean.getData().get(0).getCatid()) ;
+                    startActivity(intent);
+                }else{
+                    intent = new Intent(getActivity(), CategoryListActivity.class) ;
+                    intent.putExtra("title",mCategoryBean.getData().get(0).getCatname()) ;
+                    intent.putExtra("id",mCategoryBean.getData().get(0).getCatid()) ;
+                    startActivity(intent);
+                }
+
                 break ;
             case R.id.iv_two :
-                intent = new Intent(getActivity(), MainCategoryActivity.class) ;
-                intent.putExtra("title",mCategoryBean.getData().get(1).getCatname()) ;
-                intent.putExtra("catid",mCategoryBean.getData().get(1).getCatid()) ;
-                startActivity(intent);
+                if(mCategoryBean.getData().get(1).getIsyes() == 1 ){
+                    intent = new Intent(getActivity(), MainCategoryActivity.class) ;
+                    intent.putExtra("title",mCategoryBean.getData().get(1).getCatname()) ;
+                    intent.putExtra("catid",mCategoryBean.getData().get(1).getCatid()) ;
+                    startActivity(intent);
+                }else{
+                    intent = new Intent(getActivity(), CategoryListActivity.class) ;
+                    intent.putExtra("title",mCategoryBean.getData().get(1).getCatname()) ;
+                    intent.putExtra("id",mCategoryBean.getData().get(1).getCatid()) ;
+                    startActivity(intent);
+                }
+
                 break ;
             case R.id.iv_three :
-                intent = new Intent(getActivity(), MainCategoryActivity.class) ;
-                intent.putExtra("catid",mCategoryBean.getData().get(2).getCatid()) ;
-                intent.putExtra("title",mCategoryBean.getData().get(2).getCatname()) ;
-                startActivity(intent);
+                if(mCategoryBean.getData().get(2).getIsyes() == 1 ){
+                    intent = new Intent(getActivity(), MainCategoryActivity.class) ;
+                    intent.putExtra("catid",mCategoryBean.getData().get(2).getCatid()) ;
+                    intent.putExtra("title",mCategoryBean.getData().get(2).getCatname()) ;
+                    startActivity(intent);
+                }else{
+                    intent = new Intent(getActivity(), CategoryListActivity.class) ;
+                    intent.putExtra("title",mCategoryBean.getData().get(2).getCatname()) ;
+                    intent.putExtra("id",mCategoryBean.getData().get(2).getCatid()) ;
+                    startActivity(intent);
+                }
+
                 break ;
             case R.id.iv_four :
-                intent = new Intent(getActivity(), MainCategoryActivity.class) ;
-                intent.putExtra("catid",mCategoryBean.getData().get(3).getCatid()) ;
-                intent.putExtra("title",mCategoryBean.getData().get(3).getCatname()) ;
-                startActivity(intent);
+                if(mCategoryBean.getData().get(3).getIsyes() == 1 ){
+                    intent = new Intent(getActivity(), MainCategoryActivity.class) ;
+                    intent.putExtra("catid",mCategoryBean.getData().get(3).getCatid()) ;
+                    intent.putExtra("title",mCategoryBean.getData().get(3).getCatname()) ;
+                    startActivity(intent);
+                }else{
+                    intent = new Intent(getActivity(), CategoryListActivity.class) ;
+                    intent.putExtra("title",mCategoryBean.getData().get(3).getCatname()) ;
+                    intent.putExtra("id",mCategoryBean.getData().get(3).getCatid()) ;
+                    startActivity(intent);
+                }
+
                 break ;
             case R.id.iv_xinfang :
                 intent = new Intent(getActivity(), CategoryListActivity.class) ;
