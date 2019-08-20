@@ -54,7 +54,7 @@ public class SignInDialog extends Dialog{
 		this.mContext = context;
 	}
 
-	private void getQiandao(String uid) {
+	/*private void getQiandao(String uid) {
 
 		Map<String, String> map = new HashMap<>();
 		map.put("s", "App.Member.Qiandao");
@@ -92,7 +92,7 @@ public class SignInDialog extends Dialog{
 			}
 		});
 
-	}
+	}*/
 
 
 	@Override
@@ -106,16 +106,15 @@ public class SignInDialog extends Dialog{
 		mLLQianDao.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				User user = UserDAO.getInstance(mContext).selectUserByIsLogin(1) ;
+				/*User user = UserDAO.getInstance(mContext).selectUserByIsLogin(1) ;
 
 				if(user != null){
 					getQiandao(user.getUserid()) ;
 				}else{
 					Intent intent = new Intent(mContext, LoginActivity.class);
 					mContext.startActivity(intent);
-					dismiss();
-				}
-
+				}*/
+				dismiss();
 
 
 			}

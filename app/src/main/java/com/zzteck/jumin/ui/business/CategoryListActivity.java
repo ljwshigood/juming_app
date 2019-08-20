@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.zzteck.jumin.R;
+import com.zzteck.jumin.adapter.Recommand2Adapter;
 import com.zzteck.jumin.adapter.RecommandAdapter;
 import com.zzteck.jumin.app.App;
 import com.zzteck.jumin.bean.FilterInfo;
@@ -67,7 +68,7 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
 
     private RecyclerView mGvCommand;
 
-    private RecommandAdapter mCommandAdapter;
+    private Recommand2Adapter mCommandAdapter;
 
     private TextView mTvTitle;
 
@@ -214,7 +215,7 @@ public class CategoryListActivity extends BaseActivity implements OnClickListene
         itemDecoration.setDrawLastItem(false);
         mGvCommand.addItemDecoration(itemDecoration);
 
-        mCommandAdapter = new RecommandAdapter(this, info.getData());
+        mCommandAdapter = new Recommand2Adapter(this, info.getData());
         mGvCommand.setAdapter(mCommandAdapter);
 
         mCommandAdapter.setNoMore(R.layout.view_no_more);

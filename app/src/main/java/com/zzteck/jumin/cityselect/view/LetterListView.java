@@ -53,7 +53,7 @@ public class LetterListView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (showBkg) {
-            canvas.drawColor(bgColor);
+           // canvas.drawColor(bgColor);
         }
         int height = getHeight();
         int width = getWidth();

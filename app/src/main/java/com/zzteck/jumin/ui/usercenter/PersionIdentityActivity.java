@@ -133,14 +133,6 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 				.apply(options)
 				.into(mIvOrg);
 
-		/*Glide.with(mContext)
-				.load(info.getFilePath())
-				.placeholder(R.mipmap.default_pic)
-				.error(R.mipmap.default_pic)
-				.crossFade(300)
-				.diskCacheStrategy(DiskCacheStrategy.SOURCE)
-				.into(mIvOrg);
-*/
 
 	}
 
@@ -156,15 +148,6 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 				.load(Constants.PIC_HOST+info.getFilePath())
 				.apply(options)
 				.into(mIvFront);
-
-
-		/*Glide.with(mContext)
-				.load(info.getFilePath())
-				.placeholder(R.mipmap.default_pic)
-				.error(R.mipmap.default_pic)
-				.crossFade(300)
-				.diskCacheStrategy(DiskCacheStrategy.SOURCE)
-				.into(mIvFront);*/
 
 	}
 
@@ -232,8 +215,8 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 			@Override
 			protected String doInBackground(Integer... params) {
 
-                String front = (String) mIvFront.getTag();
-                String org = (String) mIvOrg.getTag();
+                String front = (String) mLLFront.getTag();
+                String org = (String) mLLOrg.getTag();
 
 				MultipartBody body = RequestBuilder.uploadRequestBody2(PersionIdentityActivity.this,mEtName.getText().toString().trim(),mEtNumber.getText().toString().trim(),
 																		new File(front),new File(org));
@@ -321,7 +304,7 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 						.maxSelectNum(4)// 最大图片选择数量
 						.minSelectNum(1)// 最小选择数量
 						.imageSpanCount(4)// 每行显示个数
-						.selectionMode(PictureConfig.MULTIPLE)// 多选 or 单选
+						.selectionMode(PictureConfig.SINGLE)// 多选 or 单选
 						.previewImage(true)// 是否可预览图片
 						.previewVideo(true)// 是否可预览视频
 						.enablePreviewAudio(true) // 是否可播放音频
@@ -329,7 +312,7 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 						.isZoomAnim(true)// 图片列表点击 缩放效果 默认true
 						//.imageFormat(PictureMimeType.PNG)// 拍照保存图片格式后缀,默认jpeg
 						//.setOutputCameraPath("/CustomPath")// 自定义拍照保存路径
-						.enableCrop(true)// 是否裁剪
+						.enableCrop(false)// 是否裁剪
 						.compress(true)// 是否压缩
 						.synOrAsy(true)//同步true或异步false 压缩 默认同步
 						//.compressSavePath(getPath())//压缩图片保存地址
@@ -367,7 +350,7 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 						.maxSelectNum(4)// 最大图片选择数量
 						.minSelectNum(1)// 最小选择数量
 						.imageSpanCount(4)// 每行显示个数
-						.selectionMode(PictureConfig.MULTIPLE)// 多选 or 单选
+						.selectionMode(PictureConfig.SINGLE)// 多选 or 单选
 						.previewImage(true)// 是否可预览图片
 						.previewVideo(true)// 是否可预览视频
 						.enablePreviewAudio(true) // 是否可播放音频
@@ -375,7 +358,7 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 						.isZoomAnim(true)// 图片列表点击 缩放效果 默认true
 						//.imageFormat(PictureMimeType.PNG)// 拍照保存图片格式后缀,默认jpeg
 						//.setOutputCameraPath("/CustomPath")// 自定义拍照保存路径
-						.enableCrop(true)// 是否裁剪
+						.enableCrop(false)// 是否裁剪
 						.compress(true)// 是否压缩
 						.synOrAsy(true)//同步true或异步false 压缩 默认同步
 						//.compressSavePath(getPath())//压缩图片保存地址
@@ -406,8 +389,8 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 
 				break ;
 			case R.id.ll_complete :
-				String front = (String) mIvFront.getTag();
-				String org = (String) mIvOrg.getTag();
+				String front = (String) mLLFront.getTag();
+				String org = (String) mLLOrg.getTag();
 				if(TextUtils.isEmpty(mEtName.getText().toString().trim())){
 					WindowsToast.makeText(mContext,"名称不能为空").show();
 					return ;
@@ -463,7 +446,7 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 						.apply(options)
 						.into(mIvFront);
 
-				mIvFront.setTag(selectList.get(0).getCompressPath());
+				mLLFront.setTag(selectList.get(0).getCompressPath());
 
 			}else{
 
@@ -476,7 +459,7 @@ public class PersionIdentityActivity extends BaseActivity implements OnClickList
 						.load(selectList.get(0).getCompressPath())
 						.apply(options)
 						.into(mIvOrg);
-				mIvOrg.setTag(selectList.get(0).getCompressPath());
+				mLLOrg.setTag(selectList.get(0).getCompressPath());
 
 			}
 

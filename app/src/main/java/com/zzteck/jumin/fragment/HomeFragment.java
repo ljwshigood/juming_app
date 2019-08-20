@@ -1,5 +1,6 @@
 package com.zzteck.jumin.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -44,6 +45,7 @@ import com.zzteck.jumin.adapter.FeaturedPagerAdapter;
 import com.zzteck.jumin.adapter.VideoAdapter;
 import com.zzteck.jumin.bean.BannerBean;
 import com.zzteck.jumin.bean.CategoryBean;
+import com.zzteck.jumin.bean.QiandaoBean;
 import com.zzteck.jumin.bean.User;
 import com.zzteck.jumin.bean.VideoBean;
 import com.zzteck.jumin.db.UserDAO;
@@ -63,6 +65,7 @@ import com.zzteck.jumin.utils.UtilsTools;
 import com.zzteck.jumin.view.ColorFlipPagerTitleView;
 import com.zzteck.jumin.view.JudgeNestedScrollView;
 import com.zzteck.jumin.view.SignInDialog;
+import com.zzteck.zzview.WindowsToast;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -875,6 +878,47 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     }
 
+    private void getQiandao(String uid) {
+
+        Map<String, String> map = new HashMap<>();
+        map.put("s", "App.Member.Qiandao");
+        map.put("userid", uid + "");
+
+        map.put("sign",UtilsTools.getSign(mContext,"App.Member.Qiandao")) ;
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().get().url(Constants.HOST + "?" + UtilsTools.getMapToString(map)).build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("liujw", "##########################IOException : " + e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                final String responseStr = response.body().string();
+                ((Activity)mContext).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Gson gson = new Gson();
+                        QiandaoBean bean = gson.fromJson(responseStr, QiandaoBean.class);
+                        if(bean.getData().isIs_success() == true){
+
+                            SignInDialog dialog = new SignInDialog(getActivity()) ;
+                            dialog.show();
+                            WindowsToast.makeText(mContext,"签到成功啦").show();
+                        }else{
+                            WindowsToast.makeText(mContext,bean.getData().getInfo()).show();
+                        }
+
+                    }
+                });
+            }
+        });
+
+    }
+
     @Override
     public void onClick(View view) {
         Intent intent = null ;
@@ -980,8 +1024,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break ;
             case R.id.iv_qiandao :
-                SignInDialog dialog = new SignInDialog(getActivity()) ;
-                dialog.show();
+                if(userList != null && userList.size() > 0){
+                    User user = UserDAO.getInstance(mContext).selectUserByIsLogin(1) ;
+                    getQiandao(user.getUserid()) ;
+                  /*  SignInDialog dialog = new SignInDialog(getActivity()) ;
+                    dialog.show();*/
+                }else{
+                    intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                }
+
                 break ;
             case R.id.tv_search :
                 intent = new Intent(getActivity(), SearchActivity.class) ;

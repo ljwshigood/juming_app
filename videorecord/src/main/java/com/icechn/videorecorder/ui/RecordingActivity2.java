@@ -47,7 +47,7 @@ public class RecordingActivity2 extends AppCompatActivity implements
         TextureView.SurfaceTextureListener, View.OnClickListener, IVideoChange {
     private static final String TAG = "RecordingActivity2";
     public static final String IS_SQUARE = "is_square";
-    private static final int MIN_RECORD_DURATION = 10000;//10S
+    private static final int MIN_RECORD_DURATION = 0;//10S
     private static final int MAX_RECORD_DURATION = 30000;//30S
     protected RecorderClient mRecorderClient;
     protected AspectTextureView mTextureView;

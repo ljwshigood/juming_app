@@ -60,7 +60,9 @@ import com.zzteck.jumin.bean.MediaInfo;
 import com.zzteck.jumin.bean.QoneInfo;
 import com.zzteck.jumin.bean.ReleaseDataBean;
 import com.zzteck.jumin.bean.ReleaseRet;
+import com.zzteck.jumin.bean.User;
 import com.zzteck.jumin.bean.VideoInfo;
+import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.pop.LinkCatAdapter;
 import com.zzteck.jumin.ui.mainui.BaseActivity;
 import com.zzteck.jumin.utils.Constants;
@@ -1074,6 +1076,8 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 	private int popHeight ;
 
+	private List<User> userList ;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -1089,6 +1093,14 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		DisplayMetrics dm = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(dm);
 		popHeight = SupDialogStaticUtils.px2dip(mContext,dm.heightPixels / 2) ;
+		userList = UserDAO.getInstance(mContext).selectUserList() ;
+
+		if(userList != null && userList.size() > 0){
+			mEtContact.setText(userList.get(0).getTrueName());
+			mEtMobile.setText(userList.get(0).getMobile());
+		}
+
+
 	}
 
 
@@ -1327,13 +1339,13 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				}else if(TextUtils.isEmpty(mEtMobile.getText().toString().trim())){
 					Toast.makeText(mContext,"手机号不能为空",Toast.LENGTH_SHORT).show();
 					return ;
-				}else if(TextUtils.isEmpty(mEtWeiXin.getText().toString().trim())){
+				}/*else if(TextUtils.isEmpty(mEtWeiXin.getText().toString().trim())){
 					Toast.makeText(mContext,"微信号不能为空",Toast.LENGTH_SHORT).show();
 					return ;
 				}else if(TextUtils.isEmpty(mEtQQ.getText().toString().trim())){
 					Toast.makeText(mContext,"QQ号不能为空",Toast.LENGTH_SHORT).show();
 					return ;
-				}
+				}*/
                 if(!TextUtils.isEmpty(mLinkName)){
                 	for(int i = 0 ;i< mSelectLinkList.size() ;i++){
 						mSelectLinkList.get(i).setType("link");
@@ -1352,10 +1364,10 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 					return ;
 				}
 
-				if(TextUtils.isEmpty(mVideUrl)){
+				/*if(TextUtils.isEmpty(mVideUrl)){
 					Toast.makeText(mContext,"请上传视频",Toast.LENGTH_SHORT).show();
 					return ;
-				}
+				}*/
 
 				String imgs = mImageUrl.substring(0,mImageUrl.lastIndexOf(","));
 
@@ -1553,7 +1565,9 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		map.put("mappoint",mappoint) ;
 		map.put("web_address",webAddress) ;
 		map.put("extra",extra) ;
-		map.put("video",video) ;
+		if(!TextUtils.isEmpty(video)){
+			map.put("video",video) ;
+		}
 		map.put("img",img) ;
 		map.put("contact_who",conatctWho) ;
 		map.put("tel",tel) ;
@@ -1580,6 +1594,9 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 						String message = new String(responseStr.getBytes()) ;
 
 						Log.e("liujw","############################message AppInfoAdd: "+message);
+
+						WindowsToast.makeText(mContext,message).show();
+
 						Gson gson = new Gson() ;
 						ReleaseRet bean = gson.fromJson(message,ReleaseRet.class) ;
 

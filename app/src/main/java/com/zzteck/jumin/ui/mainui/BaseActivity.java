@@ -48,7 +48,8 @@ public class BaseActivity extends FragmentActivity {
 
         ImmersionBar.with(this)
                 .statusBarDarkFont(true, 0.2f)
-                .navigationBarDarkIcon(true, 1f)
+             /*   .statusBarDarkFont(true, 0.2f)
+                .navigationBarDarkIcon(true, 0.2f)*/
                 .init();
 
     }
