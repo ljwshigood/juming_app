@@ -302,7 +302,6 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 	private int from = 0 ;
 
 	private List<LinkCat.DataBean> initPopData(){
-
 		return null ;
 	}
 
@@ -327,8 +326,6 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			popupWindow = null ;
 		}
 
-
-
 		View popupWindowView = getLayoutInflater().inflate(R.layout.right_qone_pop_memu, null);
 		popupWindow = new PopupWindow(popupWindowView, ViewGroup.LayoutParams.FILL_PARENT, popHeight*2, true);
 		popupWindow.setAnimationStyle(R.style.AnimationBottomFade);
@@ -338,13 +335,6 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 		popupWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_release, null), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
 
 		backgroundAlpha(0.5f);
-
-		/*View popupWindowView = getLayoutInflater().inflate(R.layout.right_qone_pop_memu, null);
-		popupWindow = new PopupWindow(popupWindowView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
-		popupWindow.setAnimationStyle(R.style.AnimationRightFade);
-
-		ColorDrawable dw = new ColorDrawable(0xffffffff);
-		popupWindow.setBackgroundDrawable(dw);*/
 
 		ptv = popupWindowView.findViewById(R.id.tv_info) ;
 		piv = popupWindowView.findViewById(R.id.iv_back) ;
@@ -388,7 +378,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 		mCheckAdapter.setmIOnItemClick(new CheckAdapter.IOnCityItemLister() {
 			@Override
-			public void onItemCityClick(QoneInfo.DataBean bean) {
+			public void onItemCityClick(CheckInfo bean) {
 
 			}
 		});
@@ -825,12 +815,12 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 			}else if(info.get(i).getType().equals("select")){
 
 				linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
-				final MaterialSpinner spinner = new MaterialSpinner(mContext) ;
-				spinner.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+			/*	final MaterialSpinner spinner = new MaterialSpinner(mContext) ;
+				spinner.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));*/
 
 				final String[] attray = info.get(i).getExtra().getChoices().split("\\r\\n") ;
 
-				List<String> spinnerList = new ArrayList<>() ;
+				final List<String> spinnerList = new ArrayList<>() ;
 
 				for(int j = 0 ;j < attray.length ;j++){
 					int index = attray[j].indexOf("=") ;
@@ -841,12 +831,86 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 				if(spinnerList != null && spinnerList.size() > 0){
 					String temp = attray[0] ;
 					String[] splites = temp.split("=") ;
-					String identifier = (String) spinner.getTag();
 					mHashExtra.put(info.get(i).getIdentifier(),splites[0]) ;
 
 				}
 
-				spinner.setItems(spinnerList);
+				final TextView etSelect = new TextView(this);
+				etSelect.setHint("请输入"+info.get(i).getTitle());
+				etSelect.setBackground(null);
+				etSelect.setTextSize(14f);
+				etSelect.setLayoutParams(new LinearLayout.LayoutParams(200,ViewGroup.LayoutParams.WRAP_CONTENT,0.8f));
+				etSelect.setTag(info.get(i).getIdentifier());
+
+				etSelect.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+
+						if(popupWindow != null){
+							popupWindow.dismiss();
+							popupWindow = null ;
+						}
+
+						final View popupWindowView = getLayoutInflater().inflate(R.layout.right_select_memu, null);
+						popupWindow = new PopupWindow(popupWindowView, ViewGroup.LayoutParams.FILL_PARENT, popHeight, true);
+						popupWindow.setAnimationStyle(R.style.AnimationBottomFade);
+						ColorDrawable dw = new ColorDrawable(0xffffffff);
+						popupWindow.setBackgroundDrawable(dw);
+
+						popupWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_release, null), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+
+						backgroundAlpha(0.5f);
+
+						ptv = popupWindowView.findViewById(R.id.tv_info) ;
+						piv = popupWindowView.findViewById(R.id.iv_back) ;
+						piv.setVisibility(View.INVISIBLE);
+
+						popupWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_release, null), Gravity.RIGHT, 0, 500);
+
+						backgroundAlpha(0.5f);
+						popupWindow.setOnDismissListener(new popupDismissListener());
+
+
+						RecyclerView mRlSelect = popupWindowView.findViewById(R.id.rv_select);
+						mRlSelect.setLayoutManager(new LinearLayoutManager(ReleaseActivity.this));
+
+						List<CheckInfo> checkInfos = new ArrayList<>() ;
+
+						for(int i = 0 ;i< spinnerList.size() ;i++){
+							CheckInfo info = new CheckInfo() ;
+							info.setInfo(spinnerList.get(i));
+							checkInfos.add(info);
+						}
+
+						CheckAdapter mCheckAdapter = new CheckAdapter(ReleaseActivity.this,checkInfos);
+						mRlSelect.setAdapter(mCheckAdapter);
+
+						mCheckAdapter.setmIOnItemClick(new CheckAdapter.IOnCityItemLister() {
+							@Override
+							public void onItemCityClick(CheckInfo bean) {
+								String temp = bean.getInfo();
+								String[] splites = temp.split("=") ;
+								String identifier = (String) etSelect.getTag();
+								etSelect.setText(splites[0]);
+								mHashExtra.put(identifier,splites[0]) ;
+								popupWindow.dismiss();
+
+							}
+						});
+
+						popupWindowView.setOnTouchListener(new View.OnTouchListener() {
+
+							@Override
+							public boolean onTouch(View v, MotionEvent event) {
+								return false;
+							}
+						});
+
+					}
+				});
+
+
+				/*spinner.setItems(spinnerList);
 				spinner.setTag(info.get(i).getIdentifier());
 				spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 					@Override
@@ -858,11 +922,11 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 						Log.e("liujw","########setOnItemSelectedListener mHashExtra : "+mHashExtra.toString()) ;
 					}
-				});
+				});*/
 
-				mHashMapViews.put(info.get(i).getIdentifier(),spinner) ;
+				mHashMapViews.put(info.get(i).getIdentifier(),etSelect) ;
 
-				linearLayoutRight.addView(spinner);
+				linearLayoutRight.addView(etSelect);
 			}else if(info.get(i).getType().equals("text")){
 				linearLayoutRight.setOrientation(LinearLayout.HORIZONTAL);
 				EditText tvText = new EditText(this);

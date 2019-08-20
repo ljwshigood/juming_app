@@ -52,7 +52,7 @@ public class CheckAdapter extends RecyclerView.Adapter<CheckAdapter.ViewHolder> 
 
     public interface IOnCityItemLister{
 
-        public void onItemCityClick(QoneInfo.DataBean bean) ;
+        public void onItemCityClick(CheckInfo bean) ;
     }
 
 
@@ -64,7 +64,7 @@ public class CheckAdapter extends RecyclerView.Adapter<CheckAdapter.ViewHolder> 
             @Override
             public void onClick(View view) {
                 if(mIOnItemClick != null){
-                    //mIOnItemClick.onItemCityClick(mVideoList.get(position));
+                    mIOnItemClick.onItemCityClick(mVideoList.get(position));
                 }
             }
         });

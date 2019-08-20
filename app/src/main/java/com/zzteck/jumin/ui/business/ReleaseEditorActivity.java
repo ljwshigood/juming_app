@@ -406,7 +406,7 @@ public class ReleaseEditorActivity extends BaseActivity implements View.OnClickL
 
 		mCheckAdapter.setmIOnItemClick(new CheckAdapter.IOnCityItemLister() {
 			@Override
-			public void onItemCityClick(QoneInfo.DataBean bean) {
+			public void onItemCityClick(CheckInfo bean) {
 
 			}
 		});
