@@ -106,7 +106,7 @@ public class PicturePreview2Activity extends PictureBaseActivity implements
                 0, config.selectionMode == PictureConfig.SINGLE ? 1 : config.maxSelectNum)
                 : getString(R.string.picture_please_select));
 
-        tv_img_num.setSelected(config.checkNumMode ? true : false);
+     //   tv_img_num.setSelected(config.checkNumMode ? true : false);
 
         selectImages = (List<LocalMedia>) getIntent().
                 getSerializableExtra(PictureConfig.EXTRA_SELECT_LIST);
