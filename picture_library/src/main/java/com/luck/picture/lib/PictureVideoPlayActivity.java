@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.VideoView;
 
 public class PictureVideoPlayActivity extends PictureBaseActivity implements MediaPlayer.OnErrorListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, View.OnClickListener {
@@ -19,6 +20,8 @@ public class PictureVideoPlayActivity extends PictureBaseActivity implements Med
     private ImageView iv_play;
     private int mPositionWhenPaused = -1;
 
+    private ProgressBar mProgressBar ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -26,6 +29,7 @@ public class PictureVideoPlayActivity extends PictureBaseActivity implements Med
         setContentView(R.layout.picture_activity_video_play);
         video_path = getIntent().getStringExtra("video_path");
         picture_left_back = (ImageView) findViewById(R.id.picture_left_back);
+        mProgressBar = findViewById(R.id.loading);
         mVideoView = (VideoView) findViewById(R.id.video_view);
         mVideoView.setBackgroundColor(Color.BLACK);
         iv_play = (ImageView) findViewById(R.id.iv_play);
@@ -35,6 +39,7 @@ public class PictureVideoPlayActivity extends PictureBaseActivity implements Med
         mVideoView.setMediaController(mMediaController);
         picture_left_back.setOnClickListener(this);
         iv_play.setOnClickListener(this);
+
     }
 
 
@@ -43,6 +48,7 @@ public class PictureVideoPlayActivity extends PictureBaseActivity implements Med
         // Play Video
         mVideoView.setVideoPath(video_path);
         mVideoView.start();
+        mProgressBar.setVisibility(View.VISIBLE);
         super.onStart();
     }
 
@@ -119,6 +125,7 @@ public class PictureVideoPlayActivity extends PictureBaseActivity implements Med
                 if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
                     // video started
                     mVideoView.setBackgroundColor(Color.TRANSPARENT);
+                    mProgressBar.setVisibility(View.INVISIBLE);
                     return true;
                 }
                 return false;

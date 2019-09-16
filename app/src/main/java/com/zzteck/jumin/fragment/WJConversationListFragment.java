@@ -115,12 +115,14 @@ public class WJConversationListFragment extends Fragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-
-						String message = new String(responseStr.getBytes()) ;
-						Gson gson = new Gson() ;
-						PushBean bean = gson.fromJson(message,PushBean.class) ;
-
-						mMessageAdapter.notifyMessageList(bean.getData());
+						try{
+							String message = new String(responseStr.getBytes()) ;
+							Gson gson = new Gson() ;
+							PushBean bean = gson.fromJson(message,PushBean.class) ;
+							mMessageAdapter.notifyMessageList(bean.getData());
+						}catch(Exception e){
+							e.printStackTrace();
+						}
 
 					}
 				});

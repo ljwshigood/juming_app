@@ -78,6 +78,8 @@
             android:name="com.amap.api.v2.apikey"
             android:value="e7db04f4e93cb4203d9bb9307e48b2da" />
 
+        <activity android:name="com.luck.picture.lib.PicturePreview2Activity"></activity>
+
         <activity android:name=".ui.location.LocationActivity"></activity>
         <activity android:name=".ui.mainui.SearchActivity"></activity>
         <activity android:name=".ui.usercenter.MemberUpgradeActivity"></activity>
