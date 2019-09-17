@@ -739,7 +739,7 @@ public class CategoryDetailActivity extends BaseActivity implements View.OnClick
         initView();
         initData();
         //mId = "20719" ;
-        mId = "11211" ;
+        mId = "39300" ;
         getCatoryDetail(mId);
         getLove() ;
         /*mShareDialog = new ShareDialog(mContext);

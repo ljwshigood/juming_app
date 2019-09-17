@@ -77,11 +77,12 @@ public class CategoryPagerAdapter extends PagerAdapter {
                     List<LocalMedia> selectedImages = new ArrayList<>() ;
                     for(int i = 0 ;i < data.size() ;i++){
                         LocalMedia localMedia = new LocalMedia() ;
-                        localMedia.setPath(Constants.PIC_HOST+data.get(i).getFilePath());
                         if(data.get(i).getType() == 0){
                             localMedia.setPictureType(PictureConfig.IMAGE);
+                            localMedia.setPath(Constants.PIC_HOST+data.get(i).getFilePath());
                         }else{
                             localMedia.setPictureType(PictureConfig.VIDEO);
+                            localMedia.setPath(Constants.PIC_HOST+data.get(i).getThumbPath());
                         }
                         selectedImages.add(localMedia);
                     }
@@ -120,11 +121,12 @@ public class CategoryPagerAdapter extends PagerAdapter {
                     List<LocalMedia> selectedImages = new ArrayList<>() ;
                     for(int i = 0 ;i < data.size() ;i++){
                         LocalMedia localMedia = new LocalMedia() ;
-                        localMedia.setPath(Constants.PIC_HOST+data.get(i).getFilePath());
                         if(data.get(i).getType() == 0){
                             localMedia.setPictureType(PictureConfig.IMAGE);
+                            localMedia.setPath(Constants.PIC_HOST+data.get(i).getFilePath());
                         }else{
                             localMedia.setPictureType(PictureConfig.VIDEO);
+                            localMedia.setPath(Constants.PIC_HOST+data.get(i).getThumbPath());
                         }
                         selectedImages.add(localMedia);
                     }
