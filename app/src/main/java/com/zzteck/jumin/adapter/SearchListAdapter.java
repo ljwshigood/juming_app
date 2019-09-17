@@ -74,7 +74,7 @@ public class SearchListAdapter extends RecyclerArrayAdapter<SearchListBean.DataB
         private LinearLayout mllocation ;
 
         public RecommandViewHolder(ViewGroup parent) {
-            super(parent, R.layout.item_recommand);
+            super(parent, R.layout.item_search_list);
 
             mIvLogo = $(R.id.iv_pic) ;
             mTvTitle = $(R.id.tv_title) ;

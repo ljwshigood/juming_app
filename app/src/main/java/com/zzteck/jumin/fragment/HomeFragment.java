@@ -426,7 +426,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 mBannerViewPaper.setCurrentItem(currentItem + 1);
                 mHandler.postDelayed(mRunnable, 3000);
             }else if(msg.what == 1){
-                dealWithViewPager();
+                toolbar.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        dealWithViewPager();
+                    }
+                });
             }
         }
 
@@ -746,6 +751,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 dealWithViewPager();
             }
         });*/
+
         scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             int lastScrollY = 0;
             int maxh = DensityUtil.dp2px(80);
