@@ -115,6 +115,7 @@ public class CatoryDetailInfo implements Serializable {
          * extra : [{"title":"狗狗品种","value":"37785"},{"title":"体形","value":"小型犬"},{"title":"价格","value":"1600元/只"},{"title":"发布人身份","value":"个人"},{"title":"疫苗情况","value":"3针"},{"title":"年龄","value":"3个月"},{"title":"犬只血统","value":"纯种"},{"title":"驱虫情况","value":"已驱虫"},{"title":"待售只数","value":"23只"},{"title":"供求","value":"狗狗出售"},{"title":"狗狗品种名称","value":"博美"},{"title":"功能","value":"玩具犬"},{"title":"特性","value":"友善"},{"title":"公母","value":"公母都有"}]
          */
 
+
         private String id;
         private String title;
         private String catid;
@@ -169,7 +170,16 @@ public class CatoryDetailInfo implements Serializable {
         private String modid;
         private String usertoid;
         private List<ImageBean> image;
+
+
         private Map extra;
+        /**
+         * value : 8000~12000元
+         * type : select
+         */
+
+        private String value;
+        private String type;
 
         public String getId() {
             return id;
@@ -609,6 +619,55 @@ public class CatoryDetailInfo implements Serializable {
 
         public void setExtra(Map extra) {
             this.extra = extra;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public Price getPrice() {
+            return price;
+        }
+
+        public void setPrice(Price price) {
+            this.price = price;
+        }
+
+        private Price price ;
+
+        public static class Price {
+
+            private String title;
+
+            public String getValue() {
+                return value;
+            }
+
+            public void setValue(String value) {
+                this.value = value;
+            }
+
+            private String value;
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
         }
 
         public static class ImageBean {

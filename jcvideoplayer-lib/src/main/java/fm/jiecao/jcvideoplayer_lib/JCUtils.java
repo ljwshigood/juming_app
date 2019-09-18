@@ -72,14 +72,15 @@ public class JCUtils {
      * @param context
      * @return AppCompatActivity if it's not null
      */
-    public static AppCompatActivity getAppCompActivity(Context context) {
-        if (context == null) return null;
+    public static Activity getAppCompActivity(Context context) {
+        return (Activity)context ;
+       /* if (context == null) return null;
         if (context instanceof AppCompatActivity) {
             return (AppCompatActivity) context;
         } else if (context instanceof ContextThemeWrapper) {
             return getAppCompActivity(((ContextThemeWrapper) context).getBaseContext());
         }
-        return null;
+        return null;*/
     }
 
     public static int dip2px(Context context, float dpValue) {
