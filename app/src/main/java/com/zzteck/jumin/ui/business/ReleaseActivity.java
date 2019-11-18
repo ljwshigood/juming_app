@@ -1503,7 +1503,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 
 								for(int i = 0 ;i < selectList.size() ;i++){
 									if(selectList.get(i).getCompressPath().equals(file.getAbsolutePath())){
-										selectList.get(i).setStatus(1);
+										//selectList.get(i).set(1);
 									}
 								}
 

@@ -139,7 +139,7 @@ public class GridImageAdapter extends
             viewHolder.mTv.setText("");
         } else {
 
-            int status = list.get(position).getStatus() ;
+            int status = 1 ;
             if(status == 0){ // 正在上传
                 viewHolder.mProgressBar.setVisibility(View.VISIBLE);
                 viewHolder.mTv.setText("");

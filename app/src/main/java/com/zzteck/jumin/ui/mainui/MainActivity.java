@@ -44,6 +44,7 @@ import com.zzteck.jumin.bean.User;
 import com.zzteck.jumin.bean.VersionInfo;
 import com.zzteck.jumin.db.UserDAO;
 import com.zzteck.jumin.fragment.HomeFragment;
+import com.zzteck.jumin.fragment.HomeFragmentbak;
 import com.zzteck.jumin.fragment.MainCategoryFragment;
 import com.zzteck.jumin.fragment.UserFragment;
 import com.zzteck.jumin.fragment.WJConversationListFragment;
@@ -380,7 +381,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 		 mTvUser = findViewById(R.id.tv_user) ;
 		 
 		 mWJViewPaper = findViewById(R.id.content) ;
-		 mHomeFragmemt = new HomeFragment();
+		 mHomeFragmemt = new HomeFragmentbak();
 		 mCategoryFragment = new MainCategoryFragment();
 		 mMessageFragment = new WJConversationListFragment();
 		 mUserFragment = new UserFragment();

@@ -295,7 +295,7 @@ public class ReleaseEditorActivity extends BaseActivity implements View.OnClickL
 		List<LocalMedia> localMediaList = new ArrayList<>() ;
 		for(int i = 0 ;i< images.size() ;i++){
 			LocalMedia localMedia = new LocalMedia() ;
-			localMedia.setStatus(1);
+			//localMedia.setStatus(1);
 			localMedia.setPath(Constants.PIC_HOST+images.get(i).getPath());
 			localMediaList.add(localMedia);
 
@@ -1539,7 +1539,7 @@ public class ReleaseEditorActivity extends BaseActivity implements View.OnClickL
 
 								for(int i = 0 ;i < selectList.size() ;i++){
 									if(selectList.get(i).getCompressPath().equals(file.getAbsolutePath())){
-										selectList.get(i).setStatus(1);
+										//selectList.get(i).setStatus(1);
 									}
 								}
 

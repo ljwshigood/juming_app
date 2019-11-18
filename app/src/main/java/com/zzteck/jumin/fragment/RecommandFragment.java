@@ -77,16 +77,10 @@ public class RecommandFragment extends Fragment {
         return (int) (dipValue * scale + 0.5f); //+0.5是为了向上取整
     }
 
-    public static int px2dip(Context context, float pxValue){        
-        final float scale = context.getResources().getDisplayMetrics().density;        
-        return (int)(pxValue / scale + 0.5f);//+0.5是为了向上取整   
-    }
-
     private void initData(HomeInfo info) {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRVCategory.setLayoutManager(layoutManager);
-       // DividerDecoration itemDecoration = new DividerDecoration(mContext.getResources().getColor(R.color.color_line),dip2px(getActivity(),0.5f), 0,0);
         DividerDecoration itemDecoration = new DividerDecoration(mContext.getResources().getColor(R.color.pickerview_wheelview_textcolor_divider),dip2px(getActivity(),0.5f), 0,0);
         itemDecoration.setDrawLastItem(false);
         mRVCategory.addItemDecoration(itemDecoration);
@@ -163,7 +157,6 @@ public class RecommandFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             mCategoryId = bundle.getString("item");
-            Log.e("liujw","#################item : "+mCategoryId) ;
             getInfosList(mCategoryId,mCurrentPage+"") ;
         }
 
